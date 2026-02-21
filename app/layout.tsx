@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger } from "@/components/ui/navigation-menu";
+import NavBar from "./components/NavBar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,9 +25,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body>
         <NavBar />
         {children}
       </body>
@@ -35,24 +33,3 @@ export default function RootLayout({
   );
 }
 
-export function NavBar() {
-
-  const links = [
-    {
-      nombre: "Home",
-      href: "/"
-    }
-  ]
-  return (
-    <NavigationMenu>
-      <NavigationMenuList>
-        {links.map((link) => (
-          <NavigationMenuItem key={link.nombre}>
-            aaa
-          </NavigationMenuItem>
-        ))}
-      </NavigationMenuList>
-    </NavigationMenu>
-  )
-
-}
