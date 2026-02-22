@@ -28,6 +28,7 @@ const links = [
   ]
 
 export default function NavBar() {
+
   return (
     <>
       <div className="hidden md:block">
@@ -42,18 +43,25 @@ export default function NavBar() {
   )
 }
 
-export function NavBarDesktop() {
+export function NavBarDesktop({isLoggedIn = false}: {isLoggedIn?: boolean}) {
   return (
-    <div className="hidden md:flex items-center justify-between px-4 lg:px-10 py-3 w-full">
+    <div className="hidden md:flex items-center justify-center px-4 lg:px-10 py-3 w-full gap-12">
       
       {/* Left side */}
       <div className="flex items-center gap-6">
-        <Image
-          src="/logo.png"
-          alt="Logo"
-          width={40}
-          height={40}
-        />
+        <Link href="/">
+          <div className="flex gap-1 cursor-pointer hover:opacity-80 transition-opacity">
+            <Image
+              className="dark:invert"
+              src="/skin4all_logo.svg"
+              alt="Skin4All logo"
+              width={20}
+              height={20}
+              priority
+            />
+            <h1 className="font-medium">Skin4All</h1>
+          </div>
+        </Link>
 
         <NavigationMenu>
           <NavigationMenuList className="gap-4">
@@ -71,27 +79,33 @@ export function NavBarDesktop() {
         </NavigationMenu>
       </div>
 
-      {/* Barra de busqueda en el centro  */}
-      <div className="flex-1 max-w-md mx-6">
-        <SearchBar />
+      <div className="flex items-center justify-centter">
+        {/* Barra de busqueda en el centro  */}
+        <div className="flex-1 max-w-1/2 mx-6">
+          <SearchBar />
+        </div>
+
+        {/* Lado derecho */}
+        <div className="flex items-center gap-3">
+          <div className="hidden lg:flex items-center gap-2">
+            <Button
+              variant="outline"
+              className="border-secondary hover:bg-secondary hover:text-primary-foreground"
+            >
+              Registrarme
+            </Button>
+            <Button>
+              Iniciar sesión
+            </Button>
+          </div>
+          {isLoggedIn && (<>
+            <NotificationsButton />
+            <ProfileButton />
+          </>)}
+        </div>
       </div>
 
-      {/* Lado derecho */}
-      <div className="flex items-center gap-3">
-        <div className="hidden lg:flex items-center gap-2">
-          <Button
-            variant="outline"
-            className="border-secondary hover:bg-secondary hover:text-primary-foreground"
-          >
-            Registrarme
-          </Button>
-          <Button>
-            Iniciar sesión
-          </Button>
-        </div>
-        <NotificationsButton />
-        <ProfileButton />
-      </div>
+      
     </div>
   )
 }
