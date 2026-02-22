@@ -61,7 +61,7 @@ export function NavBarDesktop() {
               <NavigationMenuItem key={link.nombre}>
                 <NavigationMenuLink
                   href={link.href}
-                  className="text-sm font-medium hover:text-pink-400 transition-colors"
+                  className="text-sm font-medium hover:text-primary hover:font-medium transition-colors"
                 >
                   {link.nombre}
                 </NavigationMenuLink>
@@ -80,7 +80,8 @@ export function NavBarDesktop() {
       <div className="flex items-center gap-3">
         <div className="hidden lg:flex items-center gap-2">
           <Button
-            variant="secondary"
+            variant="outline"
+            className="border-secondary hover:bg-secondary hover:text-primary-foreground"
           >
             Registrarme
           </Button>
@@ -112,7 +113,7 @@ export function SearchBar() {
 
 export function NotificationsButton() {
   return (
-    <Button variant="outline" size="icon">
+    <Button variant="outline" size="icon" >
         <Bell className="h-5 w-5" />
     </Button>
   )
@@ -120,7 +121,7 @@ export function NotificationsButton() {
 
 export function ProfileButton() {
   return (
-    <Button variant="outline" size="icon" className="rounded-full">
+    <Button size="icon" className="rounded-full">
       <User className="h-5 w-5" />
     </Button>
   )
@@ -155,7 +156,7 @@ export function NavBarMobile() {
 
             {/* Autenticación al fondo */}
             <div className="mt-auto pt-6 border-t flex flex-col gap-2">
-              <Button variant="secondary">Registrarme</Button>
+              <Button variant="outline">Registrarme</Button>
               <Button>Iniciar sesión</Button>
             </div>
           </SheetContent>
