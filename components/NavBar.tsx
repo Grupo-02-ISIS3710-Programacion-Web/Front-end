@@ -59,7 +59,7 @@ export function NavBarDesktop({isLoggedIn = false}: {isLoggedIn?: boolean}) {
               height={20}
               priority
             />
-            <h1 className="font-medium">Skin4All</h1>
+            <h1 className="font-medium text-xl">Skin4All</h1>
           </div>
         </Link>
 
@@ -143,8 +143,8 @@ export function ProfileButton() {
 
 export function NavBarMobile() {
   return (
-    <div className="md:hidden sticky top-0 z-50 bg-background border-b">
-      <div className="flex items-center justify-between px-4 py-3">
+    <div className="md:hidden sticky top-0 z-50 border-b">
+      <div className="flex items-center justify-baseline px-4 py-3">
         
         {/* Menu trigger */}
         <Sheet>
@@ -162,32 +162,49 @@ export function NavBarMobile() {
             {/* Links */}
             <div className="mt-6 flex flex-col gap-1">
               {links.map((link) => (
-                <Button key={link.nombre} variant="ghost" className="justify-start text-base">
+                <Button key={link.nombre} variant="ghost" className="justify-start text-base active:text-primary transition-transform ">
                   <Link href={link.href}>{link.nombre}</Link>
                 </Button>
               ))}
             </div>
 
             {/* Autenticación al fondo */}
-            <div className="mt-auto pt-6 border-t flex flex-col gap-2">
-              <Button variant="outline">Registrarme</Button>
-              <Button>Iniciar sesión</Button>
+            <div className="mt-auto pt-6 border-t flex justify-center w-full">
+              <div className=" flex flex-col gap-2 w-60">
+                <Button variant="outline">Registrarme</Button>
+                <Button>Iniciar sesión</Button>
+              </div>
             </div>
           </SheetContent>
         </Sheet>
 
-        {/* Center logo */}
-        <Image src="/logo.png" alt="Logo" width={36} height={36}/>
+        <div className="flex justify-between w-full items-center">
+          {/* Center logo */}
+          <Link href="/">
+            <div className="flex gap-1 cursor-pointer hover:opacity-80 transition-opacity">
+              <Image
+                className="dark:invert"
+                src="/skin4all_logo.svg"
+                alt="Skin4All logo"
+                width={20}
+                height={20}
+                priority
+              />
+              <h1 className="font-medium text-lg">Skin4All</h1>
+            </div>
+          </Link>
+          {/* Right actions */}
+          <div className="flex items-center gap-1">
+            <Button variant="ghost" size="icon">
+              <Search className="h-5 w-5" />
+            </Button>
 
-        {/* Right actions */}
-        <div className="flex items-center gap-1">
-          <Button variant="ghost" size="icon">
-            <Search className="h-5 w-5" />
-          </Button>
-
-          <NotificationsButton />
-          <ProfileButton />
+            <NotificationsButton />
+            <ProfileButton />
+          </div>
         </div>
+
+        
       </div>
     </div>
   )
