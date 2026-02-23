@@ -1,4 +1,4 @@
-export function ProductCard() {
+export function CategoriesCard() {
     return (
         <div>
             hola
