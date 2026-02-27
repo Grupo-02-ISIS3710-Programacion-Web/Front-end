@@ -28,9 +28,9 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body>
-        <NextIntlClientProvider>
-          {children}
-        </NextIntlClientProvider>
+        <NavBar />
+        {children}
+        <Toaster />
       </body>
     </html>
   );
