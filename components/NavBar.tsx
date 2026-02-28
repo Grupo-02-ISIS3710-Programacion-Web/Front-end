@@ -3,10 +3,9 @@ import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuL
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
 import { User, Search, Menu, Bell } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 
 const links = [
     {
@@ -45,7 +44,7 @@ export default function NavBar() {
 
 export function NavBarDesktop({isLoggedIn = false}: {isLoggedIn?: boolean}) {
   return (
-    <div className="hidden md:flex items-center justify-center px-4 lg:px-10 py-3 w-full gap-12">
+    <div className="hidden md:flex items-center justify-center px-4 lg:px-10 py-3 w-full gap-12 bg-popover">
       
       {/* Left side */}
       <div className="flex items-center gap-6">
@@ -90,7 +89,7 @@ export function NavBarDesktop({isLoggedIn = false}: {isLoggedIn?: boolean}) {
           <div className="hidden lg:flex items-center gap-2">
             <Button
               variant="outline"
-              className="border-secondary hover:bg-secondary hover:text-primary-foreground"
+              className=" hover:bg-secondary hover:text-secondary-foreground"
             >
               Registrarme
             </Button>
