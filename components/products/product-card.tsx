@@ -29,6 +29,7 @@ export function ProductCard({productIndex, product, onFavoriteSelect, onFavorite
     return (
         <Card className="p-0 h-full">
             <a href="#">
+                {/* product image */}
                 <CardHeader className="bg-muted p-5 flex items-center justify-center">
                     <div className="flex justify-center items-center w-full h-full">
                         <Image
@@ -43,6 +44,7 @@ export function ProductCard({productIndex, product, onFavoriteSelect, onFavorite
                 </CardHeader>
             </a>
             <CardContent className="pb-5">
+                {/* brand and favorite button */}
                 <Stack direction={"row"} paddingBottom={2} justifyContent={"space-between"} alignItems={"center"}>
                     <div className="text-primary font-bold">{product.brand}</div>
                     <Button 
@@ -54,9 +56,13 @@ export function ProductCard({productIndex, product, onFavoriteSelect, onFavorite
                         <Heart size={16} />
                     </Button>
                 </Stack>
+
+                {/* product name */}
                 <CardTitle>
                     <a href="#">{product.name}</a>
                 </CardTitle>
+
+                {/* rating, product type and key ingredient */}
                 <CardDescription>
                     <StarRating
                         rating={product.rating}
@@ -64,7 +70,7 @@ export function ProductCard({productIndex, product, onFavoriteSelect, onFavorite
                         size={10}
                     />
                     <Stack direction={"row"} gap={1} className="items-center-safe">
-                        <Smile className="text-primary" size={20}/> Tipo de prducto: {product.product_type}
+                        <Smile className="text-primary" size={20}/> Tipo de producto: {product.product_type}
                     </Stack>
                     <Stack direction={"row"} gap={1} className="items-center-safe">
                         <FlaskConical className="text-primary" size={20}/> Ingrediente clave: {product.ingredients[0]}
