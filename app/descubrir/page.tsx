@@ -3,11 +3,12 @@ import { CategoriesCard } from "@/components/products/categories-card";
 import { FilterHeader } from "@/components/products/filter-header";
 import { Category, Product, SkinType } from "@/types/product";
 import { useState } from "react";
-import { products } from "@/lib/api";
+import { getProducts } from "@/lib/api";
 import { ProductCard } from "@/components/products/product-card";
 import { useSearchParams } from "next/navigation";
 
 export default function DiscoveryPage() {
+  const products = getProducts();
   const params = useSearchParams();
   const selectedCategory = (params.get("category") as Category) || "ALL";
   const [favoriteProducts, setFavoriteProducts] = useState<Product[]>([]);
