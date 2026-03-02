@@ -2,7 +2,7 @@ import { Stack } from "@mui/material";
 import { Card, CardHeader, CardContent, CardTitle, CardDescription } from "../ui/card";
 import { Button } from "../ui/button";
 import { ButtonGroup } from "../ui/button-group";
-import { Droplets, LayoutDashboard, Pipette, SoapDispenserDroplet, Sun } from "lucide-react";
+import { Droplets, LayoutDashboard, Pipette, SoapDispenserDroplet, SprayCan, Sun } from "lucide-react";
 import { Category } from "@/types/product";
 
 interface CategoriesCardProps {
@@ -22,13 +22,13 @@ const categories = [
     },
     {
         icon: <SoapDispenserDroplet />,
-        label: "Limpiadores faciales",
+        label: "Limpiadores",
         value: Category.LIMPIEZA,
         description: "Encuentra los mejores limpiadores para tu piel"
     },
     {
         icon: <Droplets />,
-        label: "Cremas hidratantes",
+        label: "Hidratantes",
         value: Category.HIDRATACION,
         description: "Hidrata tu piel con cremas y lociones"
     },
@@ -39,8 +39,8 @@ const categories = [
         description: "Potencia tu rutina con serums especializados"
     },
     {
-        icon: <Pipette />,
-        label: "Esencias",
+        icon: <SprayCan />,
+        label: "Reparación",
         value: Category.REPARACION,
         description: "Potencia tu rutina con esencias reparadoras"
     },

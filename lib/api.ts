@@ -3,6 +3,7 @@
 // data/products.ts
 
 import { Product, Category, SkinType } from "@/types/product";
+import { toLowerCaseAndReplaceHyphensWithSpaces } from "./string-utils";
 
 const products: Product[] = [
     {
@@ -211,7 +212,7 @@ export function getProductById(id: string): Product | undefined {
 }
 
 export function getProductByName(name: string): Product | undefined {
-    return products.find(product => product.name.toLowerCase() === name.toLowerCase());
+    return products.find(product => toLowerCaseAndReplaceHyphensWithSpaces(product.name) === toLowerCaseAndReplaceHyphensWithSpaces(name));
 }
 
 export function getProductsByCategory(category: Category | "ALL"): Product[] {

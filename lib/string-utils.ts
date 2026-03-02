@@ -12,7 +12,8 @@ export function toLowerCaseAndReplaceSpacesWithHyphens(str: string): string {
             .replace("é", "e")
             .replace("í", "i")
             .replace("ó", "o")
-            .replace("ú", "u");
+            .replace("ú", "u")
+            .replace(/[^a-z0-9-]/g, '');
 }
 
 export function toLowerCaseAndReplaceHyphensWithSpaces(str: string): string {
@@ -22,5 +23,6 @@ export function toLowerCaseAndReplaceHyphensWithSpaces(str: string): string {
             .replace("é", "e")
             .replace("í", "i")
             .replace("ó", "o")
-            .replace("ú", "u");
+            .replace("ú", "u")
+            .replace(/[^a-z0-9-]/g, '');
 }
