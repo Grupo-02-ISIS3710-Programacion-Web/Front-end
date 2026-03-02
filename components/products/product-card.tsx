@@ -45,10 +45,10 @@ export function ProductCard({productIndex, product, onFavoriteSelect, onFavorite
             </a>
             <CardContent className="pb-5">
                 {/* brand and favorite button */}
-                <Stack direction={"row"} paddingBottom={2} justifyContent={"space-between"} alignItems={"center"}>
+                <Stack direction={"row"} paddingBottom={1} justifyContent={"space-between"} alignItems={"center"}>
                     <div className="text-primary font-bold">{product.brand}</div>
                     <Button 
-                        variant={toggleFavorite ? "destructive" : "outline"} 
+                        variant={toggleFavorite ? "secondary" : "outline"} 
                         size="sm" 
                         className="h-8 px-2 rounded-2xl"
                         onClick={handleClick}
@@ -63,11 +63,12 @@ export function ProductCard({productIndex, product, onFavoriteSelect, onFavorite
                 </CardTitle>
 
                 {/* rating, product type and key ingredient */}
-                <CardDescription>
+                <CardDescription className="flex flex-col gap-1">
                     <StarRating
                         rating={product.rating}
                         reviewCount={product.review_count}
                         size={10}
+                        className="mb-1"
                     />
                     <Stack direction={"row"} gap={1} className="items-center-safe">
                         <Smile className="text-primary" size={20}/> Tipo de producto: {product.product_type}
