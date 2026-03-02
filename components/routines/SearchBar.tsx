@@ -44,7 +44,7 @@ export default function SearchBar({
                 <Search className="w-5 h-5 text-gray-400" />
                 <input
                     type="text"
-                    placeholder="Search for cleanser, serum, moisturizer..."
+                    placeholder="Busca productos por nombre, marca o tipo..."
                     value={searchTerm}
                     onChange={(e) => onSearchChange(e.target.value)}
                     className="bg-transparent flex-1 outline-none text-gray-700 placeholder-gray-400"

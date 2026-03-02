@@ -6,7 +6,8 @@ import {
     DrawerContent,
     DrawerTrigger,
 } from "@/components/ui/drawer";
-import { Plus } from "lucide-react";
+import { Plus, ArrowRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import RoutineSummary from "./RoutineSummary";
 
 type RoutineDrawerProps = Readonly<{
@@ -24,9 +25,18 @@ export default function RoutineDrawer({
         <div className="fixed bottom-6 right-6 md:hidden z-40">
             <Drawer>
                 <DrawerTrigger asChild>
-                    <button className="flex items-center justify-center w-16 h-16 rounded-full bg-pink-500 text-white shadow-lg hover:bg-pink-600 transition-colors group hover:scale-110">
-                        <h3 className="text-lg font-bold">{addedProducts.size}</h3>
-                    </button>
+                    <Button
+                    className="
+                        inline-flex items-center justify-center
+                        px-6 py-6
+                        rounded-2xl
+                        shadow-lg
+                        transition-all">
+                    <span className="text-lg font-bold">
+                        Ver mi rutina
+                    </span>
+                    <ArrowRight className="ml-2 w-5 h-5" />
+                    </Button>
                 </DrawerTrigger>
                 <DrawerContent className="h-3/4">
                     <div className="p-6 h-full flex flex-col">
