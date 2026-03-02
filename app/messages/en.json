@@ -1,0 +1,76 @@
+{
+  "registro": {
+    "titulo": "Create account",
+    "descripcion": "Complete your details to start your experience",
+    "campos": {
+      "nombre": {
+        "label": "Name",
+        "placeholder": "Eg: John Doe"
+      },
+      "fechaNacimiento": {
+        "label": "Birth date"
+      },
+      "tipoPiel": {
+        "label": "Skin type",
+        "placeholder": "Select your skin type",
+        "opciones": {
+          "grasa": "Oily",
+          "seca": "Dry",
+          "mixta": "Combination",
+          "sensible": "Sensitive",
+          "normal": "Normal"
+        }
+      },
+      "probadoSkinCare": {
+        "label": "Have you ever tried skincare products?",
+        "si": "Yes",
+        "no": "No"
+      },
+      "comoEnteroDeNosotros": {
+        "label": "How did you hear about us?",
+        "placeholder": "Select an option",
+        "opciones": {
+          "instagram": "Instagram",
+          "tiktok": "TikTok",
+          "amigo": "Friend referral",
+          "google": "Google search",
+          "publicidad": "Ads",
+          "otro": "Other"
+        }
+      },
+      "email": {
+        "label": "Email address",
+        "placeholder": "email@example.com"
+      },
+      "contrasenia": {
+        "label": "Password",
+        "placeholder": "********"
+      },
+      "confirmarContrasenia": {
+        "label": "Confirm password",
+        "placeholder": "********"
+      }
+    },
+    "validaciones": {
+      "requerido": "This field is required",
+      "emailInvalido": "Please enter a valid email",
+      "contraseniaMinima": "Password must be at least 8 characters",
+      "contraseniasNoCoinciden": "Passwords do not match"
+    },
+    "legal": {
+      "texto": "Password must be at least 8 characters long. By creating an account, you accept our",
+      "terminos": "Terms and Conditions"
+    },
+    "botones": {
+      "crearCuenta": "Create account",
+      "iniciarSesion": "Sign in here"
+    },
+    "footer": {
+      "yaTienesCuenta": "Already have an account?"
+    },
+    "mensajes": {
+      "registroExitoso": "Your account has been created successfully",
+      "errorGenerico": "An unexpected error occurred. Please try again."
+    }
+  }
+}

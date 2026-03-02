@@ -1,18 +1,26 @@
 export const formasEnteroDeNosotros = [
     {
-        value: "redesSociales",
-        label: "Redes sociales"
+        value: "instagram",
+        label: "Instagram"
     },
     {
-        value: "amigos",
-        label: "Amigos"
+        value: "tiktok",
+        label: "TikTok"
+    },
+    {
+        value: "amigo",
+        label: "Recomendación de un amigo"
+    },
+    {
+        value: "google",
+        label: "Búsqueda en Google"
     },
     {
         value: "publicidad",
         label: "Publicidad"
     },
     {
-        value: "otros",
-        label: "Otros"
+        value: "otro",
+        label: "Otro"
     }
 ]
