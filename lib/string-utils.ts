@@ -14,3 +14,13 @@ export function toLowerCaseAndReplaceSpacesWithHyphens(str: string): string {
             .replace("ó", "o")
             .replace("ú", "u");
 }
+
+export function toLowerCaseAndReplaceHyphensWithSpaces(str: string): string {
+  return str.toLowerCase()
+            .replace(/-/g, ' ')
+            .replace("á", "a")
+            .replace("é", "e")
+            .replace("í", "i")
+            .replace("ó", "o")
+            .replace("ú", "u");
+}
