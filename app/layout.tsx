@@ -2,9 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import NavBar from "../components/NavBar";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { Toaster } from "sonner";
-import { NextIntlClientProvider } from "next-intl";
+import { Toaster } from "@/components/ui/sonner";
+import { NextIntlClientProvider } from 'next-intl';
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -28,9 +27,11 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body>
-        <NavBar />
-        {children}
-        <Toaster />
+        <NextIntlClientProvider >
+          <NavBar />
+          {children}
+          <Toaster />
+        </NextIntlClientProvider>
       </body>
     </html>
   );

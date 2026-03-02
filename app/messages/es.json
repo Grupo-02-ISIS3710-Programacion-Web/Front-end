@@ -1,0 +1,76 @@
+{
+  "registro": {
+    "titulo": "Crear cuenta",
+    "descripcion": "Completa tus datos para comenzar tu experiencia",
+    "campos": {
+      "nombre": {
+        "label": "Nombre",
+        "placeholder": "Ej: Pepito Pérez"
+      },
+      "fechaNacimiento": {
+        "label": "Fecha de nacimiento"
+      },
+      "tipoPiel": {
+        "label": "Tipo de piel",
+        "placeholder": "Selecciona tu tipo de piel",
+        "opciones": {
+          "grasa": "Grasa",
+          "seca": "Seca",
+          "mixta": "Mixta",
+          "sensible": "Sensible",
+          "normal": "Normal"
+        }
+      },
+      "probadoSkinCare": {
+        "label": "¿Alguna vez has probado productos de skincare?",
+        "si": "Sí",
+        "no": "No"
+      },
+      "comoEnteroDeNosotros": {
+        "label": "¿Cómo te enteraste de nosotros?",
+        "placeholder": "Selecciona una opción",
+        "opciones": {
+          "instagram": "Instagram",
+          "tiktok": "TikTok",
+          "amigo": "Recomendación de un amigo",
+          "google": "Búsqueda en Google",
+          "publicidad": "Publicidad",
+          "otro": "Otro"
+        }
+      },
+      "email": {
+        "label": "Correo electrónico",
+        "placeholder": "correo@ejemplo.com"
+      },
+      "contrasenia": {
+        "label": "Contraseña",
+        "placeholder": "********"
+      },
+      "confirmarContrasenia": {
+        "label": "Confirmar contraseña",
+        "placeholder": "********"
+      }
+    },
+    "validaciones": {
+      "requerido": "Este campo es obligatorio",
+      "emailInvalido": "Ingresa un correo electrónico válido",
+      "contraseniaMinima": "La contraseña debe tener al menos 8 caracteres",
+      "contraseniasNoCoinciden": "Las contraseñas no coinciden"
+    },
+    "legal": {
+      "texto": "La contraseña debe tener al menos 8 caracteres. Al crear una cuenta aceptas nuestros",
+      "terminos": "Términos y condiciones"
+    },
+    "botones": {
+      "crearCuenta": "Crear cuenta",
+      "iniciarSesion": "Inicia sesión aquí"
+    },
+    "footer": {
+      "yaTienesCuenta": "¿Ya tienes una cuenta?"
+    },
+    "mensajes": {
+      "registroExitoso": "Tu cuenta ha sido creada exitosamente",
+      "errorGenerico": "Ocurrió un error inesperado. Inténtalo nuevamente."
+    }
+  }
+}
