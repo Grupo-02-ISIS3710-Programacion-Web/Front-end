@@ -5,9 +5,11 @@ import { Category, Product, SkinType } from "@/types/product";
 import { useState } from "react";
 import { products } from "@/lib/api";
 import { ProductCard } from "@/components/products/product-card";
+import { useSearchParams } from "next/navigation";
 
 export default function DiscoveryPage() {
-  const [selectedCategory, setSelectedCategory] = useState<Category | "ALL">("ALL");
+  const params = useSearchParams();
+  const selectedCategory = (params.get("category") as Category) || "ALL";
   const [favoriteProducts, setFavoriteProducts] = useState<Product[]>([]);
   const [filters, setFilters] = useState<{
     skinTypes: SkinType[];
@@ -45,11 +47,6 @@ export default function DiscoveryPage() {
   const brands = Array.from(new Set(products.flatMap(product => product.brand)));
   const ingredients = Array.from(new Set(products.flatMap(product => product.ingredients)));
 
-  const handleCategoryChange = async (category: Category | "ALL") => {
-    console.log("Categoría seleccionada:", category);
-    setSelectedCategory(category);
-  }
-
   const handleFavoriteSelect = (productIndex: number) => {
     const selectedProduct = products[productIndex];
     if (!favoriteProducts.some(product => product.id === selectedProduct.id)) {
@@ -66,7 +63,7 @@ export default function DiscoveryPage() {
     <div className=" flex justify-center">
       <div className="w-full grid grid-cols-1 lg:grid-cols-14 gap-8 justify-center px-10 lg:px-20 py-10">
         <div className="col-span-1 lg:col-span-4 w-full">
-            <CategoriesCard currentCategory={selectedCategory} handleCategoryChange={handleCategoryChange}/>
+            <CategoriesCard currentCategory={selectedCategory}/>
         </div>
         <div className="col-pan-1 lg:col-span-10">
             <div className="flex flex-col gap-3">

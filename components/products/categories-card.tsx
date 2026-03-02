@@ -2,16 +2,14 @@ import { Stack } from "@mui/material";
 import { Card, CardHeader, CardContent, CardTitle, CardDescription } from "../ui/card";
 import { Button } from "../ui/button";
 import { ButtonGroup } from "../ui/button-group";
-import { Cat, Droplets, LayoutDashboard, Pipette, SoapDispenserDroplet, Sun } from "lucide-react";
+import { Droplets, LayoutDashboard, Pipette, SoapDispenserDroplet, Sun } from "lucide-react";
 import { Category } from "@/types/product";
 
 interface CategoriesCardProps {
-    handleCategoryChange: (category: Category | "ALL") => void;
     currentCategory?: Category | "ALL";
 }
 
 interface CategoriesCardDesktopMobileProps {
-    handleCategoryChange: (category: Category | "ALL") => void;
     isCategorySelected: (category: Category | "ALL") => boolean;
 }
 
@@ -54,7 +52,7 @@ const categories = [
     }
 ] as const;
 
-export function CategoriesCard({currentCategory, handleCategoryChange}: CategoriesCardProps) {
+export function CategoriesCard({currentCategory}: CategoriesCardProps) {
     const isSelected = (categoryName: string) => {
         return currentCategory === categoryName
     }
@@ -62,16 +60,16 @@ export function CategoriesCard({currentCategory, handleCategoryChange}: Categori
     return ( 
         <>
             <div className="hidden lg:block">
-                <CategoriesCardDesktop handleCategoryChange={handleCategoryChange} isCategorySelected={isSelected}/>
+                <CategoriesCardDesktop  isCategorySelected={isSelected}/>
             </div>
             <div className="block lg:hidden">
-                <CategoriesCardMobile handleCategoryChange={handleCategoryChange} isCategorySelected={isSelected}/>
+                <CategoriesCardMobile  isCategorySelected={isSelected}/>
             </div>
         </>
     )
 }
 
-export function CategoriesCardDesktop({ handleCategoryChange, isCategorySelected}: CategoriesCardDesktopMobileProps) {
+export function CategoriesCardDesktop({  isCategorySelected}: CategoriesCardDesktopMobileProps) {
 
     return (
         <div className="px-1">
@@ -94,11 +92,13 @@ export function CategoriesCardDesktop({ handleCategoryChange, isCategorySelected
                             {categories.map((category, index)=>(
                                 <Button 
                                     key={index} 
-                                    className={` flex justify-baseline w-full hover:bg-secondary py-5 ${isCategorySelected(category.value) ? "bg-secondary text-secondary-foreground " : "bg-muted/20 text-foreground"}`} 
-                                    onClick={() => handleCategoryChange(category.value)}
+                                    className={`flex justify-baseline w-full hover:bg-secondary py-5 ${isCategorySelected(category.value) ? "bg-secondary text-secondary-foreground " : "bg-muted/20 text-foreground"}`}
+                                    asChild
                                 >
-                                    <div>{category.icon}</div>
-                                    <div>{category.label}</div>
+                                    <a href={category.value === "ALL" ? "/descubrir": `?category=${category.value}`} className="flex justify-baseline ">
+                                        <div>{category.icon}</div>
+                                        <div>{category.label}</div>
+                                    </a>
                                 </Button>
                             ))}
                         </ButtonGroup>
@@ -109,7 +109,7 @@ export function CategoriesCardDesktop({ handleCategoryChange, isCategorySelected
     )
 }
 
-export function CategoriesCardMobile({ handleCategoryChange, isCategorySelected}: CategoriesCardDesktopMobileProps) {
+export function CategoriesCardMobile({isCategorySelected}: CategoriesCardDesktopMobileProps) {
 
     return (
         <div className="px-1 flex justify-begin gap-1 overflow-auto">
@@ -118,9 +118,12 @@ export function CategoriesCardMobile({ handleCategoryChange, isCategorySelected}
                                     key={index} 
                                     className={` flex justify-baseline w-fit hover:bg-secondary py-5 ${isCategorySelected(category.value) ? "bg-secondary text-secondary-foreground " : "bg-muted text-foreground"}`} 
                                     onClick={() => handleCategoryChange(category.value)}
+                                    asChild
                                 >
-                                    <div>{category.icon}</div>
-                                    <div>{category.label}</div>
+                                    <a href={category.value === "ALL" ? "/descubrir": `?category=${category.value}`} className="flex justify-baseline ">
+                                        <div>{category.icon}</div>
+                                        <div>{category.label}</div>
+                                    </a>
                                 </Button>
                             ))}
         </div>
