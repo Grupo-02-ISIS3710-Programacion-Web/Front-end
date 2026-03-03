@@ -3,6 +3,38 @@
         "title": "Crea Tu Rutina Ideal",
         "description": "Explora productos, filtra por categoría y guarda una rutina personalizada para tu piel."
     },
+    "GuardarRutina": {
+        "pageTitle": "Finaliza tu rutina personalizada",
+        "pageDescription": "Revisa y ajusta la descripción de cada paso de tu rutina. Puedes cambiar el orden, editar los detalles o eliminar pasos antes de guardar tu rutina personalizada.",
+        "infoCard": {
+            "title": "Información de la rutina",
+            "nameLabel": "Nombre de la rutina",
+            "namePlaceholder": "Nombre de la rutina",
+            "objectiveLabel": "Objetivo de la rutina",
+            "objectivePlaceholder": "Objetivo de la rutina",
+            "productsLabel": "Productos en la rutina",
+            "productsSelected": "{count, plural, =0 {0 productos seleccionados} =1 {1 producto seleccionado} other {{count} productos seleccionados}}",
+            "selectProductsButton": "Seleccionar productos"
+        },
+        "productDialog": {
+            "title": "Selecciona los productos de tu rutina",
+            "noResults": "No hay productos que coincidan con la búsqueda."
+        },
+        "steps": {
+            "title": "Descripción de cada paso",
+            "empty": "No hay pasos en la rutina. Agrega productos desde el selector para empezar.",
+            "stepNumber": "Paso {number}",
+            "nameLabel": "Nombre del paso",
+            "namePlaceholder": "Nombre del paso",
+            "descriptionLabel": "Descripción del paso",
+            "descriptionPlaceholder": "Descripción del paso"
+        },
+        "submitButton": "Crear Rutina",
+        "toast": {
+            "alreadyAdded": "{name} ya fue agregado a tu rutina",
+            "added": "{name} agregado a la rutina"
+        }
+    },
     "GridProductos": {
         "loading": "Cargando productos...",
         "noResults": "No se encontraron productos que coincidan con tu búsqueda.",

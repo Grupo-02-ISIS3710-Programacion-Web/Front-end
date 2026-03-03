@@ -6,6 +6,7 @@ import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import CardProducto from "@/components/routines/CardProducto";
 import { ArrowDown, ArrowUp, Trash2 } from "lucide-react";
 import { UseFormRegister } from "react-hook-form";
+import { useTranslations } from "next-intl";
 
 type PasoRutinaFormShape = {
     name: string;
@@ -36,11 +37,12 @@ export default function PasoRutinaCard({
     onMoveDown,
     onRemove
 }: PasoRutinaCardProps) {
+    const t = useTranslations("GuardarRutina.steps");
     return (
         <Card className="gap-3">
             <CardContent className="space-y-3 pt-6">
                 <div className="flex items-center justify-between gap-2">
-                    <CardTitle className="text-lg md:text-xl">Paso {index + 1}</CardTitle>
+                    <CardTitle className="text-lg md:text-xl">{t("stepNumber", { number: index + 1 })}</CardTitle>
 
                     <div className="flex items-center gap-1">
                         <Button
@@ -76,15 +78,15 @@ export default function PasoRutinaCard({
                 </div>
 
                 <div className="space-y-2">
-                    <p className="text-sm font-medium text-muted-foreground">Nombre del paso</p>
-                    <Input {...register(`pasos.${index}.name`)} placeholder="Nombre del paso" />
+                    <p className="text-sm font-medium text-muted-foreground">{t("nameLabel")}</p>
+                    <Input {...register(`pasos.${index}.name`)} placeholder={t("namePlaceholder")} />
                 </div>
 
                 <CardProducto product={product} showButton={false} compact />
 
                 <div className="space-y-2">
-                    <p className="text-sm font-medium text-muted-foreground">Descripción del paso</p>
-                    <Textarea {...register(`pasos.${index}.description`)} placeholder="Descripción del paso" />
+                    <p className="text-sm font-medium text-muted-foreground">{t("descriptionLabel")}</p>
+                    <Textarea {...register(`pasos.${index}.description`)} placeholder={t("descriptionPlaceholder")} />
                 </div>
             </CardContent>
         </Card>

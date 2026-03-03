@@ -28,14 +28,14 @@ type DescripcionPaso = {
 }
 
 export default function CrearRutina() {
-    const t = useTranslations("GuardarRutina");
+
     const allProducts = products as Product[];
     const previousProductsSignatureRef = useRef<string>("");
     const [searchTerm, setSearchTerm] = useState("");
     const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
     const [selectedProductIds, setSelectedProductIds] = useState<Set<string>>(new Set());
     const [isProductsDialogOpen, setIsProductsDialogOpen] = useState(false);
-
+    const t = useTranslations("CrearRutina");
     const filteredProducts = useMemo(() => {
         return allProducts.filter((product) => {
             const matchesSearch =
@@ -97,12 +97,12 @@ export default function CrearRutina() {
 
     const handleAddToRoutine = (product: Product) => {
         if (selectedProductIds.has(product.id)) {
-            toast.info(t("toast.alreadyAdded", { name: product.name }));
+            toast.info(`${product.name} ya fue agregado a tu rutina`);
             return;
         }
 
         setSelectedProductIds((prev) => new Set([...prev, product.id]));
-        toast.success(t("toast.added", { name: product.name }));
+        toast.success(`${product.name} agregado a la rutina`);
     };
 
     const handleRemoveProduct = (productId: string) => {
@@ -141,39 +141,39 @@ export default function CrearRutina() {
         <div className="mx-auto w-full max-w-6xl p-4 md:p-6">
             <header className="mb-6 md:mb-8 text-center">
                 <h1 className="mt-3 text-3xl md:text-4xl font-bold tracking-tight text-foreground">
-                    {t("pageTitle")}
+                    {t("title")}
                 </h1>
                 <p className="mt-2 text-sm md:text-base text-muted-foreground max-w-2xl mx-auto">
-                    {t("pageDescription")}
+                    {t("description")}
                 </p>
             </header>
             <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 gap-6 md:grid-cols-2 md:items-start">
                 <div className="space-y-6 md:sticky md:top-6 md:self-start md:max-w-sm">
                     <Card>
                         <CardHeader className="pb-2">
-                            <CardTitle className="text-xl md:text-2xl">{t("infoCard.title")}</CardTitle>
+                            <CardTitle className="text-xl md:text-2xl">{t("routineInfo")}</CardTitle>
                         </CardHeader>
                         <CardContent className="space-y-4">
                             <div className="space-y-2">
-                                <p className="text-sm font-medium text-muted-foreground">{t("infoCard.nameLabel")}</p>
-                                <Input {...register("name")} placeholder={t("infoCard.namePlaceholder")} />
+                                <p className="text-sm font-medium text-muted-foreground">Nombre de la rutina</p>
+                                <Input {...register("name")} placeholder={t("routineNamePlaceholder")} />
                             </div>
 
                             <div className="space-y-2">
-                                <p className="text-sm font-medium text-muted-foreground">{t("infoCard.objectiveLabel")}</p>
-                                <Input {...register("objective")} placeholder={t("infoCard.objectivePlaceholder")} />
+                                <p className="text-sm font-medium text-muted-foreground">Objetivo de la rutina</p>
+                                <Input {...register("objective")} placeholder="Objetivo de la rutina" />
                             </div>
 
                             <div className="space-y-2">
-                                <p className="text-sm font-medium text-muted-foreground">{t("infoCard.productsLabel")}</p>
-                                <p className="text-sm text-foreground">{t("infoCard.productsSelected", { count: selectedProducts.length })}</p>
+                                <p className="text-sm font-medium text-muted-foreground">Productos en la rutina</p>
+                                <p className="text-sm text-foreground">{selectedProducts.length} productos seleccionados</p>
                                 <Dialog open={isProductsDialogOpen} onOpenChange={setIsProductsDialogOpen}>
                                     <DialogTrigger asChild>
-                                        <Button type="button" variant="outline" className="w-full">{t("infoCard.selectProductsButton")}</Button>
+                                        <Button type="button" variant="outline" className="w-full">Seleccionar productos</Button>
                                     </DialogTrigger>
-                                    <DialogContent className="w-[95vw] max-w-[95vw] lg:max-w-6xl max-h-[85vh] overflow-hidden p-4 sm:p-6 flex flex-col">
+                                    <DialogContent className="w-[95vw] max-w-[95vw] lg:max-w-6xl max-h-[90vh] overflow-hidden p-4 sm:p-6 flex flex-col">
                                         <DialogHeader>
-                                            <DialogTitle>{t("productDialog.title")}</DialogTitle>
+                                            <DialogTitle>Selecciona los productos de tu rutina</DialogTitle>
                                         </DialogHeader>
 
                                         <SearchBar
@@ -187,7 +187,7 @@ export default function CrearRutina() {
                                         <div className="flex-1 min-h-0 overflow-y-auto pr-2">
                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                                                 {filteredProducts.length === 0 && (
-                                                    <p className="text-center text-muted-foreground col-span-full">{t("productDialog.noResults")}</p>
+                                                    <p className="text-center text-muted-foreground col-span-full">No hay productos que coincidan con la búsqueda.</p>
                                                 )}
 
                                                 {filteredProducts.map((product) => (
@@ -207,15 +207,15 @@ export default function CrearRutina() {
                         </CardContent>
                     </Card>
 
-                    <Button type="submit" className="w-full">{t("submitButton")}</Button>
+                    <Button type="submit" className="w-full">Crear Rutina</Button>
                 </div>
 
-                <div className="space-y-4 md:min-w-0">
-                    <h2 className="text-xl font-semibold tracking-tight md:text-2xl">{t("steps.title")}</h2>
+                <div className="space-y-2 md:min-w-0">
+                    <h2 className="text-xl font-semibold tracking-tight md:text-2xl">Descripción de cada paso</h2>
                     {fields.length === 0 && (
-                        <Card>
+                        <Card className="">
                             <CardContent className="pt-6">
-                                <p className="text-sm text-muted-foreground">{t("steps.empty")}</p>
+                                <p className="text-sm text-muted-foreground">No hay pasos en la rutina. Agrega productos desde el selector para empezar.</p>
                             </CardContent>
                         </Card>
                     )}
