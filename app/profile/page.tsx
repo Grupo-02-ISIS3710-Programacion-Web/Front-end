@@ -2,115 +2,59 @@
 import UserInfo from "./componente/userInfo"    
 import ProfileTabs from "./componente/profileTabs"
 import RoutineContent from "./componente/routineContent"
-import FavoritesContent from "./componente/favoritesContent"
+import { ProductCard } from "@/components/products/product-card"
 import ForumContent from "./componente/forumContent"
+import { Heart, Sun, SlidersHorizontal } from "lucide-react"
 import { useState} from "react"
-
+import { Product, Category, SkinType } from "@/types/product";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Search} from "lucide-react";
+import { productsFavorites } from "@/lib/favorites";
+import { routines } from "@/lib/routine";
+import Link from "next/link"
 
 export default function Profile(){
     const [activeTab, setActiveTab] = useState("routine")
-    const productsList = [
-        {
-            "code": "4001638098069",
-            "status": "success",
-            "product": {
-            "_id": "4001638098069",
-            "product_name": "Ratanhia Mondwater",
-            "brands": "Weleda",
-            "quantity": "50 ml",
-            "product_type": "beauty",
-            "countries": "Australia, Netherlands",
-            "ingredients": [
-                { "id": "en:alcohol", "text": "Alcohol" },
-                { "id": "en:water", "text": "Water (Aqua)" },
-                { "id": "en:lactose", "text": "Lactose" }
-            ],
-            "images": {
-                "front_url": "https://images.openbeautyfacts.org/images/products/400/163/809/8069/front_en.8.400.jpg"
-            }
-            }
-        },
-        {
-            "code": "4001638098070",
-            "status": "success",
-            "product": {
-            "_id": "4001638098070",
-            "product_name": "Calendula Toothpaste",
-            "brands": "Weleda",
-            "quantity": "75 ml",
-            "product_type": "beauty",
-            "countries": "Germany",
-            "ingredients": [
-                { "id": "en:water", "text": "Water" },
-                { "id": "en:calendula-extract", "text": "Calendula Extract" }
-            ],
-            "images": {
-                "front_url": "https://images.openbeautyfacts.org/images/products/400/163/809/8069/front_en.8.400.jpg"
-            }
-            }
-        },
-        {
-            "code": "4001638098071",
-            "status": "success",
-            "product": {
-            "_id": "4001638098071",
-            "product_name": "Arnica Massage Oil",
-            "brands": "Weleda",
-            "quantity": "100 ml",
-            "product_type": "beauty",
-            "countries": "Spain",
-            "ingredients": [
-                { "id": "en:sesame-oil", "text": "Sesame Oil" },
-                { "id": "en:arnica-extract", "text": "Arnica Extract" }
-            ],
-            "images": {
-                "front_url": "https://images.openbeautyfacts.org/images/products/400/163/809/8069/front_en.8.400.jpg"
-            }
-            }
-        },
-        {
-            "code": "4001638098072",
-            "status": "success",
-            "product": {
-            "_id": "4001638098072",
-            "product_name": "Skin Food Cream",
-            "brands": "Weleda",
-            "quantity": "30 ml",
-            "product_type": "beauty",
-            "countries": "France",
-            "ingredients": [
-                { "id": "en:sunflower-oil", "text": "Sunflower Oil" },
-                { "id": "en:chamomile-extract", "text": "Chamomile Extract" }
-            ],
-            "images": {
-                "front_url": "https://images.openbeautyfacts.org/images/products/400/163/809/8069/front_en.8.400.jpg"
-            }
-            }
-        },
-        {
-            "code": "4001638098073",
-            "status": "success",
-            "product": {
-            "_id": "4001638098073",
-            "product_name": "Lavender Relaxing Oil",
-            "brands": "Weleda",
-            "quantity": "100 ml",
-            "product_type": "beauty",
-            "countries": "Italy",
-            "ingredients": [
-                { "id": "en:lavender-oil", "text": "Lavender Oil" },
-                { "id": "en:almond-oil", "text": "Almond Oil" }
-            ],
-            "images": {
-                "front_url": "https://images.openbeautyfacts.org/images/products/400/163/809/8069/front_en.8.400.jpg"
-            }
-            }
-        }
+    const [selectedCategory, setSelectedCategory] = useState<Category | "ALL">("ALL");
+    const [favoriteProducts, setFavoriteProducts] = useState<Product[]>([]);
+
+    const [routineDaily, setRoutineDaily] = useState("am")
+
+    const tabs = [
+        {id:"routine", label: "My Routine", icon: Sun},
+        {id:"favorites", label: "My Favorites", icon:Heart}
+
     ]
+
+    const routine = [
+        {id:"am", label: "Morning (AM)"},
+        {id:"pm", label: "Evening (PM)"}
+    ]
+
+    
+    const handleFavoriteSelect = (productIndex: number) => {
+        const selectedProduct = productsFavorites[productIndex];
+        if (!favoriteProducts.some(product => product.id === selectedProduct.id)) {
+        setFavoriteProducts([...favoriteProducts, selectedProduct]);
+        }
+    }
+
+    const handleFavoriteDeselect = (productIndex: number) => {
+        const deselectedProduct = productsFavorites[productIndex];
+        setFavoriteProducts(favoriteProducts.filter(product => product.id !== deselectedProduct.id));
+    }
+
+    const filteredRoutines = routines.filter((routine) => 
+        routine.type.toLowerCase() === routineDaily
+    );
+
+
+
  
     return( 
         <div>
-            <div className="grid grid-cols-1 md:grid-cols-25 gap-y-10 md:gap-10 px-35 py-15 min-h-screen">
+            <div className="grid grid-cols-1 px-15 py-10 md:grid-cols-25 gap-y-10 md:gap-10 md:px-35 md:py-15 min-h-screen">
                 <div className="col-span-6 ">
                    <UserInfo
                     name="Elara Vance"
@@ -124,16 +68,113 @@ export default function Profile(){
                 </div>
 
                 <div className="flex flex-col col-span-19  h-full gap-5">
-                    <div className=" h-35">
-                        <ProfileTabs
-                         activeTab={activeTab}
-                         setActiveTab={setActiveTab}/>
+                    <div className="">
+                        <div className="flex flex-col rounded-2xl border border-gray-200 overflow-hidden h-full">
+
+    
+                            <div className="grid grid-cols-1 sm:grid-cols-2 sm:h-15 bg-white">
+                                {tabs.map((tab) => {
+                                    const Icon = tab.icon
+                                    const isActive = activeTab === tab.id
+
+                                    return (
+                                    <button
+                                        key={tab.id}
+                                        onClick={() => setActiveTab(tab.id)}
+                                        className={`relative flex items-center justify-center gap-2 px-4 py-3 text-sm font-medium transition
+                                        ${isActive ? "text-primary" : "text-gray-500 hover:text-gray-700"}
+                                        `}
+                                    >
+                                        <Icon
+                                        size={16}
+                                        className={`${isActive ? "fill-current text-primary" : "text-gray-500"}`}
+                                        />
+                                        {tab.label}
+
+                                        <span
+                                        className={`absolute left-0 bottom-0 w-full h-[2px] rounded-full
+                                            ${isActive ? "bg-primary" : "bg-gray-200"}
+                                        `}
+                                        />
+                                    </button>
+                                    )
+                                })}
+                            </div>
+
+                            
+                            {activeTab === "routine" && (
+                            <div className="flex flex-col lg:flex-row bg-white gap-4 items-start lg:items-center justify-between p-4 lg:px-10">
+
+                                <div className="flex flex-wrap rounded-2xl border border-secondary p-1 gap-2 w-full lg:w-auto">
+                                {routine.map((routin) => {
+                                    const dayRoutine = routineDaily === routin.id
+                                    return (
+                                    <Button
+                                        key={routin.id}
+                                        className={`text-black ${
+                                        dayRoutine
+                                            ? ""
+                                            : "bg-white border-primary hover:bg-secondary hover:text-primary-foreground"
+                                        }`}
+                                        onClick={() => setRoutineDaily(routin.id)}
+                                    >
+                                        {routin.label}
+                                    </Button>
+                                    )
+                                })}
+                                </div>
+
+                                <Button className="bg-white text-primary hover:bg-white hover:underline w-full lg:w-auto">
+                                + Agregar paso
+                                </Button>
+                            </div>
+                            )}
+
+                            
+                            {activeTab === "favorites" && (
+                            <div className="flex flex-col lg:flex-row bg-white gap-4 items-start lg:items-center justify-between p-4 lg:px-10">
+
+                                <div className="flex items-center gap-2 w-full lg:w-96">
+                                <Input
+                                    type="text"
+                                    placeholder="Buscar productos..."
+                                    className="w-full"
+                                />
+                                <Button variant="outline" size="icon">
+                                    <Search className="h-4 w-4" />
+                                </Button>
+                                <Button className="flex items-center justify-center w-10 h-10 rounded-xl border border-gray-200 bg-white hover:bg-gray-100 transition">
+                                    <SlidersHorizontal size={18} className="text-gray-600" />
+                                </Button>
+                                </div>
+
+                                <Button  className="bg-white text-primary hover:bg-white hover:underline w-full lg:w-auto">
+                                    <Link href="/descubrir">
+                                        Descubre más productos
+                                    </Link>
+                                </Button>
+                            </div>
+                            )}
+
+                        </div>
                     </div>
                     
                     <div className=" flex-1">
                         <div className=" flex-1  rounded-2xl">
-                            {activeTab === "routine" && <RoutineContent productList={productsList}/>}
-                            {activeTab === "favorites" && <FavoritesContent />}
+                            {activeTab === "routine" && <RoutineContent filteredRoutines={filteredRoutines}/>}
+                        </div>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 ">
+                            {activeTab === "favorites" &&
+                              productsFavorites.map((product, index) => (
+                            <ProductCard 
+                                key={index} 
+                                productIndex={index} 
+                                product={product}
+                                onFavoriteSelect={handleFavoriteSelect}
+                                onFavoriteDeselect={handleFavoriteDeselect}
+                            />
+                            ))
+                            }
                             {activeTab === "forum" && <ForumContent />}
                         </div>
                     </div>

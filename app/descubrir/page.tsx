@@ -5,6 +5,7 @@ import { Category, Product, SkinType } from "@/types/product";
 import { useState } from "react";
 import { products } from "@/lib/api";
 import { ProductCard } from "@/components/products/product-card";
+import { productsFavorites } from "@/lib/favorites";
 
 export default function DiscoveryPage() {
   const [selectedCategory, setSelectedCategory] = useState<Category | "ALL">("ALL");
@@ -54,6 +55,7 @@ export default function DiscoveryPage() {
     const selectedProduct = products[productIndex];
     if (!favoriteProducts.some(product => product.id === selectedProduct.id)) {
       setFavoriteProducts([...favoriteProducts, selectedProduct]);
+      productsFavorites.push(selectedProduct)
     }
   }
 
