@@ -16,7 +16,10 @@ export function toLowerCaseAndReplaceSpacesWithHyphens(str: string): string {
             .replace(/[^a-z0-9-]/g, '');
 }
 
-export function toLowerCaseAndReplaceHyphensWithSpaces(str: string): string {
+export function toLowerCaseAndReplaceHyphensWithSpaces(str: string | undefined): string {
+  if (!str) {
+    return ""; // Handles undefined or empty strings
+  }
   return str.toLowerCase()
             .replace(/-/g, ' ')
             .replace("á", "a")

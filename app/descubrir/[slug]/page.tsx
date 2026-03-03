@@ -1,6 +1,13 @@
 "use client";
+import ImageCarousel from "@/components/products/image-carousel";
 import StarRating from "@/components/products/star-rating";
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
+import { 
+    Breadcrumb, 
+    BreadcrumbItem, 
+    BreadcrumbLink, 
+    BreadcrumbList, 
+    BreadcrumbSeparator 
+} from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { getProductByName } from "@/lib/api";
@@ -8,18 +15,38 @@ import { capitalizeFirstLetter, toLowerCaseAndReplaceHyphensWithSpaces } from "@
 import { Category } from "@/types/product";
 import { Chip, Container, Divider, Stack, useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import { BadgeInfo, Droplets, Heart, Pipette, SoapDispenserDroplet, Sparkles, SprayCan, Sun } from "lucide-react";
+import { 
+    BadgeInfo, 
+    Droplets, 
+    Heart, 
+    Pipette, 
+    SoapDispenserDroplet, 
+    Sparkles, 
+    SprayCan, 
+    Sun 
+} from "lucide-react";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 
 export default function ProductDetailPage() {
     const params = useParams();
-    const productSlug = toLowerCaseAndReplaceHyphensWithSpaces(params.slug);
+
+    let slug: string;
+    if (Array.isArray(params.slug)) {
+    slug = params.slug.join('-');
+    console.log("Slug is an array, joined to:", slug);
+    } else if (typeof params.slug === 'string') {
+        slug = params.slug;
+    } else {
+        slug = '';
+    }
+    const productSlug = toLowerCaseAndReplaceHyphensWithSpaces(slug);
     const product = getProductByName(productSlug);
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
     const [toggleFavorite, setToggleFavorite] = useState(false);
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
     
     const handleFavoriteClick = () => {
         setToggleFavorite(!toggleFavorite);
@@ -44,6 +71,18 @@ export default function ProductDetailPage() {
         } else if (category === Category.ANTI_EDAD) {
             return <Sparkles className="text-primary" />;
         }
+    }
+
+    const handleNextImage = () => {
+        setCurrentImageIndex((prevIndex) => (prevIndex + 1) % product.image_url.length);
+    }
+
+    const handlePreviousImage = () => {
+        setCurrentImageIndex((prevIndex) => (prevIndex - 1 + product.image_url.length) % product.image_url.length);
+    }
+
+    const changeImageIndex = (index: number) => {
+        setCurrentImageIndex(index);
     }
 
     if (!product) {
@@ -77,62 +116,35 @@ export default function ProductDetailPage() {
                     <Stack direction={isMobile ? "column" : "row"} gap={8} paddingTop={5}>
                         {/* imagenes */}
                         <Stack direction={"column"} gap={5} alignItems={"center"}>
-                            <div className={`flex justify-center items-center ${product.image_url.length > 1 ? "max-w-2/5" : ""}`}
-                                style={{ maxWidth: 400, width: '100%' }}>
-                                {/* cuadro de imagen principal */}
-                                <Carousel opts={{ loop: true }} className="p-0 relative w-full">
-                                    <CarouselContent>
-                                        {product.image_url.map((url, index) => (
-                                            <CarouselItem key={index}>
-                                                <div className="flex justify-center items-center w-full h-full">
-                                                    <Image
-                                                        src={url}
-                                                        alt={product.name}
-                                                        width={350}
-                                                        height={350}
-                                                        unoptimized={true}
-                                                        className="object-cover max-h-70 max-w-70 rounded-md"
-                                                    />
-                                                </div>
-                                            </CarouselItem>
-                                        ))}
-                                    </CarouselContent>
-                                    {product.image_url.length > 1 && (
-                                        <div>
-                                            <CarouselPrevious className="absolute left-2 top-1/2 -translate-y-1/2 z-10"/>
-                                            <CarouselNext className="absolute right-2 top-1/2 -translate-y-1/2 z-10"/>
-                                        </div>
-                                    )}
-                                </Carousel>
-                                
-                            </div>
+
+                            <ImageCarousel imagesURL={product.image_url} currentIndex={currentImageIndex} altText={product.name} onNextImage={handleNextImage} onPreviousImage={handlePreviousImage} />
                             
-                            {/* {product.image_url.length > 1 && <div className={`flex justify-center items-center ${product.image_url.length > 1 ? "max-w-9/12" : ""}`}>
+                            {product.image_url.length > 1 && <div className={`flex justify-center items-center w-auto max-w-full`}>
                                 <Carousel opts={{ loop: true }}>
                                     <CarouselContent>
                                         {product.image_url.map((url, index) => (
-                                            <CarouselItem key={index}  className="basis-1/2 lg:basis-1/3">
-                                                <div className="flex justify-center items-center w-full h-full">
+                                            <CarouselItem key={index}  className="basis-auto">
+                                                <div className="flex justify-center items-center cursor-pointer h-full" onClick={() => changeImageIndex(index)}>
                                                     <Image
                                                         src={url}
                                                         alt={product.name}
                                                         width={70}
                                                         height={70}
                                                         unoptimized={true}
-                                                        className="object-cover max-h-70 max-w-70 rounded-md"
+                                                        className={`object-cover max-h-70 max-w-70 rounded-md ${currentImageIndex === index ? "" : "opacity-50"}`}
                                                     />
                                                 </div>
                                             </CarouselItem>
                                         ))}
                                     </CarouselContent>
-                                    {product.image_url.length > 3 && (
+                                    {product.image_url.length > 4 && (
                                         <div>
                                             <CarouselPrevious />
                                             <CarouselNext />
                                         </div>
                                     )}
                                 </Carousel>
-                            </div>} */}
+                            </div>}
                         </Stack>
 
                         {/* info del producto */}
