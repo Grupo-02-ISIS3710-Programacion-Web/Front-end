@@ -1,6 +1,7 @@
 import { Card } from "@/components/ui/card";
 import { Plus } from "lucide-react";
 import { Product } from "@/types/product";
+import { useTranslations } from "next-intl";
 
 type CardProductoProps = Readonly<{
     product: Product;
@@ -27,11 +28,11 @@ export default function CardProducto({
 }: CardProductoProps) {
     const primaryCategory = product.category[0] || "";
     const imageUrl = product.image_url[0] || "/producto.jpg";
-    
+    const t = useTranslations("CardProducto");
     return (
         <Card className="w-full bg-white shadow-sm">
             <div className="flex items-start p-4 gap-4">
-                
+
                 {/* Image */}
                 <div className="relative w-16 h-20 shrink-0">
                     <img
@@ -60,13 +61,13 @@ export default function CardProducto({
 
                     {/* Add to Routine button */}
                     {showButton && (
-                        <button 
+                        <button
                             onClick={onAddToRoutine}
                             disabled={!onAddToRoutine}
                             className="flex flex-wrap items-center gap-1.5 text-pink-500 hover:text-pink-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors w-full sm:w-fit group"
                         >
                             <Plus className="w-4 h-4 group-hover:scale-110 transition-transform" />
-                            <span className="text-sm font-medium wrap-break-word whitespace-normal text-left">Añadir a rutina</span>
+                            <span className="text-sm font-medium wrap-break-word whitespace-normal text-left">{t("addToRoutine")}</span>
                         </button>
                     )}
                 </div>

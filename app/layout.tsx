@@ -4,7 +4,7 @@ import "./globals.css";
 import NavBar from "../components/NavBar";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Toaster } from "sonner";
-
+import { NextIntlClientProvider } from "next-intl";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -28,9 +28,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <NavBar />
-        <TooltipProvider>{children}</TooltipProvider>
-        <Toaster />
+        <NextIntlClientProvider>
+          <NavBar />
+          <TooltipProvider>{children}</TooltipProvider>
+          <Toaster />
+        </NextIntlClientProvider>
       </body>
     </html>
   );

@@ -5,6 +5,7 @@ import { useMemo } from "react";
 import { products } from "@/lib/api";
 import { Category } from "@/types/product";
 import { Button } from "../ui/button";
+import { useTranslations } from "next-intl";
 
 type SearchBarProps = Readonly<{
     searchTerm: string;
@@ -26,7 +27,7 @@ export default function SearchBar({
     onSearchChange,
     onCategoryChange
 }: SearchBarProps) {
-    // Extract unique categories from products that have at least one product
+    const t = useTranslations("SearchBar");
     const availableCategories = useMemo(() => {
         const categorySet = new Set<Category>();
         products.forEach((product) => {
@@ -44,7 +45,7 @@ export default function SearchBar({
                 <Search className="w-5 h-5 text-gray-400" />
                 <input
                     type="text"
-                    placeholder="Busca productos por nombre, marca o tipo..."
+                    placeholder={t("placeholder")}
                     value={searchTerm}
                     onChange={(e) => onSearchChange(e.target.value)}
                     className="bg-transparent flex-1 outline-none text-gray-700 placeholder-gray-400"
@@ -55,24 +56,22 @@ export default function SearchBar({
             <div className="overflow-x-auto flex gap-2 pb-2">
                 <Button
                     onClick={() => onCategoryChange(null)}
-                    className={`px-6 py-2 rounded-full font-medium text-sm transition-colors whitespace-nowrap shrink-0 ${
-                        selectedCategory === null
-                            ? "bg-secondary text-secondary-foreground hover:bg-secondary/90"
-                            : "bg-muted/20 text-foreground hover:bg-secondary"
-                    }`}
+                    className={`px-6 py-2 rounded-full font-medium text-sm transition-colors whitespace-nowrap shrink-0 ${selectedCategory === null
+                        ? "bg-secondary text-secondary-foreground hover:bg-secondary/90"
+                        : "bg-muted/20 text-foreground hover:bg-secondary"
+                        }`}
                 >
-                    All Products
+                    {t("allProducts")}
                 </Button>
 
                 {availableCategories.map((category) => (
                     <Button
                         key={category}
                         onClick={() => onCategoryChange(category)}
-                        className={`px-6 py-2 rounded-full font-medium text-sm transition-colors whitespace-nowrap shrink-0 ${
-                            selectedCategory === category
-                                ? "bg-secondary text-secondary-foreground hover:bg-secondary/90"
-                                : "bg-muted/20 text-foreground hover:bg-secondary"
-                        }`}
+                        className={`px-6 py-2 rounded-full font-medium text-sm transition-colors whitespace-nowrap shrink-0 ${selectedCategory === category
+                            ? "bg-secondary text-secondary-foreground hover:bg-secondary/90"
+                            : "bg-muted/20 text-foreground hover:bg-secondary"
+                            }`}
                     >
                         {formatCategoryName(category)}
                     </Button>

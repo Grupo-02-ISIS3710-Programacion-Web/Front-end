@@ -1,9 +1,9 @@
 "use client";
-
 import { Product } from "@/types/product";
 import { X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-
+import Link from "next/link";
+import { useLocale, useTranslations } from 'next-intl';
 type RoutineSummaryProps = Readonly<{
     addedProducts: Set<string>;
     products: Product[];
@@ -15,23 +15,24 @@ export default function RoutineSummary({
     products,
     onRemoveProduct
 }: RoutineSummaryProps) {
+    const locale = useLocale();
+    const t = useTranslations("RoutineSummary");
     const routineProducts = products.filter((p) => addedProducts.has(p.id));
-
     return (
         <div className="flex flex-col h-full gap-4">
             <div>
                 <h2 className="text-xl font-bold text-gray-900">
-                    Tu Rutina Personalizada
+                    {t("title")}
                 </h2>
                 <p className="text-sm text-gray-500 mt-1">
-                    {routineProducts.length} producto{routineProducts.length !== 1 && "s"} agregado{routineProducts.length !== 1 && "s"}
+                    {t("productsCount", { count: routineProducts.length })}
                 </p>
             </div>
 
             <div className="flex-1 overflow-y-auto space-y-3">
                 {routineProducts.length === 0 ? (
                     <p className="text-center text-gray-400 py-8">
-                        No has agregado ningún producto a tu rutina. Explora y agrega productos para verlos aquí.
+                        {t("empty")}
                     </p>
                 ) : (
                     routineProducts.map((product) => (
@@ -68,10 +69,18 @@ export default function RoutineSummary({
             </div>
 
             {routineProducts.length > 0 && (
-                <Button className="w-full">
-                    Guardar Rutina
-                </Button>
-            )}
-        </div>
+                <Link href={{
+                    pathname: "/[locale]/routine/guardar",
+                    query: {
+                        locale: locale
+                    }
+                }}>
+                    <Button className="w-full">
+                        {t("save")}
+                    </Button >
+                </Link>
+            )
+            }
+        </div >
     );
 }

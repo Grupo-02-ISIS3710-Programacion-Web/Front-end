@@ -1,0 +1,39 @@
+{
+    "CrearRutina": {
+        "title": "Create Your Ideal Routine",
+        "description": "Explore products, filter by category, and save a personalized routine for your skin."
+    },
+    "GridProductos": {
+        "loading": "Loading products...",
+        "noResults": "No products matched your search.",
+        "toast": {
+            "alreadyAdded": "{name} is already in your routine",
+            "added": "{name} has been added to your routine",
+            "removed": "{name} has been removed from your routine"
+        }
+    },
+    "CardProducto": {
+        "addToRoutine": "Add to routine",
+        "categories": {
+            "hidratacion": "Hydration",
+            "limpieza": "Cleanser",
+            "exfoliacion": "Exfoliant",
+            "anti-edad": "Anti-aging",
+            "reparacion": "Repair",
+            "antioxidante": "Antioxidant"
+        }
+    },
+    "RoutineDrawer": {
+        "viewRoutine": "View my routine"
+    },
+    "RoutineSummary": {
+        "title": "Your Personalized Routine",
+        "empty": "You haven't added any products to your routine yet. Explore and add products to see them here.",
+        "save": "Save Routine",
+        "productsCount": "{count, plural, =0 {0 products added} =1 {1 product added} other {{count} products added}}"
+    },
+    "SearchBar": {
+        "placeholder": "Search products by name, brand, or type...",
+        "allProducts": "All products"
+    }
+}

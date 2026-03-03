@@ -8,7 +8,7 @@ import RoutineSidebar from "@/components/routines/RoutineSidebar";
 import { Product, Category } from "@/types/product";
 import { products } from "@/lib/api";
 import SearchBar from "@/components/routines/SearchBar";
-
+import { useTranslations } from "next-intl";
 const getProductos = async (): Promise<Product[]> => {
     return new Promise((resolve) => {
         setTimeout(() => {
@@ -23,7 +23,7 @@ export default function GridProductos() {
     const [searchTerm, setSearchTerm] = useState("");
     const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
     const [addedProducts, setAddedProducts] = useState<Set<string>>(new Set());
-
+    const t = useTranslations("GridProductos");
     useEffect(() => {
         getProductos().then((data) => {
             setProductos(data);
@@ -31,7 +31,6 @@ export default function GridProductos() {
         });
     }, []);
 
-    // Filter products based on search and category
     const filteredProductos = useMemo(() => {
         return productos.filter((product) => {
             const matchesSearch =
@@ -47,12 +46,12 @@ export default function GridProductos() {
 
     const handleAddToRoutine = (product: Product) => {
         if (addedProducts.has(product.id)) {
-            toast.info(`${product.name} ya está en tu rutina`);
+            toast.info(t("toast.alreadyAdded", { name: product.name }));
             return;
         }
 
         setAddedProducts((prev) => new Set([...prev, product.id]));
-        toast.success(`${product.name} se ha agregado a tu rutina`);
+        toast.success(t("toast.added", { name: product.name }));
     };
 
     const handleRemoveProduct = (productId: string) => {
@@ -63,7 +62,7 @@ export default function GridProductos() {
         });
         const product = productos.find((p) => p.id === productId);
         if (product) {
-            toast.success(`${product.name} removed from routine`);
+            toast.success(t("toast.removed", { name: product.name }));
         }
     };
 
@@ -92,10 +91,10 @@ export default function GridProductos() {
                 {/* Products Grid - 3 columns below search bar */}
                 <div className="lg:col-span-3">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                        {loading && <p className="text-center">Cargando productos...</p>}
+                        {loading && <p className="text-center">{t("loading")}</p>}
                         {!loading && filteredProductos.length === 0 && (
                             <p className="text-center text-gray-500 col-span-full">
-                                No se encontraron productos que coincidan con tu búsqueda.
+                                {t("noResults")}
                             </p>
                         )}
                         {!loading &&
