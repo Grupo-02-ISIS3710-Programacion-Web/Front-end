@@ -23,9 +23,11 @@ export interface Product {
     id: string;
     name: string;
     brand: string;
-    skint_type: SkinType[];
+    skin_type: SkinType[];
     product_type: string;
-    category: Category;
+    category: Category[];
     ingredients: string[];
-    image_url: string;
+    image_url: string[];
+    rating?: number;
+    review_count?: number;
 }
