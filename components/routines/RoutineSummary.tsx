@@ -1,6 +1,6 @@
 "use client";
 import { Product } from "@/types/product";
-import { X } from "lucide-react";
+import { X, ArrowRightCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useLocale, useTranslations } from 'next-intl';
@@ -69,15 +69,17 @@ export default function RoutineSummary({
             </div>
 
             {routineProducts.length > 0 && (
-                <Link href={{
-                    pathname: "/[locale]/routine/guardar",
-                    query: {
-                        locale: locale
-                    }
-                }}>
+                <Link
+                    href={{
+                        pathname: "/routine/guardar",
+                        query: {
+                            products: Array.from(addedProducts).join(",")
+                        }
+                    }}
+                >
                     <Button className="w-full">
-                        {t("save")}
-                    </Button >
+                        {t("save")} <ArrowRightCircle className="w-4 h-4 ml-2" />
+                    </Button>
                 </Link>
             )
             }

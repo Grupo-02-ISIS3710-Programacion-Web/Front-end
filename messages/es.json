@@ -27,9 +27,9 @@
         "viewRoutine": "Ver mi rutina"
     },
     "RoutineSummary": {
-        "title": "Tu Rutina Personalizada",
+        "title": "Tus productos seleccionados",
         "empty": "No has agregado ningún producto a tu rutina. Explora y agrega productos para verlos aquí.",
-        "save": "Guardar Rutina",
+        "save": "Siguiente paso",
         "productsCount": "{count, plural, =0 {0 productos agregados} =1 {1 producto agregado} other {{count} productos agregados}}"
     },
     "SearchBar": {

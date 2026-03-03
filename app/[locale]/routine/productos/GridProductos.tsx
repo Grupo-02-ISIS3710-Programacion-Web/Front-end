@@ -9,6 +9,7 @@ import { Product, Category } from "@/types/product";
 import { products } from "@/lib/api";
 import SearchBar from "@/components/routines/SearchBar";
 import { useTranslations } from "next-intl";
+
 const getProductos = async (): Promise<Product[]> => {
     return new Promise((resolve) => {
         setTimeout(() => {
@@ -79,7 +80,6 @@ export default function GridProductos() {
                     />
                 </div>
 
-                {/* Desktop Sidebar - 2 columns, aligned with search bar */}
                 <div className="hidden lg:block lg:col-span-2 lg:row-span-2">
                     <RoutineSidebar
                         addedProducts={addedProducts}
@@ -88,7 +88,6 @@ export default function GridProductos() {
                     />
                 </div>
 
-                {/* Products Grid - 3 columns below search bar */}
                 <div className="lg:col-span-3">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                         {loading && <p className="text-center">{t("loading")}</p>}

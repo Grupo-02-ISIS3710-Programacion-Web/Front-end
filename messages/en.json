@@ -27,9 +27,9 @@
         "viewRoutine": "View my routine"
     },
     "RoutineSummary": {
-        "title": "Your Personalized Routine",
+        "title": "Your selected products",
         "empty": "You haven't added any products to your routine yet. Explore and add products to see them here.",
-        "save": "Save Routine",
+        "save": "Continue",
         "productsCount": "{count, plural, =0 {0 products added} =1 {1 product added} other {{count} products added}}"
     },
     "SearchBar": {
