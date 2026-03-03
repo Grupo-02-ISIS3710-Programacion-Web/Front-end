@@ -92,7 +92,7 @@ const products: Product[] = [
         product_type: "suero hidratante",
         category: [Category.HIDRATACION],
         ingredients: ["extracto de té verde", "niacinamida", "betaína", "glicerina"],
-        image_url: ["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTFrtZH8yRL54cwMzg3V5-Wa3-m-ffkjuCDnw&s"],
+        image_url: ["https://i0.wp.com/rosavainilla.co/wp-content/uploads/2020/08/gtss_new.webp?fit=800%2C800&ssl=1", "https://koreanskincare.com/cdn/shop/files/467013853_18466105798037010_9177982332670859662_n.jpg?v=1738151086", "https://nudieglow.com/cdn/shop/files/INNISFREE-Green-Tea-Seed-Hyaluronic-Serum-NEW-Nudie-Glow-Australia_1000x.jpg?v=1698228961"],
         description: "Suero hidratante con extracto de té verde que revitaliza y equilibra la piel, proporcionando hidratación profunda y efecto calmante.",
         rating: 4.5,
         review_count: 6432

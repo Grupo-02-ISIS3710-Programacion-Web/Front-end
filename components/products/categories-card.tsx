@@ -2,7 +2,7 @@ import { Stack } from "@mui/material";
 import { Card, CardHeader, CardContent, CardTitle, CardDescription } from "../ui/card";
 import { Button } from "../ui/button";
 import { ButtonGroup } from "../ui/button-group";
-import { Droplets, LayoutDashboard, Pipette, SoapDispenserDroplet, SprayCan, Sun } from "lucide-react";
+import { Droplets, LayoutDashboard, Pipette, SoapDispenserDroplet, Sparkles, SprayCan, Sun } from "lucide-react";
 import { Category } from "@/types/product";
 
 interface CategoriesCardProps {
@@ -49,7 +49,13 @@ const categories = [
         label: "Exfoliación",
         value: Category.EXFOLIACION,
         description: "Renueva tu piel con exfoliantes químicos y físicos"
-    }
+    },
+    {
+        icon: <Sparkles />,
+        label: "Anti-edad",
+        value: Category.ANTI_EDAD,
+        description: "Encuentra productos anti-edad para combatir los signos del envejecimiento"
+    },
 ] as const;
 
 export function CategoriesCard({currentCategory}: CategoriesCardProps) {
