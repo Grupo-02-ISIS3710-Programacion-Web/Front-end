@@ -1,9 +1,8 @@
 "use client"
-import UserInfo from "./componente/userInfo"    
-import ProfileTabs from "./componente/profileTabs"
-import RoutineContent from "./componente/routineContent"
+import UserInfo from "../../components/profile/userInfo"    
+import ProfileTabs from "../../components/profile/profileTabs"
+import RoutineContent from "../../components/profile/routineContent"
 import { ProductCard } from "@/components/products/product-card"
-import ForumContent from "./componente/forumContent"
 import { Heart, Sun, SlidersHorizontal } from "lucide-react"
 import { useState} from "react"
 import { Product, Category, SkinType } from "@/types/product";
@@ -13,11 +12,15 @@ import { Search} from "lucide-react";
 import { productsFavorites } from "@/lib/favorites";
 import { routines } from "@/lib/routine";
 import Link from "next/link"
+import { useEffect } from "react";
 
 export default function Profile(){
     const [activeTab, setActiveTab] = useState("routine")
     const [selectedCategory, setSelectedCategory] = useState<Category | "ALL">("ALL");
     const [favoriteProducts, setFavoriteProducts] = useState<Product[]>([]);
+    const [searchTerm, setSearchTerm] = useState("")
+    const ITEMS_PER_PAGE = 6;
+    const [visibleCount, setVisibleCount] = useState(ITEMS_PER_PAGE);
 
     const [routineDaily, setRoutineDaily] = useState("am")
 
@@ -47,8 +50,17 @@ export default function Profile(){
 
     const filteredRoutines = routines.filter((routine) => 
         routine.type.toLowerCase() === routineDaily
+    
     );
 
+    const filteredFavorites = productsFavorites.filter((product) =>
+        product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        product.brand.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+    useEffect(() => {
+        setVisibleCount(ITEMS_PER_PAGE);
+        }, [searchTerm]);
 
 
  
@@ -139,6 +151,7 @@ export default function Profile(){
                                     type="text"
                                     placeholder="Buscar productos..."
                                     className="w-full"
+                                    onChange={(e) => setSearchTerm(e.target.value)}
                                 />
                                 <Button variant="outline" size="icon">
                                     <Search className="h-4 w-4" />
@@ -163,20 +176,34 @@ export default function Profile(){
                         <div className=" flex-1  rounded-2xl">
                             {activeTab === "routine" && <RoutineContent filteredRoutines={filteredRoutines}/>}
                         </div>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 ">
-                            {activeTab === "favorites" &&
-                              productsFavorites.map((product, index) => (
-                            <ProductCard 
-                                key={index} 
-                                productIndex={index} 
-                                product={product}
-                                onFavoriteSelect={handleFavoriteSelect}
-                                onFavoriteDeselect={handleFavoriteDeselect}
-                            />
-                            ))
-                            }
-                            {activeTab === "forum" && <ForumContent />}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                            {activeTab === "favorites" && filteredFavorites
+                                .slice(0, visibleCount)
+                                .map((product, index) => (
+                                <ProductCard 
+                                    key={product.id}
+                                    productIndex={index}
+                                    product={product}
+                                    onFavoriteSelect={handleFavoriteSelect}
+                                    onFavoriteDeselect={handleFavoriteDeselect}
+                                />
+                                ))}
                         </div>
+
+                        {activeTab === "favorites" &&
+                            visibleCount < filteredFavorites.length && (
+                            <div className="flex justify-center mt-8">
+                                <Button
+                                variant="outline"
+                                onClick={() =>
+                                    setVisibleCount((prev) => prev + ITEMS_PER_PAGE)
+                                }
+                                className="px-8"
+                                >
+                                Descargar más
+                                </Button>
+                            </div>
+                        )}
                     </div>
                     
                 </div>
