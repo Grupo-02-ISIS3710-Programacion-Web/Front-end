@@ -98,25 +98,34 @@ function LoginFormComponent() {
           </Link>
         </div>
 
-        <div className="relative">
-          <Lock className="absolute left-3 top-3.5 text-gray-400" size={18} />
-          <Input
-            type={showPassword ? "text" : "password"}
-            placeholder="••••••••"
-            className="pl-10 pr-10"
-            {...register("password", {
-              required: "Password is required",
-            })}
-          />
+            <div className="relative">
 
-          <button
-            type="button"
-            onClick={() => setShowPassword(!showPassword)}
-            className="absolute right-3 top-3.5 text-gray-400"
-          >
-            {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-          </button>
-        </div>
+                
+                <Lock
+                className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+                size={18}
+                />
+
+                
+                <Input
+                type={showPassword ? "text" : "password"}
+                placeholder="••••••••"
+                className="pl-10 pr-10 h-12 rounded-xl"
+                {...register("password", {
+                    required: "Password is required",
+                })}
+                />
+
+                
+                <button
+                type="button"
+                onClick={() => setShowPassword((prev) => !prev)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition"
+                >
+                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
+
+            </div>
 
         {errors.password && (
           <p className="text-xs text-red-500">{errors.password.message}</p>
@@ -148,9 +157,9 @@ function LoginFormComponent() {
 
       {/* Sign up */}
       <p className="text-sm text-center text-gray-500">
-        New to Skin4All?{" "}
+        Nuevo en Skin4All?{" "}
         <Link href="/register" className="text-pink-500 font-medium hover:underline">
-          Ingresar
+          Registrate
         </Link>
       </p>
     </form>
