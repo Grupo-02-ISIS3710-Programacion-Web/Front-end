@@ -18,9 +18,9 @@ export default function ImageCarousel({ imagesURL, currentIndex, altText, onNext
         <div className={`flex justify-center items-center w-fit`}>
             {/* cuadro de imagen principal */}
             <div className="flex justify-center items-center w-full h-full">
-                <Button variant={"outline"} onClick={onPreviousImage} className="hover:bg-secondary mr-1 rounded-full">
+                {imagesURL.length > 1 && <Button variant={"outline"} onClick={onPreviousImage} className="hover:bg-secondary mr-1 rounded-full">
                     <ArrowLeft size={20}  />
-                </Button>
+                </Button>}
                 <Image
                     src={currentImage}
                     alt={altText}
@@ -29,9 +29,9 @@ export default function ImageCarousel({ imagesURL, currentIndex, altText, onNext
                     unoptimized={true}
                     className="object-cover max-h-70 max-w-70 rounded-md"
                 />
-                <Button variant={"outline"} onClick={onNextImage} className="hover:bg-secondary ml-1 rounded-full">
+                {imagesURL.length > 1 && <Button variant={"outline"} onClick={onNextImage} className="hover:bg-secondary ml-1 rounded-full">
                     <ArrowRight size={20}  />
-                </Button>
+                </Button>}
             </div>
         </div>
     )

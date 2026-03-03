@@ -44,7 +44,7 @@ export default function ProductDetailPage() {
     const productSlug = toLowerCaseAndReplaceHyphensWithSpaces(slug);
     const product = getProductByName(productSlug);
     const theme = useTheme();
-    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+    const isMobile = useMediaQuery(theme.breakpoints.down('md'));
     const [toggleFavorite, setToggleFavorite] = useState(false);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     
@@ -119,11 +119,11 @@ export default function ProductDetailPage() {
 
                             <ImageCarousel imagesURL={product.image_url} currentIndex={currentImageIndex} altText={product.name} onNextImage={handleNextImage} onPreviousImage={handlePreviousImage} />
                             
-                            {product.image_url.length > 1 && <div className={`flex justify-center items-center w-auto max-w-full`}>
-                                <Carousel opts={{ loop: true }}>
+                            {product.image_url.length > 1 && <div className={`flex justify-center items-center w-fit max-w-1`}>
+                                <Carousel opts={{ loop: true }} className="w-60 md:w-xs">
                                     <CarouselContent>
                                         {product.image_url.map((url, index) => (
-                                            <CarouselItem key={index}  className="basis-auto">
+                                            <CarouselItem key={index}  className="basis-1/3 md:basis-1/4">
                                                 <div className="flex justify-center items-center cursor-pointer h-full" onClick={() => changeImageIndex(index)}>
                                                     <Image
                                                         src={url}

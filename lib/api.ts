@@ -92,7 +92,7 @@ const products: Product[] = [
         product_type: "suero hidratante",
         category: [Category.HIDRATACION],
         ingredients: ["extracto de té verde", "niacinamida", "betaína", "glicerina"],
-        image_url: ["https://i0.wp.com/rosavainilla.co/wp-content/uploads/2020/08/gtss_new.webp?fit=800%2C800&ssl=1", "https://koreanskincare.com/cdn/shop/files/467013853_18466105798037010_9177982332670859662_n.jpg?v=1738151086", "https://nudieglow.com/cdn/shop/files/INNISFREE-Green-Tea-Seed-Hyaluronic-Serum-NEW-Nudie-Glow-Australia_1000x.jpg?v=1698228961", "https://www.koreanbeauty.es/cdn/shop/files/innisfree-Green-Tea-Seed-Hyaluronic-Serum-80ml-1.png?v=1743600651&width=1080"],
+        image_url: ["https://i0.wp.com/rosavainilla.co/wp-content/uploads/2020/08/gtss_new.webp?fit=800%2C800&ssl=1", "https://koreanskincare.com/cdn/shop/files/467013853_18466105798037010_9177982332670859662_n.jpg?v=1738151086", "https://nudieglow.com/cdn/shop/files/INNISFREE-Green-Tea-Seed-Hyaluronic-Serum-NEW-Nudie-Glow-Australia_1000x.jpg?v=1698228961", "https://www.koreanbeauty.es/cdn/shop/files/innisfree-Green-Tea-Seed-Hyaluronic-Serum-80ml-1.png?v=1743600651&width=1080", "https://www.beautymonster.store/cdn/shop/files/InnisfreeGreenTeaSeedSerum80ml_1.png?v=1694588390&width=1200", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJJm5zqr4UzHKABU-OZX91eIn5iizJ33ubiQ&s"],
         description: "Suero hidratante con extracto de té verde que revitaliza y equilibra la piel, proporcionando hidratación profunda y efecto calmante.",
         rating: 4.5,
         review_count: 6432
