@@ -107,7 +107,7 @@ export default function ProductDetailPage() {
                                 
                             </div>
                             
-                            {product.image_url.length > 1 && <div className={`flex justify-center items-center ${product.image_url.length > 1 ? "max-w-9/12" : ""}`}>
+                            {/* {product.image_url.length > 1 && <div className={`flex justify-center items-center ${product.image_url.length > 1 ? "max-w-9/12" : ""}`}>
                                 <Carousel opts={{ loop: true }}>
                                     <CarouselContent>
                                         {product.image_url.map((url, index) => (
@@ -132,7 +132,7 @@ export default function ProductDetailPage() {
                                         </div>
                                     )}
                                 </Carousel>
-                            </div>}
+                            </div>} */}
                         </Stack>
 
                         {/* info del producto */}
@@ -192,10 +192,7 @@ export default function ProductDetailPage() {
                     </Stack>
                 </Container>
 
-                
-                
-            </Container>
-            <Container maxWidth="md">
+                <Container maxWidth="md">
                     <Stack direction={"column"} gap={2} alignItems={"baseline"} paddingTop={5}>
                         <h3 className="font-medium text-foreground">
                             Ingredientes Detallados
@@ -216,6 +213,9 @@ export default function ProductDetailPage() {
 
                     {/* TODO: sección de product reviews */}
             </Container>
+                
+            </Container>
+            
         </div>
     );
 }
