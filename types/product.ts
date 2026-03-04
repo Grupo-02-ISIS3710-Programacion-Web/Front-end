@@ -26,6 +26,7 @@ export interface Product {
     skin_type: SkinType[];
     product_type: string;
     category: Category[];
+    description: string;
     ingredients: string[];
     image_url: string[];
     rating?: number;

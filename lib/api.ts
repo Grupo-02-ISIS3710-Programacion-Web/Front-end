@@ -3,8 +3,9 @@
 // data/products.ts
 
 import { Product, Category, SkinType } from "@/types/product";
+import { toLowerCaseAndReplaceHyphensWithSpaces } from "./string-utils";
 
-export const products: Product[] = [
+const products: Product[] = [
     {
         id: "1",
         name: "Toleriane Double Repair Face Moisturizer",
@@ -14,6 +15,7 @@ export const products: Product[] = [
         category: [Category.HIDRATACION],
         ingredients: ["ceramida-3", "niacinamida", "glicerina", "agua termal"],
         image_url: ["https://images-na.ssl-images-amazon.com/images/I/41oMKHKCJCL._UL500_.jpg"],
+        description: "Crema hidratante ligera que fortalece la barrera cutánea y proporciona hidratación hasta por 48 horas. Formulada con ceramida-3, niacinamida y agua termal para calmar y proteger la piel sensible.",
         rating: 4.7,
         review_count: 12453
     },
@@ -26,6 +28,7 @@ export const products: Product[] = [
         category: [Category.LIMPIEZA],
         ingredients: ["ácido salicílico", "ceramidas", "niacinamida", "ácido hialurónico"],
         image_url: ["https://www.lookfantastic.es/images?url=https://static.thcdn.com/productimg/original/12207663-1995074481347395.jpg&format=webp&auto=avif&width=1200&height=1200&fit=cover"],
+        description: "Limpiador exfoliante con ácido salicílico que ayuda a suavizar la textura de la piel y destapar poros sin comprometer la barrera cutánea. Ideal para piel grasa, mixta o con textura irregular.",
         rating: 4.6,
         review_count: 9821
     },
@@ -38,6 +41,7 @@ export const products: Product[] = [
         category: [Category.EXFOLIACION],
         ingredients: ["ácido glicólico", "aloe vera", "ginseng", "tasmanian pepperberry"],
         image_url: ["https://bebeautycol.com/cdn/shop/products/2FD69212-7EA4-4947-9824-9199F91146AE_1200x1200.jpg?v=1704781572"],
+        description: "Tónico exfoliante con 7% de ácido glicólico que mejora la luminosidad y textura de la piel. Ayuda a reducir manchas y líneas finas con uso constante.",
         rating: 4.5,
         review_count: 15890
     },
@@ -50,6 +54,7 @@ export const products: Product[] = [
         category: [Category.ANTI_EDAD],
         ingredients: ["ácido hialurónico", "bifidus extract", "vitamina C", "glicerina"],
         image_url: ["https://static.sweetcare.com/img/prd/488/v-638200523158559322/lancome-003003lc-4.webp"],
+        description: "Suero antiedad avanzado que mejora visiblemente la luminosidad y firmeza de la piel. Contiene ácido hialurónico y extracto de bifidus para reforzar la barrera cutánea.",
         rating: 4.8,
         review_count: 7342
     },
@@ -62,6 +67,7 @@ export const products: Product[] = [
         category: [Category.HIDRATACION],
         ingredients: ["ácido hialurónico", "glicerina", "dimeticona", "olivato de sorbitán"],
         image_url: ["https://habibdroguerias.vtexassets.com/arquivos/ids/157438-800-auto?v=638459643757500000&width=800&height=auto&aspect=true"],
+        description: "Gel hidratante ligero con ácido hialurónico que aporta hidratación intensa sin sensación grasa. Perfecto para piel normal a grasa.",
         rating: 4.6,
         review_count: 21456
     },
@@ -74,6 +80,7 @@ export const products: Product[] = [
         category: [Category.REPARACION],
         ingredients: ["pantenol", "madecassoside", "manteca de karité", "zinc"],
         image_url: ["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8OStExzMvoqxBSu1C-SznSXOSHd3jPd_l0Q&s"],
+        description: "Bálsamo reparador multiuso que calma, protege y repara la piel irritada o sensibilizada. Enriquecido con pantenol y madecassoside.",
         rating: 4.9,
         review_count: 18765
     },
@@ -85,7 +92,8 @@ export const products: Product[] = [
         product_type: "suero hidratante",
         category: [Category.HIDRATACION],
         ingredients: ["extracto de té verde", "niacinamida", "betaína", "glicerina"],
-        image_url: ["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTFrtZH8yRL54cwMzg3V5-Wa3-m-ffkjuCDnw&s"],
+        image_url: ["https://i0.wp.com/rosavainilla.co/wp-content/uploads/2020/08/gtss_new.webp?fit=800%2C800&ssl=1", "https://koreanskincare.com/cdn/shop/files/467013853_18466105798037010_9177982332670859662_n.jpg?v=1738151086", "https://nudieglow.com/cdn/shop/files/INNISFREE-Green-Tea-Seed-Hyaluronic-Serum-NEW-Nudie-Glow-Australia_1000x.jpg?v=1698228961", "https://www.koreanbeauty.es/cdn/shop/files/innisfree-Green-Tea-Seed-Hyaluronic-Serum-80ml-1.png?v=1743600651&width=1080", "https://www.beautymonster.store/cdn/shop/files/InnisfreeGreenTeaSeedSerum80ml_1.png?v=1694588390&width=1200", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJJm5zqr4UzHKABU-OZX91eIn5iizJ33ubiQ&s"],
+        description: "Suero hidratante con extracto de té verde que revitaliza y equilibra la piel, proporcionando hidratación profunda y efecto calmante.",
         rating: 4.5,
         review_count: 6432
     },
@@ -98,6 +106,7 @@ export const products: Product[] = [
         category: [Category.ANTIOXIDANTE],
         ingredients: ["ácido ascórbico", "ácido hialurónico", "escualano", "tocoferol"],
         image_url: ["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjWwYICcN2Ltwv4ucjZbmwUY81SuYRcrHLKg&s"],
+        description: "Suero antioxidante con 23% de vitamina C pura que mejora la luminosidad y combate los signos del envejecimiento. Contiene ácido hialurónico para mantener la hidratación.",
         rating: 4.4,
         review_count: 11234
     },
@@ -110,6 +119,7 @@ export const products: Product[] = [
         category: [Category.ANTI_EDAD],
         ingredients: ["retinol", "escualano", "jojoba oil", "tomato extract"],
         image_url: ["https://cosmetis.com/media/catalog/product/c/t/ct204001-theordinary_retinol_2_squalene_serum_30ml.jpg"],
+        description: "Suero con retinol al 0.3% que ayuda a reducir líneas finas, mejorar textura y unificar el tono. Ideal para introducir el retinol progresivamente.",
         rating: 4.6,
         review_count: 16789
     },
@@ -122,6 +132,7 @@ export const products: Product[] = [
         category: [Category.HIDRATACION],
         ingredients: ["escualano", "glicerina", "glacial glycoprotein", "urea"],
         image_url: ["https://http2.mlstatic.com/D_NQ_NP_704291-MLU54983799272_042023-O.webp"],
+        description: "Crema hidratante facial de uso diario que proporciona hidratación prolongada y fortalece la barrera de la piel en todo tipo de piel.",
         rating: 4.8,
         review_count: 9543
     },
@@ -134,6 +145,7 @@ export const products: Product[] = [
         category: [Category.LIMPIEZA],
         ingredients: ["agua termal", "zinc PCA", "coco-betaína", "glicerina"],
         image_url: ["https://pielfarmaceutica.com/cdn/shop/files/effaclar_gel_x_400ml.png?v=1723645399"],
+        description: "Gel limpiador purificante que elimina el exceso de grasa y limpia profundamente los poros sin resecar la piel.",
         rating: 4.7,
         review_count: 13221
     },
@@ -146,6 +158,7 @@ export const products: Product[] = [
         category: [Category.LIMPIEZA],
         ingredients: ["ceramidas", "ácido hialurónico", "glicerina", "colesterol"],
         image_url: ["https://cocorosey.net/cdn/shop/products/16_1800x.jpg?v=1653346366"],
+        description: "Limpiador facial suave que elimina impurezas mientras mantiene la hidratación natural de la piel gracias a sus ceramidas y ácido hialurónico.",
         rating: 4.8,
         review_count: 20567
     },
@@ -158,6 +171,7 @@ export const products: Product[] = [
         category: [Category.ANTIOXIDANTE],
         ingredients: ["niacinamida", "zinc PCA", "tamarindus indica seed gum", "pentylene glycol"],
         image_url: ["https://bebeautycol.com/cdn/shop/products/image_33008b22-795b-41a9-bc5f-cbcc31a1f602_1024x1024.jpg?v=1704781533"],
+        description: "Serum con niacinamida y zinc que ayuda a regular el exceso de sebo, reducir imperfecciones y mejorar la apariencia de los poros.",
         rating: 4.5,
         review_count: 18934
     },
@@ -170,6 +184,7 @@ export const products: Product[] = [
         category: [Category.REPARACION],
         ingredients: ["mucina de caracol", "betaína", "butylene glycol", "arginina"],
         image_url: ["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6AiLsjODpxkoXlXoXDN6bDwNvAD4B_zV8Mw&s"],
+        description: "Esencia reparadora con 96% de mucina de caracol que mejora la elasticidad, hidrata profundamente y ayuda a reparar la piel dañada.",
         rating: 4.7,
         review_count: 8765
     },
@@ -182,7 +197,27 @@ export const products: Product[] = [
         category: [Category.HIDRATACION],
         ingredients: ["agua volcánica de Vichy", "ácido hialurónico", "glicerina", "carbómero"],
         image_url: ["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQiQUy4b0kJxqUJApxBbU1EtEaOyt8HgnI-Qw&s"],
+        description: "Suero hidratante con agua volcánica y ácido hialurónico que fortalece la barrera cutánea y protege contra agresores externos.",
         rating: 4.9,
         review_count: 14234
     }
 ];
+
+export function getProducts(): Product[] {
+    return products;
+}
+
+export function getProductById(id: string): Product | undefined {
+    return products.find(product => product.id === id);
+}
+
+export function getProductByName(name: string): Product | undefined {
+    return products.find(product => toLowerCaseAndReplaceHyphensWithSpaces(product.name) === toLowerCaseAndReplaceHyphensWithSpaces(name));
+}
+
+export function getProductsByCategory(category: Category | "ALL"): Product[] {
+    if (category === "ALL") {
+        return products;
+    }
+    return products.filter(product => product.category.includes(category));
+}

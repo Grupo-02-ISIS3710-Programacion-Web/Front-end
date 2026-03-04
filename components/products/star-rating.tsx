@@ -32,7 +32,7 @@ export default function StarRating({
                 <Star
                     key={index}
                     size={size}
-                    className="fill-secondary text-secondary"
+                    className="fill-primary text-primary"
                 />
                 );
             }
@@ -51,8 +51,10 @@ export default function StarRating({
             })}
         </div>
 
+        <span className="text-sm text-primary">({rating})</span>
+
         {reviewCount !== undefined && (
-            <span className="text-sm text-muted-foreground">
+            <span className="text-sm text-primary">
             ({reviewCount})
             </span>
         )}
@@ -81,7 +83,7 @@ function HalfStar({ size }: { size: number }) {
         >
             <Star
             size={size}
-            className="fill-secondary text-secondary"
+            className="fill-primary text-primary"
             />
         </div>
         </div>
