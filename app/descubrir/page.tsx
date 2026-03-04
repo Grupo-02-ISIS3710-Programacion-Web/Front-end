@@ -6,6 +6,7 @@ import { useState } from "react";
 import { getProducts } from "@/lib/api";
 import { ProductCard } from "@/components/products/product-card";
 import { useSearchParams } from "next/navigation";
+import { productsFavorites } from "@/lib/favorites";
 
 export default function DiscoveryPage() {
   const products = getProducts();
@@ -52,6 +53,7 @@ export default function DiscoveryPage() {
     const selectedProduct = products[productIndex];
     if (!favoriteProducts.some(product => product.id === selectedProduct.id)) {
       setFavoriteProducts([...favoriteProducts, selectedProduct]);
+      productsFavorites.push(selectedProduct)
     }
   }
 

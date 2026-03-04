@@ -8,6 +8,7 @@ import { FlaskConical, Heart, Smile } from "lucide-react";
 import { Button } from "../ui/button";
 import { useState } from "react";
 import { toLowerCaseAndReplaceSpacesWithHyphens } from "@/lib/string-utils";
+import {productsFavorites} from "@/lib/favorites"
 
 interface ProductCardProps {
     productIndex: number;
@@ -17,7 +18,7 @@ interface ProductCardProps {
 }
 
 export function ProductCard({productIndex, product, onFavoriteSelect, onFavoriteDeselect}: ProductCardProps) {
-    const [toggleFavorite, setToggleFavorite] = useState(false);
+    const [toggleFavorite, setToggleFavorite] = useState(productsFavorites.some(p => p.id === product.id));
     const handleClick = () => {
         setToggleFavorite(!toggleFavorite);
         if (toggleFavorite) {
