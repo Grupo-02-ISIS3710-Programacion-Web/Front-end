@@ -4,7 +4,7 @@ import { useFieldArray, useForm } from "react-hook-form"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Product } from "@/types/product"
-import { products } from "@/lib/api";
+import { getProducts } from "@/lib/api";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import PasoRutinaCard from "@/components/routines/PasoRutinaCard";
 import { AnimatePresence, motion } from "motion/react";
@@ -29,7 +29,7 @@ type DescripcionPaso = {
 
 export default function CrearRutina() {
     const t = useTranslations("GuardarRutina");
-    const allProducts = products as Product[];
+    const [allProducts, setAllProducts] = useState<Product[]>([]);
     const previousProductsSignatureRef = useRef<string>("");
     const [searchTerm, setSearchTerm] = useState("");
     const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
@@ -137,6 +137,11 @@ export default function CrearRutina() {
         console.log("Form entregado", data);
     };
 
+    useEffect(() => {
+        const products = getProducts();
+        setAllProducts(products);
+    }
+    , []);
     return (
         <div className="mx-auto w-full max-w-6xl p-4 md:p-6">
             <header className="mb-6 md:mb-8 text-center">

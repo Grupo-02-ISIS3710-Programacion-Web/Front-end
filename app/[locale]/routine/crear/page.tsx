@@ -4,7 +4,7 @@ import { useFieldArray, useForm } from "react-hook-form"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Product } from "@/types/product"
-import { products } from "@/lib/api";
+import { getProducts } from "@/lib/api";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import PasoRutinaCard from "@/components/routines/PasoRutinaCard";
 import { AnimatePresence, motion } from "motion/react";
@@ -29,7 +29,7 @@ type DescripcionPaso = {
 
 export default function CrearRutina() {
 
-    const allProducts = products as Product[];
+    const [allProducts, setAllProducts] = useState<Product[]>([]);
     const previousProductsSignatureRef = useRef<string>("");
     const [searchTerm, setSearchTerm] = useState("");
     const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
@@ -59,6 +59,11 @@ export default function CrearRutina() {
         [selectedProducts]
     );
 
+    useEffect(() => {
+        const products = getProducts();
+        setAllProducts(products);
+    }, []);
+    
     const { control, register, handleSubmit, reset, getValues } = useForm<CrearRutinaFormData>({
         defaultValues: {
             name: "",

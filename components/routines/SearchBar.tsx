@@ -1,9 +1,9 @@
 "use client";
 
 import { Search } from "lucide-react";
-import { useMemo } from "react";
-import { products } from "@/lib/api";
-import { Category } from "@/types/product";
+import { useEffect, useMemo, useState } from "react";
+import { getProducts } from "@/lib/api";
+import { Category, Product } from "@/types/product";
 import { Button } from "../ui/button";
 import { useTranslations } from "next-intl";
 
@@ -29,6 +29,11 @@ export default function SearchBar({
     onCategoryChange,
     compact = false
 }: SearchBarProps) {
+    const [products, setProducts] = useState<Product[]>([]);
+    useEffect(() => {
+        const products = getProducts();
+        setProducts(products);
+    }, []);
     const t = useTranslations("SearchBar");
     const availableCategories = useMemo(() => {
         const categorySet = new Set<Category>();
@@ -54,7 +59,6 @@ export default function SearchBar({
                 />
             </div>
 
-            {/* Category Filters - Horizontally Scrollable */}
             <div className="overflow-x-auto flex gap-2 pb-2">
                 <Button
                     onClick={() => onCategoryChange(null)}
