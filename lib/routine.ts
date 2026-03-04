@@ -1,6 +1,7 @@
 import { Routine } from "@/types/routine";
-import { products } from "@/lib/api";
+import { getProducts } from "@/lib/api";
 
+const products = getProducts();
 export const routines: Routine[] = [
   {
     id: "routine-1",
