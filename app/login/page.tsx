@@ -7,7 +7,6 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { Eye, EyeOff, Mail, Lock } from "lucide-react";
-import GoogleIcon from "@/components/Google";
 
 type LoginForm = {
   email: string;
@@ -136,7 +135,7 @@ function LoginFormComponent() {
       
       <Button
         type="submit"
-        className="w-full  text-white rounded-xl py-6"
+        className="w-full bg-pink-500 hover:bg-pink-600 text-white rounded-xl py-6"
       >
         Ingresar
       </Button>
@@ -153,7 +152,7 @@ function LoginFormComponent() {
         variant="outline"
         className="w-full rounded-xl py-6"
       >
-        <img src="/google.svg" alt="Google" />
+        G
       </Button>
 
       {/* Sign up */}
@@ -166,4 +165,3 @@ function LoginFormComponent() {
     </form>
   );
 }
-
