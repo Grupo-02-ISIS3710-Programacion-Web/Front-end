@@ -4,3 +4,28 @@ export function capitalizeFirstLetter(str: string): string {
   }
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
+
+export function toLowerCaseAndReplaceSpacesWithHyphens(str: string): string {
+  return str.toLowerCase()
+            .replace(/\s+/g, '-')
+            .replace("á", "a")
+            .replace("é", "e")
+            .replace("í", "i")
+            .replace("ó", "o")
+            .replace("ú", "u")
+            .replace(/[^a-z0-9-]/g, '');
+}
+
+export function toLowerCaseAndReplaceHyphensWithSpaces(str: string | undefined): string {
+  if (!str) {
+    return ""; // Handles undefined or empty strings
+  }
+  return str.toLowerCase()
+            .replace(/-/g, ' ')
+            .replace("á", "a")
+            .replace("é", "e")
+            .replace("í", "i")
+            .replace("ó", "o")
+            .replace("ú", "u")
+            .replace(/[^a-z0-9-]/g, '');
+}

@@ -1,5 +1,5 @@
 "use client";
-import { Product } from "@/types/product";
+import { Category, Product } from "@/types/product";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
 import Image from "next/image";
 import StarRating from "./star-rating";
@@ -7,6 +7,8 @@ import { Stack } from "@mui/material";
 import { FlaskConical, Heart, Smile } from "lucide-react";
 import { Button } from "../ui/button";
 import { useState } from "react";
+import { toLowerCaseAndReplaceSpacesWithHyphens } from "@/lib/string-utils";
+import {productsFavorites} from "@/lib/favorites"
 
 interface ProductCardProps {
     productIndex: number;
@@ -16,7 +18,7 @@ interface ProductCardProps {
 }
 
 export function ProductCard({productIndex, product, onFavoriteSelect, onFavoriteDeselect}: ProductCardProps) {
-    const [toggleFavorite, setToggleFavorite] = useState(false);
+    const [toggleFavorite, setToggleFavorite] = useState(productsFavorites.some(p => p.id === product.id));
     const handleClick = () => {
         setToggleFavorite(!toggleFavorite);
         if (toggleFavorite) {
@@ -28,7 +30,7 @@ export function ProductCard({productIndex, product, onFavoriteSelect, onFavorite
 
     return (
         <Card className="p-0 h-full">
-            <a href="#">
+            <a href={`/descubrir/${toLowerCaseAndReplaceSpacesWithHyphens(product.name)}`}>
                 {/* product image */}
                 <CardHeader className="bg-muted p-5 flex items-center justify-center">
                     <div className="flex justify-center items-center w-full h-full">
@@ -59,7 +61,9 @@ export function ProductCard({productIndex, product, onFavoriteSelect, onFavorite
 
                 {/* product name */}
                 <CardTitle>
-                    <a href="#">{product.name}</a>
+                    <a href={`/descubrir/${toLowerCaseAndReplaceSpacesWithHyphens(product.name)}`}>
+                        {product.name}
+                    </a>
                 </CardTitle>
 
                 {/* rating, product type and key ingredient */}
