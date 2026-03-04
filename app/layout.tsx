@@ -29,9 +29,7 @@ export default function RootLayout({
     <html lang="es">
       <body>
         <NextIntlClientProvider>
-          <NavBar />
-          <TooltipProvider>{children}</TooltipProvider>
-          <Toaster />
+          {children}
         </NextIntlClientProvider>
       </body>
     </html>
