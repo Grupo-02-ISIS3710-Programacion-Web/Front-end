@@ -7,7 +7,6 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { Eye, EyeOff, Mail, Lock } from "lucide-react";
-import GoogleIcon from "@/components/Google";
 
 type LoginForm = {
   email: string;
