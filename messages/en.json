@@ -45,6 +45,7 @@
         "title": "Discover products",
         "description": "Discover the best products for you",
         "productCount": "{count, plural, =0 {Showing 0 products} =1 {Showing 1 product} other {Showing {count} products}}",
+        "filter": "Filter by:",
         "filters": {
             "skinType": "Skin type",
             "brand": "Brand",
@@ -52,7 +53,7 @@
         },
         "clearFilters": "Clear filters",
         "chips": {
-            "skin": "Skin: {type}",
+            "skin": "Skin:",
             "brand": "Brand: {brand}",
             "exclude": "Exclude: {ingredient}"
         }

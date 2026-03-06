@@ -62,49 +62,42 @@ export function CategoriesCardDesktop({ isCategorySelected }: CategoriesCardDesk
         <div className="px-1">
         <Card className="mx-auto px-0">
             <CardHeader>
-
-            <CardTitle>
-                {t("title")}
-            </CardTitle>
-
-            <CardDescription>
-                {t("description")}
-            </CardDescription>
-
+                <CardTitle>
+                    {t("title")}
+                </CardTitle>
+                <CardDescription>
+                    {t("description")}
+                </CardDescription>
             </CardHeader>
 
             <CardContent>
-            <Stack direction={"column"}>
-
-                <ButtonGroup orientation="vertical" className="h-full w-full">
-
-                {categories.map((category, index) => (
-
-                    <Button
-                    key={index}
-                    className={`flex justify-baseline w-full hover:bg-secondary py-5 ${
-                        isCategorySelected(category.value)
-                        ? "bg-secondary text-secondary-foreground"
-                        : "bg-muted/20 text-foreground"
-                    }`}
-                    asChild
-                    >
-                    <a
-                        href={category.value === "ALL"
-                        ? "/descubrir"
-                        : `?category=${category.value}`}
-                        className="flex justify-baseline gap-2"
-                    >
-                        {category.icon}
-                        <div>
-                        {t(`categories.${category.value}.label`)}
-                        </div>
-                    </a>
-                    </Button>
-                ))}
-                </ButtonGroup>
-
-            </Stack>
+                <Stack direction={"column"}>
+                    <ButtonGroup orientation="vertical" className="h-full w-full">
+                    {categories.map((category, index) => (
+                        <Button
+                        key={index}
+                        className={`flex justify-baseline w-full hover:bg-secondary py-5 ${
+                            isCategorySelected(category.value)
+                            ? "bg-secondary text-secondary-foreground"
+                            : "bg-muted/20 text-foreground"
+                        }`}
+                        asChild
+                        >
+                        <a
+                            href={category.value === "ALL"
+                            ? "/descubrir"
+                            : `?category=${category.value}`}
+                            className="flex justify-baseline gap-2"
+                        >
+                            {category.icon}
+                            <div>
+                            {t(`categories.${category.value}.label`)}
+                            </div>
+                        </a>
+                        </Button>
+                    ))}
+                    </ButtonGroup>
+                </Stack>
             </CardContent>
         </Card>
         </div>
@@ -117,9 +110,7 @@ export function CategoriesCardMobile({ isCategorySelected }: CategoriesCardDeskt
 
     return (
         <div className="px-1 flex justify-begin gap-1 overflow-auto">
-
         {categories.map((category, index) => (
-
             <Button
             key={index}
             className={`flex justify-baseline w-fit hover:bg-secondary py-5 ${
@@ -129,24 +120,18 @@ export function CategoriesCardMobile({ isCategorySelected }: CategoriesCardDeskt
             }`}
             asChild
             >
-
             <a
                 href={category.value === "ALL"
                 ? "/descubrir"
                 : `?category=${category.value}`}
                 className="flex justify-baseline gap-2"
             >
-
                 {category.icon}
-
                 <div>
                 {t(`categories.${category.value}.label`)}
                 </div>
-
             </a>
-
             </Button>
-
         ))}
 
         </div>
