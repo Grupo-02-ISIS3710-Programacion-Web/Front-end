@@ -7,8 +7,10 @@ import { getProducts } from "@/lib/api";
 import { ProductCard } from "@/components/products/product-card";
 import { useSearchParams } from "next/navigation";
 import { productsFavorites } from "@/lib/favorites";
+import { useTranslations } from "next-intl";
 
 export default function DiscoveryPage() {
+  const t = useTranslations("DiscoveryPage");
   const products = getProducts();
   const params = useSearchParams();
   const selectedCategory = (params.get("category") as Category) || "ALL";
@@ -71,6 +73,13 @@ export default function DiscoveryPage() {
         <div className="col-pan-1 lg:col-span-10">
             <div className="flex flex-col gap-3">
               <FilterHeader brands={brands} ingredients={ingredients} onFiltersChange={setFilters} productCount={filteredProducts.length}/>
+
+              {filteredProducts.length === 0 && (
+                <p className="text-sm text-muted-foreground p-2">
+                  {t("empty")}
+                </p>
+              )}
+
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3 auto-rows-max">
                 {filteredProducts.map((product, index) => (
                   <ProductCard 

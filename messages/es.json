@@ -67,5 +67,131 @@
     "SearchBar": {
         "placeholder": "Busca productos por nombre, marca o tipo...",
         "allProducts": "Todos los productos"
+    },
+
+    "DiscoveryPage": {
+        "empty": "No hay productos que coincidan con los filtros seleccionados."
+    },
+    "FilterHeader": {
+        "title": "Descubre productos",
+        "description": "Descubre los mejores productos para ti",
+        "productCount": "{count, plural, =0 {Mostrando 0 productos} =1 {Mostrando 1 producto} other {Mostrando {count} productos}}",
+        "filters": {
+            "skinType": "Tipo de piel",
+            "brand": "Marca",
+            "excludeIngredients": "Excluir ingredientes"
+        },
+        "clearFilters": "Limpiar filtros",
+        "chips": {
+            "skin": "Piel",
+            "brand": "Marca:",
+            "exclude": "Excluir:"
+        }
+    },
+
+    "SkinTypes": {
+        "normal": "Normal",
+        "seca": "Seca",
+        "grasa": "Grasa",
+        "mixta": "Mixta",
+        "sensible": "Sensible",
+        "acneica": "Acnéica",
+        "irritada": "Irritada",
+        "opaca": "Opaca",
+        "texturizada": "Texturizada"
+    },
+    "CategoriesCard": {
+        "title": "Categorías",
+        "description": "Explora productos por categorías",
+        "categories": {
+            "ALL": {
+            "label": "Todos los productos",
+            "description": "Descubre todos los productos disponibles"
+            },
+            "limpieza": {
+            "label": "Limpiadores",
+            "description": "Encuentra los mejores limpiadores para tu piel"
+            },
+            "hidratacion": {
+            "label": "Hidratantes",
+            "description": "Hidrata tu piel con cremas y lociones"
+            },
+            "antioxidante": {
+            "label": "Serums",
+            "description": "Potencia tu rutina con serums especializados"
+            },
+            "reparacion": {
+            "label": "Reparación",
+            "description": "Potencia tu rutina con esencias reparadoras"
+            },
+            "exfoliacion": {
+            "label": "Exfoliación",
+            "description": "Renueva tu piel con exfoliantes químicos y físicos"
+            },
+            "anti-edad": {
+            "label": "Anti-edad",
+            "description": "Encuentra productos anti-edad para combatir los signos del envejecimiento"
+            }
+        }
+    },
+    "ProductCard": {
+        "discover": "Descubrir",
+        "category": "Categoría",
+        "productType": "Tipo de producto",
+        "keyIngredient": "Ingrediente clave",
+        "ingredientsDetailed": "Ingredientes detallados",
+        "addToRoutine": "Agregar a una rutina",
+        "productNotFound": "Producto no encontrado",
+
+        "productTypes": {
+            "cleanser": "Limpiador",
+            "serum": "Suero",
+            "moisturizer": "Hidratante",
+            "essence": "Esencia",
+            "toner": "Tónico",
+            "exfoliant": "Exfoliante",
+            "sunscreen": "Protector solar",
+            "mask": "Mascarilla",
+            "exfoliating_cleanser": "Limpiador exfoliante",
+            "exfoliating_toner": "Tónico exfoliante",
+            "anti_aging_serum": "Suero antiedad",
+            "hydrating_gel": "Gel hidratante",
+            "repair_balm": "Bálsamo reparador",
+            "hydrating_serum": "Suero hidratante",
+            "antioxidant_serum": "Suero antioxidante",
+            "retinol_serum": "Suero con retinol",
+            "facial_cleanser": "Limpiador facial"
+        },
+
+        "categories": {
+            "ALL": {
+            "label": "Todos los productos",
+            "description": "Descubre todos los productos disponibles"
+            },
+            "limpieza": {
+            "label": "Limpiadores",
+            "description": "Encuentra los mejores limpiadores para tu piel"
+            },
+            "hidratacion": {
+            "label": "Hidratantes",
+            "description": "Hidrata tu piel con cremas y lociones"
+            },
+            "antioxidante": {
+            "label": "Serums",
+            "description": "Potencia tu rutina con serums especializados"
+            },
+            "reparacion": {
+            "label": "Reparación",
+            "description": "Potencia tu rutina con esencias reparadoras"
+            },
+            "exfoliacion": {
+            "label": "Exfoliación",
+            "description": "Renueva tu piel con exfoliantes químicos y físicos"
+            },
+            "anti-edad": {
+            "label": "Anti-edad",
+            "description": "Encuentra productos anti-edad para combatir los signos del envejecimiento"
+            }
+        }
     }
 }

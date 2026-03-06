@@ -35,5 +35,132 @@
     "SearchBar": {
         "placeholder": "Search products by name, brand, or type...",
         "allProducts": "All products"
+    },
+
+    "DiscoveryPage": {
+        "results": "{count, plural, =0 {No products found} =1 {1 product found} other {{count} products found}}",
+        "empty": "No products match the selected filters."
+    },
+    "FilterHeader": {
+        "title": "Discover products",
+        "description": "Discover the best products for you",
+        "productCount": "{count, plural, =0 {Showing 0 products} =1 {Showing 1 product} other {Showing {count} products}}",
+        "filters": {
+            "skinType": "Skin type",
+            "brand": "Brand",
+            "excludeIngredients": "Exclude ingredients"
+        },
+        "clearFilters": "Clear filters",
+        "chips": {
+            "skin": "Skin",
+            "brand": "Brand:",
+            "exclude": "Exclude:"
+        }
+    },
+
+    "SkinTypes": {
+        "normal": "Normal",
+        "seca": "Dry",
+        "grasa": "Oily",
+        "mixta": "Combination",
+        "sensible": "Sensitive",
+        "acneica": "Acne-prone",
+        "irritada": "Irritated",
+        "opaca": "Dull",
+        "texturizada": "Textured"
+    },
+    "CategoriesCard": {
+        "title": "Categories",
+        "description": "Explore products by category",
+        "categories": {
+            "ALL": {
+            "label": "All products",
+            "description": "Discover all available products"
+            },
+            "limpieza": {
+            "label": "Cleansers",
+            "description": "Find the best cleansers for your skin"
+            },
+            "hidratacion": {
+            "label": "Moisturizers",
+            "description": "Hydrate your skin with creams and lotions"
+            },
+            "antioxidante": {
+            "label": "Serums",
+            "description": "Boost your routine with specialized serums"
+            },
+            "reparacion": {
+            "label": "Repair",
+            "description": "Enhance your routine with repairing essences"
+            },
+            "exfoliacion": {
+            "label": "Exfoliation",
+            "description": "Renew your skin with chemical and physical exfoliants"
+            },
+            "anti-edad": {
+            "label": "Anti-aging",
+            "description": "Find anti-aging products to fight signs of aging"
+            }
+        }
+    },
+    "ProductCard": {
+        "discover": "Discover",
+        "category": "Category",
+        "productType": "Product type",
+        "keyIngredient": "Key ingredient",
+        "ingredientsDetailed": "Detailed ingredients",
+        "addToRoutine": "Add to routine",
+        "productNotFound": "Product not found",
+
+        "productTypes": {
+            "cleanser": "Cleanser",
+            "serum": "Serum",
+            "moisturizer": "Moisturizer",
+            "essence": "Essence",
+            "toner": "Toner",
+            "exfoliant": "Exfoliant",
+            "sunscreen": "Sunscreen",
+            "mask": "Mask",
+            "exfoliating_cleanser": "Exfoliating cleanser",
+            "exfoliating_toner": "Exfoliating toner",
+            "anti_aging_serum": "Anti-aging serum",
+            "hydrating_gel": "Hydrating gel",
+            "repair_balm": "Repairing balm",
+            "hydrating_serum": "Hydrating serum",
+            "antioxidant_serum": "Antioxidant serum",
+            "retinol_serum": "Retinol serum",
+            "facial_cleanser": "Facial cleanser"
+        },
+
+        "categories": {
+            "ALL": {
+            "label": "All products",
+            "description": "Discover all available products"
+            },
+            "limpieza": {
+            "label": "Cleansers",
+            "description": "Find the best cleansers for your skin"
+            },
+            "hidratacion": {
+            "label": "Moisturizers",
+            "description": "Hydrate your skin with creams and lotions"
+            },
+            "antioxidante": {
+            "label": "Serums",
+            "description": "Boost your routine with specialized serums"
+            },
+            "reparacion": {
+            "label": "Repair",
+            "description": "Enhance your routine with repairing essences"
+            },
+            "exfoliacion": {
+            "label": "Exfoliation",
+            "description": "Renew your skin with chemical and physical exfoliants"
+            },
+            "anti-edad": {
+            "label": "Anti-aging",
+            "description": "Find anti-aging products to fight signs of aging"
+            }
+        }
     }
 }

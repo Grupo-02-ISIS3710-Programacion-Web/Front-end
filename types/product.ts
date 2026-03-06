@@ -19,16 +19,37 @@ export enum SkinType {
     TEXTURIZADA = "texturizada"
 }
 
+export enum ProductType {
+    CLEANSER = "cleanser",
+    MOISTURIZER = "moisturizer",
+    SERUM = "serum",
+    ESSENCE = "essence",
+    EXFOLIATOR = "exfoliator",
+    SUNSCREEN = "sunscreen",
+    TONER = "toner",
+    EXFOLIATING_CLEANSER = "exfoliating_cleanser",
+    EXFOLIATING_TONER = "exfoliating_toner",
+    EYE_CREAM = "eye_cream",
+    MASK = "mask",
+    OIL = "oil",
+    ANTI_AGING_SERUM = "anti_aging_serum",
+    HYDRATING_SERUM = "hydrating_serum",
+    HYDRATING_GEL = "hydrating_gel",
+    REPAIR_BALM = "repair_balm",
+    ANTIOXIDANT_SERUM = "antioxidant_serum",
+    RETINOL_SERUM = "retinol_serum",
+    FACIAL_CLEANSER = "facial_cleanser",
+}
+
 export interface Product {
     id: string;
     name: string;
     brand: string;
     skin_type: SkinType[];
-    product_type: string;
+    product_type: ProductType;
     category: Category[];
-    description: string;
     ingredients: string[];
+    rating: number;
+    review_count: number;
     image_url: string[];
-    rating?: number;
-    review_count?: number;
 }
