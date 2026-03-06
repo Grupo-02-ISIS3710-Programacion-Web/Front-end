@@ -89,7 +89,6 @@ export function CategoriesCardDesktop({ isCategorySelected }: CategoriesCardDesk
                     }`}
                     asChild
                     >
-
                     <a
                         href={category.value === "ALL"
                         ? "/descubrir"
@@ -97,17 +96,12 @@ export function CategoriesCardDesktop({ isCategorySelected }: CategoriesCardDesk
                         className="flex justify-baseline gap-2"
                     >
                         {category.icon}
-
                         <div>
                         {t(`categories.${category.value}.label`)}
                         </div>
-
                     </a>
-
                     </Button>
-
                 ))}
-
                 </ButtonGroup>
 
             </Stack>

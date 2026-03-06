@@ -38,8 +38,8 @@
     },
 
     "DiscoveryPage": {
-        "results": "{count, plural, =0 {No products found} =1 {1 product found} other {{count} products found}}",
-        "empty": "No products match the selected filters."
+        "didNotFindProduct": "Didn't found what you were looking for?",
+        "addProduct": "Add a product to our catalogue"
     },
     "FilterHeader": {
         "title": "Discover products",
@@ -52,9 +52,9 @@
         },
         "clearFilters": "Clear filters",
         "chips": {
-            "skin": "Skin",
-            "brand": "Brand:",
-            "exclude": "Exclude:"
+            "skin": "Skin: {type}",
+            "brand": "Brand: {brand}",
+            "exclude": "Exclude: {ingredient}"
         }
     },
 

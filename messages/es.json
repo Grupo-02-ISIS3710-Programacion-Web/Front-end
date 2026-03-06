@@ -70,16 +70,17 @@
     },
 
     "DiscoveryPage": {
-        "empty": "No hay productos que coincidan con los filtros seleccionados."
+        "didNotFindProduct": "¿No encontraste lo que estabas buscando?",
+        "addProduct": "Añade un producto a nuestro catálogo"
     },
     "FilterHeader": {
         "title": "Descubre productos",
         "description": "Descubre los mejores productos para ti",
         "productCount": "{count, plural, =0 {Mostrando 0 productos} =1 {Mostrando 1 producto} other {Mostrando {count} productos}}",
         "filters": {
-            "skinType": "Tipo de piel",
-            "brand": "Marca",
-            "excludeIngredients": "Excluir ingredientes"
+            "skinType": "Tipo de piel: {type}",
+            "brand": "Marca: {brand}",
+            "excludeIngredients": "Excluir ingredientes: {ingredient}"
         },
         "clearFilters": "Limpiar filtros",
         "chips": {

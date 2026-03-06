@@ -154,7 +154,7 @@ interface FilterHeaderProps {
                     </ComboboxContent>
                 </Combobox>
 
-                <Button onClick={resetFilters} className="text-sm font-normal">
+                <Button variant={"secondary"} onClick={resetFilters} className="text-sm font-medium">
                     {t("clearFilters")}
                 </Button>
             </Stack>
@@ -172,7 +172,7 @@ interface FilterHeaderProps {
                     },
                     }}
                     key={skin}
-                    label={t("chips.skin", { type: skin })}
+                    label={t("chips.skin", { type: capitalizeFirstLetter(skin) })}
                     onDelete={() => handleDeleteChip(skin, "skinType")}
                 />
                 ))}
@@ -180,6 +180,8 @@ interface FilterHeaderProps {
                 {selectedBrands.map((brand) => (
                 <Chip
                     sx={{
+                    backgroundColor: "var(--border)",
+                    color: "var(--muted-foreground)",
                     border: "1px solid var(--border)",
                     "& .MuiChip-deleteIcon:hover": {
                         color: "var(--secondary)",
@@ -194,6 +196,8 @@ interface FilterHeaderProps {
                 {selectedIngredients.map((ingredient) => (
                 <Chip
                     sx={{
+                    backgroundColor: "var(--border)",
+                    color: "var(--muted-foreground)",
                     border: "1px solid var(--border)",
                     "& .MuiChip-deleteIcon:hover": {
                         color: "var(--secondary)",
@@ -209,6 +213,7 @@ interface FilterHeaderProps {
             </Stack>
             </Stack>
         </CardContent>
+        
         </Card>
     );
 }

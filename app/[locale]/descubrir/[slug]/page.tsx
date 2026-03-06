@@ -105,7 +105,7 @@ export default function ProductDetailPage() {
                         </BreadcrumbItem>
                         <BreadcrumbSeparator className="text-secondary" />
                         <BreadcrumbItem>
-                            <BreadcrumbLink className="hover:text-secondary font-normal" href={`/descubrir?category=${product.category[0]}`}>{t(`categories.${product.category[0]}.label`)}</BreadcrumbLink>
+                            <BreadcrumbLink className="hover:text-secondary font-normal" href={`../descubrir?category=${product.category[0]}`}>{t(`categories.${product.category[0]}.label`)}</BreadcrumbLink>
                         </BreadcrumbItem>
                         <BreadcrumbSeparator className="text-secondary"/>
                         <BreadcrumbItem>
