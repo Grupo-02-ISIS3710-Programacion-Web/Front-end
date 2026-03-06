@@ -79,9 +79,9 @@
         "productCount": "{count, plural, =0 {Mostrando 0 productos} =1 {Mostrando 1 producto} other {Mostrando {count} productos}}",
         "filter": "Filtrar por:",
         "filters": {
-            "skinType": "Tipo de piel: {type}",
-            "brand": "Marca: {brand}",
-            "excludeIngredients": "Excluir ingredientes: {ingredient}"
+            "skinType": "Tipo de piel",
+            "brand": "Marca",
+            "excludeIngredients": "Excluir ingredientes"
         },
         "clearFilters": "Limpiar filtros",
         "chips": {
@@ -195,5 +195,9 @@
             "description": "Encuentra productos anti-edad para combatir los signos del envejecimiento"
             }
         }
+    },
+
+    "CreateProductPage" : {
+        "title": "Añade un nuevo producto al catálogo de Skin4All"
     }
 }

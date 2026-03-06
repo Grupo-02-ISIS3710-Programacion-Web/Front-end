@@ -163,5 +163,9 @@
             "description": "Find anti-aging products to fight signs of aging"
             }
         }
+    },
+
+    "CreateProductPage" : {
+        "title": "Add a new product to the Skin4All Catalogue"
     }
 }
