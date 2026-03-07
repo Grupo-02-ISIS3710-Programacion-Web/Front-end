@@ -115,58 +115,58 @@ export default function Profile(){
 
                             
                             {activeTab === "routine" && (
-                            <div className="flex flex-col lg:flex-row bg-white gap-4 items-start lg:items-center justify-between p-4 lg:px-10">
+                                <div className="flex flex-col lg:flex-row bg-white gap-4 items-start lg:items-center justify-between p-4 lg:px-10">
 
-                                <div className="flex flex-wrap rounded-2xl border border-secondary p-1 gap-2 w-full lg:w-auto">
-                                {routine.map((routin) => {
-                                    const dayRoutine = routineDaily === routin.id
-                                    return (
-                                    <Button
-                                        key={routin.id}
-                                        className={`text-black ${
-                                        dayRoutine
-                                            ? ""
-                                            : "bg-white border-primary hover:bg-secondary hover:text-primary-foreground"
-                                        }`}
-                                        onClick={() => setRoutineDaily(routin.id)}
-                                    >
-                                        {routin.label}
+                                    <div className="flex flex-wrap rounded-2xl border border-secondary p-1 gap-2 w-full lg:w-auto">
+                                    {routine.map((routin) => {
+                                        const dayRoutine = routineDaily === routin.id
+                                        return (
+                                        <Button
+                                            key={routin.id}
+                                            className={`text-black ${
+                                            dayRoutine
+                                                ? ""
+                                                : "bg-white border-primary hover:bg-secondary hover:text-primary-foreground"
+                                            }`}
+                                            onClick={() => setRoutineDaily(routin.id)}
+                                        >
+                                            {routin.label}
+                                        </Button>
+                                        )
+                                    })}
+                                    </div>
+
+                                    <Button className="bg-white text-primary hover:bg-white hover:underline w-full lg:w-auto">
+                                    + Agregar paso
                                     </Button>
-                                    )
-                                })}
                                 </div>
-
-                                <Button className="bg-white text-primary hover:bg-white hover:underline w-full lg:w-auto">
-                                + Agregar paso
-                                </Button>
-                            </div>
                             )}
 
                             
                             {activeTab === "favorites" && (
-                            <div className="flex flex-col lg:flex-row bg-white gap-4 items-start lg:items-center justify-between p-4 lg:px-10">
+                                <div className="flex flex-col lg:flex-row bg-white gap-4 items-start lg:items-center justify-between p-4 lg:px-10">
 
-                                <div className="flex items-center gap-2 w-full lg:w-96">
-                                <Input
-                                    type="text"
-                                    placeholder="Buscar productos..."
-                                    className="w-full"
-                                    onChange={(e) => setSearchTerm(e.target.value)}
-                                />
-                                <Button variant="outline" size="icon">
-                                    <Search className="h-4 w-4" />
-                                </Button>
-                                <Button className="flex items-center justify-center w-10 h-10 rounded-xl border border-gray-200 bg-white hover:bg-gray-100 transition">
-                                    <SlidersHorizontal size={18} className="text-gray-600" />
-                                </Button>
+                                    <div className="flex items-center gap-2 w-full lg:w-96">
+                                    <Input
+                                        type="text"
+                                        placeholder="Buscar productos..."
+                                        className="w-full"
+                                        onChange={(e) => setSearchTerm(e.target.value)}
+                                    />
+                                    <Button variant="outline" size="icon">
+                                        <Search className="h-4 w-4" />
+                                    </Button>
+                                    <Button className="flex items-center justify-center w-10 h-10 rounded-xl border border-gray-200 bg-white hover:bg-gray-100 transition">
+                                        <SlidersHorizontal size={18} className="text-gray-600" />
+                                    </Button>
+                                    </div>
+
+                                    <Button  className="bg-white text-primary hover:bg-white hover:underline w-full lg:w-auto">
+                                        <Link href="/descubrir">
+                                            Descubre más productos
+                                        </Link>
+                                    </Button>
                                 </div>
-
-                                <Button  className="bg-white text-primary hover:bg-white hover:underline w-full lg:w-auto">
-                                    <Link href="/descubrir">
-                                        Descubre más productos
-                                    </Link>
-                                </Button>
-                            </div>
                             )}
 
                         </div>

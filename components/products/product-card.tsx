@@ -49,14 +49,19 @@ export function ProductCard({productIndex, product, onFavoriteSelect, onFavorite
                 {/* brand and favorite button */}
                 <Stack direction={"row"} paddingBottom={1} justifyContent={"space-between"} alignItems={"center"}>
                     <div className="text-primary font-bold">{product.brand}</div>
-                    <Button 
-                        variant={toggleFavorite ? "secondary" : "outline"} 
-                        size="sm" 
-                        className="h-8 px-2 rounded-2xl"
+                    <button
                         onClick={handleClick}
+                        className="flex items-center justify-center"
                     >
-                        <Heart size={16} />
-                    </Button>
+                        <Heart
+                            size={18}
+                            className={
+                                toggleFavorite
+                                    ? "text-primary fill-primary"
+                                    : "text-gray-400"
+                            }
+                        />
+                    </button>
                 </Stack>
 
                 {/* product name */}
