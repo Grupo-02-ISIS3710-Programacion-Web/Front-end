@@ -70,10 +70,126 @@
     },
 
     
-        "Home": {
-            "topProducts": "Productos mejor valorados",
-            "topProductsDescription": "Seleccionados por nuestra comunidad y dermatólogos.",
-            "seeAllProducts": "Ver todos los productos"
-        }
+    "Home": {
+        "topProducts": "Productos mejor valorados",
+        "topProductsDescription": "Seleccionados por nuestra comunidad y dermatólogos.",
+        "seeAllProducts": "Ver todos los productos"
+    },
+
+    
+    "CommentHome": {
+        "title": "Únete a la conversación",
+        "description": "Haz preguntas, comparte tus resultados y aprende de miles de usuarios reales con tu mismo tipo de piel.",
+
+        "feature1": "Foros específicos según tu problema de piel",
+        "feature2": "Respuestas verificadas por profesionales",
+        "feature3": "Retos diarios de rutinas de cuidado facial",
+
+        "visitCommunity": "Visitar comunidad",
+
+        "post1": "¿Cuál es el mejor protector solar para piel grasa que no obstruya los poros?",
+        "post2": "Mi transformación con vitamina C después de 3 meses (Resultados)",
+        "post3": "¿Se puede usar retinol junto con niacinamida? Expertos lo explican.",
+
+        "replies": "respuestas",
+        "likes": "me gusta",
+
+        "ctaTitle": "Empieza tu transformación de piel",
+        "ctaDescription": "Recibe consejos personalizados de skincare cada semana y acceso temprano a nuevos productos.",
+        "emailPlaceholder": "Ingresa tu email",
+        "joinNow": "Unirme"
+    },
+
+    
+    "ProductCard": {
+        "viewDetails": "Ver detalles"
+    },
+    "SeccionInfoHome": {
+        "badge": "CUIDADO DE LA PIEL RESPALDADO POR EXPERTOS",
+        "title1": "Tu viaje de",
+        "title2": "Skincare",
+        "title3": "empieza aquí",
+        "description": "Únete a una comunidad de más de 50 mil entusiastas. Haz seguimiento a tu progreso, encuentra la rutina perfecta para tu tipo de piel y descubre productos que realmente funcionan.",
+        "register": "Regístrate",
+        "trusted": "personas confían en nosotros"
+    },
+    
+    "Profile": {
+        "myRoutine": "Mi rutina",
+        "myFavorites": "Mis favoritos",
+
+        "morning": "Mañana (AM)",
+        "evening": "Noche (PM)",
+
+        "addStep": "+ Agregar paso",
+
+        "searchProducts": "Buscar productos...",
+
+        "discoverMore": "Descubre más productos",
+
+        "loadMore": "Cargar más"
+    },
+    
+    "ProfileTabs": {
+        "myRoutine": "Mi rutina",
+        "myFavorites": "Mis favoritos",
+        "forumPosts": "Publicaciones del foro",
+
+        "morning": "Mañana (AM)",
+        "evening": "Noche (PM)",
+
+        "addStep": "+ Agregar paso",
+
+        "searchProducts": "Buscar productos...",
+        "discoverMore": "Descubre más productos"
+    },
+
+    "RoutineContent": {
+        "steps": "pasos"
+    },
+
+
+    "UserInfo": {
+        "reviews": "RESEÑAS",
+        "posts": "PUBLICACIONES",
+
+        "editProfile": "Editar perfil",
+
+        "changePhoto": "Cambiar foto",
+
+        "name": "Nombre",
+        "city": "Ciudad",
+        "skinType": "Tipo de piel",
+        "bio": "Biografía",
+
+        "cancel": "Cancelar",
+        "save": "Guardar"
+    },
+    
+    "Login": {
+        "welcome": "Bienvenido",
+        "subtitle": "Inicia sesión en tu ritual diario de cuidado de la piel",
+
+        "usernameEmail": "Usuario o Email",
+        "password": "Contraseña",
+        "forgotPassword": "¿Olvidé mi contraseña?",
+
+        "login": "Ingresar",
+
+        "continueWith": "o continúa con",
+
+        "newUser": "¿Nuevo en Skin4All?",
+        "register": "Regístrate",
+
+        "emailRequired": "El email es obligatorio",
+        "passwordRequired": "La contraseña es obligatoria"
+    }
+
+
+
+
+
+
+
     
 }

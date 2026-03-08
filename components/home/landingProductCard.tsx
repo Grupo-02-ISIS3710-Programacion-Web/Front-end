@@ -1,12 +1,15 @@
 import Image from "next/image"
 import { Product } from "@/types/product"
 import StarRating from "@/components/products/star-rating"
+import { getTranslations } from "next-intl/server"
 
 interface LandingProductCardProps {
   product: Product
 }
 
-export default function LandingProductCard({ product }: LandingProductCardProps) {
+export default async function LandingProductCard({ product }: LandingProductCardProps) {
+
+  const t = await getTranslations("ProductCard")
 
   return (
 
@@ -42,7 +45,7 @@ export default function LandingProductCard({ product }: LandingProductCardProps)
       </div>
 
       <button className="mt-auto w-full bg-primary text-white py-2 rounded-lg hover:bg-pink-600 transition">
-        Ver detalles
+        {t("viewDetails")}
       </button>
 
     </div>

@@ -1,12 +1,16 @@
+"use client"
+
 import { Trash2, Sun, Moon } from "lucide-react"
 import { Routine } from "@/types/routine"
-import { products } from "@/lib/api"
+import { useTranslations } from "next-intl"
 
 export default function RoutineContent({
   filteredRoutines,
 }: {
   filteredRoutines: Routine[]
 }) {
+
+  const t = useTranslations("RoutineContent")
 
   return (
     <div className="flex flex-col gap-6">
@@ -19,19 +23,17 @@ export default function RoutineContent({
                      hover:shadow-md transition-all duration-200"
         >
 
-          
           <div className="flex justify-between items-start gap-4">
 
             <div className="flex flex-col gap-2 flex-1">
 
-              
               <div className="flex items-center gap-2">
+
                 <span
                   className={`flex items-center gap-1 px-3 py-1 text-xs rounded-full font-medium
                     ${routine.type === "AM"
                       ? "bg-amber-100 text-amber-600"
-                      : "bg-indigo-100 text-indigo-600"
-                    }
+                      : "bg-indigo-100 text-indigo-600"}
                   `}
                 >
                   {routine.type === "AM" ? <Sun size={14}/> : <Moon size={14}/>}
@@ -39,40 +41,39 @@ export default function RoutineContent({
                 </span>
 
                 <span className="text-xs text-gray-400">
-                  {routine.steps.length} steps
+                  {routine.steps.length} {t("steps")}
                 </span>
+
               </div>
 
-              
               <h2 className="text-lg sm:text-xl font-semibold text-gray-900">
                 {routine.name}
               </h2>
 
-              
               <p className="text-sm text-gray-500">
                 {routine.description}
               </p>
 
             </div>
 
-            
             <button
               onClick={() => console.log("Delete routine", routine.id)}
-              className="
-                         transition text-gray-400 hover:text-red-500"
+              className="transition text-gray-400 hover:text-red-500"
             >
               <Trash2 size={18} />
             </button>
+
           </div>
 
-          {/* Steps Preview */}
           <div className="mt-4 flex flex-wrap gap-3">
+
             {routine.steps.map((step) => (
               <div
                 key={step.id}
                 className="flex items-center gap-2 bg-gray-50 
                            border border-gray-200 rounded-xl px-3 py-2"
               >
+
                 <div className="w-6 h-6 rounded-full bg-rose-100 
                                 text-rose-600 text-xs flex items-center 
                                 justify-center font-semibold">
@@ -82,8 +83,10 @@ export default function RoutineContent({
                 <span className="text-xs sm:text-sm text-gray-700">
                   {step.product.name}
                 </span>
+
               </div>
             ))}
+
           </div>
 
         </div>
