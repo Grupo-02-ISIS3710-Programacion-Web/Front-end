@@ -67,5 +67,13 @@
     "SearchBar": {
         "placeholder": "Busca productos por nombre, marca o tipo...",
         "allProducts": "Todos los productos"
-    }
+    },
+
+    
+        "Home": {
+            "topProducts": "Productos mejor valorados",
+            "topProductsDescription": "Seleccionados por nuestra comunidad y dermatólogos.",
+            "seeAllProducts": "Ver todos los productos"
+        }
+    
 }

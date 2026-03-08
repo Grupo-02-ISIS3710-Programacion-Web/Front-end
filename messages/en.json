@@ -35,5 +35,10 @@
     "SearchBar": {
         "placeholder": "Search products by name, brand, or type...",
         "allProducts": "All products"
+    },
+    "Home": {
+        "topProducts": "Top rated products",
+        "topProductsDescription": "Selected by our community and dermatologists.",
+        "seeAllProducts": "See all products"
     }
 }

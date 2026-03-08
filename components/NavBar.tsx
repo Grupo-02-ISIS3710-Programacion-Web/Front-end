@@ -10,7 +10,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/co
 const links = [
     {
       nombre: "Home",
-      href: "/"
+      href: "/home"
     },
     {
         nombre: "Descubre productos",
