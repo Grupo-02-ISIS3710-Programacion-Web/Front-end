@@ -1,6 +1,7 @@
 {
     "CrearRutina": {
         "title": "Create Your Ideal Routine",
+        "routineInfo": "Your routine information",
         "description": "Explore products, filter by category, and save a personalized routine for your skin."
     },
     "GridProductos": {

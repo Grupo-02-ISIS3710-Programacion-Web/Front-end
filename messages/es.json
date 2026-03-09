@@ -1,6 +1,7 @@
 {
     "CrearRutina": {
         "title": "Crea Tu Rutina Ideal",
+        "routineInfo": "Información de tu rutina",
         "description": "Explora productos, filtra por categoría y guarda una rutina personalizada para tu piel."
     },
     "GuardarRutina": {
