@@ -32,6 +32,8 @@ import { useTranslations } from "next-intl";
 
 export default function ProductDetailPage() {
     const t = useTranslations("ProductCard");
+    const tCat = useTranslations("Categories");
+    const tProdType = useTranslations("ProductTypes");
     const params = useParams();
 
     let slug: string;
@@ -105,7 +107,7 @@ export default function ProductDetailPage() {
                         </BreadcrumbItem>
                         <BreadcrumbSeparator className="text-secondary" />
                         <BreadcrumbItem>
-                            <BreadcrumbLink className="hover:text-secondary font-normal" href={`../descubrir?category=${product.category[0]}`}>{t(`categories.${product.category[0]}.label`)}</BreadcrumbLink>
+                            <BreadcrumbLink className="hover:text-secondary font-normal" href={`../descubrir?category=${product.category[0]}`}>{tCat(`${product.category[0]}.label`)}</BreadcrumbLink>
                         </BreadcrumbItem>
                         <BreadcrumbSeparator className="text-secondary"/>
                         <BreadcrumbItem>
@@ -173,7 +175,7 @@ export default function ProductDetailPage() {
                                     </div>
                                     <div className="text-sm flex flex-col">
                                         <p>{t("category")}</p>
-                                        <p className="text-foreground">{capitalizeFirstLetter(product.category[0])}</p>
+                                        <p className="text-foreground">{tCat(`${product.category[0]}.label`)}</p>
                                     </div>
                                 </Stack>
                                 <Stack direction={"row"} gap={1} alignItems={"center"} flexWrap="wrap">
@@ -182,7 +184,7 @@ export default function ProductDetailPage() {
                                     </div>
                                     <div className="text-sm flex flex-col">
                                         <p>{t("productType")}</p>
-                                        <p className="text-foreground">{t(`productTypes.${product.product_type}`)}</p>
+                                        <p className="text-foreground">{tProdType(`${product.product_type}`)}</p>
                                     </div>
                                 </Stack>
                             </Stack>

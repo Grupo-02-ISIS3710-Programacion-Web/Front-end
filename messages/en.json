@@ -70,39 +70,61 @@
         "opaca": "Dull",
         "texturizada": "Textured"
     },
+    "Categories": {
+        "ALL": {
+        "label": "All products",
+        "description": "Discover all available products"
+        },
+        "limpieza": {
+        "label": "Cleansers",
+        "description": "Find the best cleansers for your skin"
+        },
+        "hidratacion": {
+        "label": "Moisturizers",
+        "description": "Hydrate your skin with creams and lotions"
+        },
+        "antioxidante": {
+        "label": "Serums",
+        "description": "Boost your routine with specialized serums"
+        },
+        "reparacion": {
+        "label": "Repair",
+        "description": "Enhance your routine with repairing essences"
+        },
+        "exfoliacion": {
+        "label": "Exfoliation",
+        "description": "Renew your skin with chemical and physical exfoliants"
+        },
+        "anti-edad": {
+        "label": "Anti-aging",
+        "description": "Find anti-aging products to fight signs of aging"
+        }
+    },
     "CategoriesCard": {
         "title": "Categories",
-        "description": "Explore products by category",
-        "categories": {
-            "ALL": {
-            "label": "All products",
-            "description": "Discover all available products"
-            },
-            "limpieza": {
-            "label": "Cleansers",
-            "description": "Find the best cleansers for your skin"
-            },
-            "hidratacion": {
-            "label": "Moisturizers",
-            "description": "Hydrate your skin with creams and lotions"
-            },
-            "antioxidante": {
-            "label": "Serums",
-            "description": "Boost your routine with specialized serums"
-            },
-            "reparacion": {
-            "label": "Repair",
-            "description": "Enhance your routine with repairing essences"
-            },
-            "exfoliacion": {
-            "label": "Exfoliation",
-            "description": "Renew your skin with chemical and physical exfoliants"
-            },
-            "anti-edad": {
-            "label": "Anti-aging",
-            "description": "Find anti-aging products to fight signs of aging"
-            }
-        }
+        "description": "Explore products by category"
+    },
+
+    "ProductTypes": {
+        "cleanser": "Cleanser",
+        "serum": "Serum",
+        "moisturizer": "Moisturizer",
+        "essence": "Essence",
+        "toner": "Toner",
+        "exfoliant": "Exfoliant",
+        "sunscreen": "Sunscreen",
+        "mask": "Mask",
+        "exfoliating_cleanser": "Exfoliating cleanser",
+        "exfoliating_toner": "Exfoliating toner",
+        "anti_aging_serum": "Anti-aging serum",
+        "hydrating_gel": "Hydrating gel",
+        "repair_balm": "Repairing balm",
+        "hydrating_serum": "Hydrating serum",
+        "antioxidant_serum": "Antioxidant serum",
+        "retinol_serum": "Retinol serum",
+        "facial_cleanser": "Facial cleanser",
+        "eye_cream": "Eye cream",
+        "oil": "Oil"
     },
     "ProductCard": {
         "discover": "Discover",
@@ -111,61 +133,20 @@
         "keyIngredient": "Key ingredient",
         "ingredientsDetailed": "Detailed ingredients",
         "addToRoutine": "Add to routine",
-        "productNotFound": "Product not found",
-
-        "productTypes": {
-            "cleanser": "Cleanser",
-            "serum": "Serum",
-            "moisturizer": "Moisturizer",
-            "essence": "Essence",
-            "toner": "Toner",
-            "exfoliant": "Exfoliant",
-            "sunscreen": "Sunscreen",
-            "mask": "Mask",
-            "exfoliating_cleanser": "Exfoliating cleanser",
-            "exfoliating_toner": "Exfoliating toner",
-            "anti_aging_serum": "Anti-aging serum",
-            "hydrating_gel": "Hydrating gel",
-            "repair_balm": "Repairing balm",
-            "hydrating_serum": "Hydrating serum",
-            "antioxidant_serum": "Antioxidant serum",
-            "retinol_serum": "Retinol serum",
-            "facial_cleanser": "Facial cleanser"
-        },
-
-        "categories": {
-            "ALL": {
-            "label": "All products",
-            "description": "Discover all available products"
-            },
-            "limpieza": {
-            "label": "Cleansers",
-            "description": "Find the best cleansers for your skin"
-            },
-            "hidratacion": {
-            "label": "Moisturizers",
-            "description": "Hydrate your skin with creams and lotions"
-            },
-            "antioxidante": {
-            "label": "Serums",
-            "description": "Boost your routine with specialized serums"
-            },
-            "reparacion": {
-            "label": "Repair",
-            "description": "Enhance your routine with repairing essences"
-            },
-            "exfoliacion": {
-            "label": "Exfoliation",
-            "description": "Renew your skin with chemical and physical exfoliants"
-            },
-            "anti-edad": {
-            "label": "Anti-aging",
-            "description": "Find anti-aging products to fight signs of aging"
-            }
-        }
+        "productNotFound": "Product not found"
     },
 
     "CreateProductPage" : {
-        "title": "Add a new product to the Skin4All Catalogue"
+        "title": "Add a new product to the Skin4All Catalogue",
+        "submitDisclaimer": "Products submitted to this form will be verified by an administrator before they are approved to be put on the platform. The administrator may decide to not add the product if it doesn't meet the standards of the platform.",
+        "productName": "Product name",
+        "productNamePlaceholder": "CeraVe hydrating cleanser",
+        "brand": "Product brand",
+        "productType": "Product type",
+        "productTypePlaceholder": "Ex: serum, moisturizer, cream, etc",
+        "primaryCategory": "Main product category",
+        "ingredients": "Ingredients",
+        "ingredientsPlaceholder": "Ex: niacinamide, glycerin, ceramides",
+        "imageUrl": "Image URL of the product"
     }
 }

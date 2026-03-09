@@ -102,39 +102,61 @@
         "opaca": "Opaca",
         "texturizada": "Texturizada"
     },
+
+    "Categories": {
+        "ALL": {
+        "label": "Todos los productos",
+        "description": "Descubre todos los productos disponibles"
+        },
+        "limpieza": {
+        "label": "Limpiadores",
+        "description": "Encuentra los mejores limpiadores para tu piel"
+        },
+        "hidratacion": {
+        "label": "Hidratantes",
+        "description": "Hidrata tu piel con cremas y lociones"
+        },
+        "antioxidante": {
+        "label": "Serums",
+        "description": "Potencia tu rutina con serums especializados"
+        },
+        "reparacion": {
+        "label": "Reparación",
+        "description": "Potencia tu rutina con esencias reparadoras"
+        },
+        "exfoliacion": {
+        "label": "Exfoliación",
+        "description": "Renueva tu piel con exfoliantes químicos y físicos"
+        },
+        "anti-edad": {
+        "label": "Anti-edad",
+        "description": "Encuentra productos anti-edad para combatir los signos del envejecimiento"
+        }
+    },
     "CategoriesCard": {
         "title": "Categorías",
-        "description": "Explora productos por categorías",
-        "categories": {
-            "ALL": {
-            "label": "Todos los productos",
-            "description": "Descubre todos los productos disponibles"
-            },
-            "limpieza": {
-            "label": "Limpiadores",
-            "description": "Encuentra los mejores limpiadores para tu piel"
-            },
-            "hidratacion": {
-            "label": "Hidratantes",
-            "description": "Hidrata tu piel con cremas y lociones"
-            },
-            "antioxidante": {
-            "label": "Serums",
-            "description": "Potencia tu rutina con serums especializados"
-            },
-            "reparacion": {
-            "label": "Reparación",
-            "description": "Potencia tu rutina con esencias reparadoras"
-            },
-            "exfoliacion": {
-            "label": "Exfoliación",
-            "description": "Renueva tu piel con exfoliantes químicos y físicos"
-            },
-            "anti-edad": {
-            "label": "Anti-edad",
-            "description": "Encuentra productos anti-edad para combatir los signos del envejecimiento"
-            }
-        }
+        "description": "Explora productos por categorías"
+    },
+    "ProductTypes": {
+        "cleanser": "Limpiador",
+        "serum": "Suero",
+        "moisturizer": "Hidratante",
+        "essence": "Esencia",
+        "toner": "Tónico",
+        "exfoliant": "Exfoliante",
+        "sunscreen": "Protector solar",
+        "mask": "Mascarilla",
+        "exfoliating_cleanser": "Limpiador exfoliante",
+        "exfoliating_toner": "Tónico exfoliante",
+        "anti_aging_serum": "Suero antiedad",
+        "hydrating_gel": "Gel hidratante",
+        "repair_balm": "Bálsamo reparador",
+        "hydrating_serum": "Suero hidratante",
+        "antioxidant_serum": "Suero antioxidante",
+        "retinol_serum": "Suero con retinol",
+        "facial_cleanser": "Limpiador facial",
+        "eye_cream": "Crema para ojos",
+        "oil": "Aceite"
     },
     "ProductCard": {
         "discover": "Descubrir",
@@ -143,61 +165,20 @@
         "keyIngredient": "Ingrediente clave",
         "ingredientsDetailed": "Ingredientes detallados",
         "addToRoutine": "Agregar a una rutina",
-        "productNotFound": "Producto no encontrado",
-
-        "productTypes": {
-            "cleanser": "Limpiador",
-            "serum": "Suero",
-            "moisturizer": "Hidratante",
-            "essence": "Esencia",
-            "toner": "Tónico",
-            "exfoliant": "Exfoliante",
-            "sunscreen": "Protector solar",
-            "mask": "Mascarilla",
-            "exfoliating_cleanser": "Limpiador exfoliante",
-            "exfoliating_toner": "Tónico exfoliante",
-            "anti_aging_serum": "Suero antiedad",
-            "hydrating_gel": "Gel hidratante",
-            "repair_balm": "Bálsamo reparador",
-            "hydrating_serum": "Suero hidratante",
-            "antioxidant_serum": "Suero antioxidante",
-            "retinol_serum": "Suero con retinol",
-            "facial_cleanser": "Limpiador facial"
-        },
-
-        "categories": {
-            "ALL": {
-            "label": "Todos los productos",
-            "description": "Descubre todos los productos disponibles"
-            },
-            "limpieza": {
-            "label": "Limpiadores",
-            "description": "Encuentra los mejores limpiadores para tu piel"
-            },
-            "hidratacion": {
-            "label": "Hidratantes",
-            "description": "Hidrata tu piel con cremas y lociones"
-            },
-            "antioxidante": {
-            "label": "Serums",
-            "description": "Potencia tu rutina con serums especializados"
-            },
-            "reparacion": {
-            "label": "Reparación",
-            "description": "Potencia tu rutina con esencias reparadoras"
-            },
-            "exfoliacion": {
-            "label": "Exfoliación",
-            "description": "Renueva tu piel con exfoliantes químicos y físicos"
-            },
-            "anti-edad": {
-            "label": "Anti-edad",
-            "description": "Encuentra productos anti-edad para combatir los signos del envejecimiento"
-            }
-        }
+        "productNotFound": "Producto no encontrado"
     },
 
     "CreateProductPage" : {
-        "title": "Añade un nuevo producto al catálogo de Skin4All"
+        "title": "Añade un nuevo producto al catálogo de Skin4All",
+        "submitDisclaimer": "Los productos que subas a este form pasaran por la verificación de un administrador antes de ser acepatos en la plataforma. El administrador puede excluir el producto si considera que no cumple con los estándares de la plataforma.",
+        "productName": "Nombre del producto",
+        "productNamePlaceholder": "CeraVe limpiador hidratante",
+        "brand": "Marca del producto",
+        "productType": "Tipo de producto",
+        "productTypePlaceholder": "Ej: serum, limpiador, crema hidratante",
+        "primaryCategory": "Categoría principal del producto",
+        "ingredients": "Ingredientes",
+        "ingredientsPlaceholder": "Ej: niacinamida, glicerina, ceramidas",
+        "imageUrl": "URL de la imagen del producto"
     }
 }

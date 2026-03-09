@@ -1,12 +1,10 @@
-import { useTranslations } from "next-intl";
+import ProductForm from "@/components/products/product-form";
 import { Container } from "@mui/material";
 
 export default function CreateProductPage() {
-    const t = useTranslations("CreateProductPage");
-
-    return (
+        return (
         <Container className="pt-10">
-            <h1>{t("title")}</h1>
+            <ProductForm/>
         </Container>
     );
 }

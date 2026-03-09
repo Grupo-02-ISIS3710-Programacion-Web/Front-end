@@ -24,7 +24,7 @@ export enum ProductType {
     MOISTURIZER = "moisturizer",
     SERUM = "serum",
     ESSENCE = "essence",
-    EXFOLIATOR = "exfoliator",
+    EXFOLIANT = "exfoliant",
     SUNSCREEN = "sunscreen",
     TONER = "toner",
     EXFOLIATING_CLEANSER = "exfoliating_cleanser",
@@ -52,4 +52,16 @@ export interface Product {
     rating: number;
     review_count: number;
     image_url: string[];
+}
+
+//Productos propuestos por los usuarios, que aún no han sido validados por el equipo de administración
+export interface ProposedProduct {
+    name: string
+    brand: string
+    skin_type: SkinType[]
+    product_type: string
+    primary_category: Category
+    additional_categories?: Category[]
+    ingredients: string[]
+    image_url: string[]
 }

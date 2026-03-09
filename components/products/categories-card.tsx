@@ -57,6 +57,7 @@ export function CategoriesCard({ currentCategory }: CategoriesCardProps) {
 export function CategoriesCardDesktop({ isCategorySelected }: CategoriesCardDesktopMobileProps) {
 
     const t = useTranslations("CategoriesCard");
+    const tCat = useTranslations("Categories");
 
     return (
         <div className="px-1">
@@ -91,7 +92,7 @@ export function CategoriesCardDesktop({ isCategorySelected }: CategoriesCardDesk
                         >
                             {category.icon}
                             <div>
-                            {t(`categories.${category.value}.label`)}
+                            {tCat(`${category.value}.label`)}
                             </div>
                         </a>
                         </Button>
