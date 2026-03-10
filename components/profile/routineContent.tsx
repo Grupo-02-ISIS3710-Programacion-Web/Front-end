@@ -1,13 +1,24 @@
 import { Trash2, Sun, Moon } from "lucide-react"
 import { Routine } from "@/types/routine"
-import { products } from "@/lib/api"
+import { Product } from "@/types/product"
+import { getProducts } from "@/lib/api"
+import { useEffect, useState } from "react"
 
 export default function RoutineContent({
   filteredRoutines,
 }: {
   filteredRoutines: Routine[]
 }) {
+  const [products, setProducts] = useState<Product[]>([])
 
+  function setProductsApi() {
+    const productsData = getProducts();
+    setProducts(productsData);
+  }
+
+  useEffect(() => {
+    setProductsApi()
+  }, [])
   return (
     <div className="flex flex-col gap-6">
 
@@ -19,12 +30,12 @@ export default function RoutineContent({
                      hover:shadow-md transition-all duration-200"
         >
 
-          
+
           <div className="flex justify-between items-start gap-4">
 
             <div className="flex flex-col gap-2 flex-1">
 
-              
+
               <div className="flex items-center gap-2">
                 <span
                   className={`flex items-center gap-1 px-3 py-1 text-xs rounded-full font-medium
@@ -34,7 +45,7 @@ export default function RoutineContent({
                     }
                   `}
                 >
-                  {routine.type === "AM" ? <Sun size={14}/> : <Moon size={14}/>}
+                  {routine.type === "AM" ? <Sun size={14} /> : <Moon size={14} />}
                   {routine.type}
                 </span>
 
@@ -43,19 +54,19 @@ export default function RoutineContent({
                 </span>
               </div>
 
-              
+
               <h2 className="text-lg sm:text-xl font-semibold text-gray-900">
                 {routine.name}
               </h2>
 
-              
+
               <p className="text-sm text-gray-500">
                 {routine.description}
               </p>
 
             </div>
 
-            
+
             <button
               onClick={() => console.log("Delete routine", routine.id)}
               className="

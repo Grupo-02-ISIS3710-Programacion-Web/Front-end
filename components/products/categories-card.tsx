@@ -75,7 +75,7 @@ export function CategoriesCard({currentCategory}: CategoriesCardProps) {
     )
 }
 
-export function CategoriesCardDesktop({  isCategorySelected}: CategoriesCardDesktopMobileProps) {
+export function CategoriesCardDesktop({isCategorySelected}: CategoriesCardDesktopMobileProps) {
 
     return (
         <div className="px-1">
@@ -122,8 +122,7 @@ export function CategoriesCardMobile({isCategorySelected}: CategoriesCardDesktop
             {categories.map((category, index)=>(
                                 <Button 
                                     key={index} 
-                                    className={` flex justify-baseline w-fit hover:bg-secondary py-5 ${isCategorySelected(category.value) ? "bg-secondary text-secondary-foreground " : "bg-muted text-foreground"}`} 
-                                    onClick={() => handleCategoryChange(category.value)}
+                                    className={` flex justify-baseline w-fit hover:bg-secondary py-5 ${isCategorySelected(category.value) ? "bg-secondary text-secondary-foreground " : "bg-muted text-foreground"}`}
                                     asChild
                                 >
                                     <a href={category.value === "ALL" ? "/descubrir": `?category=${category.value}`} className="flex justify-baseline ">

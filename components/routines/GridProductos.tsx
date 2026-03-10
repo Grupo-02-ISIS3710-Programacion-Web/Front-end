@@ -6,14 +6,14 @@ import CardProducto from "@/components/routines/CardProducto";
 import RoutineDrawer from "@/components/routines/RoutineDrawer";
 import RoutineSidebar from "@/components/routines/RoutineSidebar";
 import { Product, Category } from "@/types/product";
-import { products } from "@/lib/api";
+import { getProducts } from "@/lib/api";
 import SearchBar from "@/components/routines/SearchBar";
 import { useTranslations } from "next-intl";
 
 const getProductos = async (): Promise<Product[]> => {
     return new Promise((resolve) => {
         setTimeout(() => {
-            resolve(products);
+            resolve(getProducts());
         }, 1000);
     });
 };
