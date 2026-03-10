@@ -145,6 +145,9 @@
         "productType": "Product type",
         "productTypePlaceholder": "Ex: serum, moisturizer, cream, etc",
         "primaryCategory": "Main product category",
+        "primaryCategoryPlaceholder": "Select the main category of the product",
+        "additionalCategories": "Other categories",
+        "additionalCategoriesPlaceholder": "Select additional product categories",
         "ingredients": "Ingredients",
         "ingredientsPlaceholder": "Ex: niacinamide, glycerin, ceramides",
         "imageUrl": "Image URL of the product"

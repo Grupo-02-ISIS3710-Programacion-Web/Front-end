@@ -45,6 +45,7 @@ export interface Product {
     id: string;
     name: string;
     brand: string;
+    description: string;
     skin_type: SkinType[];
     product_type: ProductType;
     category: Category[];

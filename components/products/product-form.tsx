@@ -12,6 +12,8 @@ import { Button } from "../ui/button";
 import { InputGroup, InputGroupTextarea } from "../ui/input-group";
 import { Stack, useMediaQuery, useTheme } from "@mui/material";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
+import { Combobox, ComboboxChip, ComboboxChips, ComboboxChipsInput, ComboboxContent, ComboboxInput, ComboboxItem, ComboboxList, ComboboxTrigger, ComboboxValue, useComboboxAnchor } from "../ui/combobox";
+import { Fragment } from "react";
 
 export const createProductSchema = z.object({
     name: z.string().min(3),
@@ -68,16 +70,22 @@ export default function ProductForm() {
             name: "",
             brand: "",
             skin_type: [],
-            product_type: ProductType.CLEANSER,
-            primary_category: Category.HIDRATACION,
+            product_type: undefined,
+            primary_category: undefined,
             additional_categories: [],
             ingredients: [],
             image_url: []
         }
-  })
+    })
+
+    const selectedPrimaryCat = form.watch("primary_category");
+
+    const additionalCategoryOptions = categories.filter((c) => c !== selectedPrimaryCat);
+
+    const anchor = useComboboxAnchor();
 
     return (
-        <Card>
+        <Card className="w-full md:w-3/4 mx-auto">
             <CardHeader>
                 <CardTitle className="text-center text-3xl">{t("title")}</CardTitle>
                 <div className="w-full flex justify-center">
@@ -88,52 +96,49 @@ export default function ProductForm() {
                 <CardContent>
                     <FieldGroup>
 
-                        <Stack direction={isMobile?"column":"row"} gap={4}>
-                            <Controller
-                            name="name"
-                            control={form.control}
-                            render={({ field, fieldState }) => (
-                                <Field data-invalid={fieldState.invalid}>
-                                <FieldLabel htmlFor="name">
-                                    {t("productName")}
+                        <Controller
+                        name="name"
+                        control={form.control}
+                        render={({ field, fieldState }) => (
+                            <Field data-invalid={fieldState.invalid}>
+                            <FieldLabel className="text-primary" htmlFor="name">
+                                {t("productName")}
+                            </FieldLabel>
+                            <Input
+                                {...field}
+                                id="name"
+                                placeholder={t("productNamePlaceholder")}
+                                aria-invalid={fieldState.invalid}
+                            />
+                            {fieldState.invalid && (
+                                <FieldError errors={[fieldState.error]} />
+                            )}
+                            </Field>
+                        )}
+                        />
+
+
+                        <Controller
+                        name="brand"
+                        control={form.control}
+                        render={({ field, fieldState }) => (
+                            <Field data-invalid={fieldState.invalid}>
+                                <FieldLabel className="text-primary" htmlFor="brand">
+                                    {t("brand")}
                                 </FieldLabel>
+
                                 <Input
                                     {...field}
-                                    id="name"
-                                    placeholder={t("productNamePlaceholder")}
+                                    id="brand"
+                                    placeholder="La Roche Posay"
                                     aria-invalid={fieldState.invalid}
                                 />
+
                                 {fieldState.invalid && (
                                     <FieldError errors={[fieldState.error]} />
                                 )}
-                                </Field>
-                            )}
-                            />
-
-
-                            <Controller
-                            name="brand"
-                            control={form.control}
-                            render={({ field, fieldState }) => (
-                                <Field data-invalid={fieldState.invalid}>
-                                    <FieldLabel htmlFor="brand">
-                                        {t("brand")}
-                                    </FieldLabel>
-
-                                    <Input
-                                        {...field}
-                                        id="brand"
-                                        placeholder="La Roche Posay"
-                                        aria-invalid={fieldState.invalid}
-                                    />
-
-                                    {fieldState.invalid && (
-                                        <FieldError errors={[fieldState.error]} />
-                                    )}
-                                </Field>
-                            )}
-                        />
-                        </Stack>
+                            </Field>
+                        )}/>
                         
                         <Stack direction={isMobile?"column":"row"} gap={4}>
                             {/* PRIMARY CATEGORY */}
@@ -144,13 +149,17 @@ export default function ProductForm() {
                             render={({ field, fieldState }) => (
 
                                 <Field>
-                                    <FieldLabel>
+                                    <FieldLabel className="text-primary">
                                         {t("primaryCategory")}
                                     </FieldLabel>
 
-                                    <Select name={field.name} value={field.value} onValueChange={field.onChange}>
+                                    <Select 
+                                        name={field.name} 
+                                        value={field.value} 
+                                        onValueChange={field.onChange}
+                                    >
                                         <SelectTrigger id="product-form-primary-category" aria-invalid={fieldState.invalid}>
-                                            <SelectValue />
+                                            <SelectValue placeholder={t("primaryCategoryPlaceholder")} />
                                         </SelectTrigger>
                                         <SelectContent>
                                             {categories.map((c) => (
@@ -165,6 +174,61 @@ export default function ProductForm() {
 
                             )}
                             />
+
+                            {/* ADDITIONAL CATEGORIES */}
+                            <Controller
+                            name="additional_categories"
+                            control={form.control}
+                            render={({ field, fieldState }) => (
+                                <Field data-invalid={fieldState.invalid}>
+                                <FieldLabel className="text-primary">{t("additionalCategories")}</FieldLabel>
+
+                                <Combobox
+                                    items={additionalCategoryOptions}
+                                    multiple
+                                    autoHighlight
+                                    value={field.value ?? []}
+                                    onValueChange={field.onChange}
+                                    disabled={!selectedPrimaryCat}
+                                >
+                                    
+                                    <ComboboxChips ref={anchor} className="w-full">
+                                        <ComboboxValue>
+                                            {(values) => (
+                                            <Fragment>
+                                                {values.map((value: string) => (
+                                                <ComboboxChip key={value}>{tCat(`${value}.label`)}</ComboboxChip>
+                                                ))}
+
+                                                <ComboboxChipsInput
+                                                placeholder={
+                                                    t("additionalCategoriesPlaceholder")
+                                                }
+                                                aria-invalid={fieldState.invalid}
+                                                className="min-w-24 flex-1"
+                                                />
+                                            </Fragment>
+                                            )}
+                                        </ComboboxValue>
+
+                                        <ComboboxTrigger className="ml-auto text-muted-foreground" />
+                                    </ComboboxChips>
+
+                                    <ComboboxContent anchor={anchor}>
+                                    <ComboboxList>
+                                        {(item) => (
+                                        <ComboboxItem key={item} value={item}>
+                                            {tCat(`${item}.label`)}
+                                        </ComboboxItem>
+                                        )}
+                                    </ComboboxList>
+                                    </ComboboxContent>
+                                </Combobox>
+
+                                {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+                                </Field>
+                            )}
+                            />
                         </Stack>
                             <Controller
                             name="product_type"
@@ -173,7 +237,7 @@ export default function ProductForm() {
 
                                 <Field data-invalid={fieldState.invalid}>
 
-                                    <FieldLabel htmlFor="product_type">
+                                    <FieldLabel className="text-primary" htmlFor="product_type">
                                         {t("productType")}
                                     </FieldLabel>
 
@@ -208,7 +272,7 @@ export default function ProductForm() {
 
                         <Field data-invalid={fieldState.invalid}>
 
-                        <FieldLabel>
+                        <FieldLabel className="text-primary">
                             {t("ingredients")}
                         </FieldLabel>
 
@@ -249,7 +313,7 @@ export default function ProductForm() {
 
                         <Field data-invalid={fieldState.invalid}>
 
-                        <FieldLabel>
+                        <FieldLabel className="text-primary">
                             {t("imageUrl")}
                         </FieldLabel>
 

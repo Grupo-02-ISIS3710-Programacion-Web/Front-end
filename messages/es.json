@@ -177,6 +177,9 @@
         "productType": "Tipo de producto",
         "productTypePlaceholder": "Ej: serum, limpiador, crema hidratante",
         "primaryCategory": "Categoría principal del producto",
+        "primaryCategoryPlaceholder": "Selecciona la categoría principal del producto",
+        "additionalCategories": "Otras categorías del producto",
+        "additionalCategoriesPlaceholder": "Escoja otras categorías del producto",
         "ingredients": "Ingredientes",
         "ingredientsPlaceholder": "Ej: niacinamida, glicerina, ceramidas",
         "imageUrl": "URL de la imagen del producto"
