@@ -74,11 +74,15 @@ export default function ProductDetailPage() {
     }
 
     const handleNextImage = () => {
-        setCurrentImageIndex((prevIndex) => (prevIndex + 1) % product.image_url.length);
+        if (product?.image_url) {
+            setCurrentImageIndex((prevIndex) => (prevIndex + 1) % product.image_url.length);
+        }
     }
 
     const handlePreviousImage = () => {
-        setCurrentImageIndex((prevIndex) => (prevIndex - 1 + product.image_url.length) % product.image_url.length);
+        if(product?.image_url) {
+            setCurrentImageIndex((prevIndex) => (prevIndex - 1 + product?.image_url.length) % product?.image_url.length);
+        }
     }
 
     const changeImageIndex = (index: number) => {
