@@ -10,14 +10,14 @@ import { Field, FieldError, FieldGroup, FieldLabel } from "../ui/field";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { InputGroup, InputGroupTextarea } from "../ui/input-group";
-import { Stack, useMediaQuery, useTheme } from "@mui/material";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 import { Combobox, ComboboxChip, ComboboxChips, ComboboxChipsInput, ComboboxContent, ComboboxInput, ComboboxItem, ComboboxList, ComboboxTrigger, ComboboxValue, useComboboxAnchor } from "../ui/combobox";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 
 export const createProductSchema = z.object({
     name: z.string().min(3),
     brand: z.string().min(2),
+    description: z.string().min(10),
     skin_type: z
         .array(z.enum(SkinType))
         .min(1),
@@ -32,7 +32,7 @@ export const createProductSchema = z.object({
         .min(1),
     image_url: z
         .array(z.string().url())
-        .min(1)
+        .min(1),
     })
     .refine(
     (data) => !data.additional_categories.includes(data.primary_category),
@@ -50,11 +50,10 @@ export default function ProductForm() {
     const tCat = useTranslations("Categories");
     const tProdType = useTranslations("ProductTypes");
     const tSkinType = useTranslations("SkinTypes");
-    const theme = useTheme();
-    const isMobile = useMediaQuery(theme.breakpoints.down('md'));
     const categories = Object.values(Category);
     const skinTypes = Object.values(SkinType);
     const productTypes = Object.values(ProductType);
+    const [ingredientsRaw, setIngredientsRaw] = useState("");
 
     function onSubmit(data: FormValues) {
         console.log(data)
@@ -68,6 +67,7 @@ export default function ProductForm() {
         defaultValues: {
             name: "",
             brand: "",
+            description: "",
             skin_type: [],
             product_type: undefined,
             primary_category: undefined,
@@ -139,8 +139,31 @@ export default function ProductForm() {
                                 )}
                             </Field>
                         )}/>
+
+                        <Controller
+                        name="description"
+                        control={form.control}
+                        render={({ field, fieldState }) => (
+                            <Field data-invalid={fieldState.invalid}>
+                            <FieldLabel className="text-primary">
+                                {t("description")}
+                            </FieldLabel>
+                            <InputGroup>
+                                <InputGroupTextarea
+                                {...field}
+                                placeholder={t("descriptionPlaceholder")}
+                                rows={3}
+                                aria-invalid={fieldState.invalid}
+                                />
+                            </InputGroup>
+                            {fieldState.invalid && (
+                                <FieldError errors={[fieldState.error]} />
+                            )}
+                            </Field>
+                        )}
+                        />
                         
-                        <Stack direction={isMobile?"column":"row"} gap={4}>
+                        <div className="flex flex-col md:flex-row gap-4">
                             {/* PRIMARY CATEGORY */}
 
                             <Controller
@@ -227,10 +250,10 @@ export default function ProductForm() {
                                 </Field>
                             )}
                             />
-                        </Stack>
+                        </div>
                         
                             
-                        <Stack direction={isMobile?"column":"row"} gap={4}>
+                        <div className="flex flex-col md:flex-row gap-4">
                             
                             {/* Skin Types */}
 
@@ -300,6 +323,7 @@ export default function ProductForm() {
                                         items={productTypes}
                                         value={field.value ?? ""}
                                         onValueChange={field.onChange}
+                                        itemToStringLabel={(item: ProductType) => (item ?tProdType(item) : "")}
                                     >
                                         <ComboboxInput
                                         placeholder={t("productTypePlaceholder")}
@@ -309,7 +333,7 @@ export default function ProductForm() {
                                         <ComboboxContent>
                                         <ComboboxList>
                                             {(item) => (
-                                            <ComboboxItem key={item} value={tProdType(item)}>
+                                            <ComboboxItem key={item} value={item}>
                                                 {tProdType(item)}
                                             </ComboboxItem>
                                             )}
@@ -324,7 +348,7 @@ export default function ProductForm() {
                             )}
                             />
 
-                        </Stack>
+                        </div>
 
                     
 
@@ -347,10 +371,11 @@ export default function ProductForm() {
                             <InputGroupTextarea
                             placeholder={t("ingredientsPlaceholder")}
                             rows={3}
-                            value={field.value.join(", ")}
-                            onChange={(e) =>
+                            value={ingredientsRaw}
+                            onChange={(e) => setIngredientsRaw(e.target.value)}
+                            onBlur={() =>
                                 field.onChange(
-                                e.target.value
+                                ingredientsRaw
                                     .split(",")
                                     .map((v) => v.trim())
                                     .filter(Boolean)
@@ -411,7 +436,10 @@ export default function ProductForm() {
                     <Button
                         type="button"
                         variant="outline"
-                        onClick={() => form.reset()}
+                        onClick={() => {
+                            form.reset();
+                            setIngredientsRaw("");
+                        }}
                     >
                         Reset
                     </Button>

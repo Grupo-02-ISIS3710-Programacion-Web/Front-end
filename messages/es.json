@@ -170,6 +170,8 @@
         "productName": "Nombre del producto",
         "productNamePlaceholder": "CeraVe limpiador hidratante",
         "brand": "Marca del producto",
+        "description": "Descripción del producto",
+        "descriptionPlaceholder": "Escriba la descripción del producto",
         "productType": "Tipo de producto",
         "productTypePlaceholder": "Selecciona el tipo de producto",
         "primaryCategory": "Categoría principal del producto",

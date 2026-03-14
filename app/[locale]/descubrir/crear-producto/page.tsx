@@ -1,3 +1,4 @@
+"use client";
 import ProductForm from "@/components/products/product-form";
 import { Container } from "@mui/material";
 

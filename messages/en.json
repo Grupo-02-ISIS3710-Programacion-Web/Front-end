@@ -138,6 +138,8 @@
         "productName": "Product name",
         "productNamePlaceholder": "CeraVe hydrating cleanser",
         "brand": "Product brand",
+        "description": "Product Description",
+        "descriptionPlaceholder": "Enter the product description",
         "productType": "Product type",
         "productTypePlaceholder": "Select product type",
         "primaryCategory": "Main product category",
