@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useEffectEvent, useMemo, useRef, useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
@@ -59,10 +59,15 @@ export default function CrearRutina() {
         [selectedProducts]
     );
 
+    const safelySetAllProducts = useEffectEvent((products: Product[]) => {
+            setAllProducts(products);
+        })
+    
     useEffect(() => {
         const products = getProducts();
-        setAllProducts(products);
-    }, []);
+        safelySetAllProducts(products)
+    }
+    , []);
     
     const { control, register, handleSubmit, reset, getValues } = useForm<CrearRutinaFormData>({
         defaultValues: {

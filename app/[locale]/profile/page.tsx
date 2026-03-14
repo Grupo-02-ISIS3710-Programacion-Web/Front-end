@@ -1,6 +1,5 @@
 "use client"
-import UserInfo from "@/components/profile/userInfo"    
-import ProfileTabs from "@/components/profile/profileTabs"
+import UserInfo from "@/components/profile/userInfo" 
 import RoutineContent from "@/components/profile/routineContent"
 import { ProductCard } from "@/components/products/product-card"
 import { Heart, Sun, SlidersHorizontal } from "lucide-react"
