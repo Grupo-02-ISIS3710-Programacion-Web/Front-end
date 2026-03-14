@@ -21,10 +21,7 @@ export const createProductSchema = z.object({
     skin_type: z
         .array(z.enum(SkinType))
         .min(1),
-    product_type: z.union([
-        z.enum(ProductType),
-        z.string().min(3)
-    ]),
+    product_type:z.enum(ProductType),
     primary_category: z.enum(Category),
     additional_categories: z
         .array(z.enum(Category))
@@ -45,12 +42,14 @@ export const createProductSchema = z.object({
     }
 );
 
-type FormValues = z.infer<typeof createProductSchema>;
+type FormInput = z.input<typeof createProductSchema>;
+type FormValues = z.output<typeof createProductSchema>;
 
 export default function ProductForm() {
     const t = useTranslations("CreateProductPage");
     const tCat = useTranslations("Categories");
     const tProdType = useTranslations("ProductTypes");
+    const tSkinType = useTranslations("SkinTypes");
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('md'));
     const categories = Object.values(Category);
@@ -64,7 +63,7 @@ export default function ProductForm() {
         })
     }
 
-    const form = useForm<FormValues>({
+    const form = useForm<FormInput, unknown, FormValues>({
         resolver: zodResolver(createProductSchema),
         defaultValues: {
             name: "",
@@ -82,7 +81,8 @@ export default function ProductForm() {
 
     const additionalCategoryOptions = categories.filter((c) => c !== selectedPrimaryCat);
 
-    const anchor = useComboboxAnchor();
+    const anchorCategories = useComboboxAnchor();
+    const anchorSkinTypes = useComboboxAnchor();
 
     return (
         <Card className="w-full md:w-3/4 mx-auto">
@@ -192,7 +192,7 @@ export default function ProductForm() {
                                     disabled={!selectedPrimaryCat}
                                 >
                                     
-                                    <ComboboxChips ref={anchor} className="w-full">
+                                    <ComboboxChips ref={anchorCategories} className="w-full">
                                         <ComboboxValue>
                                             {(values) => (
                                             <Fragment>
@@ -201,9 +201,7 @@ export default function ProductForm() {
                                                 ))}
 
                                                 <ComboboxChipsInput
-                                                placeholder={
-                                                    t("additionalCategoriesPlaceholder")
-                                                }
+                                                placeholder={values.length === 0 ? t("additionalCategoriesPlaceholder") : ""}
                                                 aria-invalid={fieldState.invalid}
                                                 className="min-w-24 flex-1"
                                                 />
@@ -214,7 +212,7 @@ export default function ProductForm() {
                                         <ComboboxTrigger className="ml-auto text-muted-foreground" />
                                     </ComboboxChips>
 
-                                    <ComboboxContent anchor={anchor}>
+                                    <ComboboxContent anchor={anchorCategories}>
                                     <ComboboxList>
                                         {(item) => (
                                         <ComboboxItem key={item} value={item}>
@@ -230,6 +228,63 @@ export default function ProductForm() {
                             )}
                             />
                         </Stack>
+                        
+                            
+                        <Stack direction={isMobile?"column":"row"} gap={4}>
+                            
+                            {/* Skin Types */}
+
+                            <Controller
+                            name="skin_type"
+                            control={form.control}
+                            render={({ field, fieldState }) => (
+                                <Field data-invalid={fieldState.invalid}>
+                                <FieldLabel className="text-primary">{t("skinTypes")}</FieldLabel>
+
+                                <Combobox
+                                    items={skinTypes}
+                                    multiple
+                                    autoHighlight
+                                    value={field.value ?? []}
+                                    onValueChange={field.onChange}
+                                >
+                                    
+                                    <ComboboxChips ref={anchorSkinTypes} className="w-full">
+                                        <ComboboxValue>
+                                            {(values) => (
+                                            <Fragment>
+                                                {values.map((value: string) => (
+                                                <ComboboxChip key={value}>{tSkinType(`${value}`)}</ComboboxChip>
+                                                ))}
+
+                                                <ComboboxChipsInput
+                                                placeholder={values.length === 0 ? t("skinTypesPlaceholder") : ""}
+                                                aria-invalid={fieldState.invalid}
+                                                className="min-w-24 flex-1"
+                                                />
+                                            </Fragment>
+                                            )}
+                                        </ComboboxValue>
+
+                                        <ComboboxTrigger className="ml-auto text-muted-foreground" />
+                                    </ComboboxChips>
+
+                                    <ComboboxContent anchor={anchorSkinTypes}>
+                                    <ComboboxList>
+                                        {(item) => (
+                                        <ComboboxItem key={item} value={item}>
+                                            {tSkinType(`${item}`)}
+                                        </ComboboxItem>
+                                        )}
+                                    </ComboboxList>
+                                    </ComboboxContent>
+                                </Combobox>
+
+                                {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+                                </Field>
+                            )}
+                            />
+
                             <Controller
                             name="product_type"
                             control={form.control}
@@ -241,16 +296,26 @@ export default function ProductForm() {
                                         {t("productType")}
                                     </FieldLabel>
 
-                                    <Select name={field.name} value={field.value} onValueChange={field.onChange}>
-                                        <SelectTrigger id="product_type" aria-invalid={fieldState.invalid}>
-                                            <SelectValue />
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            {productTypes.map((p) => (
-                                                <SelectItem key={p} value={p}>{tProdType(`${p}`)}</SelectItem>
-                                            ))}
-                                        </SelectContent>
-                                    </Select>
+                                    <Combobox
+                                        items={productTypes}
+                                        value={field.value ?? ""}
+                                        onValueChange={field.onChange}
+                                    >
+                                        <ComboboxInput
+                                        placeholder={t("productTypePlaceholder")}
+                                        aria-invalid={fieldState.invalid}
+                                        showClear={!!field.value}
+                                        />
+                                        <ComboboxContent>
+                                        <ComboboxList>
+                                            {(item) => (
+                                            <ComboboxItem key={item} value={tProdType(item)}>
+                                                {tProdType(item)}
+                                            </ComboboxItem>
+                                            )}
+                                        </ComboboxList>
+                                        </ComboboxContent>
+                                    </Combobox>
                                     {fieldState.invalid && (
                                         <FieldError errors={[fieldState.error]} />
                                     )}
@@ -259,6 +324,7 @@ export default function ProductForm() {
                             )}
                             />
 
+                        </Stack>
 
                     
 

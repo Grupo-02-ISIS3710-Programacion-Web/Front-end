@@ -20,25 +20,21 @@ export enum SkinType {
 }
 
 export enum ProductType {
+    CREAM = "cream",
     CLEANSER = "cleanser",
-    MOISTURIZER = "moisturizer",
+    EYE_CREAM = "eye_cream",
+    MASK = "mask",
+    OIL = "oil",
     SERUM = "serum",
     ESSENCE = "essence",
     EXFOLIANT = "exfoliant",
     SUNSCREEN = "sunscreen",
     TONER = "toner",
-    EXFOLIATING_CLEANSER = "exfoliating_cleanser",
-    EXFOLIATING_TONER = "exfoliating_toner",
-    EYE_CREAM = "eye_cream",
-    MASK = "mask",
-    OIL = "oil",
-    ANTI_AGING_SERUM = "anti_aging_serum",
-    HYDRATING_SERUM = "hydrating_serum",
-    HYDRATING_GEL = "hydrating_gel",
-    REPAIR_BALM = "repair_balm",
-    ANTIOXIDANT_SERUM = "antioxidant_serum",
-    RETINOL_SERUM = "retinol_serum",
-    FACIAL_CLEANSER = "facial_cleanser",
+    GEL= "gel",
+    BALM = "balm",
+    TREATMENT = "treatment",
+    MAKEUP_REMOVER = "makeup_remover",
+    MAKEUP = "makeup"
 }
 
 export interface Product {
