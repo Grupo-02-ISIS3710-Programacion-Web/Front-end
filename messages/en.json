@@ -4,6 +4,44 @@
         "routineInfo": "Your routine information",
         "description": "Explore products, filter by category, and save a personalized routine for your skin."
     },
+    "GuardarRutina": {
+        "pageTitle": "Finish your personalized routine",
+        "pageDescription": "Review and adjust each step description in your routine. You can reorder, edit details, or remove steps before saving your personalized routine.",
+        "infoCard": {
+            "title": "Routine information",
+            "nameLabel": "Routine name",
+            "namePlaceholder": "Routine name",
+            "descriptionLabel": "Routine description",
+            "descriptionPlaceholder": "Routine description",
+            "timeOfDayLabel": "Routine time",
+            "timeOfDay": {
+                "am": "AM",
+                "pm": "PM"
+            },
+            "productsLabel": "Products in routine",
+            "productsSelected": "{count, plural, =0 {0 selected products} =1 {1 selected product} other {{count} selected products}}",
+            "selectProductsButton": "Add a step"
+        },
+        "productDialog": {
+            "title": "Select products for your routine",
+            "noResults": "No products match your search."
+        },
+        "steps": {
+            "title": "Description of each step",
+            "empty": "There are no steps in the routine. Add products from the selector to get started.",
+            "stepNumber": "Step {number}",
+            "nameLabel": "Step name",
+            "routineNamePlaceholder": "Routine name",
+            "namePlaceholder": "Step name",
+            "descriptionLabel": "Step description",
+            "descriptionPlaceholder": "Step description"
+        },
+        "submitButton": "Create Routine",
+        "toast": {
+            "alreadyAdded": "{name} is already in your routine",
+            "added": "{name} added to your routine"
+        }
+    },
     "GridProductos": {
         "loading": "Loading products...",
         "noResults": "No products matched your search.",

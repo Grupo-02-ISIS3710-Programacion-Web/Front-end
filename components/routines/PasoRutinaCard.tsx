@@ -10,11 +10,14 @@ import { useTranslations } from "next-intl";
 
 type PasoRutinaFormShape = {
     name: string;
-    objective: string;
-    pasos: {
+    description: string;
+    type: string;
+    steps: {
+        id: string;
         name: string;
-        description: string;
+        order: number;
         product: Product;
+        notes: string;
     }[];
 };
 
@@ -22,6 +25,7 @@ type PasoRutinaCardProps = Readonly<{
     index: number;
     totalSteps: number;
     product: Product;
+    stepId: string;
     register: UseFormRegister<PasoRutinaFormShape>;
     onMoveUp: () => void;
     onMoveDown: () => void;
@@ -32,6 +36,7 @@ export default function PasoRutinaCard({
     index,
     totalSteps,
     product,
+    stepId,
     register,
     onMoveUp,
     onMoveDown,
@@ -40,7 +45,7 @@ export default function PasoRutinaCard({
     const t = useTranslations("GuardarRutina.steps");
     return (
         <Card className="gap-3">
-            <CardContent className="space-y-3 pt-6">
+            <CardContent className="space-y-3 pt-4">
                 <div className="flex items-center justify-between gap-2">
                     <CardTitle className="text-lg md:text-xl">{t("stepNumber", { number: index + 1 })}</CardTitle>
 
@@ -79,14 +84,14 @@ export default function PasoRutinaCard({
 
                 <div className="space-y-2">
                     <p className="text-sm font-medium text-muted-foreground">{t("nameLabel")}</p>
-                    <Input {...register(`pasos.${index}.name`)} placeholder={t("namePlaceholder")} />
+                    <Input {...register(`steps.${index}.name`)} placeholder={t("namePlaceholder")} />
                 </div>
 
                 <CardProducto product={product} showButton={false} compact />
 
                 <div className="space-y-2">
                     <p className="text-sm font-medium text-muted-foreground">{t("descriptionLabel")}</p>
-                    <Textarea {...register(`pasos.${index}.description`)} placeholder={t("descriptionPlaceholder")} />
+                    <Textarea {...register(`steps.${index}.notes`)} placeholder={t("descriptionPlaceholder")} />
                 </div>
             </CardContent>
         </Card>

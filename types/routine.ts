@@ -1,17 +1,15 @@
-import { Product, Category, SkinType } from "@/types/product";
-
 export interface RoutineStep {
   id: string;
+  name: string;
   order: number;
-  product: Product;
-  notes?: string;
+  product: string;
+  notes: string;
 }
 
 export interface Routine {
   id: string;
   name: string;
-  description:String;  
-  type:String;
+  description: string;
+  type: string;
   steps: RoutineStep[];
-
 }
