@@ -2,6 +2,10 @@
   "registro": {
     "titulo": "Create account",
     "descripcion": "Complete your details to start your experience",
+    "header": {
+      "title": "Start a new routine now",
+      "subtitle": "Bring more glow to your skin"
+    },
     "campos": {
       "nombre": {
         "label": "Name",
@@ -71,6 +75,28 @@
     "mensajes": {
       "registroExitoso": "Your account has been created successfully",
       "errorGenerico": "An unexpected error occurred. Please try again."
+    }
+  },
+  "ToS": {
+    "title": "Terms and Conditions",
+    "lastUpdated": "Last updated: March 16, 2026",
+    "sections": {
+      "platformUse": {
+        "title": "1. Platform use",
+        "body": "By creating an account on Skin4All, you agree to use the platform responsibly and not affect the security, availability, or experience of other users."
+      },
+      "accountPrivacy": {
+        "title": "2. Account and privacy",
+        "body": "You are responsible for keeping your account credentials confidential. The information you provide will be handled according to our privacy practices and used only to improve your in-app experience."
+      },
+      "contentRecommendations": {
+        "title": "3. Content and recommendations",
+        "body": "Routines and recommendations shown in the app are for informational purposes only and do not replace professional medical or dermatological advice."
+      },
+      "changes": {
+        "title": "4. Changes to these terms",
+        "body": "We may update these terms at any time. If important changes are made, we will notify you within the platform."
+      }
     }
   }
 }

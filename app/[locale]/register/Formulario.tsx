@@ -3,11 +3,11 @@
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { SubmitHandler, useForm } from "react-hook-form";
-import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { tiposPiel } from "@/lib/constants/TipoPiel";
 import { formasEnteroDeNosotros } from "@/lib/constants/FormasDeContacto";
 import { DatePickerSimple } from "@/components/ui/datepicker";
+import { Link } from "@/i18n/navigation";
 
 export type FormularioRegistro = {
     nombre: string;
@@ -35,7 +35,7 @@ export function FormularioRegistroComponent() {
         }
     });
 
-    const campoObligatorio = "Este campo es obligatorio";
+    const campoObligatorio = t("validaciones.requerido");
 
     const onSubmit: SubmitHandler<FormularioRegistro> = data => console.log(data);
     const haProbadoSkinCare = watch("probadoSkinCare");
@@ -69,6 +69,7 @@ export function FormularioRegistroComponent() {
             </div>
 
             <div className="grid gap-5 sm:grid-cols-2">
+                
                 <div className="space-y-2">
                     <p className="text-sm font-medium">{t("campos.fechaNacimiento.label")}</p>
                     <DatePickerSimple
@@ -80,6 +81,7 @@ export function FormularioRegistroComponent() {
                     <input type="hidden" {...register("fechaNacimiento", { required: campoObligatorio })} />
                     {errors.fechaNacimiento && <span className="text-red-500 text-sm">{errors.fechaNacimiento.message}</span>}
                 </div>
+
                 <div className="space-y-2">
                     <p className="text-sm font-medium">{t("campos.tipoPiel.label")}</p>
                     <select className={selectClasses} {...register("tipoPiel", { required: campoObligatorio })}>
@@ -143,40 +145,50 @@ export function FormularioRegistroComponent() {
                 {errors.email && <span className="text-red-500 text-sm">{errors.email.message}</span>}
             </div>
 
-            <div className="space-y-2">
-                <p className="text-sm font-medium">{t("campos.contrasenia.label")}</p>
-                <Input
-                    type="password"
-                    className={inputPrimaryClasses}
-                    placeholder={t("campos.contrasenia.placeholder")}
-                    {...register("contrasenia", { required: campoObligatorio })}
-                />
-                {errors.contrasenia && <span className="text-red-500 text-sm">{errors.contrasenia.message}</span>}
+            <div className="grid gap-5 sm:grid-cols-2">
+                <div className="space-y-2">
+                    <p className="text-sm font-medium">{t("campos.contrasenia.label")}</p>
+                    <Input
+                        type="password"
+                        className={inputPrimaryClasses}
+                        placeholder={t("campos.contrasenia.placeholder")}
+                        {...register("contrasenia", {
+                            required: campoObligatorio,
+                            minLength: {
+                                value: 8,
+                                message: t("validaciones.contraseniaMinima"),
+                            },
+                        })}
+                    />
+                    {errors.contrasenia && <span className="text-red-500 text-sm">{errors.contrasenia.message}</span>}
+                </div>
+
+                <div className="space-y-2">
+                    <p className="text-sm font-medium">{t("campos.confirmarContrasenia.label")}</p>
+                    <Input
+                        type="password"
+                        placeholder={t("campos.confirmarContrasenia.placeholder")}
+                        className={inputPrimaryClasses}
+                        {...register("confirmarContrasenia", {
+                            required: campoObligatorio,
+                            validate: (value) => value === watch("contrasenia") || t("validaciones.contraseniasNoCoinciden"),
+                        })}
+                    />
+                    {errors.confirmarContrasenia && (
+                        <span className="text-red-500 text-sm">{errors.confirmarContrasenia.message}</span>
+                    )}
+                </div>
             </div>
 
             <div className="space-y-2">
-                <p className="text-sm font-medium">{t("campos.confirmarContrasenia.label")}</p>
-                <Input
-                    type="password"
-                    placeholder={t("campos.confirmarContrasenia.placeholder")}
-                    className={inputPrimaryClasses}
-                    {...register("confirmarContrasenia", {
-                        required: campoObligatorio,
-                        validate: (value) => value === watch("contrasenia") || t("validaciones.contraseniasNoCoinciden"),
-                    })}
-                />
-                {errors.confirmarContrasenia && (
-                    <span className="text-red-500 text-sm">{errors.confirmarContrasenia.message}</span>
-                )}
                 <p className="text-gray-600 text-sm">
-                    {t("legal.texto")} <Link href="/es/terminos-y-condiciones" className="text-pink-500">{t("legal.terminos")}</Link>
+                    {t("legal.texto")} <Link href="/ToS" className="text-pink-500">{t("legal.terminos")}</Link>
                 </p>
             </div>
-
             <Button type="submit" className="w-full">
                 {t("botones.crearCuenta")}
             </Button>
-            <p className="text-center text-sm">{t("footer.yaTienesCuenta")} <Link href="/es/login" className="text-pink-500">{t("botones.iniciarSesion")}</Link></p>
+            <p className="text-center text-sm">{t("footer.yaTienesCuenta")} <Link href="/login" className="text-pink-500">{t("botones.iniciarSesion")}</Link></p>
         </form>
     )
 }

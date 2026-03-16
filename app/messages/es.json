@@ -2,6 +2,10 @@
   "registro": {
     "titulo": "Crear cuenta",
     "descripcion": "Completa tus datos para comenzar tu experiencia",
+    "header": {
+      "title": "Empieza una nueva rutina ahora",
+      "subtitle": "Anadele brillo a tu piel"
+    },
     "campos": {
       "nombre": {
         "label": "Nombre",
@@ -71,6 +75,28 @@
     "mensajes": {
       "registroExitoso": "Tu cuenta ha sido creada exitosamente",
       "errorGenerico": "Ocurrió un error inesperado. Inténtalo nuevamente."
+    }
+  },
+  "ToS": {
+    "title": "Terminos y Condiciones",
+    "lastUpdated": "Ultima actualizacion: 16 de marzo de 2026",
+    "sections": {
+      "platformUse": {
+        "title": "1. Uso de la plataforma",
+        "body": "Al crear una cuenta en Skin4All, aceptas usar la plataforma de manera responsable, sin afectar la seguridad, disponibilidad o experiencia de otros usuarios."
+      },
+      "accountPrivacy": {
+        "title": "2. Cuenta y privacidad",
+        "body": "Eres responsable de mantener la confidencialidad de tu cuenta. La informacion proporcionada sera tratada conforme a nuestras politicas de privacidad y solo para mejorar tu experiencia en la aplicacion."
+      },
+      "contentRecommendations": {
+        "title": "3. Contenido y recomendaciones",
+        "body": "Las rutinas y recomendaciones mostradas son de caracter informativo y no sustituyen asesoria profesional medica o dermatologica."
+      },
+      "changes": {
+        "title": "4. Cambios en estos terminos",
+        "body": "Podemos actualizar estos terminos en cualquier momento. Si realizamos cambios importantes, te lo notificaremos dentro de la plataforma."
+      }
     }
   }
 }
