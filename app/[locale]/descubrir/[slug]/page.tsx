@@ -28,6 +28,7 @@ import {
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useState } from "react";
+import { useRouter } from "@/i18n/navigation";
 
 export default function ProductDetailPage() {
     const params = useParams();
@@ -43,6 +44,7 @@ export default function ProductDetailPage() {
     }
     const productSlug = toLowerCaseAndReplaceHyphensWithSpaces(slug);
     const product = getProductByName(productSlug);
+    const router = useRouter();
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('md'));
     const [toggleFavorite, setToggleFavorite] = useState(false);
@@ -188,7 +190,7 @@ export default function ProductDetailPage() {
 
                             {/* botones para añadir a rutina y favorito */}
                             <Stack direction={"row"} gap={2} alignItems={"center"}>
-                                <Button size="lg" className="w-fit">
+                                <Button size="lg" className="w-fit" onClick={() => router.push(`/routine/crear?product=${product.id}`)}>
                                     Agregar a una rutina
                                 </Button>
                                 <Button 

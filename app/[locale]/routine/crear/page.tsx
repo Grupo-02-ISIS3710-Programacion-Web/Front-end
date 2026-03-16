@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { useFieldArray, useForm } from "react-hook-form"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -42,6 +43,7 @@ export default function CrearRutina() {
     const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
     const [selectedProductIds, setSelectedProductIds] = useState<Set<string>>(new Set());
     const [isProductsDialogOpen, setIsProductsDialogOpen] = useState(false);
+    const searchParams = useSearchParams();
     
     const tCreate = useTranslations("CrearRutina");
     const tRoutine = useTranslations("GuardarRutina");
@@ -73,6 +75,10 @@ export default function CrearRutina() {
     useEffect(() => {
         const products = getProducts();
         setAllProducts(products);
+        const preselectedId = searchParams.get("product");
+        if (preselectedId && products.some((p) => p.id === preselectedId)) {
+            setSelectedProductIds(new Set([preselectedId]));
+        }
     }, []);
     
     const { control, register, handleSubmit, reset, getValues, setValue, watch } = useForm<CrearRutinaFormData>({
