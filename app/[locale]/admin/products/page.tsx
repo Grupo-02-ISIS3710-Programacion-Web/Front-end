@@ -1,8 +1,9 @@
+import ProductManagementView from "@/components/admin/products/product-management-view";
 
 export default function ProductsPage() {
-  return (
-    <div>
-      <h1>Hello Page</h1>
-    </div>
-  );
+    return (
+        <div>
+            <ProductManagementView/>
+        </div>
+    );
 }

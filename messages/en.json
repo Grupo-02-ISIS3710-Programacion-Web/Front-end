@@ -297,7 +297,7 @@
             "delete": "Delete"
         },
         "products": {
-            "inventoryTitle": "Product Inventory",
+            "overviewTitle": "Product Overview",
             "addProduct": "Add Product",
             "colName": "Product Name",
             "colCategory": "Category",
@@ -318,6 +318,41 @@
         "actions": {
             "edit": "Edit",
             "delete": "Delete"
+        },
+        "productsPage": {
+            "title": "Product Management",
+            "subtitle": "Review, approve and manage products submitted by users.",
+            "export": "Export",
+            "addNew": "Add New Product",
+            "empty": "No products match the selected filters.",
+            "showing": "Showing {from}–{to} of {total} results",
+            "stats": {
+                    "total": "Total Products",
+                    "pending": "Pending Approval",
+                    "approved": "Approved",
+                    "published": "Published",
+                    "rejected": "Rejected"
+            },
+            "filters": {
+                "searchPlaceholder": "Filter by name or brand...",
+                "allCategories": "All Categories",
+                "allStatuses": "All Statuses",
+                "more": "More filters"
+            },
+            "bulk": {
+                "label": "Bulk Actions:",
+                "selectAction": "Select Action",
+                "approve": "Approve",
+                "reject": "Reject",
+                "publish": "Publish",
+                "delete": "Delete",
+                "apply": "Apply"
+            },
+            "table": {
+                    "selectAll": "Select all",
+                    "select": "Select",
+                    "submittedBy": "Submitted By"
+            }
         }
     }
 }

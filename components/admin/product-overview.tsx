@@ -148,8 +148,6 @@ function CategoryBadge({ category }: { category: Category }) {
     );
 }
 
-// ─── ProductTypeBadge ─────────────────────────────────────────────────────────
-
 function ProductTypeBadge({ value }: { value: string }) {
     return (
         <Badge variant="outline" className="text-[10px] font-medium capitalize">
@@ -434,17 +432,16 @@ function PaginationRow({
     );
 }
 
-// ─── ProductInventory ─────────────────────────────────────────────────────────
 
-interface ProductInventoryProps {
-  products?: Product[];
-  proposedProducts?: ProposedProduct[];
+interface ProductOverviewProps {
+    products?: Product[];
+    proposedProducts?: ProposedProduct[];
 }
 
-export function ProductInventory({
+export function ProductOverview({
     products = PRODUCTS,
     proposedProducts = PROPOSED_PRODUCTS,
-}: ProductInventoryProps) {
+}: ProductOverviewProps) {
     const t = useTranslations("admin");
 
     return (
@@ -452,7 +449,7 @@ export function ProductInventory({
         <CardHeader className="pb-3 pt-5 px-5">
             <div className="flex items-center justify-between">
             <CardTitle className="text-base font-semibold">
-                {t("products.inventoryTitle")}
+                {t("products.overviewTitle")}
             </CardTitle>
             <Button
                 size="sm"

@@ -29,3 +29,18 @@ export function toLowerCaseAndReplaceHyphensWithSpaces(str: string | undefined):
             .replace("ú", "u")
             .replace(/[^a-z0-9-]/g, '');
 }
+
+export function toLabel(value: string) {
+    return (value.charAt(0).toUpperCase() + value.slice(1))
+        .replace(/-/g, " ")
+        .replace(/_/g, " ");
+}
+
+export function formatDate(iso?: string) {
+    if (!iso) return "—";
+    return new Intl.DateTimeFormat("es", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+    }).format(new Date(iso));
+}

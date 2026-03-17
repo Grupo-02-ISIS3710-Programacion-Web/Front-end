@@ -329,7 +329,7 @@
             "delete": "Eliminar"
         },
         "products": {
-            "inventoryTitle": "Inventario de productos",
+            "overviewTitle": "Vista general de productos",
             "addProduct": "Agregar producto",
             "colName": "Nombre del producto",
             "colCategory": "Categoría",
@@ -342,6 +342,41 @@
             "colBrand": "Marca",
             "colType": "Tipo",
             "colSubmittedBy": "Propuesto por"
+        },
+        "productsPage": {
+            "title": "Gestión de Productos",
+            "subtitle": "Revisa, aprueba y administra los productos enviados por usuarios.",
+            "export": "Exportar",
+            "addNew": "Agregar producto",
+            "empty": "Ningún producto coincide con los filtros seleccionados.",
+            "showing": "Mostrando {from}–{to} de {total} resultados",
+            "stats": {
+                "total": "Total productos",
+                "pending": "Pendientes de aprobación",
+                "approved": "Aprobados",
+                "published": "Publicados",
+                "rejected": "Rechazados"
+            },
+            "filters": {
+                "searchPlaceholder": "Filtrar por nombre o marca...",
+                "allCategories": "Todas las categorías",
+                "allStatuses": "Todos los estados",
+                "more": "Más filtros"
+            },
+            "bulk": {
+                "label": "Acciones masivas:",
+                "selectAction": "Seleccionar acción",
+                "approve": "Aprobar",
+                "reject": "Rechazar",
+                "publish": "Publicar",
+                "delete": "Eliminar",
+                "apply": "Aplicar"
+            },
+            "table": {
+            "selectAll": "Seleccionar todos",
+            "select": "Seleccionar",
+            "submittedBy": "Enviado por"
+            }
         },
         "pagination": {
             "prev": "Anterior",
