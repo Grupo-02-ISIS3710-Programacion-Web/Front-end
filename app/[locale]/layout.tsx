@@ -23,7 +23,7 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
   }
 
   setRequestLocale(locale);
-  const messages = (await import(`../messages/${locale}.json`)).default;
+  const messages = (await import(`../../messages/${locale}.json`)).default;
 
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>

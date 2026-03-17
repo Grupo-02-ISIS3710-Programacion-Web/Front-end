@@ -69,9 +69,11 @@
         "allProducts": "Todos los productos"
     },
     "registro": {
+        "titulo": "Crear cuenta",
+        "descripcion": "Completa tus datos para comenzar tu experiencia",
         "header": {
-            "title": "Start a new routine now",
-            "subtitle": "Bring more glow to your skin"
+            "title": "Empieza una nueva rutina ahora",
+            "subtitle": "Añadele brillo a tu piel"
         },
         "campos": {
             "nombre": {

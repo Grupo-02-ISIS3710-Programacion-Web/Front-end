@@ -37,17 +37,19 @@
         "allProducts": "All products"
     },
     "registro": {
+        "titulo": "Create account",
+        "descripcion": "Complete your details to start your experience",
         "header": {
-            "title": "Start a new routine now",
-            "subtitle": "Bring more glow to your skin"
+            "title": "Join the Glow",
+            "subtitle": "Let's get to know your skin."
         },
         "campos": {
             "nombre": {
                 "label": "Name",
-                "placeholder": "Ex: Jane Doe"
+                "placeholder": "Eg: John Doe"
             },
             "fechaNacimiento": {
-                "label": "Date of birth"
+                "label": "Birth date"
             },
             "tipoPiel": {
                 "label": "Skin type",
@@ -71,14 +73,14 @@
                 "opciones": {
                     "instagram": "Instagram",
                     "tiktok": "TikTok",
-                    "amigo": "Friend recommendation",
+                    "amigo": "Friend referral",
                     "google": "Google search",
-                    "publicidad": "Advertising",
+                    "publicidad": "Ads",
                     "otro": "Other"
                 }
             },
             "email": {
-                "label": "Email",
+                "label": "Email address",
                 "placeholder": "email@example.com"
             },
             "contrasenia": {
@@ -92,12 +94,12 @@
         },
         "validaciones": {
             "requerido": "This field is required",
-            "emailInvalido": "Enter a valid email",
+            "emailInvalido": "Please enter a valid email",
             "contraseniaMinima": "Password must be at least 8 characters",
             "contraseniasNoCoinciden": "Passwords do not match"
         },
         "legal": {
-            "texto": "Password must be at least 8 characters. By creating an account, you accept our",
+            "texto": "Password must be at least 8 characters long. By creating an account, you accept our",
             "terminos": "Terms and Conditions"
         },
         "botones": {
