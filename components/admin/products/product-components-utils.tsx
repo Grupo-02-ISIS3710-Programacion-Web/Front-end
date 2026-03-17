@@ -68,9 +68,6 @@ export function ApprovalStatusBadge({
 export function PaginationRow({
     page,
     totalPages,
-    from,
-    to,
-    total,
     onPrev,
     onNext,
     labelShowing,
