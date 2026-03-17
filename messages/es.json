@@ -68,7 +68,6 @@
         "placeholder": "Busca productos por nombre, marca o tipo...",
         "allProducts": "Todos los productos"
     },
-
     "DiscoveryPage": {
         "didNotFindProduct": "¿No encontraste lo que estabas buscando?",
         "addProduct": "Añade un producto a nuestro catálogo"
@@ -90,7 +89,6 @@
             "exclude": "Excluir: {ingredient}"
         }
     },
-
     "SkinTypes": {
         "normal": "Normal",
         "seca": "Seca",
@@ -102,35 +100,34 @@
         "opaca": "Opaca",
         "texturizada": "Texturizada"
     },
-
     "Categories": {
         "ALL": {
-        "label": "Todos los productos",
-        "description": "Descubre todos los productos disponibles"
+            "label": "Todos los productos",
+            "description": "Descubre todos los productos disponibles"
         },
         "limpieza": {
-        "label": "Limpiadores",
-        "description": "Encuentra los mejores limpiadores para tu piel"
+            "label": "Limpiadores",
+            "description": "Encuentra los mejores limpiadores para tu piel"
         },
         "hidratacion": {
-        "label": "Hidratantes",
-        "description": "Hidrata tu piel con cremas y lociones"
+            "label": "Hidratantes",
+            "description": "Hidrata tu piel con cremas y lociones"
         },
         "antioxidante": {
-        "label": "Serums",
-        "description": "Potencia tu rutina con serums especializados"
+            "label": "Serums",
+            "description": "Potencia tu rutina con serums especializados"
         },
         "reparacion": {
-        "label": "Reparación",
-        "description": "Potencia tu rutina con esencias reparadoras"
+            "label": "Reparación",
+            "description": "Potencia tu rutina con esencias reparadoras"
         },
         "exfoliacion": {
-        "label": "Exfoliación",
-        "description": "Renueva tu piel con exfoliantes químicos y físicos"
+            "label": "Exfoliación",
+            "description": "Renueva tu piel con exfoliantes químicos y físicos"
         },
         "anti-edad": {
-        "label": "Anti-edad",
-        "description": "Encuentra productos anti-edad para combatir los signos del envejecimiento"
+            "label": "Anti-edad",
+            "description": "Encuentra productos anti-edad para combatir los signos del envejecimiento"
         }
     },
     "CategoriesCard": {
@@ -163,8 +160,7 @@
         "addToRoutine": "Agregar a una rutina",
         "productNotFound": "Producto no encontrado"
     },
-
-    "CreateProductPage" : {
+    "CreateProductPage": {
         "title": "Añade un nuevo producto al catálogo de Skin4All",
         "submitDisclaimer": "Los productos que subas a este form pasaran por la verificación de un administrador antes de ser acepatos en la plataforma. El administrador puede excluir el producto si considera que no cumple con los estándares de la plataforma.",
         "productName": "Nombre del producto",
@@ -183,7 +179,6 @@
         "ingredients": "Ingredientes",
         "ingredientsPlaceholder": "Ej: niacinamida, glicerina, ceramidas",
         "imageUrl": "URL de la imagen del producto",
-
         "errors": {
             "nameMin": "El nombre del producto debe tener al menos 3 caracteres",
             "brandMin": "La marca del producto debe tener al menos 3 caracteres",
@@ -193,103 +188,105 @@
             "primaryCategoryRequired": "Debe seleccionar al menos una categoría",
             "ingredientsRequired": "Debe ingresar al menos un ingrediente",
             "imageUrlRequired": "Debe incluir una url de imagen del producto válida"
-    "registro": {
-        "titulo": "Crear cuenta",
-        "descripcion": "Completa tus datos para comenzar tu experiencia",
-        "header": {
-            "title": "Empieza una nueva rutina ahora",
-            "subtitle": "Añadele brillo a tu piel"
         },
-        "campos": {
-            "nombre": {
-                "label": "Nombre",
-                "placeholder": "Ej: Pepito Pérez"
+        "registro": {
+            "titulo": "Crear cuenta",
+            "descripcion": "Completa tus datos para comenzar tu experiencia",
+            "header": {
+                "title": "Empieza una nueva rutina ahora",
+                "subtitle": "Añadele brillo a tu piel"
             },
-            "fechaNacimiento": {
-                "label": "Fecha de nacimiento"
-            },
-            "tipoPiel": {
-                "label": "Tipo de piel",
-                "placeholder": "Selecciona tu tipo de piel",
-                "opciones": {
-                    "grasa": "Grasa",
-                    "seca": "Seca",
-                    "mixta": "Mixta",
-                    "sensible": "Sensible",
-                    "normal": "Normal"
+            "campos": {
+                "nombre": {
+                    "label": "Nombre",
+                    "placeholder": "Ej: Pepito Pérez"
+                },
+                "fechaNacimiento": {
+                    "label": "Fecha de nacimiento"
+                },
+                "tipoPiel": {
+                    "label": "Tipo de piel",
+                    "placeholder": "Selecciona tu tipo de piel",
+                    "opciones": {
+                        "grasa": "Grasa",
+                        "seca": "Seca",
+                        "mixta": "Mixta",
+                        "sensible": "Sensible",
+                        "normal": "Normal"
+                    }
+                },
+                "probadoSkinCare": {
+                    "label": "¿Alguna vez has probado productos de skincare?",
+                    "si": "Sí",
+                    "no": "No"
+                },
+                "comoEnteroDeNosotros": {
+                    "label": "¿Cómo te enteraste de nosotros?",
+                    "placeholder": "Selecciona una opción",
+                    "opciones": {
+                        "instagram": "Instagram",
+                        "tiktok": "TikTok",
+                        "amigo": "Recomendación de un amigo",
+                        "google": "Búsqueda en Google",
+                        "publicidad": "Publicidad",
+                        "otro": "Otro"
+                    }
+                },
+                "email": {
+                    "label": "Correo electrónico",
+                    "placeholder": "correo@ejemplo.com"
+                },
+                "contrasenia": {
+                    "label": "Contraseña",
+                    "placeholder": "********"
+                },
+                "confirmarContrasenia": {
+                    "label": "Confirmar contraseña",
+                    "placeholder": "********"
                 }
             },
-            "probadoSkinCare": {
-                "label": "¿Alguna vez has probado productos de skincare?",
-                "si": "Sí",
-                "no": "No"
+            "validaciones": {
+                "requerido": "Este campo es obligatorio",
+                "emailInvalido": "Ingresa un correo electrónico válido",
+                "contraseniaMinima": "La contraseña debe tener al menos 8 caracteres",
+                "contraseniasNoCoinciden": "Las contraseñas no coinciden"
             },
-            "comoEnteroDeNosotros": {
-                "label": "¿Cómo te enteraste de nosotros?",
-                "placeholder": "Selecciona una opción",
-                "opciones": {
-                    "instagram": "Instagram",
-                    "tiktok": "TikTok",
-                    "amigo": "Recomendación de un amigo",
-                    "google": "Búsqueda en Google",
-                    "publicidad": "Publicidad",
-                    "otro": "Otro"
-                }
+            "legal": {
+                "texto": "La contraseña debe tener al menos 8 caracteres. Al crear una cuenta aceptas nuestros",
+                "terminos": "Términos y condiciones"
             },
-            "email": {
-                "label": "Correo electrónico",
-                "placeholder": "correo@ejemplo.com"
+            "botones": {
+                "crearCuenta": "Crear cuenta",
+                "iniciarSesion": "Inicia sesión aquí"
             },
-            "contrasenia": {
-                "label": "Contraseña",
-                "placeholder": "********"
+            "footer": {
+                "yaTienesCuenta": "¿Ya tienes una cuenta?"
             },
-            "confirmarContrasenia": {
-                "label": "Confirmar contraseña",
-                "placeholder": "********"
+            "mensajes": {
+                "registroExitoso": "Tu cuenta ha sido creada exitosamente",
+                "errorGenerico": "Ocurrió un error inesperado. Inténtalo nuevamente."
             }
         },
-        "validaciones": {
-            "requerido": "Este campo es obligatorio",
-            "emailInvalido": "Ingresa un correo electrónico válido",
-            "contraseniaMinima": "La contraseña debe tener al menos 8 caracteres",
-            "contraseniasNoCoinciden": "Las contraseñas no coinciden"
-        },
-        "legal": {
-            "texto": "La contraseña debe tener al menos 8 caracteres. Al crear una cuenta aceptas nuestros",
-            "terminos": "Términos y condiciones"
-        },
-        "botones": {
-            "crearCuenta": "Crear cuenta",
-            "iniciarSesion": "Inicia sesión aquí"
-        },
-        "footer": {
-            "yaTienesCuenta": "¿Ya tienes una cuenta?"
-        },
-        "mensajes": {
-            "registroExitoso": "Tu cuenta ha sido creada exitosamente",
-            "errorGenerico": "Ocurrió un error inesperado. Inténtalo nuevamente."
-        }
-    },
-    "ToS": {
-        "title": "Terminos y Condiciones",
-        "lastUpdated": "Ultima actualizacion: 16 de marzo de 2026",
-        "sections": {
-            "platformUse": {
-                "title": "1. Uso de la plataforma",
-                "body": "Al crear una cuenta en Skin4All, aceptas usar la plataforma de manera responsable, sin afectar la seguridad, disponibilidad o experiencia de otros usuarios."
-            },
-            "accountPrivacy": {
-                "title": "2. Cuenta y privacidad",
-                "body": "Eres responsable de mantener la confidencialidad de tu cuenta. La informacion proporcionada sera tratada conforme a nuestras politicas de privacidad y solo para mejorar tu experiencia en la aplicacion."
-            },
-            "contentRecommendations": {
-                "title": "3. Contenido y recomendaciones",
-                "body": "Las rutinas y recomendaciones mostradas son de caracter informativo y no sustituyen asesoria profesional medica o dermatologica."
-            },
-            "changes": {
-                "title": "4. Cambios en estos terminos",
-                "body": "Podemos actualizar estos terminos en cualquier momento. Si realizamos cambios importantes, te lo notificaremos dentro de la plataforma."
+        "ToS": {
+            "title": "Terminos y Condiciones",
+            "lastUpdated": "Ultima actualizacion: 16 de marzo de 2026",
+            "sections": {
+                "platformUse": {
+                    "title": "1. Uso de la plataforma",
+                    "body": "Al crear una cuenta en Skin4All, aceptas usar la plataforma de manera responsable, sin afectar la seguridad, disponibilidad o experiencia de otros usuarios."
+                },
+                "accountPrivacy": {
+                    "title": "2. Cuenta y privacidad",
+                    "body": "Eres responsable de mantener la confidencialidad de tu cuenta. La informacion proporcionada sera tratada conforme a nuestras politicas de privacidad y solo para mejorar tu experiencia en la aplicacion."
+                },
+                "contentRecommendations": {
+                    "title": "3. Contenido y recomendaciones",
+                    "body": "Las rutinas y recomendaciones mostradas son de caracter informativo y no sustituyen asesoria profesional medica o dermatologica."
+                },
+                "changes": {
+                    "title": "4. Cambios en estos terminos",
+                    "body": "Podemos actualizar estos terminos en cualquier momento. Si realizamos cambios importantes, te lo notificaremos dentro de la plataforma."
+                }
             }
         }
     }
