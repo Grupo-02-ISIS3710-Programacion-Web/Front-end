@@ -114,7 +114,7 @@ export function ProductTable({ products, selected, onToggleOne }: ProductTablePr
             <TableHeader>
             <TableRow className="hover:bg-transparent">
                 <TableHead className="pl-5 w-10" />
-                <TableHead className="text-[11px] font-semibold tracking-wider uppercase text-muted-foreground min-w-[200px]">
+                <TableHead className="text-[11px] font-semibold tracking-wider uppercase text-muted-foreground min-w-50">
                 {t("products.colName")}
                 </TableHead>
                 <TableHead className="text-[11px] font-semibold tracking-wider uppercase text-muted-foreground">

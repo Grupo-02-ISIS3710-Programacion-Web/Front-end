@@ -6,7 +6,7 @@ import { toLabel } from "@/lib/string-utils";
 
 export function CategoryBadge({ category }: { category: Category }) {
     return (
-        <Badge variant="secondary" className="text-[10px] font-medium capitalize whitespace-nowrap">
+        <Badge variant="secondary" className="text-[10px] font-medium text-primary-foreground capitalize whitespace-nowrap">
         {toLabel(category)}
         </Badge>
     );
