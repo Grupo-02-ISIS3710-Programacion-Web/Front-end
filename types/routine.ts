@@ -7,7 +7,7 @@ export interface RoutineStep {
   order: number;
   productId: string;
   product?: Product;
-  notes: string;
+  notes?: string;
 }
 
 export interface Routine {

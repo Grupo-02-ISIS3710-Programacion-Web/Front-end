@@ -36,80 +36,70 @@ export function ProductCard({
         setToggleFavorite(!toggleFavorite);
 
         if (toggleFavorite) {
-        onFavoriteDeselect(productIndex);
+            onFavoriteDeselect(productIndex);
         } else {
-        onFavoriteSelect(productIndex);
+            onFavoriteSelect(productIndex);
         }
     };
 
     return (
         <Card className="p-0 h-full">
-
-        <a href={`/descubrir/${toLowerCaseAndReplaceSpacesWithHyphens(product.name)}`}>
-            <CardHeader className="bg-muted p-5 flex items-center justify-center">
-            <div className="flex justify-center items-center w-full h-full">
-                <Image
-                src={product.image_url[0]}
-                alt={product.name}
-                width={250}
-                height={250}
-                unoptimized
-                className="object-cover h-50 w-50 rounded-md"
-                />
-            </div>
-            </CardHeader>
-        </a>
-        <CardContent className="pb-5">
-
-            {/* brand + favorite */}
-            <Stack
-            direction={"row"}
-            paddingBottom={1}
-            justifyContent={"space-between"}
-            alignItems={"center"}
-            >
-            <div className="text-primary font-bold">
-                {product.brand}
-            </div>
-
-            <Button
-                variant={toggleFavorite ? "secondary" : "outline"}
-                size="sm"
-                className="h-8 px-2 rounded-2xl"
-                onClick={handleClick}
-            >
-                <Heart size={16} />
-            </Button>
-            </Stack>
-
-            {/* product name */}
-
-            <CardTitle>
             <a href={`/descubrir/${toLowerCaseAndReplaceSpacesWithHyphens(product.name)}`}>
-                {product.name}
+                <CardHeader className="bg-muted p-5 flex items-center justify-center">
+                    <div className="flex justify-center items-center w-full h-full">
+                        <Image
+                            src={product.image_url[0]}
+                            alt={product.name}
+                            width={250}
+                            height={250}
+                            unoptimized
+                            className="object-cover h-50 w-50 rounded-md"
+                        />
+                    </div>
+                </CardHeader>
             </a>
-            </CardTitle>
 
-            {/* rating + info */}
-            <CardDescription className="flex flex-col gap-1">
-            <StarRating
-                rating={product.rating}
-                reviewCount={product.review_count}
-                size={10}
-                className="mb-1"
-            />
-            <Stack direction={"row"} gap={1} className="items-center-safe">
-                <Smile className="text-primary" size={20}/>
-                {t("productType")}: {t(`productTypes.${product.product_type}`)}
-            </Stack>
-            <Stack direction={"row"} gap={1} className="items-center-safe">
-                <FlaskConical className="text-primary" size={20}/>
-                {t("keyIngredient")}: {product.ingredients[0]}
-            </Stack>
-            </CardDescription>
+            <CardContent className="pb-5">
+                <Stack
+                    direction={"row"}
+                    paddingBottom={1}
+                    justifyContent={"space-between"}
+                    alignItems={"center"}
+                >
+                    <div className="text-primary font-bold">{product.brand}</div>
+                    <Button
+                        variant={toggleFavorite ? "secondary" : "outline"}
+                        size="sm"
+                        className="h-8 px-2 rounded-2xl"
+                        onClick={handleClick}
+                    >
+                        <Heart size={16} />
+                    </Button>
+                </Stack>
 
-        </CardContent>
+                <CardTitle>
+                    <a href={`/descubrir/${toLowerCaseAndReplaceSpacesWithHyphens(product.name)}`}>
+                        {product.name}
+                    </a>
+                </CardTitle>
 
+                <CardDescription className="mt-3 flex flex-col gap-1">
+                    <StarRating
+                        rating={product.rating}
+                        reviewCount={product.review_count}
+                        size={10}
+                        className="mb-1"
+                    />
+                    <Stack direction={"row"} gap={1} className="items-center-safe">
+                        <Smile className="text-primary" size={20} />
+                        {t("productType")}: {t(`productTypes.${product.product_type}`)}
+                    </Stack>
+                    <Stack direction={"row"} gap={1} className="items-center-safe">
+                        <FlaskConical className="text-primary" size={20} />
+                        {t("keyIngredient")}: {product.ingredients[0]}
+                    </Stack>
+                </CardDescription>
+            </CardContent>
         </Card>
     );
 }
