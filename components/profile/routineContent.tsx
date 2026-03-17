@@ -4,6 +4,9 @@ import { Trash2, Sun, Moon } from "lucide-react"
 import { Routine } from "@/types/routine"
 import { useTranslations } from "next-intl"
 import { getProducts } from "@/lib/api"
+import { Product } from "@/types/product"
+
+import { useEffect, useState } from "react"
 
 export default function RoutineContent({
   filteredRoutines,
@@ -11,13 +14,22 @@ export default function RoutineContent({
   filteredRoutines: Routine[]
 }) {
 
-  const products = getProducts();
+  const productsAvailable = getProducts();
 
+  const [products, setProducts] = useState<Product[]>([])
   const t = useTranslations("RoutineContent")
+
+  function setProductsApi() {
+    const productsData = getProducts()
+    setProducts(productsData)
+  }
+
+  useEffect(() => {
+    setProductsApi()
+  }, [])
 
   return (
     <div className="flex flex-col gap-6">
-
       {filteredRoutines.map((routine) => (
         <div
           key={routine.id}
@@ -25,13 +37,11 @@ export default function RoutineContent({
                      rounded-2xl p-5 sm:p-6 shadow-sm 
                      hover:shadow-md transition-all duration-200"
         >
-
           <div className="flex justify-between items-start gap-4">
 
             <div className="flex flex-col gap-2 flex-1">
 
               <div className="flex items-center gap-2">
-
                 <span
                   className={`flex items-center gap-1 px-3 py-1 text-xs rounded-full font-medium
                     ${routine.type === "AM"
@@ -39,14 +49,13 @@ export default function RoutineContent({
                       : "bg-indigo-100 text-indigo-600"}
                   `}
                 >
-                  {routine.type === "AM" ? <Sun size={14}/> : <Moon size={14}/>}
+                  {routine.type === "AM" ? <Sun size={14} /> : <Moon size={14} />}
                   {routine.type}
                 </span>
 
                 <span className="text-xs text-gray-400">
                   {routine.steps.length} {t("steps")}
                 </span>
-
               </div>
 
               <h2 className="text-lg sm:text-xl font-semibold text-gray-900">
@@ -72,7 +81,7 @@ export default function RoutineContent({
 
 
             {routine.steps.map((step) => {
-              const product = products.find((prod) => prod.id === step.product)
+              const product = productsAvailable.find((prod) => prod.id === step.product)
 
               return (
                 <div
@@ -99,7 +108,6 @@ export default function RoutineContent({
 
         </div>
       ))}
-
     </div>
   )
 }

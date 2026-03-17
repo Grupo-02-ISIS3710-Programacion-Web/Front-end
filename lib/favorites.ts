@@ -132,5 +132,5 @@ export const productsFavorites: Product[] = [
         rating: 4.7,
         review_count: 8765
     },
-    
+
 ];
