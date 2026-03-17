@@ -11,7 +11,7 @@ import { productsFavorites } from "@/lib/favorites";
 export default function DiscoveryPage() {
   const products = getProducts();
   const params = useSearchParams();
-  const selectedCategory = (params.get("category") as Category) || "ALL";
+  const selectedCategory = params.get("category") ?(params.get("category") as Category) : "ALL";
   const [favoriteProducts, setFavoriteProducts] = useState<Product[]>([]);
   const [filters, setFilters] = useState<{
     skinTypes: SkinType[];

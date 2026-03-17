@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useEffectEvent, useMemo, useRef, useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
@@ -137,11 +137,16 @@ export default function CrearRutina() {
         console.log("Form entregado", data);
     };
 
+    const safelySetAllProducts = useEffectEvent((products: Product[]) => {
+        setAllProducts(products);
+    })
+
     useEffect(() => {
         const products = getProducts();
-        setAllProducts(products);
+        safelySetAllProducts(products)
     }
     , []);
+    
     return (
         <div className="mx-auto w-full max-w-6xl p-4 md:p-6">
             <header className="mb-6 md:mb-8 text-center">
