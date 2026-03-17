@@ -12,13 +12,13 @@ export const routines: Routine[] = [
       {
         id: "step-1",
         order: 1,
-        product: products[0],
+        product: products[0].id,
         notes: "Aplicar sobre piel ligeramente húmeda"
       },
       {
         id: "step-2",
         order: 2,
-        product: products[4]
+        product: products[4].id
       }
     ]
   },
@@ -31,12 +31,12 @@ export const routines: Routine[] = [
       {
         id: "step-1",
         order: 1,
-        product: products[2]
+        product: products[2].id
       },
       {
         id: "step-2",
         order: 2,
-        product: products[5]
+        product: products[5].id
       }
     ]
   },
@@ -49,18 +49,18 @@ export const routines: Routine[] = [
       {
         id: "step-1",
         order: 1,
-        product: products[10] // Effaclar Gel
+        product: products[10].id // Effaclar Gel
       },
       {
         id: "step-2",
         order: 2,
-        product: products[12], // Niacinamide
+        product: products[12].id, // Niacinamide
         notes: "Aplicar solo en zonas con tendencia acneica"
       },
       {
         id: "step-3",
         order: 3,
-        product: products[4] // Hydro Boost
+        product: products[4].id // Hydro Boost
       }
     ]
   },
@@ -73,28 +73,28 @@ export const routines: Routine[] = [
       {
         id: "step-1",
         order: 1,
-        product: products[11] // Hydrating Cleanser
+        product: products[11].id // Hydrating Cleanser
       },
       {
         id: "step-2",
         order: 2,
-        product: products[2], // Glycolic Acid
+        product: products[2].id, // Glycolic Acid
         notes: "Usar máximo 3 veces por semana"
       },
       {
         id: "step-3",
         order: 3,
-        product: products[13] // Snail Essence
+        product: products[13].id // Snail Essence
       },
       {
         id: "step-4",
         order: 4,
-        product: products[9] // Snail Essence
+        product: products[9].id // Snail Essence
       },
       {
         id: "step-5",
         order: 5,
-        product: products[4] // Snail Essence
+        product: products[4].id // Snail Essence
       }
     ]
   },
@@ -107,12 +107,12 @@ export const routines: Routine[] = [
       {
         id: "step-1",
         order: 1,
-        product: products[11]
+        product: products[11].id
       },
       {
         id: "step-2",
         order: 2,
-        product: products[5], // Cicaplast
+        product: products[5].id, // Cicaplast
         notes: "Aplicar una capa generosa en zonas irritadas"
       }
     ]

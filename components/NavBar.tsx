@@ -8,23 +8,23 @@ import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 
 const links = [
-  {
-    nombre: "Home",
-    href: "/"
-  },
-  {
-    nombre: "Descubre productos",
-    href: "/descubrir"
-  },
-  {
-    nombre: "Comunidad",
-    href: "/comunidad"
-  },
-  {
-    nombre: "Mis productos",
-    href: "/mis-productos"
-  }
-]
+    {
+      nombre: "Home",
+      href: "/home"
+    },
+    {
+        nombre: "Descubre productos",
+        href: "/descubrir"
+    },
+    {
+        nombre: "Comunidad",
+        href: "/comunidad"
+    },
+    {
+        nombre: "Mis productos",
+        href: "/mis-productos"
+    }
+  ]
 
 export default function NavBar() {
 
@@ -96,7 +96,9 @@ export function NavBarDesktop({ isLoggedIn = false }: { isLoggedIn?: boolean }) 
               </Button>
             </Link>
             <Button>
-              Iniciar sesión
+              <Link href="/login">
+                Iniciar sesión
+              </Link>
             </Button>
           </div>
           {isLoggedIn && (<>

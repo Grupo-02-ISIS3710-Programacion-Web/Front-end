@@ -1,6 +1,3 @@
-// Aquí debería ir la lógica de las llamadas a la API, pero como no tenemos una API real, esta parte se ha dejado con datos dummy
-
-// data/products.ts
 
 import { Product, Category, SkinType, ProductType } from "@/types/product";
 
@@ -15,6 +12,7 @@ export const productsFavorites: Product[] = [
         category: [Category.HIDRATACION],
         ingredients: ["ceramida-3", "niacinamida", "glicerina", "agua termal"],
         image_url: ["https://images-na.ssl-images-amazon.com/images/I/41oMKHKCJCL._UL500_.jpg"],
+        description: "Crema hidratante ligera que fortalece la barrera cutánea y proporciona hidratación hasta por 48 horas. Formulada con ceramida-3, niacinamida y agua termal para calmar y proteger la piel sensible.",
         rating: 4.7,
         review_count: 12453
     },
@@ -28,6 +26,7 @@ export const productsFavorites: Product[] = [
         category: [Category.LIMPIEZA],
         ingredients: ["ácido salicílico", "ceramidas", "niacinamida", "ácido hialurónico"],
         image_url: ["https://www.lookfantastic.es/images?url=https://static.thcdn.com/productimg/original/12207663-1995074481347395.jpg&format=webp&auto=avif&width=1200&height=1200&fit=cover"],
+        description: "Limpiador exfoliante con ácido salicílico que ayuda a suavizar la textura de la piel y destapar poros sin comprometer la barrera cutánea. Ideal para piel grasa, mixta o con textura irregular.",
         rating: 4.6,
         review_count: 9821
     },
@@ -41,6 +40,7 @@ export const productsFavorites: Product[] = [
         category: [Category.EXFOLIACION],
         ingredients: ["ácido glicólico", "aloe vera", "ginseng", "tasmanian pepperberry"],
         image_url: ["https://bebeautycol.com/cdn/shop/products/2FD69212-7EA4-4947-9824-9199F91146AE_1200x1200.jpg?v=1704781572"],
+        description: "Tónico exfoliante con 7% de ácido glicólico que mejora la luminosidad y textura de la piel. Ayuda a reducir manchas y líneas finas con uso constante.",
         rating: 4.5,
         review_count: 15890
     },
@@ -54,6 +54,7 @@ export const productsFavorites: Product[] = [
         category: [Category.ANTI_EDAD],
         ingredients: ["ácido hialurónico", "bifidus extract", "vitamina C", "glicerina"],
         image_url: ["https://static.sweetcare.com/img/prd/488/v-638200523158559322/lancome-003003lc-4.webp"],
+        description: "Suero antiedad avanzado que mejora visiblemente la luminosidad y firmeza de la piel. Contiene ácido hialurónico y extracto de bifidus para reforzar la barrera cutánea.",
         rating: 4.8,
         review_count: 7342
     },
@@ -67,10 +68,11 @@ export const productsFavorites: Product[] = [
         category: [Category.HIDRATACION],
         ingredients: ["ácido hialurónico", "glicerina", "dimeticona", "olivato de sorbitán"],
         image_url: ["https://habibdroguerias.vtexassets.com/arquivos/ids/157438-800-auto?v=638459643757500000&width=800&height=auto&aspect=true"],
+        description: "Gel hidratante ligero con ácido hialurónico que aporta hidratación intensa sin sensación grasa. Perfecto para piel normal a grasa.",
         rating: 4.6,
         review_count: 21456
     },
-    {
+   {
         id: "6",
         name: "Cicaplast Baume B5",
         brand: "La Roche-Posay",
@@ -80,10 +82,11 @@ export const productsFavorites: Product[] = [
         category: [Category.REPARACION],
         ingredients: ["pantenol", "madecassoside", "manteca de karité", "zinc"],
         image_url: ["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8OStExzMvoqxBSu1C-SznSXOSHd3jPd_l0Q&s"],
+        description: "Bálsamo reparador multiuso que calma, protege y repara la piel irritada o sensibilizada. Enriquecido con pantenol y madecassoside.",
         rating: 4.9,
         review_count: 18765
     },
-    {
+   {
         id: "11",
         name: "Effaclar Gel Limpiador Purificante",
         brand: "La Roche-Posay",
@@ -93,6 +96,7 @@ export const productsFavorites: Product[] = [
         category: [Category.LIMPIEZA],
         ingredients: ["agua termal", "zinc PCA", "coco-betaína", "glicerina"],
         image_url: ["https://pielfarmaceutica.com/cdn/shop/files/effaclar_gel_x_400ml.png?v=1723645399"],
+        description: "Gel limpiador purificante que elimina el exceso de grasa y limpia profundamente los poros sin resecar la piel.",
         rating: 4.7,
         review_count: 13221
     },
@@ -106,6 +110,7 @@ export const productsFavorites: Product[] = [
         category: [Category.LIMPIEZA],
         ingredients: ["ceramidas", "ácido hialurónico", "glicerina", "colesterol"],
         image_url: ["https://cocorosey.net/cdn/shop/products/16_1800x.jpg?v=1653346366"],
+        description: "Limpiador facial suave que elimina impurezas mientras mantiene la hidratación natural de la piel gracias a sus ceramidas y ácido hialurónico.",
         rating: 4.8,
         review_count: 20567
     },
@@ -119,6 +124,7 @@ export const productsFavorites: Product[] = [
         category: [Category.ANTIOXIDANTE],
         ingredients: ["niacinamida", "zinc PCA", "tamarindus indica seed gum", "pentylene glycol"],
         image_url: ["https://bebeautycol.com/cdn/shop/products/image_33008b22-795b-41a9-bc5f-cbcc31a1f602_1024x1024.jpg?v=1704781533"],
+        description: "Serum con niacinamida y zinc que ayuda a regular el exceso de sebo, reducir imperfecciones y mejorar la apariencia de los poros.",
         rating: 4.5,
         review_count: 18934
     },
@@ -132,6 +138,7 @@ export const productsFavorites: Product[] = [
         category: [Category.REPARACION],
         ingredients: ["mucina de caracol", "betaína", "butylene glycol", "arginina"],
         image_url: ["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6AiLsjODpxkoXlXoXDN6bDwNvAD4B_zV8Mw&s"],
+        description: "Esencia reparadora con 96% de mucina de caracol que mejora la elasticidad, hidrata profundamente y ayuda a reparar la piel dañada.",
         rating: 4.7,
         review_count: 8765
     },
