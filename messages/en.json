@@ -266,6 +266,7 @@
             "users": "Users",
             "reviews": "Reviews",
             "advertisement": "Advertisements",
+            "posts": "Posts",
             "settings": "Settings"
         },
         "viewSite": "View site",
@@ -284,12 +285,16 @@
         "stats": {
             "totalUsers": "Total Users",
             "activePosts": "Active Posts",
-            "pendingReviews": "Pending Reviews",
-            "monthlyRevenue": "Monthly Revenue"
+            "pendingPostReviews": "Pending Post Reviews",
+            "pendingProductReviews": "Pending Product Reviews"
         },
         "moderation": {
             "title": "Moderation Queue",
-            "viewAll": "View All"
+            "viewAll": "View All",
+            "keep": "Keep",
+            "remove": "Remove",
+            "approve": "Approve",
+            "delete": "Delete"
         },
         "products": {
             "inventoryTitle": "Product Inventory",

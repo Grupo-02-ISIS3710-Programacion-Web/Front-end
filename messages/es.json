@@ -298,6 +298,7 @@
             "users": "Usuarios",
             "reviews": "Reseñas",
             "advertisement": "Publicidad",
+            "posts": "Posts",
             "settings": "Ajustes"
         },
         "viewSite": "Ver sitio",
@@ -316,12 +317,16 @@
         "stats": {
             "totalUsers": "Usuarios totales",
             "activePosts": "Posts activos",
-            "pendingReviews": "Reseñas pendientes",
-            "monthlyRevenue": "Ingresos mensuales"
+            "pendingPostReviews": "Posts pendientes por revisar",
+            "pendingProductReviews": "Productos pendientes por revisar"
         },
         "moderation": {
             "title": "Cola de moderación",
-            "viewAll": "Ver todo"
+            "viewAll": "Ver todo",
+            "keep": "Conservar",
+            "remove": "Remover",
+            "approve": "Aprobar",
+            "delete": "Eliminar"
         },
         "products": {
             "inventoryTitle": "Inventario de productos",

@@ -142,7 +142,7 @@ function formatDate(iso?: string) {
 
 function CategoryBadge({ category }: { category: Category }) {
     return (
-        <Badge variant="secondary" className="text-[10px] font-medium capitalize">
+        <Badge className="text-[10px] font-medium capitalize bg-secondary ">
         {toLabel(category)}
         </Badge>
     );
@@ -456,7 +456,7 @@ export function ProductInventory({
             </CardTitle>
             <Button
                 size="sm"
-                className="bg-secondary hover:bg-primary text-white gap-1.5"
+                className="bg-secondary text-secondary-foreground gap-1.5"
             >
                 <Plus className="h-3.5 w-3.5" aria-hidden="true" />
                 {t("products.addProduct")}
@@ -479,7 +479,7 @@ export function ProductInventory({
                 <TabsTrigger value="proposed" className="text-xs h-7 gap-1.5">
                     {t("products.proposed")}
                     {proposedProducts.length > 0 && (
-                    <Badge className="text-[10px] px-1.5 py-0 bg-orange-500 hover:bg-orange-500 text-white">
+                    <Badge className="text-[10px] px-1.5 py-0 bg-secondary text-secondary-foreground">
                         {proposedProducts.length}
                     </Badge>
                     )}

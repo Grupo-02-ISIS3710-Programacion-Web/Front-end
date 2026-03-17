@@ -46,6 +46,7 @@ export const MODERATION_QUEUE: ModerationItem[] = [
 
 function ModerationCard({ item }: { item: ModerationItem }) {
     const isFlag = item.type === "flag";
+    const t = useTranslations("admin");
 
     return (
         <div className="py-4 first:pt-0 last:pb-0">
@@ -80,14 +81,14 @@ function ModerationCard({ item }: { item: ModerationItem }) {
                 size="sm"
                 className="h-7 text-xs bg-secondary hover:bg-primary text-white"
                 >
-                Keep
+                {t("moderation.keep")}
                 </Button>
                 <Button
                 size="sm"
                 variant="ghost"
                 className="h-7 text-xs text-destructive hover:bg-destructive/10"
                 >
-                Remove
+                {t("moderation.remove")}
                 </Button>
             </>
             ) : (
@@ -96,14 +97,14 @@ function ModerationCard({ item }: { item: ModerationItem }) {
                 size="sm"
                 className="h-7 text-xs bg-secondary hover:bg-primary text-white"
                 >
-                Approve
+                {t("moderation.approve")}
                 </Button>
                 <Button
                 size="sm"
                 variant="ghost"
                 className="h-7 text-xs text-destructive hover:bg-destructive/10"
                 >
-                Delete
+                {t("moderation.delete")}
                 </Button>
             </>
             )}

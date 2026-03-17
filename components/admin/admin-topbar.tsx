@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { Bell, Search } from "lucide-react";
+import { MobileSidebarTrigger } from "./admin-sidebar";
 
 interface AdminUser {
   name: string;
@@ -40,6 +41,8 @@ export function AdminTopbar({
 
     return (
         <header className="h-14 shrink-0 bg-background border-b flex items-center gap-4 px-6">
+
+            <MobileSidebarTrigger />
 
         {/* ── Search ── */}
         <div className="relative flex-1 max-w-md">
