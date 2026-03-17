@@ -14,37 +14,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from ".
 import { Combobox, ComboboxChip, ComboboxChips, ComboboxChipsInput, ComboboxContent, ComboboxInput, ComboboxItem, ComboboxList, ComboboxTrigger, ComboboxValue, useComboboxAnchor } from "../ui/combobox";
 import { Fragment, useState } from "react";
 
-export const createProductSchema = z.object({
-    name: z.string().min(3),
-    brand: z.string().min(2),
-    description: z.string().min(10),
-    skin_type: z
-        .array(z.enum(SkinType))
-        .min(1),
-    product_type:z.enum(ProductType),
-    primary_category: z.enum(Category),
-    additional_categories: z
-        .array(z.enum(Category))
-        .optional()
-        .default([]),
-    ingredients: z
-        .array(z.string().min(2))
-        .min(1),
-    image_url: z
-        .array(z.string().url())
-        .min(1),
-    })
-    .refine(
-    (data) => !data.additional_categories.includes(data.primary_category),
-    {
-        message: "La categoría principal no puede estar repetida en las adicionales",
-        path: ["additional_categories"]
-    }
-);
-
-type FormInput = z.input<typeof createProductSchema>;
-type FormValues = z.output<typeof createProductSchema>;
-
 export default function ProductForm() {
     const t = useTranslations("CreateProductPage");
     const tCat = useTranslations("Categories");
@@ -54,6 +23,32 @@ export default function ProductForm() {
     const skinTypes = Object.values(SkinType);
     const productTypes = Object.values(ProductType);
     const [ingredientsRaw, setIngredientsRaw] = useState("");
+
+    const createProductSchema = z.object({
+        name: z.string().min(3, { message: t("errors.nameMin") }),
+        brand: z.string().min(2, { message: t("errors.brandMin") }),
+        description: z.string().min(10, { message: t("errors.descriptionMin") }),
+        skin_type: z.array(z.enum(SkinType)).min(1, { message: t("errors.skinTypeRequired") }),
+        product_type: z.enum(ProductType, { message: t("errors.productTypeRequired") }),
+        primary_category: z.enum(Category, {message: t("errors.primaryCategoryRequired")
+        }),
+        additional_categories: z.array(z.enum(Category)).optional().default([]),
+        ingredients: z.array(z.string().min(2)).min(1, { message: t("errors.ingredientsRequired") }),
+        image_url: z.array(z.string().url({ message: t("errors.imageUrlInvalid") })).min(1, {
+        message: t("errors.imageUrlRequired"),
+        }),
+        })
+        .refine(
+        (data) => !data.additional_categories.includes(data.primary_category),
+        {
+            message: "La categoría principal no puede estar repetida en las adicionales",
+            path: ["additional_categories"]
+        }
+    );
+
+    
+    type FormInput = z.input<typeof createProductSchema>;
+    type FormValues = z.output<typeof createProductSchema>;
 
     function onSubmit(data: FormValues) {
         console.log(data)
