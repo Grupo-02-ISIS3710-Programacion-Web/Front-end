@@ -36,16 +36,16 @@ export default function NavBar() {
 
       {/* Para mobile */}
       <div className="block md:hidden">
-        <NavBarMobile   />
+        <NavBarMobile />
       </div>
     </>
   )
 }
 
-export function NavBarDesktop({isLoggedIn = false}: {isLoggedIn?: boolean}) {
+export function NavBarDesktop({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
   return (
     <div className="hidden md:flex items-center justify-center px-4 lg:px-10 py-3 w-full gap-12 bg-popover">
-      
+
       {/* Left side */}
       <div className="flex items-center gap-6">
         <Link href="/">
@@ -87,12 +87,14 @@ export function NavBarDesktop({isLoggedIn = false}: {isLoggedIn?: boolean}) {
         {/* Lado derecho */}
         <div className="flex items-center gap-3">
           <div className="hidden lg:flex items-center gap-2">
-            <Button
-              variant="outline"
-              className=" hover:bg-secondary hover:text-secondary-foreground"
-            >
-              Registrarme
-            </Button>
+            <Link href={"/register"}>
+              <Button
+                variant="outline"
+                className=" hover:bg-secondary hover:text-secondary-foreground"
+              >
+                Registrarme
+              </Button>
+            </Link>
             <Button>
               <Link href="/login">
                 Iniciar sesión
@@ -106,7 +108,7 @@ export function NavBarDesktop({isLoggedIn = false}: {isLoggedIn?: boolean}) {
         </div>
       </div>
 
-      
+
     </div>
   )
 }
@@ -129,7 +131,7 @@ export function SearchBar() {
 export function NotificationsButton() {
   return (
     <Button variant="outline" size="icon" >
-        <Bell className="h-5 w-5" />
+      <Bell className="h-5 w-5" />
     </Button>
   )
 }
@@ -146,7 +148,7 @@ export function NavBarMobile() {
   return (
     <div className="md:hidden sticky top-0 z-50 border-b">
       <div className="flex items-center justify-baseline px-4 py-3">
-        
+
         {/* Menu trigger */}
         <Sheet>
           <SheetTrigger asChild>
@@ -172,7 +174,9 @@ export function NavBarMobile() {
             {/* Autenticación al fondo */}
             <div className="mt-auto pt-6 border-t flex justify-center w-full">
               <div className=" flex flex-col gap-2 w-60">
-                <Button variant="outline">Registrarme</Button>
+                <Button variant="outline"><Link href={"/register"}>
+                  Registrarme
+                </Link></Button>
                 <Button>Iniciar sesión</Button>
               </div>
             </div>
@@ -205,7 +209,7 @@ export function NavBarMobile() {
           </div>
         </div>
 
-        
+
       </div>
     </div>
   )
