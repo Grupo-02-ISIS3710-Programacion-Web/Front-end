@@ -3,12 +3,15 @@
 import { Trash2, Sun, Moon } from "lucide-react"
 import { Routine } from "@/types/routine"
 import { useTranslations } from "next-intl"
+import { getProducts } from "@/lib/api"
 
 export default function RoutineContent({
   filteredRoutines,
 }: {
   filteredRoutines: Routine[]
 }) {
+
+  const products = getProducts();
 
   const t = useTranslations("RoutineContent")
 
@@ -67,25 +70,30 @@ export default function RoutineContent({
 
           <div className="mt-4 flex flex-wrap gap-3">
 
-            {routine.steps.map((step) => (
-              <div
-                key={step.id}
-                className="flex items-center gap-2 bg-gray-50 
-                           border border-gray-200 rounded-xl px-3 py-2"
-              >
 
-                <div className="w-6 h-6 rounded-full bg-rose-100 
-                                text-rose-600 text-xs flex items-center 
-                                justify-center font-semibold">
-                  {step.order}
+            {routine.steps.map((step) => {
+              const product = products.find((prod) => prod.id === step.product)
+
+              return (
+                <div
+                  key={step.id}
+                  className="flex items-center gap-2 bg-gray-50 
+                            border border-gray-200 rounded-xl px-3 py-2"
+                >
+
+                  <div className="w-6 h-6 rounded-full bg-rose-100 
+                                  text-rose-600 text-xs flex items-center 
+                                  justify-center font-semibold">
+                    {step.order}
+                  </div>
+
+                  <span className="text-xs sm:text-sm text-gray-700">
+                    {product?.name || "Producto no encontrado"}
+                  </span>
+
                 </div>
-
-                <span className="text-xs sm:text-sm text-gray-700">
-                  {step.product.name}
-                </span>
-
-              </div>
-            ))}
+              )
+            })}
 
           </div>
 

@@ -74,17 +74,18 @@
         "title3": "journey starts here",
         "description": "Join a community of over 50k enthusiasts. Track your progress, find the perfect routine for your skin type and discover products that actually work.",
         "register": "Sign up",
+        "explorer": "Discover more",
         "trusted": "people trust us"
     },
     
     "Profile": {
-        "myRoutine": "My Routine",
+        "myRoutine": "My Routines",
         "myFavorites": "My Favorites",
 
         "morning": "Morning (AM)",
         "evening": "Evening (PM)",
 
-        "addStep": "+ Add step",
+        "addStep": "+ Add routine",
 
         "searchProducts": "Search products...",
 
@@ -94,7 +95,7 @@
     },
 
     "ProfileTabs": {
-        "myRoutine": "My Routine",
+        "myRoutine": "My Routines",
         "myFavorites": "My Favorites",
         "forumPosts": "Forum Posts",
 

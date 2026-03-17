@@ -94,7 +94,9 @@ export function NavBarDesktop({isLoggedIn = false}: {isLoggedIn?: boolean}) {
               Registrarme
             </Button>
             <Button>
-              Iniciar sesión
+              <Link href="/login">
+                Iniciar sesión
+              </Link>
             </Button>
           </div>
           {isLoggedIn && (<>

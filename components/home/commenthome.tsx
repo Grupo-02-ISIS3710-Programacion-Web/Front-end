@@ -2,6 +2,7 @@
 
 import { Check, MessageCircle, Heart } from "lucide-react"
 import { useTranslations } from "next-intl"
+import Link from "next/link"
 
 export default function CommentHome(){
 
@@ -9,9 +10,9 @@ export default function CommentHome(){
 
     return(
 
-        <div className="flex flex-col p-10 bg-gray-50">
+        <div className="flex flex-col  bg-gray-50">
             
-            <div className="flex flex-cols max-w-7xl mx-auto px-5 py-20 mb-24 grid md:grid-cols-2 gap-14 items-start">
+            <div className="flex flex-cols max-w-7xl mx-auto px-5 mt-23 mb-24 grid md:grid-cols-2 gap-14 items-start">
 
                 <div>
                     <h2 className="text-3xl font-bold text-gray-900 mb-4">
@@ -41,7 +42,9 @@ export default function CommentHome(){
                         </li>
                     </ul>
                     <button className="bg-foreground text-white px-6 py-3 rounded-lg font-medium hover:opacity-90 transition">
-                        {t("visitCommunity")}
+                        <Link href="/comunidad">
+                         {t("visitCommunity")}
+                        </Link> 
                     </button>
                 </div>
 
@@ -124,7 +127,7 @@ export default function CommentHome(){
             </div>
 
        
-            <div className="min-h-foreground flex items-center bg-secondary mt-30 py-20">
+            <div className="min-h-foreground flex items-center bg-primary mt-5 py-20">
             
                 <div className="max-w-4xl mx-auto px-6 text-center w-full">
                     

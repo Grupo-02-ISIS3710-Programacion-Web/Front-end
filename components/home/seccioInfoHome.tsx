@@ -1,15 +1,17 @@
 import Image from "next/image"
 import { ArrowRight } from "lucide-react"
-import { getTranslations } from "next-intl/server"
+import { useTranslations } from "next-intl"
+import { navigate } from "next/dist/client/components/segment-cache/navigation"
+import Link from "next/link"
 
-export default async function SeccionInfoHome(){
+export default function SeccionInfoHome(){
 
-    const t = await getTranslations("SeccionInfoHome")
+    const t = useTranslations("SeccionInfoHome")
 
     return(
-        <div className="grid md:grid-cols-2 gap-10 items-center h-full">
+        <div className="grid md:grid-cols-2  items-center h-full">
 
-          <div className="flex flex-col justify-center">
+          <div className="flex flex-col justify-center px-6">
 
             <span className="bg-secondary text-xs px-3 py-1 rounded-full font-medium text-gray-700 w-fit">
               {t("badge")}
@@ -24,11 +26,20 @@ export default async function SeccionInfoHome(){
               {t("description")}
             </p>
 
-            <div className="flex items-center gap-6 mt-8">
+            <div className="flex items-center gap-3 mt-8">
 
-              <button className="flex items-center gap-2 bg-primary hover:bg-pink-600 text-white px-6 py-3 rounded-xl shadow-md transition">
-                {t("register")}
+              <button className="flex items-center gap-2 bg-primary hover:bg-secondary text-white px-4 py-3 rounded-xl shadow-md transition"
+              >
+                <Link href="/login">
+                 {t("register")}
+                </Link>
                 <ArrowRight size={18}/>
+              </button>
+
+              <button className="flex items-center gap-2 bg-foreground  text-white px-4 py-3 rounded-xl shadow-md transition">
+                <Link href="/descubrir">
+                 {t("explorer")}
+                </Link>
               </button>
 
               <div className="flex items-center gap-3">
@@ -52,11 +63,12 @@ export default async function SeccionInfoHome(){
           <div className="flex justify-center items-center h-full">
 
             <Image
-              src="/skincare_home.png"
+              src="https://bebeautycol.com/cdn/shop/products/image_33008b22-795b-41a9-bc5f-cbcc31a1f602_1024x1024.jpg?v=1704781533"
               alt="Productos de skincare"
-              width={520}
-              height={420}
+              width={505}
+              height={300}
               className="rounded-2xl object-cover shadow-lg"
+              unoptimized={true}
             />
 
           </div>

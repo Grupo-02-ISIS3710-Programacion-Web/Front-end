@@ -24,6 +24,7 @@ export default function Profile(){
     const [searchTerm, setSearchTerm] = useState("")
     const ITEMS_PER_PAGE = 6
     const [visibleCount, setVisibleCount] = useState(ITEMS_PER_PAGE)
+    const [inputValue, setInputValue] = useState("")
 
     const [routineDaily, setRoutineDaily] = useState("am")
 
@@ -154,13 +155,23 @@ export default function Profile(){
                                     <div className="flex items-center gap-2 w-full lg:w-96">
 
                                         <Input
-                                            type="text"
-                                            placeholder={t("searchProducts")}
-                                            className="w-full"
-                                            onChange={(e) => setSearchTerm(e.target.value)}
+                                        type="text"
+                                        placeholder={t("searchProducts")}
+                                        className="w-full"
+                                        value={inputValue}
+                                        onChange={(e) => setInputValue(e.target.value)}
+                                        onKeyDown={(e) => {
+                                            if (e.key === "Enter") {
+                                                setSearchTerm(inputValue)
+                                            }
+                                        }}
                                         />
 
-                                        <Button variant="outline" size="icon">
+                                        <Button 
+                                            variant="outline" 
+                                            size="icon"
+                                            onClick={() => setSearchTerm(inputValue)}
+                                            >
                                             <Search className="h-4 w-4"/>
                                         </Button>
 

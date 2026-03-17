@@ -111,17 +111,18 @@
         "title3": "empieza aquí",
         "description": "Únete a una comunidad de más de 50 mil entusiastas. Haz seguimiento a tu progreso, encuentra la rutina perfecta para tu tipo de piel y descubre productos que realmente funcionan.",
         "register": "Regístrate",
+        "explorer": "Descubre más",
         "trusted": "personas confían en nosotros"
     },
     
     "Profile": {
-        "myRoutine": "Mi rutina",
+        "myRoutine": "Mis rutinas",
         "myFavorites": "Mis favoritos",
 
         "morning": "Mañana (AM)",
         "evening": "Noche (PM)",
 
-        "addStep": "+ Agregar paso",
+        "addStep": "+ Agregar rutina",
 
         "searchProducts": "Buscar productos...",
 
@@ -131,7 +132,7 @@
     },
     
     "ProfileTabs": {
-        "myRoutine": "Mi rutina",
+        "myRoutine": "Mis rutina",
         "myFavorites": "Mis favoritos",
         "forumPosts": "Publicaciones del foro",
 
