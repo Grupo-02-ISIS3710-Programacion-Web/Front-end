@@ -68,6 +68,131 @@
         "placeholder": "Busca productos por nombre, marca o tipo...",
         "allProducts": "Todos los productos"
     },
+
+    "DiscoveryPage": {
+        "didNotFindProduct": "¿No encontraste lo que estabas buscando?",
+        "addProduct": "Añade un producto a nuestro catálogo"
+    },
+    "FilterHeader": {
+        "title": "Descubre productos",
+        "description": "Descubre los mejores productos para ti",
+        "productCount": "{count, plural, =0 {Mostrando 0 productos} =1 {Mostrando 1 producto} other {Mostrando {count} productos}}",
+        "filter": "Filtrar por:",
+        "filters": {
+            "skinType": "Tipo de piel",
+            "brand": "Marca",
+            "excludeIngredients": "Excluir ingredientes"
+        },
+        "clearFilters": "Limpiar filtros",
+        "chips": {
+            "skin": "Piel",
+            "brand": "Marca: {brand}",
+            "exclude": "Excluir: {ingredient}"
+        }
+    },
+
+    "SkinTypes": {
+        "normal": "Normal",
+        "seca": "Seca",
+        "grasa": "Grasa",
+        "mixta": "Mixta",
+        "sensible": "Sensible",
+        "acneica": "Acnéica",
+        "irritada": "Irritada",
+        "opaca": "Opaca",
+        "texturizada": "Texturizada"
+    },
+
+    "Categories": {
+        "ALL": {
+        "label": "Todos los productos",
+        "description": "Descubre todos los productos disponibles"
+        },
+        "limpieza": {
+        "label": "Limpiadores",
+        "description": "Encuentra los mejores limpiadores para tu piel"
+        },
+        "hidratacion": {
+        "label": "Hidratantes",
+        "description": "Hidrata tu piel con cremas y lociones"
+        },
+        "antioxidante": {
+        "label": "Serums",
+        "description": "Potencia tu rutina con serums especializados"
+        },
+        "reparacion": {
+        "label": "Reparación",
+        "description": "Potencia tu rutina con esencias reparadoras"
+        },
+        "exfoliacion": {
+        "label": "Exfoliación",
+        "description": "Renueva tu piel con exfoliantes químicos y físicos"
+        },
+        "anti-edad": {
+        "label": "Anti-edad",
+        "description": "Encuentra productos anti-edad para combatir los signos del envejecimiento"
+        }
+    },
+    "CategoriesCard": {
+        "title": "Categorías",
+        "description": "Explora productos por categorías"
+    },
+    "ProductTypes": {
+        "cream": "Crema",
+        "cleanser": "Limpiador",
+        "eye_cream": "Crema para ojos",
+        "mask": "Mascarilla",
+        "oil": "Aceite",
+        "serum": "Suero",
+        "essence": "Esencia",
+        "exfoliant": "Exfoliante",
+        "sunscreen": "Protector solar",
+        "toner": "Tónico",
+        "gel": "Gel",
+        "balm": "Bálsamo",
+        "treatment": "Tratamiento",
+        "makeup_remover": "Desmaquillante",
+        "makeup": "Maquillaje"
+    },
+    "ProductCard": {
+        "discover": "Descubrir",
+        "category": "Categoría",
+        "productType": "Tipo de producto",
+        "keyIngredient": "Ingrediente clave",
+        "ingredientsDetailed": "Ingredientes detallados",
+        "addToRoutine": "Agregar a una rutina",
+        "productNotFound": "Producto no encontrado"
+    },
+
+    "CreateProductPage" : {
+        "title": "Añade un nuevo producto al catálogo de Skin4All",
+        "submitDisclaimer": "Los productos que subas a este form pasaran por la verificación de un administrador antes de ser acepatos en la plataforma. El administrador puede excluir el producto si considera que no cumple con los estándares de la plataforma.",
+        "productName": "Nombre del producto",
+        "productNamePlaceholder": "CeraVe limpiador hidratante",
+        "brand": "Marca del producto",
+        "description": "Descripción del producto",
+        "descriptionPlaceholder": "Escriba la descripción del producto",
+        "productType": "Tipo de producto",
+        "productTypePlaceholder": "Selecciona el tipo de producto",
+        "primaryCategory": "Categoría principal del producto",
+        "primaryCategoryPlaceholder": "Selecciona la categoría principal del producto",
+        "additionalCategories": "Otras categorías del producto",
+        "additionalCategoriesPlaceholder": "Escoja otras categorías del producto",
+        "skinTypes": "Tipos de piel",
+        "skinTypesPlaceholder": "Selecciona los tipos de piel del producto",
+        "ingredients": "Ingredientes",
+        "ingredientsPlaceholder": "Ej: niacinamida, glicerina, ceramidas",
+        "imageUrl": "URL de la imagen del producto",
+
+        "errors": {
+            "nameMin": "El nombre del producto debe tener al menos 3 caracteres",
+            "brandMin": "La marca del producto debe tener al menos 3 caracteres",
+            "descriptionMin": "La descripción del producto debe tener al menos 10 caracteres",
+            "skinTypeRequired": "Debe seleccionar al menos un tipo de piel",
+            "productTypeRequired": "Debe seleccionar el tipo de producto",
+            "primaryCategoryRequired": "Debe seleccionar al menos una categoría",
+            "ingredientsRequired": "Debe ingresar al menos un ingrediente",
+            "imageUrlRequired": "Debe incluir una url de imagen del producto válida"
     "registro": {
         "titulo": "Crear cuenta",
         "descripcion": "Completa tus datos para comenzar tu experiencia",

@@ -28,8 +28,12 @@ import {
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 
 export default function ProductDetailPage() {
+    const t = useTranslations("ProductCard");
+    const tCat = useTranslations("Categories");
+    const tProdType = useTranslations("ProductTypes");
     const params = useParams();
 
     let slug: string;
@@ -103,11 +107,11 @@ export default function ProductDetailPage() {
                 <Breadcrumb>
                     <BreadcrumbList>
                         <BreadcrumbItem>
-                            <BreadcrumbLink className="hover:text-secondary font-normal" href="/descubrir">Descubrir</BreadcrumbLink>
+                            <BreadcrumbLink className="hover:text-secondary font-normal" href="/descubrir">{t("discover")}</BreadcrumbLink>
                         </BreadcrumbItem>
                         <BreadcrumbSeparator className="text-secondary" />
                         <BreadcrumbItem>
-                            <BreadcrumbLink className="hover:text-secondary font-normal" href={`/descubrir?category=${product.category[0]}`}>{capitalizeFirstLetter(product.category[0])}</BreadcrumbLink>
+                            <BreadcrumbLink className="hover:text-secondary font-normal" href={`../descubrir?category=${product.category[0]}`}>{tCat(`${product.category[0]}.label`)}</BreadcrumbLink>
                         </BreadcrumbItem>
                         <BreadcrumbSeparator className="text-secondary"/>
                         <BreadcrumbItem>
@@ -174,8 +178,8 @@ export default function ProductDetailPage() {
                                         {getCategoryIcon(product.category[0])}
                                     </div>
                                     <div className="text-sm flex flex-col">
-                                        <p>Categoría</p>
-                                        <p className="text-foreground">{capitalizeFirstLetter(product.category[0])}</p>
+                                        <p>{t("category")}</p>
+                                        <p className="text-foreground">{tCat(`${product.category[0]}.label`)}</p>
                                     </div>
                                 </Stack>
                                 <Stack direction={"row"} gap={1} alignItems={"center"} flexWrap="wrap">
@@ -183,8 +187,8 @@ export default function ProductDetailPage() {
                                         <BadgeInfo className="text-primary" />
                                     </div>
                                     <div className="text-sm flex flex-col">
-                                        <p>Tipo de producto</p>
-                                        <p className="text-foreground">{capitalizeFirstLetter(product.product_type)}</p>
+                                        <p>{t("productType")}</p>
+                                        <p className="text-foreground">{tProdType(`${product.product_type}`)}</p>
                                     </div>
                                 </Stack>
                             </Stack>
@@ -193,7 +197,7 @@ export default function ProductDetailPage() {
                             {/* botones para añadir a rutina y favorito */}
                             <Stack direction={"row"} gap={2} alignItems={"center"}>
                                 <Button size="lg" className="w-fit">
-                                    Agregar a una rutina
+                                    {t("addToRoutine")}
                                 </Button>
                                 <Button 
                                     variant={toggleFavorite ? "secondary" : "outline"} 
@@ -211,7 +215,7 @@ export default function ProductDetailPage() {
                 <Container maxWidth="md">
                     <Stack direction={"column"} gap={2} alignItems={"baseline"} paddingTop={5}>
                         <h3 className="font-medium text-foreground">
-                            Ingredientes Detallados
+                            {t("ingredientsDetailed")}
                         </h3>
                         <Stack direction={"row"} gap={1} flexWrap="wrap" className="w-full">
                             {product.ingredients.map((ingredient, index) => (
