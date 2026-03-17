@@ -6,7 +6,8 @@ import { useFieldArray, useForm } from "react-hook-form";
 import { AnimatePresence, motion } from "motion/react";
 import { toast } from "sonner";
 
-import { getProducts, getRoutineById } from "@/lib/api";
+import { getProducts } from "@/lib/api";
+import { getRoutineById } from "@/lib/routine";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
@@ -119,7 +120,7 @@ export default function RoutineForm({ mode }: RoutineFormProps) {
 
         const routineSteps = routine.steps
             .map((step) => {
-                const product = products.find((item) => item.id === step.product);
+                const product = products.find((item) => item.id === step.productId);
 
                 if (!product) {
                     return null;
@@ -223,6 +224,7 @@ export default function RoutineForm({ mode }: RoutineFormProps) {
         const routineId = searchParams.get("id");
         const routine: Routine = {
             id: mode === "edit" && routineId ? routineId : generateId(),
+            userId: "u1",
             name: data.name,
             description: data.description,
             type: data.type,
@@ -231,7 +233,7 @@ export default function RoutineForm({ mode }: RoutineFormProps) {
                 id: step.id,
                 name: step.name,
                 order: index,
-                product: step.product.id,
+                productId: step.product.id,
                 notes: step.notes
             }))
         };

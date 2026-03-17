@@ -1,24 +1,12 @@
 import { Trash2, Sun, Moon } from "lucide-react"
 import { Routine } from "@/types/routine"
-import { Product } from "@/types/product"
-import { getProducts } from "@/lib/api"
-import { useEffect, useState } from "react"
+import { getProductById } from "@/lib/api"
 
 export default function RoutineContent({
   filteredRoutines,
 }: {
   filteredRoutines: Routine[]
 }) {
-  const [products, setProducts] = useState<Product[]>([])
-
-  function setProductsApi() {
-    const productsData = getProducts();
-    setProducts(productsData);
-  }
-
-  useEffect(() => {
-    setProductsApi()
-  }, [])
   return (
     <div className="flex flex-col gap-6">
 
@@ -91,7 +79,7 @@ export default function RoutineContent({
                 </div>
 
                 <span className="text-xs sm:text-sm text-gray-700">
-                  {step.product.name}
+                  {getProductById(step.productId)?.name || "Product"}
                 </span>
               </div>
             ))}

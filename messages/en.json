@@ -173,7 +173,24 @@
         "keyIngredient": "Key ingredient",
         "ingredientsDetailed": "Detailed ingredients",
         "addToRoutine": "Add to routine",
-        "productNotFound": "Product not found"
+        "productNotFound": "Product not found",
+        "productTypes": {
+            "cream": "Cream",
+            "cleanser": "Cleanser",
+            "eye_cream": "Eye cream",
+            "mask": "Mask",
+            "oil": "Oil",
+            "serum": "Serum",
+            "essence": "Essence",
+            "exfoliant": "Exfoliant",
+            "sunscreen": "Sunscreen",
+            "toner": "Toner",
+            "gel": "Gel",
+            "balm": "Balm",
+            "treatment": "Treatment",
+            "makeup_remover": "Makeup Remover",
+            "makeup": "Makeup"
+        }
     },
     "CreateProductPage": {
         "title": "Add a new product to the Skin4All Catalogue",
@@ -203,105 +220,138 @@
             "primaryCategoryRequired": "Product category is required",
             "ingredientsRequired": "Product ingredients are required",
             "imageUrlRequired": "Image URL of product is required"
+        }
+    },
+    "registro": {
+        "titulo": "Create account",
+        "descripcion": "Complete your details to start your experience",
+        "header": {
+            "title": "Join the Glow",
+            "subtitle": "Let's get to know your skin."
         },
-        "registro": {
-            "titulo": "Create account",
-            "descripcion": "Complete your details to start your experience",
-            "header": {
-                "title": "Join the Glow",
-                "subtitle": "Let's get to know your skin."
+        "campos": {
+            "nombre": {
+                "label": "Name",
+                "placeholder": "Eg: John Doe"
             },
-            "campos": {
-                "nombre": {
-                    "label": "Name",
-                    "placeholder": "Eg: John Doe"
-                },
-                "fechaNacimiento": {
-                    "label": "Birth date"
-                },
-                "tipoPiel": {
-                    "label": "Skin type",
-                    "placeholder": "Select your skin type",
-                    "opciones": {
-                        "grasa": "Oily",
-                        "seca": "Dry",
-                        "mixta": "Combination",
-                        "sensible": "Sensitive",
-                        "normal": "Normal"
-                    }
-                },
-                "probadoSkinCare": {
-                    "label": "Have you ever tried skincare products?",
-                    "si": "Yes",
-                    "no": "No"
-                },
-                "comoEnteroDeNosotros": {
-                    "label": "How did you hear about us?",
-                    "placeholder": "Select an option",
-                    "opciones": {
-                        "instagram": "Instagram",
-                        "tiktok": "TikTok",
-                        "amigo": "Friend referral",
-                        "google": "Google search",
-                        "publicidad": "Ads",
-                        "otro": "Other"
-                    }
-                },
-                "email": {
-                    "label": "Email address",
-                    "placeholder": "email@example.com"
-                },
-                "contrasenia": {
-                    "label": "Password",
-                    "placeholder": "********"
-                },
-                "confirmarContrasenia": {
-                    "label": "Confirm password",
-                    "placeholder": "********"
+            "fechaNacimiento": {
+                "label": "Birth date"
+            },
+            "tipoPiel": {
+                "label": "Skin type",
+                "placeholder": "Select your skin type",
+                "opciones": {
+                    "grasa": "Oily",
+                    "seca": "Dry",
+                    "mixta": "Combination",
+                    "sensible": "Sensitive",
+                    "normal": "Normal"
                 }
             },
-            "validaciones": {
-                "requerido": "This field is required",
-                "emailInvalido": "Please enter a valid email",
-                "contraseniaMinima": "Password must be at least 8 characters",
-                "contraseniasNoCoinciden": "Passwords do not match"
+            "probadoSkinCare": {
+                "label": "Have you ever tried skincare products?",
+                "si": "Yes",
+                "no": "No"
             },
-            "legal": {
-                "texto": "Password must be at least 8 characters long. By creating an account, you accept our",
-                "terminos": "Terms and Conditions"
+            "comoEnteroDeNosotros": {
+                "label": "How did you hear about us?",
+                "placeholder": "Select an option",
+                "opciones": {
+                    "instagram": "Instagram",
+                    "tiktok": "TikTok",
+                    "amigo": "Friend referral",
+                    "google": "Google search",
+                    "publicidad": "Ads",
+                    "otro": "Other"
+                }
             },
-            "botones": {
-                "crearCuenta": "Create account",
-                "iniciarSesion": "Sign in here"
+            "email": {
+                "label": "Email address",
+                "placeholder": "email@example.com"
             },
-            "footer": {
-                "yaTienesCuenta": "Already have an account?"
+            "contrasenia": {
+                "label": "Password",
+                "placeholder": "********"
             },
-            "mensajes": {
-                "registroExitoso": "Your account has been created successfully",
-                "errorGenerico": "An unexpected error occurred. Please try again."
+            "confirmarContrasenia": {
+                "label": "Confirm password",
+                "placeholder": "********"
             }
         },
-        "ToS": {
-            "title": "Terms and Conditions",
-            "lastUpdated": "Last updated: March 16, 2026",
-            "sections": {
-                "platformUse": {
-                    "title": "1. Platform use",
-                    "body": "By creating an account on Skin4All, you agree to use the platform responsibly and not affect the security, availability, or experience of other users."
-                },
-                "accountPrivacy": {
-                    "title": "2. Account and privacy",
-                    "body": "You are responsible for keeping your account credentials confidential. The information you provide will be handled according to our privacy practices and used only to improve your in-app experience."
-                },
-                "contentRecommendations": {
-                    "title": "3. Content and recommendations",
-                    "body": "Routines and recommendations shown in the app are for informational purposes only and do not replace professional medical or dermatological advice."
-                },
-                "changes": {
-                    "title": "4. Changes to these terms",
-                    "body": "We may update these terms at any time. If important changes are made, we will notify you within the platform."
-                }
+        "validaciones": {
+            "requerido": "This field is required",
+            "emailInvalido": "Please enter a valid email",
+            "contraseniaMinima": "Password must be at least 8 characters",
+            "contraseniasNoCoinciden": "Passwords do not match"
+        },
+        "legal": {
+            "texto": "Password must be at least 8 characters long. By creating an account, you accept our",
+            "terminos": "Terms and Conditions"
+        },
+        "botones": {
+            "crearCuenta": "Create account",
+            "iniciarSesion": "Sign in here"
+        },
+        "footer": {
+            "yaTienesCuenta": "Already have an account?"
+        },
+        "mensajes": {
+            "registroExitoso": "Your account has been created successfully",
+            "errorGenerico": "An unexpected error occurred. Please try again."
+        }
+    },
+    "RoutineDetail": {
+        "community": "Community",
+        "notFoundTitle": "Routine not found",
+        "notFoundDescription": "The routine you are trying to open does not exist in the mock API.",
+        "backToDiscussions": "Back to discussions",
+        "authorFallback": "Author",
+        "routineCreator": "Routine creator",
+        "routineType": "{type} routine",
+        "stepsTitle": "Routine steps",
+        "stepTitle": "Step {number}: {name}",
+        "unknownBrand": "Unknown brand",
+        "unknownProduct": "Unknown product",
+        "noImage": "No image",
+        "commentsTitle": "Comments",
+        "thoughtsTitle": "What are your thoughts?",
+        "commentPlaceholder": "Share your experience with this routine...",
+        "addComment": "Add comment",
+        "postComment": "Post comment",
+        "noComments": "No comments yet. Be the first one to comment on this routine.",
+        "communityMember": "Community member",
+        "userFallback": "Skin4All User",
+        "likes": "{count, plural, =0 {0 likes} =1 {1 like} other {{count} likes}}",
+        "reply": "Reply",
+        "expert": "Expert",
+        "justNow": "Just now",
+        "hoursAgo": "{count}h ago",
+        "upvote": "Upvote",
+        "downvote": "Downvote",
+        "bold": "Bold",
+        "italic": "Italic",
+        "insertLink": "Insert link",
+        "insertImage": "Insert image"
+    },
+    "ToS": {
+        "title": "Terms and Conditions",
+        "lastUpdated": "Last updated: March 16, 2026",
+        "sections": {
+            "platformUse": {
+                "title": "1. Platform use",
+                "body": "By creating an account on Skin4All, you agree to use the platform responsibly and not affect the security, availability, or experience of other users."
+            },
+            "accountPrivacy": {
+                "title": "2. Account and privacy",
+                "body": "You are responsible for keeping your account credentials confidential. The information you provide will be handled according to our privacy practices and used only to improve your in-app experience."
+            },
+            "contentRecommendations": {
+                "title": "3. Content and recommendations",
+                "body": "Routines and recommendations shown in the app are for informational purposes only and do not replace professional medical or dermatological advice."
+            },
+            "changes": {
+                "title": "4. Changes to these terms",
+                "body": "We may update these terms at any time. If important changes are made, we will notify you within the platform."
             }
         }
     }

@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Search} from "lucide-react";
 import { productsFavorites } from "@/lib/favorites";
-import { routines } from "@/lib/routine";
+import { getRoutines } from "@/lib/routine";
 import Link from "next/link"
 import { useEffect } from "react";
 
@@ -47,9 +47,8 @@ export default function Profile(){
         setFavoriteProducts(favoriteProducts.filter(product => product.id !== deselectedProduct.id));
     }
 
-    const filteredRoutines = routines.filter((routine) => 
+    const filteredRoutines = getRoutines().filter((routine) => 
         routine.type.toLowerCase() === routineDaily
-    
     );
 
     const filteredFavorites = productsFavorites.filter((product) =>

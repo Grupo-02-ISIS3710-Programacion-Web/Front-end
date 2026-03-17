@@ -1,4 +1,4 @@
-import { Product } from "@/types/product";
+import { Product, SkinType } from "@/types/product";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -12,6 +12,7 @@ type PasoRutinaFormShape = {
     name: string;
     description: string;
     type: string;
+    skinType: SkinType;
     steps: {
         id: string;
         name: string;
