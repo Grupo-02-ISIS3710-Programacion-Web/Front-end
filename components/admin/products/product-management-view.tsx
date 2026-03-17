@@ -4,10 +4,21 @@ import { useState } from "react";
 import { ProductFilters, ProductFiltersState } from "./product-filter";
 import { Button } from "@/components/ui/button";
 import { Download, Plus } from "lucide-react";
+import { getProposedProducts } from "@/lib/api";
+import { ApprovalStatus, ProductStats } from "@/types/product";
+import { ProductStatsCards } from "./products-statscards";
 
 export default function ProductManagementView() {
     const t = useTranslations("admin");
+    const proposedProducts = getProposedProducts();
     const [page, setPage] = useState(0);
+
+    const stats: ProductStats = {
+        total:     proposedProducts.length,
+        pending:   proposedProducts.filter((p) => p.status === ApprovalStatus.PENDING).length,
+        approved:  proposedProducts.filter((p) => p.status === ApprovalStatus.APPROVED).length,
+        published: proposedProducts.filter((p) => p.status === ApprovalStatus.PUBLISHED).length,
+    };
 
     const [filters, setFilters] = useState<ProductFiltersState>({
         search: "",
@@ -42,6 +53,9 @@ export default function ProductManagementView() {
             </Button>
             </div>
         </div>
+
+        <ProductStatsCards stats={stats}/>
+
         <ProductFilters filters={filters} onChange={handleFilterChange} />
         </div>
     )

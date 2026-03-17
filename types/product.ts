@@ -59,7 +59,16 @@ export interface Product {
 }
 
 //Productos propuestos por los usuarios, que aún no han sido validados por el equipo de administración
-export interface ProposedProduct extends Product {
+export interface ProposedProduct {
+    id: string;
+    name: string;
+    brand: string;
+    skin_type: SkinType[];
+    product_type: ProductType;
+    primary_category: Category;
+    additional_categories?: Category[];
+    ingredients: string[];
+    image_url: string[];
     submitted_by?: string; // usuario que lo propuso
     submitted_at?: string;
     status: ApprovalStatus;
@@ -74,4 +83,11 @@ export interface ModerationItem {
     excerpt: string;
     timeAgo: string;
     type: "report" | "flag" | "spam";
+}
+
+export interface ProductStats {
+    total: number;
+    pending: number;
+    approved: number;
+    published: number;
 }
