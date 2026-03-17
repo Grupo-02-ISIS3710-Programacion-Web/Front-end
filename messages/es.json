@@ -383,6 +383,31 @@
             "errorGenerico": "Ocurrió un error inesperado. Inténtalo nuevamente."
         }
     },
+    "CommunityPage": {
+        "forumTitle": "Foro de la comunidad",
+        "forumSubtitle": "Skincare y salud",
+        "allSkinTypes": "Todos los tipos de piel",
+        "createPost": "Crear publicación",
+        "discussionsTitle": "Discusiones",
+        "discussionsSubtitle": "Recibe consejos de la comunidad.",
+        "filter": "Filtrar",
+        "solved": "Resuelto",
+        "mostDiscussed": "Rutinas más discutidas",
+        "commentsCount": "{count, plural, =0 {0 comentarios} =1 {1 comentario} other {{count} comentarios}}",
+        "viewsCount": "{count} vistas",
+        "freshness": {
+            "twoHours": "Hace 2 horas",
+            "fiveHours": "Hace 5 horas",
+            "yesterday": "Ayer",
+            "twoDays": "Hace 2 días"
+        },
+        "tabs": {
+            "newest": "Recientes",
+            "mostCommented": "Más comentadas",
+            "solved": "Resueltas",
+            "mostVoted": "Más votadas"
+        }
+    },
     "RoutineDetail": {
         "community": "Comunidad",
         "notFoundTitle": "Rutina no encontrada",

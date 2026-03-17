@@ -10,7 +10,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/co
 const links = [
   {
     nombre: "Home",
-    href: "/home"
+    href: "/"
   },
   {
     nombre: "Descubre productos",
@@ -18,7 +18,7 @@ const links = [
   },
   {
     nombre: "Comunidad",
-    href: "/comunidad"
+    href: "/community"
   },
   {
     nombre: "Mis productos",
@@ -66,11 +66,13 @@ export function NavBarDesktop({ isLoggedIn = false }: { isLoggedIn?: boolean }) 
           <NavigationMenuList className="gap-4">
             {links.map((link) => (
               <NavigationMenuItem key={link.nombre}>
-                <NavigationMenuLink
-                  href={link.href}
-                  className="text-sm font-medium hover:text-primary hover:font-medium transition-colors"
-                >
-                  {link.nombre}
+                <NavigationMenuLink asChild>
+                  <Link
+                    href={link.href}
+                    className="text-sm font-medium hover:text-primary hover:font-medium transition-colors"
+                  >
+                    {link.nombre}
+                  </Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>
             ))}

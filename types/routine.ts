@@ -15,8 +15,12 @@ export interface Routine {
   userId: string;
   name: string;
   description: string;
+  publishedAt?: string;
   type: string;
   skinType: SkinType;
   steps: RoutineStep[];
   comments?: Comment[];
+  upvotes?: string[];
+  downvotes?: string[];
+  views?: number;
 }

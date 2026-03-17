@@ -381,6 +381,31 @@
             "errorGenerico": "An unexpected error occurred. Please try again."
         }
     },
+    "CommunityPage": {
+        "forumTitle": "Community Forum",
+        "forumSubtitle": "Skincare and Health",
+        "allSkinTypes": "All skin types",
+        "createPost": "Create Post",
+        "discussionsTitle": "Discussions",
+        "discussionsSubtitle": "Get expert advice from the community.",
+        "filter": "Filter",
+        "solved": "Solved",
+        "mostDiscussed": "Most discussed routines",
+        "commentsCount": "{count, plural, =0 {0 comments} =1 {1 comment} other {{count} comments}}",
+        "viewsCount": "{count} views",
+        "freshness": {
+            "twoHours": "2 hours ago",
+            "fiveHours": "5 hours ago",
+            "yesterday": "Yesterday",
+            "twoDays": "2 days ago"
+        },
+        "tabs": {
+            "newest": "Newest",
+            "mostCommented": "Most Commented",
+            "solved": "Solved",
+            "mostVoted": "Most Voted"
+        }
+    },
     "RoutineDetail": {
         "community": "Community",
         "notFoundTitle": "Routine not found",

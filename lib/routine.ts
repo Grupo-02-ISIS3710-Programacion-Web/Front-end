@@ -9,11 +9,27 @@ const routines: Routine[] = [
     userId: "u1",
     name: "Rutina básica de mañana",
     description: "Rutina sencilla de 3 pasos para comenzar el día con la piel limpia e hidratada.",
+    publishedAt: "2026-03-14T09:20:00.000Z",
     type: "am",
     skinType: SkinType.NORMAL,
+    upvotes: ["u2", "u3", "u5"],
+    downvotes: ["u6"],
+    views: 1240,
     comments: [
-      { id: "r1c1", userId: "u2", comment: "Me funciono muy bien para piel sensible en las mananas.", like: ["u1", "u4"] },
-      { id: "r1c2", userId: "u5", comment: "Yo anadiria protector solar al final para completar AM.", like: ["u2"] }
+      {
+        id: "r1c1",
+        userId: "u2",
+        comment: "Me funciono muy bien para piel sensible en las mananas.",
+        upvotes: ["u1", "u4"],
+        downvotes: []
+      },
+      {
+        id: "r1c2",
+        userId: "u5",
+        comment: "Yo anadiria protector solar al final para completar AM.",
+        upvotes: ["u2"],
+        downvotes: []
+      }
     ],
     steps: [
       { id: "r1s1", name: "Limpieza suave", order: 0, productId: "12", notes: "Usar con agua tibia, masajear en círculos durante 30 segundos." },
@@ -26,10 +42,20 @@ const routines: Routine[] = [
     userId: "u2",
     name: "Rutina antiaging de noche",
     description: "Rutina nocturna enfocada en regeneración celular y reducción de líneas finas.",
+    publishedAt: "2026-03-12T20:45:00.000Z",
     type: "pm",
     skinType: SkinType.SECA,
+    upvotes: ["u1", "u4"],
+    downvotes: [],
+    views: 2156,
     comments: [
-      { id: "r2c1", userId: "u1", comment: "Buen orden de activos. Lo haria dias alternos si eres principiante.", like: ["u3", "u6"] }
+      {
+        id: "r2c1",
+        userId: "u1",
+        comment: "Buen orden de activos. Lo haria dias alternos si eres principiante.",
+        upvotes: ["u3", "u6"],
+        downvotes: []
+      }
     ],
     steps: [
       { id: "r2s1", name: "Limpieza profunda", order: 0, productId: "2", notes: "Masajear sobre piel húmeda para activar el ácido salicílico." },
@@ -42,10 +68,20 @@ const routines: Routine[] = [
     userId: "u4",
     name: "Rutina para piel grasa AM",
     description: "Controla el exceso de sebo y mantiene los poros limpios durante el día.",
+    publishedAt: "2026-03-10T07:35:00.000Z",
     type: "am",
     skinType: SkinType.GRASA,
+    upvotes: ["u1", "u6", "u5"],
+    downvotes: ["u2"],
+    views: 1875,
     comments: [
-      { id: "r3c1", userId: "u6", comment: "La niacinamida aqui va perfecta antes de hidratar.", like: ["u1"] }
+      {
+        id: "r3c1",
+        userId: "u6",
+        comment: "La niacinamida aqui va perfecta antes de hidratar.",
+        upvotes: ["u1"],
+        downvotes: []
+      }
     ],
     steps: [
       { id: "r3s1", name: "Limpieza purificante", order: 0, productId: "11", notes: "Aclarar con agua fría para cerrar los poros." },
@@ -58,10 +94,20 @@ const routines: Routine[] = [
     userId: "u5",
     name: "Rutina reparadora de noche",
     description: "Repara y calma la piel sensible o irritada mientras descansas.",
+    publishedAt: "2026-03-08T22:10:00.000Z",
     type: "pm",
     skinType: SkinType.SENSIBLE,
+    upvotes: ["u3", "u5", "u1"],
+    downvotes: [],
+    views: 945,
     comments: [
-      { id: "r4c1", userId: "u3", comment: "Rutina super calmante, la use despues de exfoliar y me ayudo mucho.", like: ["u5", "u2", "u1"] }
+      {
+        id: "r4c1",
+        userId: "u3",
+        comment: "Rutina super calmante, la use despues de exfoliar y me ayudo mucho.",
+        upvotes: ["u5", "u2", "u1"],
+        downvotes: []
+      }
     ],
     steps: [
       { id: "r4s1", name: "Limpieza delicada", order: 0, productId: "12", notes: "Sin frotar; aclarar con agua tibia." },
@@ -74,10 +120,20 @@ const routines: Routine[] = [
     userId: "u6",
     name: "Rutina luminosidad AM",
     description: "Vitamina C y antioxidantes para un tono uniforme y piel radiante durante el día.",
+    publishedAt: "2026-03-16T11:05:00.000Z",
     type: "am",
     skinType: SkinType.OPACA,
+    upvotes: ["u4", "u2"],
+    downvotes: [],
+    views: 3420,
     comments: [
-      { id: "r5c1", userId: "u4", comment: "Vitamina C + hidratante ligera me dio buen glow durante el dia.", like: ["u2", "u6"] }
+      {
+        id: "r5c1",
+        userId: "u4",
+        comment: "Vitamina C + hidratante ligera me dio buen glow durante el dia.",
+        upvotes: ["u2", "u6"],
+        downvotes: []
+      }
     ],
     steps: [
       { id: "r5s1", name: "Limpieza exfoliante suave", order: 0, productId: "2", notes: "Usar solo 3 veces por semana para evitar irritación." },
@@ -90,8 +146,12 @@ const routines: Routine[] = [
     userId: "u3",
     name: "Rutina exfoliante de noche",
     description: "Exfolia suavemente y permite que la piel se renueve durante el sueño.",
+    publishedAt: "2026-03-06T19:50:00.000Z",
     type: "pm",
     skinType: SkinType.TEXTURIZADA,
+    upvotes: ["u2"],
+    downvotes: [],
+    views: 1650,
     steps: [
       { id: "r6s1", name: "Limpieza", order: 0, productId: "11", notes: "Primer paso para retirar maquillaje y contaminantes del día." },
       { id: "r6s2", name: "Tónico exfoliante", order: 1, productId: "3", notes: "Aplicar con algodón o directamente con las manos tras la limpieza." },
@@ -103,8 +163,12 @@ const routines: Routine[] = [
     userId: "u1",
     name: "Rutina coreana de 5 pasos AM",
     description: "Inspirada en el K-beauty para máxima hidratación y efecto glass skin.",
+    publishedAt: "2026-03-15T08:15:00.000Z",
     type: "am",
     skinType: SkinType.MIXTA,
+    upvotes: ["u2", "u3", "u4", "u5"],
+    downvotes: [],
+    views: 4782,
     steps: [
       { id: "r7s1", name: "Limpieza acuosa", order: 0, productId: "12", notes: "Primera limpieza suave para retirar residuos nocturnos." },
       { id: "r7s2", name: "Esencia baba caracol", order: 1, productId: "14", notes: "Dar palmaditas suaves para potenciar absorción." },
@@ -118,8 +182,12 @@ const routines: Routine[] = [
     userId: "u4",
     name: "Rutina anti-imperfecciones PM",
     description: "Combate el acné y las imperfecciones durante la noche sin resecar la piel.",
+    publishedAt: "2026-03-13T21:30:00.000Z",
     type: "pm",
     skinType: SkinType.ACNEICA,
+    upvotes: ["u1", "u5"],
+    downvotes: ["u6"],
+    views: 2340,
     steps: [
       { id: "r8s1", name: "Limpieza purificante", order: 0, productId: "11", notes: "Masajear durante 60 segundos para mayor eficacia." },
       { id: "r8s2", name: "Regulador de sebo", order: 1, productId: "13", notes: "Extender por toda la zona T y mentón." },
@@ -132,8 +200,12 @@ const routines: Routine[] = [
     userId: "u2",
     name: "Rutina antiedad avanzada AM",
     description: "Combina antioxidantes y activos antiaging para retrasar los signos de la edad.",
+    publishedAt: "2026-03-09T10:40:00.000Z",
     type: "am",
     skinType: SkinType.NORMAL,
+    upvotes: ["u4", "u6"],
+    downvotes: [],
+    views: 1620,
     steps: [
       { id: "r9s1", name: "Limpieza hidratante", order: 0, productId: "12", notes: "Usar temperatura templada para no alterar la barrera cutánea." },
       { id: "r9s2", name: "Sérum antiedad", order: 1, productId: "4", notes: "Aplicar 5-6 gotas con leve masaje ascendente." },
@@ -146,8 +218,12 @@ const routines: Routine[] = [
     userId: "u5",
     name: "Rutina piel seca intensa PM",
     description: "Nutrición profunda para pieles secas o muy secas que necesitan recuperar la barrera lipídica.",
+    publishedAt: "2026-03-11T23:05:00.000Z",
     type: "pm",
     skinType: SkinType.SECA,
+    upvotes: ["u1", "u3"],
+    downvotes: [],
+    views: 3105,
     steps: [
       { id: "r10s1", name: "Limpieza sin sulfatos", order: 0, productId: "12", notes: "Aclarar con agua templada, nunca fría ni caliente." },
       { id: "r10s2", name: "Esencia reparadora", order: 1, productId: "14", notes: "Aplicar abundantemente sobre piel semi-húmeda para sellar la hidratación." },

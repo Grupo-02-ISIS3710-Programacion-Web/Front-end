@@ -59,7 +59,8 @@ export default function RoutineCommentsSection({
       id: `${routineId}-local-${Date.now()}`,
       userId: currentUserId,
       comment: newComment.trim(),
-      like: [],
+      upvotes: [],
+      downvotes: [],
       user: getUserById(currentUserId)
     };
 
@@ -68,10 +69,47 @@ export default function RoutineCommentsSection({
     setNewComment("");
   };
 
+  const handleVote = (commentId: string, vote: "up" | "down") => {
+    setLocalComments((prev) =>
+      prev.map((comment) => {
+        if (comment.id !== commentId) {
+          return comment;
+        }
+
+        const hasUpvoted = comment.upvotes.includes(currentUserId);
+        const hasDownvoted = comment.downvotes.includes(currentUserId);
+
+        if (vote === "up") {
+          return {
+            ...comment,
+            upvotes: hasUpvoted
+              ? comment.upvotes.filter((id) => id !== currentUserId)
+              : [...comment.upvotes, currentUserId],
+            downvotes: hasDownvoted
+              ? comment.downvotes.filter((id) => id !== currentUserId)
+              : comment.downvotes
+          };
+        }
+
+        return {
+          ...comment,
+          downvotes: hasDownvoted
+            ? comment.downvotes.filter((id) => id !== currentUserId)
+            : [...comment.downvotes, currentUserId],
+          upvotes: hasUpvoted
+            ? comment.upvotes.filter((id) => id !== currentUserId)
+            : comment.upvotes
+        };
+      })
+    );
+  };
+
   return (
     <Card className="border-[#f2a4b0] bg-[#fcfdff]">
       <CardHeader>
-        <CardTitle className="text-xl font-bold text-[#202635]">{t("commentsTitle")}</CardTitle>
+        <CardTitle className="text-xl font-bold text-[#202635]">
+          {t("commentsTitle")} ({localComments.length})
+        </CardTitle>
       </CardHeader>
       <CardContent className="space-y-5">
         <div className="rounded-xl border border-[#dfe4ec] bg-white">
@@ -129,7 +167,13 @@ export default function RoutineCommentsSection({
 
             return (
               <div key={comment.id}>
-                <CommentCard comment={comment} postedAgo={postedAgo} isExpert={isExpert} />
+                <CommentCard
+                  comment={comment}
+                  postedAgo={postedAgo}
+                  isExpert={isExpert}
+                  currentUserId={currentUserId}
+                  onVote={handleVote}
+                />
               </div>
             );
           })}

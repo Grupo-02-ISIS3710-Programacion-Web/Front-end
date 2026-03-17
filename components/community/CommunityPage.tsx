@@ -2,305 +2,212 @@
 
 import { getUsers } from "@/lib/api";
 import { getRoutines } from "@/lib/routine";
-import { Flame, Eye, MessageSquare, ThumbsUp, Search, Filter, Plus } from "lucide-react";
+import { ArrowDown, ArrowUp, Eye, MessageSquare, Plus } from "lucide-react";
 import { Link } from "@/i18n/navigation";
+import { SkinType } from "@/types/product";
+import { useLocale, useTranslations } from "next-intl";
 import { useMemo, useState } from "react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
-type MobileTab = "Newest" | "Hot Topics" | "Solved" | "Most Liked";
+type MobileTab = "newest" | "mostCommented" | "mostVoted";
 
-const sidebarItems = [
-  "All Posts",
-  "Routine Help",
-  "Product Recs",
-  "Skincare Tips",
-  "Trending"
-];
+const mobileTabs: MobileTab[] = ["newest", "mostCommented", "mostVoted"];
+const skinTypeFilters = Object.values(SkinType);
+const toTopicTag = (label: string) => `#${label.replace(/[^a-zA-Z0-9]+/g, "")}`;
+const toCompactViews = (value: number) => (value >= 1000 ? `${(value / 1000).toFixed(1)}k` : String(value));
 
-const mobileTabs: MobileTab[] = ["Newest", "Hot Topics", "Solved", "Most Liked"];
+const VoteButton = ({ icon: Icon, count, isActive, onClick, label }: any) => (
+  <button onClick={onClick} className={`inline-flex items-center gap-1 transition ${isActive ? "text-destructive" : "hover:text-destructive"}`} aria-label={label}>
+    {Icon} {count}
+  </button>
+);
 
-function toTopicTag(label: string): string {
-  return `#${label.replace(/[^a-zA-Z0-9]+/g, "")}`;
-}
+const PostCard = ({ post, onVote, t, tRoutine, size = "lg" }: any) => {
+  const imgClass = size === "lg" ? "h-12 w-12" : "h-11 w-11";
+  const titleClass = size === "lg" ? "text-2xl" : "text-xl";
+  const contentClass = size === "lg" ? "pt-3" : "pt-2";
 
-function formatSkinTypeTag(value: string): string {
-  return value
-    .split("-")
-    .map((chunk) => chunk.charAt(0).toUpperCase() + chunk.slice(1))
-    .join(" ");
-}
+  return (
+    <Link href={`/routine/detail/${post.id}`} className="block">
+      <Card className="transition hover:-translate-y-0.5 hover:shadow-lg">
+        <CardContent className={contentClass}>
+          <div className="mb-2 flex items-start justify-between gap-3">
+            <div className="flex items-center gap-3 flex-1 min-w-0">
+              <img src={post.avatarUrl} alt={post.userName} className={`${imgClass} rounded-full object-cover shrink-0`} />
+              <div className="min-w-0">
+                <p className="text-sm font-semibold truncate">
+                  {post.userName} <span className="font-normal text-muted-foreground">• {post.publishedAt}</span>
+                </p>
+                <div className="mt-1 inline-flex items-center rounded-md bg-secondary px-2 py-0.5 text-xs font-semibold">
+                  {post.tag}
+                </div>
+              </div>
+            </div>
+          </div>
+          <h3 className={`${titleClass} font-bold leading-tight`}>{post.title}</h3>
+          <p className="mt-2 line-clamp-2 text-muted-foreground text-sm">{post.excerpt}</p>
+          <div className="mt-4 flex items-center gap-2 flex-wrap border-t pt-3 text-sm text-muted-foreground">
+            <VoteButton
+              icon={<ArrowUp size={16} />}
+              count={post.upvotes}
+              isActive={post.hasUpvoted}
+              onClick={(e: any) => { e.preventDefault(); e.stopPropagation(); onVote(post.id, "up"); }}
+              label={tRoutine("upvote")}
+            />
+            <VoteButton
+              icon={<ArrowDown size={16} />}
+              count={post.downvotes}
+              isActive={post.hasDownvoted}
+              onClick={(e: any) => { e.preventDefault(); e.stopPropagation(); onVote(post.id, "down"); }}
+              label={tRoutine("downvote")}
+            />
+            <span className="inline-flex items-center gap-1"><MessageSquare size={16} /> {t("commentsCount", { count: post.comments })}</span>
+            <span className="inline-flex items-center gap-1"><Eye size={16} /> {t("viewsCount", { count: toCompactViews(post.views) })}</span>
+          </div>
+        </CardContent>
+      </Card>
+    </Link>
+  );
+};
 
-function toCompactViews(value: number): string {
-  if (value >= 1000) {
-    return `${(value / 1000).toFixed(1)}k`;
-  }
-  return String(value);
-}
+const FilterButtons = ({ active, onChange, counts, t, tSkin }: any) => (
+  <>
+    <Button variant={active === "all" ? "default" : "outline"} onClick={() => onChange("all")} className="w-full justify-start">
+      {t("allSkinTypes")}
+    </Button>
+    {skinTypeFilters.map((skin: SkinType) => (
+      <Button key={skin} variant={active === skin ? "default" : "outline"} onClick={() => onChange(skin)} className="w-full justify-between">
+        <span>{tSkin(skin)}</span>
+        <span className="text-xs opacity-75">({counts[skin] ?? 0})</span>
+      </Button>
+    ))}
+  </>
+);
+
+const SidebarSection = ({ title, subtitle, children }: any) => (
+  <Card>
+    <CardHeader className="pb-4">
+      <div>{subtitle ? <><CardTitle>{title}</CardTitle><CardDescription>{subtitle}</CardDescription></> : <CardTitle className="text-base">{title}</CardTitle>}</div>
+    </CardHeader>
+    <CardContent>{children}</CardContent>
+  </Card>
+);
 
 export default function CommunityPage() {
-  const [activeTab, setActiveTab] = useState<MobileTab>("Newest");
+  const t = useTranslations("CommunityPage");
+  const tSkin = useTranslations("SkinTypes");
+  const tRoutine = useTranslations("RoutineDetail");
+  const locale = useLocale();
+
+  const [activeTab, setActiveTab] = useState<MobileTab>("newest");
+  const [activeSkinFilter, setActiveSkinFilter] = useState<"all" | SkinType>("all");
+  const currentUserId = "u1";
 
   const routines = getRoutines();
   const users = getUsers();
+  const [routineVotes, setRoutineVotes] = useState(() =>
+    routines.reduce((acc, r) => ({ ...acc, [r.id]: { upvotes: r.upvotes ?? [], downvotes: r.downvotes ?? [] } }), {} as Record<string, any>)
+  );
 
-  const posts = useMemo(() => {
-    return routines.map((routine, index) => {
-      const user = users.find((candidate) => candidate.id === routine.userId) ?? users[0];
-      const likes = 72 + index * 41 + routine.steps.length * 9;
-      const comments = 12 + index * 7;
-      const views = 520 + index * 290;
-      const solved = index % 3 === 2;
-      const freshness = ["2 hours ago", "5 hours ago", "Yesterday", "2 days ago"][index % 4];
+  const handleVote = (routineId: string, voteType: "up" | "down") => {
+    setRoutineVotes((prev) => {
+      const { upvotes, downvotes } = prev[routineId];
+      const hasUp = upvotes.includes(currentUserId);
+      const hasDown = downvotes.includes(currentUserId);
 
       return {
-        id: routine.id,
-        title: routine.name,
-        excerpt: routine.description,
-        userName: user?.name ?? "Skin4All User",
-        avatarUrl: user?.avatarUrl,
-        tag: formatSkinTypeTag(routine.skinType),
-        likes,
-        comments,
-        views,
-        solved,
-        freshness
+        ...prev,
+        [routineId]: voteType === "up"
+          ? { upvotes: hasUp ? upvotes.filter((id: string) => id !== currentUserId) : [...upvotes, currentUserId], downvotes: hasDown ? downvotes.filter((id: string) => id !== currentUserId) : downvotes }
+          : { downvotes: hasDown ? downvotes.filter((id: string) => id !== currentUserId) : [...downvotes, currentUserId], upvotes: hasUp ? upvotes.filter((id: string) => id !== currentUserId) : upvotes }
       };
     });
-  }, [routines, users]);
+  };
+
+  const publishedDateFormatter = useMemo(
+    () => new Intl.DateTimeFormat(locale, { day: "2-digit", month: "short", year: "numeric" }),
+    [locale]
+  );
+
+  const posts = useMemo(() =>
+    routines.map((routine) => {
+      const user = users.find(u => u.id === routine.userId) ?? users[0];
+      const votes = routineVotes[routine.id] ?? { upvotes: routine.upvotes ?? [], downvotes: routine.downvotes ?? [] };
+      const publishedAtDate = routine.publishedAt ? new Date(routine.publishedAt) : null;
+      const publishedAtTs = publishedAtDate ? publishedAtDate.getTime() : 0;
+      return { id: routine.id, title: routine.name, excerpt: routine.description, userName: user?.name ?? "", avatarUrl: user?.avatarUrl ?? "", skinType: routine.skinType, tag: tSkin(routine.skinType), upvotes: votes.upvotes.length, downvotes: votes.downvotes.length, hasUpvoted: votes.upvotes.includes(currentUserId), hasDownvoted: votes.downvotes.includes(currentUserId), comments: routine.comments?.length ?? 0, views: routine.views ?? 0, publishedAt: publishedAtDate ? publishedDateFormatter.format(publishedAtDate) : "-", publishedAtTs };
+    }),
+    [routineVotes, routines, tSkin, users, currentUserId, publishedDateFormatter]
+  );
+
+  const postsBySkin = useMemo(() => activeSkinFilter === "all" ? posts : posts.filter(p => p.skinType === activeSkinFilter), [activeSkinFilter, posts]);
 
   const visiblePosts = useMemo(() => {
-    if (activeTab === "Solved") {
-      return posts.filter((post) => post.solved);
-    }
-    if (activeTab === "Hot Topics") {
-      return [...posts].sort((a, b) => b.comments - a.comments);
-    }
-    if (activeTab === "Most Liked") {
-      return [...posts].sort((a, b) => b.likes - a.likes);
-    }
-    return posts;
-  }, [activeTab, posts]);
+    if (activeTab === "newest") return [...postsBySkin].sort((a, b) => b.publishedAtTs - a.publishedAtTs);
+    if (activeTab === "mostCommented") return [...postsBySkin].sort((a, b) => b.comments - a.comments);
+    if (activeTab === "mostVoted") return [...postsBySkin].sort((a, b) => (b.upvotes - b.downvotes) - (a.upvotes - a.downvotes));
+    return postsBySkin;
+  }, [activeTab, postsBySkin]);
 
-  const trendingTopics = useMemo(() => {
-    return posts.slice(0, 5).map((post) => ({
-      tag: toTopicTag(post.title),
-      posts: `${Math.max(900, post.comments * 45)} posts this week`
-    }));
-  }, [posts]);
+  const skinTypeCounts = useMemo(() => routines.reduce((acc, r) => ({ ...acc, [r.skinType]: (acc[r.skinType] ?? 0) + 1 }), {} as Record<SkinType, number>), [routines]);
+
+  const mostDiscussed = useMemo(() =>
+    [...postsBySkin].sort((a, b) => b.comments - a.comments).slice(0, 5).map(p => ({ id: p.id, title: p.title, comments: p.comments, skinTypeTag: toTopicTag(p.tag) })),
+    [postsBySkin]
+  );
+
+  const TabButtons = () => mobileTabs.map(tab => <Button key={tab} variant={activeTab === tab ? "default" : "outline"} onClick={() => setActiveTab(tab)} size="sm">{t(`tabs.${tab}`)}</Button>);
+
+  const PostsList = ({ size = "lg" }: any) => visiblePosts.map(post => <PostCard key={post.id} post={post} onVote={handleVote} t={t} tRoutine={tRoutine} size={size} />);
+
+  const MostDiscussedList = () => mostDiscussed.map(topic => <Link key={topic.id} href={`/routine/detail/${topic.id}`} className="block rounded-lg px-2 py-1.5 transition hover:bg-muted"><p className="font-bold line-clamp-1">{topic.title}</p><p className="text-xs text-muted-foreground">{t("commentsCount", { count: topic.comments })} • {topic.skinTypeTag}</p></Link>);
 
   return (
-    <main className="min-h-screen bg-[#f3f4f6] px-4 py-6 md:px-8 md:py-10">
-      <div className="mx-auto max-w-7xl">
+    <main className="min-h-screen bg-background pb-24">
+      <div className="mx-auto max-w-7xl px-4 py-6 md:px-8 md:py-10">
+        {/* Desktop */}
         <div className="hidden gap-6 lg:grid lg:grid-cols-[240px_minmax(0,1fr)_280px]">
-          <aside className="h-fit rounded-2xl border border-[#ebecef] bg-white p-5">
-            <div className="mb-5 border-b border-[#ececf0] pb-4">
-              <h2 className="text-lg font-bold text-[#232636]">Community Forum</h2>
-              <p className="text-sm text-[#7c8095]">Skincare and Health</p>
-            </div>
-            <nav className="space-y-2">
-              {sidebarItems.map((item, idx) => (
-                <button
-                  key={item}
-                  className={`w-full rounded-xl px-3 py-2 text-left text-sm font-semibold transition ${
-                    idx === 0
-                      ? "bg-[#f3a2ae] text-[#29253a]"
-                      : "text-[#596075] hover:bg-[#f7f7fb]"
-                  }`}
-                >
-                  {item}
-                </button>
-              ))}
-            </nav>
-            <button className="mt-5 w-full rounded-xl bg-[#e97f8e] px-4 py-2.5 text-sm font-semibold text-white hover:bg-[#dd6d7e]">
-              + Create Post
-            </button>
+          <aside>
+            <SidebarSection title={t("forumTitle")} subtitle={t("forumSubtitle")}>
+              <nav className="space-y-2"><FilterButtons active={activeSkinFilter} onChange={setActiveSkinFilter} counts={skinTypeCounts} t={t} tSkin={tSkin} /></nav>
+              <Button asChild className="mt-5 w-full"><Link href="/routine/crear"><Plus size={16} /> {t("createPost")}</Link></Button>
+            </SidebarSection>
           </aside>
 
           <section className="space-y-4">
-            <div className="flex items-end justify-between">
-              <div>
-                <h1 className="text-4xl font-extrabold text-[#232636]">Discussions</h1>
-                <p className="text-sm text-[#6f7489]">Get expert advice from the community.</p>
-              </div>
-              <button className="inline-flex items-center gap-2 rounded-lg border border-[#ececf3] bg-white px-4 py-2 text-sm font-semibold text-[#2d3042]">
-                <Filter size={14} />
-                Filter
-              </button>
-            </div>
-
-            <div className="flex gap-2">
-              {mobileTabs.map((tab) => (
-                <button
-                  key={tab}
-                  onClick={() => setActiveTab(tab)}
-                  className={`rounded-full px-4 py-1.5 text-sm font-medium transition ${
-                    activeTab === tab
-                      ? "bg-[#232636] text-white"
-                      : "bg-white text-[#4f566c] hover:bg-[#eceef4]"
-                  }`}
-                >
-                  {tab}
-                </button>
-              ))}
-            </div>
-
-            <div className="space-y-4">
-              {visiblePosts.map((post) => (
-                <Link key={post.id} href={`/routine/detail/${post.id}`} className="block rounded-2xl transition hover:-translate-y-0.5 hover:shadow-[0_10px_18px_rgba(35,38,54,0.08)]">
-                  <article className="rounded-2xl border border-[#ebedf2] bg-white p-5 shadow-[0_6px_16px_rgba(35,38,54,0.04)]">
-                  <div className="mb-3 flex items-start justify-between gap-3">
-                    <div className="flex items-center gap-3">
-                      <img src={post.avatarUrl} alt={post.userName} className="h-12 w-12 rounded-full object-cover" />
-                      <div>
-                        <p className="text-sm font-semibold text-[#202432]">
-                          {post.userName} <span className="font-normal text-[#8890a3]">• {post.freshness}</span>
-                        </p>
-                        <div className="mt-1 inline-flex items-center rounded-md bg-[#f8d0d6] px-2 py-0.5 text-xs font-semibold text-[#7d2d45]">
-                          {post.tag}
-                        </div>
-                      </div>
-                    </div>
-                    {post.solved && (
-                      <span className="rounded-md bg-[#f7a5ae] px-2 py-1 text-xs font-bold text-[#4a1f2b]">Solved</span>
-                    )}
-                  </div>
-                  <h3 className="text-2xl font-bold leading-tight text-[#1f2231]">{post.title}</h3>
-                  <p className="mt-2 line-clamp-2 text-[#667086]">{post.excerpt}</p>
-
-                  <div className="mt-4 flex items-center gap-5 border-t border-[#edf0f4] pt-3 text-sm text-[#636d84]">
-                    <span className="inline-flex items-center gap-1.5"><ThumbsUp size={16} /> {post.likes}</span>
-                    <span className="inline-flex items-center gap-1.5"><MessageSquare size={16} /> {post.comments} comments</span>
-                    <span className="inline-flex items-center gap-1.5"><Eye size={16} /> {toCompactViews(post.views)} views</span>
-                  </div>
-                  </article>
-                </Link>
-              ))}
-            </div>
+            <div className="flex items-end justify-between"><div><h1 className="text-4xl font-extrabold">{t("discussionsTitle")}</h1><p className="text-sm text-muted-foreground">{t("discussionsSubtitle")}</p></div></div>
+            <div className="flex gap-2"><TabButtons /></div>
+            <div className="space-y-4"><PostsList size="lg" /></div>
           </section>
 
-          <aside className="space-y-4">
-            <div className="rounded-2xl border border-[#ebedf2] bg-white">
-              <div className="flex items-center gap-2 border-b border-[#eceff4] px-4 py-3 text-sm font-bold text-[#212636]">
-                <Flame size={14} className="text-[#e45c6d]" />
-                Trending Topics
-              </div>
-              <div className="space-y-3 p-4">
-                {trendingTopics.map((topic) => (
-                  <div key={topic.tag}>
-                    <p className="font-bold text-[#232636]">{topic.tag}</p>
-                    <p className="text-xs text-[#7a8298]">{topic.posts}</p>
-                  </div>
-                ))}
-              </div>
-              <button className="w-full border-t border-[#eceff4] px-4 py-3 text-sm font-semibold text-[#d85068] hover:bg-[#fbf3f5]">
-                View all trending
-              </button>
-            </div>
-
-            <div className="rounded-2xl bg-[#f0a8b2] p-5 text-[#222638]">
-              <h3 className="mb-3 text-xl font-bold">Community Hub</h3>
-              <div className="flex items-end gap-8">
-                <div>
-                  <p className="text-4xl font-extrabold">45k</p>
-                  <p className="text-sm">Members</p>
-                </div>
-                <div>
-                  <p className="text-4xl font-extrabold">128</p>
-                  <p className="text-sm">Online</p>
-                </div>
-              </div>
-            </div>
+          <aside>
+            <SidebarSection title={<div className="flex items-center gap-2"><MessageSquare size={14} /><span>{t("mostDiscussed")}</span></div>}>
+              <div className="space-y-3"><MostDiscussedList /></div>
+            </SidebarSection>
           </aside>
         </div>
 
-        <div className="mx-auto max-w-md space-y-4 rounded-3xl border border-[#2d2b37] bg-[#f7f7fa] p-4 lg:hidden">
-          <div className="rounded-2xl border border-[#e7e8ee] bg-white p-3">
-            <div className="flex items-center gap-3 rounded-xl bg-[#f1f3f8] px-3 py-2 text-[#6f7890]">
-              <Search size={18} />
-              <span>Search discussions, routines, tips...</span>
-            </div>
-          </div>
+        {/* Mobile */}
+        <div className="space-y-4 lg:hidden">
+          <SidebarSection title={t("forumTitle")} subtitle={t("forumSubtitle")}>
+            <nav className="space-y-2"><FilterButtons active={activeSkinFilter} onChange={setActiveSkinFilter} counts={skinTypeCounts} t={t} tSkin={tSkin} /></nav>
+            <Button asChild className="mt-5 w-full"><Link href="/routine/crear"><Plus size={16} /> {t("createPost")}</Link></Button>
+          </SidebarSection>
 
-          <div className="grid grid-cols-3 gap-3">
-            <div className="rounded-2xl border border-[#f0d5db] bg-white px-3 py-2">
-              <p className="text-xs font-semibold text-[#6f7488]">MEMBERS</p>
-              <p className="text-3xl font-extrabold text-[#242839]">12.4k</p>
-            </div>
-            <div className="rounded-2xl border border-[#f0d5db] bg-white px-3 py-2">
-              <p className="text-xs font-semibold text-[#6f7488]">ONLINE NOW</p>
-              <p className="text-3xl font-extrabold text-[#242839]">842</p>
-            </div>
-            <div className="rounded-2xl border border-[#f0d5db] bg-white px-3 py-2">
-              <p className="text-xs font-semibold text-[#6f7488]">DAILY POSTS</p>
-              <p className="text-3xl font-extrabold text-[#242839]">156</p>
-            </div>
-          </div>
+          <Card>
+            <CardHeader className="pb-4"><CardTitle className="text-2xl">{t("discussionsTitle")}</CardTitle><CardDescription>{t("discussionsSubtitle")}</CardDescription></CardHeader>
+            <CardContent className="space-y-4">
+              <div className="flex flex-wrap gap-2"><TabButtons /></div>
+              <div className="space-y-4"><PostsList size="sm" /></div>
+            </CardContent>
+          </Card>
 
-          <div className="space-y-3 rounded-2xl bg-white p-4">
-            <div className="flex items-center justify-between">
-              <h2 className="text-3xl font-black text-[#212636]">Trending Topics</h2>
-              <Link href="#" className="text-lg font-semibold text-[#d85068]">View all</Link>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              {trendingTopics.slice(0, 4).map((topic, index) => (
-                <span
-                  key={topic.tag}
-                  className={`rounded-full px-4 py-1.5 text-lg font-medium ${
-                    index === 0 ? "border border-[#f09da9] bg-[#ffe7eb] text-[#c84862]" : "bg-[#eceff3] text-[#32384a]"
-                  }`}
-                >
-                  {topic.tag}
-                </span>
-              ))}
-            </div>
-          </div>
+          <SidebarSection title={<div className="flex items-center gap-2"><MessageSquare size={14} /><span>{t("mostDiscussed")}</span></div>}>
+            <div className="space-y-3"><MostDiscussedList /></div>
+          </SidebarSection>
 
-          <div className="rounded-2xl bg-white p-4">
-            <div className="mb-4 flex border-b border-[#eceff3]">
-              {mobileTabs.map((tab) => (
-                <button
-                  key={tab}
-                  onClick={() => setActiveTab(tab)}
-                  className={`px-2 pb-2 text-lg font-semibold ${
-                    activeTab === tab
-                      ? "border-b-2 border-[#df5e73] text-[#df5e73]"
-                      : "text-[#656d83]"
-                  }`}
-                >
-                  {tab}
-                </button>
-              ))}
-            </div>
-
-            <div className="space-y-4">
-              {visiblePosts.slice(0, 3).map((post) => (
-                <Link key={post.id} href={`/routine/detail/${post.id}`} className="block rounded-2xl transition hover:-translate-y-0.5 hover:shadow-[0_10px_18px_rgba(35,38,54,0.08)]">
-                  <article className="rounded-2xl border border-[#e8ebf1] bg-white p-4">
-                  <div className="mb-2 flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <img src={post.avatarUrl} alt={post.userName} className="h-12 w-12 rounded-full object-cover" />
-                      <div>
-                        <p className="text-2xl font-bold text-[#252a39]">{post.userName}</p>
-                        <p className="text-lg text-[#6a7287]">{post.freshness}</p>
-                      </div>
-                    </div>
-                    <span className="rounded-lg bg-[#f6b5bd] px-3 py-1 text-sm font-bold text-[#592534]">{post.tag}</span>
-                  </div>
-                  <h3 className="text-4xl font-black leading-tight text-[#1f2432]">{post.title}</h3>
-                  <p className="mt-2 line-clamp-2 text-2xl text-[#657086]">{post.excerpt}</p>
-                  <div className="mt-3 flex items-center gap-5 border-t border-[#edf0f5] pt-2 text-xl text-[#5e667f]">
-                    <span className="inline-flex items-center gap-1"><ThumbsUp size={18} /> {post.likes}</span>
-                    <span className="inline-flex items-center gap-1"><MessageSquare size={18} /> {post.comments}</span>
-                    <span className="inline-flex items-center gap-1"><Eye size={18} /> {toCompactViews(post.views)}</span>
-                  </div>
-                  </article>
-                </Link>
-              ))}
-            </div>
-          </div>
-
-          <button className="fixed right-6 bottom-6 inline-flex h-16 w-16 items-center justify-center rounded-full bg-[#e14f6b] text-white shadow-lg">
-            <Plus size={30} />
-          </button>
+          <Button asChild size="icon" className="fixed right-6 bottom-6 z-50 h-16 w-16 rounded-full shadow-lg"><Link href="/routine/crear" aria-label={t("createPost")}><Plus size={30} /></Link></Button>
         </div>
       </div>
     </main>

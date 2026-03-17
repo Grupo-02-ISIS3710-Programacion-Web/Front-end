@@ -1,34 +1,34 @@
 "use client";
 import ImageCarousel from "@/components/products/image-carousel";
 import StarRating from "@/components/products/star-rating";
-import { 
-    Breadcrumb, 
-    BreadcrumbItem, 
-    BreadcrumbLink, 
-    BreadcrumbList, 
-    BreadcrumbSeparator 
+import {
+    Breadcrumb,
+    BreadcrumbItem,
+    BreadcrumbLink,
+    BreadcrumbList,
+    BreadcrumbSeparator
 } from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+import { Link } from "@/i18n/navigation";
 import { getProductByName } from "@/lib/api";
 import { capitalizeFirstLetter, toLowerCaseAndReplaceHyphensWithSpaces } from "@/lib/string-utils";
 import { Category } from "@/types/product";
 import { Chip, Container, Divider, Stack, useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import { 
-    BadgeInfo, 
-    Droplets, 
-    Heart, 
-    Pipette, 
-    SoapDispenserDroplet, 
-    Sparkles, 
-    SprayCan, 
-    Sun 
+import {
+    BadgeInfo,
+    Droplets,
+    Heart,
+    Pipette,
+    SoapDispenserDroplet,
+    Sparkles,
+    SprayCan,
+    Sun
 } from "lucide-react";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useState } from "react";
-import { useRouter } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 
 export default function ProductDetailPage() {
@@ -39,8 +39,8 @@ export default function ProductDetailPage() {
 
     let slug: string;
     if (Array.isArray(params.slug)) {
-    slug = params.slug.join('-');
-    console.log("Slug is an array, joined to:", slug);
+        slug = params.slug.join('-');
+        console.log("Slug is an array, joined to:", slug);
     } else if (typeof params.slug === 'string') {
         slug = params.slug;
     } else {
@@ -48,12 +48,11 @@ export default function ProductDetailPage() {
     }
     const productSlug = toLowerCaseAndReplaceHyphensWithSpaces(slug);
     const product = getProductByName(productSlug);
-    const router = useRouter();
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('md'));
     const [toggleFavorite, setToggleFavorite] = useState(false);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
-    
+
     const handleFavoriteClick = () => {
         setToggleFavorite(!toggleFavorite);
         // if (toggleFavorite) {
@@ -86,7 +85,7 @@ export default function ProductDetailPage() {
     }
 
     const handlePreviousImage = () => {
-        if(product?.image_url) {
+        if (product?.image_url) {
             setCurrentImageIndex((prevIndex) => (prevIndex - 1 + product?.image_url.length) % product?.image_url.length);
         }
     }
@@ -115,7 +114,7 @@ export default function ProductDetailPage() {
                         <BreadcrumbItem>
                             <BreadcrumbLink className="hover:text-secondary font-normal" href={`../descubrir?category=${product.category[0]}`}>{tCat(`${product.category[0]}.label`)}</BreadcrumbLink>
                         </BreadcrumbItem>
-                        <BreadcrumbSeparator className="text-secondary"/>
+                        <BreadcrumbSeparator className="text-secondary" />
                         <BreadcrumbItem>
                             <BreadcrumbLink className="hover:text-secondary font-normal" href={`/descubrir/${params.slug}`}>{product.name}</BreadcrumbLink>
                         </BreadcrumbItem>
@@ -128,12 +127,12 @@ export default function ProductDetailPage() {
                         <Stack direction={"column"} gap={5} alignItems={"center"}>
 
                             <ImageCarousel imagesURL={product.image_url} currentIndex={currentImageIndex} altText={product.name} onNextImage={handleNextImage} onPreviousImage={handlePreviousImage} />
-                            
+
                             {product.image_url.length > 1 && <div className={`flex justify-center items-center w-fit max-w-1`}>
                                 <Carousel opts={{ loop: true }} className="w-60 md:w-xs">
                                     <CarouselContent>
                                         {product.image_url.map((url, index) => (
-                                            <CarouselItem key={index}  className="basis-1/3 md:basis-1/4">
+                                            <CarouselItem key={index} className="basis-1/3 md:basis-1/4">
                                                 <div className="flex justify-center items-center cursor-pointer h-full" onClick={() => changeImageIndex(index)}>
                                                     <Image
                                                         src={url}
@@ -172,7 +171,7 @@ export default function ProductDetailPage() {
                                 {product.description}
                             </div>
 
-                            
+
                             <Divider className="w-full" />
                             <Stack direction={"row"} gap={5} justifyContent={"space-between"} alignItems={"center"} flexWrap="wrap">
                                 <Stack direction={"row"} gap={1} alignItems={"center"} flexWrap="wrap">
@@ -198,12 +197,14 @@ export default function ProductDetailPage() {
 
                             {/* botones para añadir a rutina y favorito */}
                             <Stack direction={"row"} gap={2} alignItems={"center"}>
-                                <Button size="lg" className="w-fit">
-                                    {t("addToRoutine")}
+                                <Button asChild size="lg" className="w-fit">
+                                    <Link href={`/routine/crear?product=${encodeURIComponent(product.id)}`}>
+                                        {t("addToRoutine")}
+                                    </Link>
                                 </Button>
-                                <Button 
-                                    variant={toggleFavorite ? "secondary" : "outline"} 
-                                    size="sm" 
+                                <Button
+                                    variant={toggleFavorite ? "secondary" : "outline"}
+                                    size="sm"
                                     className="px-2 rounded-2xl"
                                     onClick={handleFavoriteClick}
                                 >
@@ -221,23 +222,23 @@ export default function ProductDetailPage() {
                         </h3>
                         <Stack direction={"row"} gap={1} flexWrap="wrap" className="w-full">
                             {product.ingredients.map((ingredient, index) => (
-                                <Chip 
-                                sx={{
-                                    backgroundColor: "var(--secondary)",
-                                    color: "var(--secondary-foreground)",
-                                }}
-                                key={index} 
-                                label={`${capitalizeFirstLetter(ingredient)}`} 
-                            />
+                                <Chip
+                                    sx={{
+                                        backgroundColor: "var(--secondary)",
+                                        color: "var(--secondary-foreground)",
+                                    }}
+                                    key={index}
+                                    label={`${capitalizeFirstLetter(ingredient)}`}
+                                />
                             ))}
                         </Stack>
                     </Stack>
 
                     {/* TODO: sección de product reviews */}
+                </Container>
+
             </Container>
-                
-            </Container>
-            
+
         </div>
     );
 }

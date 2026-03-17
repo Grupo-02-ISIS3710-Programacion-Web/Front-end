@@ -11,10 +11,20 @@ type CommentCardProps = Readonly<{
   comment: Comment & { user?: MockUser };
   postedAgo: string;
   isExpert?: boolean;
+  currentUserId?: string;
+  onVote?: (commentId: string, vote: "up" | "down") => void;
 }>;
 
-export default function CommentCard({ comment, postedAgo, isExpert = false }: CommentCardProps) {
+export default function CommentCard({
+  comment,
+  postedAgo,
+  isExpert = false,
+  currentUserId = "u1",
+  onVote
+}: CommentCardProps) {
   const t = useTranslations("RoutineDetail");
+  const hasUpvoted = comment.upvotes.includes(currentUserId);
+  const hasDownvoted = comment.downvotes.includes(currentUserId);
 
   return (
     <article className="rounded-xl bg-transparent p-3">
@@ -48,12 +58,25 @@ export default function CommentCard({ comment, postedAgo, isExpert = false }: Co
         </ReactMarkdown>
       </div>
       <div className="mt-3 flex items-center gap-4 pl-12 text-[#5d667d]">
-        <button className="inline-flex items-center gap-1 text-sm font-semibold hover:text-[#d44f67]" aria-label={t("upvote")}>
+        <button
+          className={`inline-flex items-center gap-1 text-sm font-semibold transition ${hasUpvoted ? "text-[#d44f67]" : "hover:text-[#d44f67]"
+            }`}
+          aria-label={t("upvote")}
+          type="button"
+          onClick={() => onVote?.(comment.id, "up")}
+        >
           <ArrowUp size={16} />
-          {comment.like.length}
+          {comment.upvotes.length}
         </button>
-        <button className="inline-flex items-center text-sm hover:text-[#d44f67]" aria-label={t("downvote")}>
+        <button
+          className={`inline-flex items-center gap-1 text-sm transition ${hasDownvoted ? "text-[#d44f67]" : "hover:text-[#d44f67]"
+            }`}
+          aria-label={t("downvote")}
+          type="button"
+          onClick={() => onVote?.(comment.id, "down")}
+        >
           <ArrowDown size={16} />
+          {comment.downvotes.length}
         </button>
         <button className="text-sm font-semibold hover:text-[#d44f67]">{t("reply")}</button>
       </div>

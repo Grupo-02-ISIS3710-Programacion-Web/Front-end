@@ -6,9 +6,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import RoutineCommentsSection from "@/components/community/RoutineCommentsSection";
 import { getProductById, getUserById, getUsers } from "@/lib/api";
 import { getRoutineById } from "@/lib/routine";
-import { ArrowLeft, Moon, Sun } from "lucide-react";
-import { useTranslations } from "next-intl";
-import { useMemo } from "react";
+import { ArrowDown, ArrowLeft, ArrowUp, CalendarDays, MessageSquare, Moon, Sun } from "lucide-react";
+import { useLocale, useTranslations } from "next-intl";
+import { useMemo, useState } from "react";
 
 type RoutineDetailPageProps = Readonly<{
   routineId: string;
@@ -18,10 +18,14 @@ type RoutineDetailPageProps = Readonly<{
 export default function RoutineDetailPage({ routineId, backPath = "/comunidad" }: RoutineDetailPageProps) {
   const t = useTranslations("RoutineDetail");
   const tSkin = useTranslations("SkinTypes");
+  const locale = useLocale();
 
   const routine = getRoutineById(routineId);
   const users = getUsers();
   const user = routine ? getUserById(routine.userId) : undefined;
+  const [routineUpvotes, setRoutineUpvotes] = useState<string[]>(routine?.upvotes ?? []);
+  const [routineDownvotes, setRoutineDownvotes] = useState<string[]>(routine?.downvotes ?? []);
+  const currentUserId = "u1";
 
   const comments = useMemo(() => {
     if (!routine?.comments) {
@@ -33,6 +37,39 @@ export default function RoutineDetailPage({ routineId, backPath = "/comunidad" }
       user: users.find((candidate) => candidate.id === comment.userId)
     }));
   }, [routine?.comments, users]);
+
+  const publishedAtLabel = useMemo(() => {
+    if (!routine?.publishedAt) {
+      return "-";
+    }
+    return new Intl.DateTimeFormat(locale, { day: "2-digit", month: "short", year: "numeric" }).format(new Date(routine.publishedAt));
+  }, [locale, routine?.publishedAt]);
+
+  const hasUpvotedRoutine = routineUpvotes.includes(currentUserId);
+  const hasDownvotedRoutine = routineDownvotes.includes(currentUserId);
+
+  const handleRoutineVote = (vote: "up" | "down") => {
+    if (vote === "up") {
+      setRoutineUpvotes((prev) =>
+        prev.includes(currentUserId)
+          ? prev.filter((id) => id !== currentUserId)
+          : [...prev, currentUserId]
+      );
+      setRoutineDownvotes((prev) =>
+        prev.includes(currentUserId) ? prev.filter((id) => id !== currentUserId) : prev
+      );
+      return;
+    }
+
+    setRoutineDownvotes((prev) =>
+      prev.includes(currentUserId)
+        ? prev.filter((id) => id !== currentUserId)
+        : [...prev, currentUserId]
+    );
+    setRoutineUpvotes((prev) =>
+      prev.includes(currentUserId) ? prev.filter((id) => id !== currentUserId) : prev
+    );
+  };
 
   if (!routine) {
     return (
@@ -92,10 +129,45 @@ export default function RoutineDetailPage({ routineId, backPath = "/comunidad" }
                   <p className="text-sm font-semibold text-[#242939]">{user?.name ?? t("userFallback")}</p>
                   <p className="text-xs text-[#7a8297]">{t("routineCreator")}</p>
                 </div>
+                <span className="inline-flex items-center gap-1 rounded-full bg-[#eff2f7] px-3 py-1 text-xs font-semibold text-[#4f576e]">
+                  <MessageSquare size={14} />
+                  {comments.length}
+                </span>
+                <span className="inline-flex items-center gap-1 rounded-full bg-[#eff2f7] px-3 py-1 text-xs font-semibold text-[#4f576e]">
+                  <CalendarDays size={14} />
+                  {publishedAtLabel}
+                </span>
                 <span className="ml-auto inline-flex items-center gap-1 rounded-full bg-[#eff2f7] px-3 py-1 text-xs font-semibold text-[#4f576e]">
                   {routine.type.toLowerCase() === "am" ? <Sun size={14} /> : <Moon size={14} />}
                   {t("routineType", { type: routine.type.toUpperCase() })}
                 </span>
+              </div>
+
+              <div className="flex items-center gap-3 border-t border-[#eceff4] pt-4 text-sm font-semibold text-[#4f576e]">
+                <button
+                  type="button"
+                  onClick={() => handleRoutineVote("up")}
+                  className={`inline-flex items-center gap-1 rounded-lg border px-3 py-1.5 transition ${hasUpvotedRoutine
+                    ? "border-[#d44f67] bg-[#fdecef] text-[#d44f67]"
+                    : "border-[#dfe4ec] hover:border-[#d44f67] hover:text-[#d44f67]"
+                    }`}
+                  aria-label={t("upvote")}
+                >
+                  <ArrowUp size={14} />
+                  {routineUpvotes.length}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleRoutineVote("down")}
+                  className={`inline-flex items-center gap-1 rounded-lg border px-3 py-1.5 transition ${hasDownvotedRoutine
+                    ? "border-[#d44f67] bg-[#fdecef] text-[#d44f67]"
+                    : "border-[#dfe4ec] hover:border-[#d44f67] hover:text-[#d44f67]"
+                    }`}
+                  aria-label={t("downvote")}
+                >
+                  <ArrowDown size={14} />
+                  {routineDownvotes.length}
+                </button>
               </div>
             </CardHeader>
           </Card>

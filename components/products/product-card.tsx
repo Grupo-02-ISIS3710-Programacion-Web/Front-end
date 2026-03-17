@@ -11,6 +11,7 @@ import { useState } from "react";
 import { toLowerCaseAndReplaceSpacesWithHyphens } from "@/lib/string-utils";
 import { productsFavorites } from "@/lib/favorites";
 import { useTranslations } from "next-intl";
+import Link from "next/link";
 
 interface ProductCardProps {
     productIndex: number;
@@ -27,6 +28,7 @@ export function ProductCard({
 }: ProductCardProps) {
 
     const t = useTranslations("ProductCard");
+    const productHref = `/descubrir/${toLowerCaseAndReplaceSpacesWithHyphens(product.name)}`;
 
     const [toggleFavorite, setToggleFavorite] = useState(
         productsFavorites.some(p => p.id === product.id)
@@ -44,7 +46,7 @@ export function ProductCard({
 
     return (
         <Card className="p-0 h-full">
-            <a href={`/descubrir/${toLowerCaseAndReplaceSpacesWithHyphens(product.name)}`}>
+            <Link href={productHref}>
                 <CardHeader className="bg-muted p-5 flex items-center justify-center">
                     <div className="flex justify-center items-center w-full h-full">
                         <Image
@@ -57,7 +59,7 @@ export function ProductCard({
                         />
                     </div>
                 </CardHeader>
-            </a>
+            </Link>
 
             <CardContent className="pb-5">
                 <Stack
@@ -78,9 +80,9 @@ export function ProductCard({
                 </Stack>
 
                 <CardTitle>
-                    <a href={`/descubrir/${toLowerCaseAndReplaceSpacesWithHyphens(product.name)}`}>
+                    <Link href={productHref}>
                         {product.name}
-                    </a>
+                    </Link>
                 </CardTitle>
 
                 <CardDescription className="mt-3 flex flex-col gap-1">
