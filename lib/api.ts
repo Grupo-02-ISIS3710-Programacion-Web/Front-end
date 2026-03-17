@@ -231,6 +231,7 @@ const routines: Routine[] = [
         name: "Rutina básica de mañana",
         description: "Rutina sencilla de 3 pasos para comenzar el día con la piel limpia e hidratada.",
         type: "am",
+        skinType: SkinType.NORMAL,
         steps: [
             { id: "r1s1", name: "Limpieza suave", order: 0, product: "12", notes: "Usar con agua tibia, masajear en círculos durante 30 segundos." },
             { id: "r1s2", name: "Hidratación express", order: 1, product: "5", notes: "Aplicar una cantidad del tamaño de un guisante sobre el rostro limpio." },
@@ -242,6 +243,7 @@ const routines: Routine[] = [
         name: "Rutina antiaging de noche",
         description: "Rutina nocturna enfocada en regeneración celular y reducción de líneas finas.",
         type: "pm",
+        skinType: SkinType.SECA,
         steps: [
             { id: "r2s1", name: "Limpieza profunda", order: 0, product: "2", notes: "Masajear sobre piel húmeda para activar el ácido salicílico." },
             { id: "r2s2", name: "Retinol", order: 1, product: "9", notes: "Aplicar solo 2-3 noches por semana al inicio para acondicionar la piel." },
@@ -253,6 +255,7 @@ const routines: Routine[] = [
         name: "Rutina para piel grasa AM",
         description: "Controla el exceso de sebo y mantiene los poros limpios durante el día.",
         type: "am",
+        skinType: SkinType.GRASA,
         steps: [
             { id: "r3s1", name: "Limpieza purificante", order: 0, product: "11", notes: "Aclarar con agua fría para cerrar los poros." },
             { id: "r3s2", name: "Sérum regulador", order: 1, product: "13", notes: "Aplicar 3-4 gotas en toda la cara tras la limpieza." },
@@ -264,6 +267,7 @@ const routines: Routine[] = [
         name: "Rutina reparadora de noche",
         description: "Repara y calma la piel sensible o irritada mientras descansas.",
         type: "pm",
+        skinType: SkinType.SENSIBLE,
         steps: [
             { id: "r4s1", name: "Limpieza delicada", order: 0, product: "12", notes: "Sin frotar; aclarar con agua tibia." },
             { id: "r4s2", name: "Esencia reparadora", order: 1, product: "14", notes: "Dar toquecitos con las yemas hasta absorción completa." },
@@ -275,6 +279,7 @@ const routines: Routine[] = [
         name: "Rutina luminosidad AM",
         description: "Vitamina C y antioxidantes para un tono uniforme y piel radiante durante el día.",
         type: "am",
+        skinType: SkinType.OPACA,
         steps: [
             { id: "r5s1", name: "Limpieza exfoliante suave", order: 0, product: "2", notes: "Usar solo 3 veces por semana para evitar irritación." },
             { id: "r5s2", name: "Vitamina C", order: 1, product: "8", notes: "Aplicar por la mañana antes de la hidratación para máxima protección antioxidante." },
@@ -286,6 +291,7 @@ const routines: Routine[] = [
         name: "Rutina exfoliante de noche",
         description: "Exfolia suavemente y permite que la piel se renueve durante el sueño.",
         type: "pm",
+        skinType: SkinType.TEXTURIZADA,
         steps: [
             { id: "r6s1", name: "Limpieza", order: 0, product: "11", notes: "Primer paso para retirar maquillaje y contaminantes del día." },
             { id: "r6s2", name: "Tónico exfoliante", order: 1, product: "3", notes: "Aplicar con algodón o directamente con las manos tras la limpieza." },
@@ -297,6 +303,7 @@ const routines: Routine[] = [
         name: "Rutina coreana de 5 pasos AM",
         description: "Inspirada en el K-beauty para máxima hidratación y efecto glass skin.",
         type: "am",
+        skinType: SkinType.MIXTA,
         steps: [
             { id: "r7s1", name: "Limpieza acuosa", order: 0, product: "12", notes: "Primera limpieza suave para retirar residuos nocturnos." },
             { id: "r7s2", name: "Esencia baba caracol", order: 1, product: "14", notes: "Dar palmaditas suaves para potenciar absorción." },
@@ -310,6 +317,7 @@ const routines: Routine[] = [
         name: "Rutina anti-imperfecciones PM",
         description: "Combate el acné y las imperfecciones durante la noche sin resecar la piel.",
         type: "pm",
+        skinType: SkinType.ACNEICA,
         steps: [
             { id: "r8s1", name: "Limpieza purificante", order: 0, product: "11", notes: "Masajear durante 60 segundos para mayor eficacia." },
             { id: "r8s2", name: "Regulador de sebo", order: 1, product: "13", notes: "Extender por toda la zona T y mentón." },
@@ -322,6 +330,7 @@ const routines: Routine[] = [
         name: "Rutina antiedad avanzada AM",
         description: "Combina antioxidantes y activos antiaging para retrasar los signos de la edad.",
         type: "am",
+        skinType: SkinType.NORMAL,
         steps: [
             { id: "r9s1", name: "Limpieza hidratante", order: 0, product: "12", notes: "Usar temperatura templada para no alterar la barrera cutánea." },
             { id: "r9s2", name: "Sérum antiedad", order: 1, product: "4", notes: "Aplicar 5-6 gotas con leve masaje ascendente." },
@@ -334,6 +343,7 @@ const routines: Routine[] = [
         name: "Rutina piel seca intensa PM",
         description: "Nutrición profunda para pieles secas o muy secas que necesitan recuperar la barrera lipídica.",
         type: "pm",
+        skinType: SkinType.SECA,
         steps: [
             { id: "r10s1", name: "Limpieza sin sulfatos", order: 0, product: "12", notes: "Aclarar con agua templada, nunca fría ni caliente." },
             { id: "r10s2", name: "Esencia reparadora", order: 1, product: "14", notes: "Aplicar abundantemente sobre piel semi-húmeda para sellar la hidratación." },

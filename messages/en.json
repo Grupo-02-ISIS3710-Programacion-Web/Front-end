@@ -4,6 +4,13 @@
         "routineInfo": "Your routine information",
         "description": "Explore products, filter by category, and save a personalized routine for your skin."
     },
+    "EditarRutina": {
+        "title": "Edit Your Routine",
+        "description": "Update the general information and adjust the steps of your existing routine.",
+        "submitButton": "Save Changes",
+        "notFoundTitle": "Routine not found",
+        "notFoundDescription": "We couldn't find a routine with the provided ID."
+    },
     "GuardarRutina": {
         "pageTitle": "Finish your personalized routine",
         "pageDescription": "Review and adjust each step description in your routine. You can reorder, edit details, or remove steps before saving your personalized routine.",
@@ -14,6 +21,7 @@
             "descriptionLabel": "Routine description",
             "descriptionPlaceholder": "Routine description",
             "timeOfDayLabel": "Routine time",
+            "skinTypeLabel": "Skin type",
             "timeOfDay": {
                 "am": "AM",
                 "pm": "PM"

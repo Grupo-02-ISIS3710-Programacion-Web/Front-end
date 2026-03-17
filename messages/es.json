@@ -4,6 +4,13 @@
         "routineInfo": "Información de tu rutina",
         "description": "Explora productos, filtra por categoría y guarda una rutina personalizada para tu piel."
     },
+    "EditarRutina": {
+        "title": "Edita Tu Rutina",
+        "description": "Actualiza la información general y ajusta los pasos de tu rutina existente.",
+        "submitButton": "Guardar Cambios",
+        "notFoundTitle": "Rutina no encontrada",
+        "notFoundDescription": "No pudimos encontrar una rutina con el ID proporcionado."
+    },
     "GuardarRutina": {
         "pageTitle": "Finaliza tu rutina personalizada",
         "pageDescription": "Revisa y ajusta la descripción de cada paso de tu rutina. Puedes cambiar el orden, editar los detalles o eliminar pasos antes de guardar tu rutina personalizada.",
@@ -14,6 +21,7 @@
             "descriptionLabel": "Descripción de la rutina",
             "descriptionPlaceholder": "Descripción de la rutina",
             "timeOfDayLabel": "Momento de la rutina",
+            "skinTypeLabel": "Tipo de piel",
             "timeOfDay": {
                 "am": "AM",
                 "pm": "PM"

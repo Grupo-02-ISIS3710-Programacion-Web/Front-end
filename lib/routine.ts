@@ -1,5 +1,6 @@
 import { Routine } from "@/types/routine";
 import { getProducts } from "@/lib/api";
+import { SkinType } from "@/types/product";
 
 const products = getProducts();
 export const routines: Routine[] = [
@@ -8,17 +9,18 @@ export const routines: Routine[] = [
     name: "Morning Hydration",
     description: "Rutina enfocada en hidratación y protección solar.",
     type: "AM",
+    skinType: SkinType.NORMAL,
     steps: [
       {
         id: "step-1",
         order: 1,
-        product: products[0],
+        product: products[0].id,
         notes: "Aplicar sobre piel ligeramente húmeda"
       },
       {
         id: "step-2",
         order: 2,
-        product: products[4]
+        product: products[4].id
       }
     ]
   },
@@ -27,16 +29,17 @@ export const routines: Routine[] = [
     name: "Night Repair",
     description: "Rutina nocturna para reparación y renovación celular.",
     type: "PM",
+    skinType: SkinType.SECA,
     steps: [
       {
         id: "step-1",
         order: 1,
-        product: products[2]
+        product: products[2].id
       },
       {
         id: "step-2",
         order: 2,
-        product: products[5]
+        product: products[5].id
       }
     ]
   },
@@ -45,22 +48,23 @@ export const routines: Routine[] = [
     name: "Acne Control AM",
     description: "Rutina matutina ligera para controlar brillo y prevenir brotes.",
     type: "AM",
+    skinType: SkinType.ACNEICA,
     steps: [
       {
         id: "step-1",
         order: 1,
-        product: products[10] // Effaclar Gel
+        product: products[10].id // Effaclar Gel
       },
       {
         id: "step-2",
         order: 2,
-        product: products[12], // Niacinamide
+        product: products[12].id, // Niacinamide
         notes: "Aplicar solo en zonas con tendencia acneica"
       },
       {
         id: "step-3",
         order: 3,
-        product: products[4] // Hydro Boost
+        product: products[4].id // Hydro Boost
       }
     ]
   },
@@ -69,32 +73,33 @@ export const routines: Routine[] = [
     name: "Glow & Exfoliation Night",
     description: "Rutina nocturna con exfoliación química para mejorar textura.",
     type: "PM",
+    skinType: SkinType.TEXTURIZADA,
     steps: [
       {
         id: "step-1",
         order: 1,
-        product: products[11] // Hydrating Cleanser
+        product: products[11].id // Hydrating Cleanser
       },
       {
         id: "step-2",
         order: 2,
-        product: products[2], // Glycolic Acid
+        product: products[2].id, // Glycolic Acid
         notes: "Usar máximo 3 veces por semana"
       },
       {
         id: "step-3",
         order: 3,
-        product: products[13] // Snail Essence
+        product: products[13].id // Snail Essence
       },
       {
         id: "step-4",
         order: 4,
-        product: products[9] // Snail Essence
+        product: products[9].id // Snail Essence
       },
       {
         id: "step-5",
         order: 5,
-        product: products[4] // Snail Essence
+        product: products[4].id // Snail Essence
       }
     ]
   },
@@ -103,16 +108,17 @@ export const routines: Routine[] = [
     name: "Barrier Repair Focus",
     description: "Rutina enfocada en reparar la barrera cutánea y calmar irritación.",
     type: "PM",
+    skinType: SkinType.SENSIBLE,
     steps: [
       {
         id: "step-1",
         order: 1,
-        product: products[11]
+        product: products[11].id
       },
       {
         id: "step-2",
         order: 2,
-        product: products[5], // Cicaplast
+        product: products[5].id, // Cicaplast
         notes: "Aplicar una capa generosa en zonas irritadas"
       }
     ]

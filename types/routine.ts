@@ -1,3 +1,5 @@
+import { SkinType } from "@/types/product";
+
 export interface RoutineStep {
   id: string;
   name: string;
@@ -11,5 +13,6 @@ export interface Routine {
   name: string;
   description: string;
   type: string;
+  skinType: SkinType;
   steps: RoutineStep[];
 }
