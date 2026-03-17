@@ -257,5 +257,62 @@
                 }
             }
         }
+    },
+
+    "admin": {
+        "nav": {
+            "dashboard": "Dashboard",
+            "products": "Products",
+            "users": "Users",
+            "reviews": "Reviews",
+            "advertisement": "Advertisements",
+            "settings": "Settings"
+        },
+        "viewSite": "View site",
+        "search": {
+            "placeholder": "Search for something"
+        },
+        "notifications": {
+            "label": "Notifications",
+            "unread": "Unread"
+        },
+        "user": {
+            "menuLabel": "Menu",
+            "profile": "Profile",
+            "logout": "Logout"
+        },
+        "stats": {
+            "totalUsers": "Total Users",
+            "activePosts": "Active Posts",
+            "pendingReviews": "Pending Reviews",
+            "monthlyRevenue": "Monthly Revenue"
+        },
+        "moderation": {
+            "title": "Moderation Queue",
+            "viewAll": "View All"
+        },
+        "products": {
+            "inventoryTitle": "Product Inventory",
+            "addProduct": "Add Product",
+            "colName": "Product Name",
+            "colCategory": "Category",
+            "colStatus": "Status",
+            "colReviews": "Reviews",
+            "colActions": "Actions",
+            "showing": "Showing {count} of {total} products",
+            "published": "Published",
+            "proposed": "Waiting for approval",
+            "colBrand": "Brand",
+            "colType": "Type",
+            "colSubmittedBy": "Submitted By"
+        },
+        "pagination": {
+            "prev": "Prev",
+            "next": "Next"
+        },
+        "actions": {
+            "edit": "Edit",
+            "delete": "Delete"
+        }
     }
 }

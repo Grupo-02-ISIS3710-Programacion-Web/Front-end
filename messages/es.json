@@ -289,5 +289,62 @@
                 }
             }
         }
+    },
+
+    "admin": {
+        "nav": {
+            "dashboard": "Dashboard",
+            "products": "Productos",
+            "users": "Usuarios",
+            "reviews": "Reseñas",
+            "advertisement": "Publicidad",
+            "settings": "Ajustes"
+        },
+        "viewSite": "Ver sitio",
+        "search": {
+            "placeholder": "Buscar"
+        },
+        "notifications": {
+            "label": "Notificaciones",
+            "unread": "Sin leer"
+        },
+        "user": {
+            "menuLabel": "Menu",
+            "profile": "Perfil",
+            "logout": "Cerrar sesión"
+        },
+        "stats": {
+            "totalUsers": "Usuarios totales",
+            "activePosts": "Posts activos",
+            "pendingReviews": "Reseñas pendientes",
+            "monthlyRevenue": "Ingresos mensuales"
+        },
+        "moderation": {
+            "title": "Cola de moderación",
+            "viewAll": "Ver todo"
+        },
+        "products": {
+            "inventoryTitle": "Inventario de productos",
+            "addProduct": "Agregar producto",
+            "colName": "Nombre del producto",
+            "colCategory": "Categoría",
+            "colStatus": "Estado",
+            "colReviews": "Reseñas",
+            "colActions": "Acciones",
+            "showing": "Mostrando {count} de {total} productos",
+            "published": "Publicados",
+            "proposed": "En espera de aprobación",
+            "colBrand": "Marca",
+            "colType": "Tipo",
+            "colSubmittedBy": "Propuesto por"
+        },
+        "pagination": {
+            "prev": "Anterior",
+            "next": "Siguiente"
+        },
+        "actions": {
+            "edit": "Editar",
+            "delete": "Eliminar"
+        }
     }
 }

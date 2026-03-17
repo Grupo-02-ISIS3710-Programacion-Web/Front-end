@@ -53,12 +53,25 @@ export interface Product {
 
 //Productos propuestos por los usuarios, que aún no han sido validados por el equipo de administración
 export interface ProposedProduct {
-    name: string
-    brand: string
-    skin_type: SkinType[]
-    product_type: string
-    primary_category: Category
-    additional_categories?: Category[]
-    ingredients: string[]
-    image_url: string[]
+    name: string;
+    brand: string;
+    skin_type: SkinType[];
+    product_type: string;
+    primary_category: Category;
+    additional_categories?: Category[];
+    ingredients: string[];
+    image_url: string[];
+    submitted_by?: string; // usuario que lo propuso
+    submitted_at?: string;
+}
+
+export interface ModerationItem {
+  id: string;
+  user: string;
+  userInitials: string;
+  userAvatar?: string;
+  action: string;
+  excerpt: string;
+  timeAgo: string;
+  type: "report" | "flag" | "spam";
 }
