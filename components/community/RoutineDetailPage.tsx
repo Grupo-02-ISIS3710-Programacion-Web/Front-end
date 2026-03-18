@@ -3,8 +3,8 @@
 import { Link } from "@/i18n/navigation";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import CommentSection from "@/components/community/CommentsSection";
-import { getProductById, getUserById, getUsers } from "@/lib/api";
+import CommentSection from "@/components/comments/CommentsSection";
+import { getProductById, getUserById } from "@/lib/api";
 import { getRoutineById } from "@/lib/routine";
 import { toLowerCaseAndReplaceSpacesWithHyphens } from "@/lib/string-utils";
 import { ArrowDown, ArrowLeft, ArrowUp, CalendarDays, MessageSquare, Moon, Sun } from "lucide-react";
@@ -22,22 +22,11 @@ export default function RoutineDetailPage({ routineId, backPath = "/community" }
   const locale = useLocale();
 
   const routine = getRoutineById(routineId);
-  const users = getUsers();
   const user = routine ? getUserById(routine.userId) : undefined;
   const [routineUpvotes, setRoutineUpvotes] = useState<string[]>(routine?.upvotes ?? []);
   const [routineDownvotes, setRoutineDownvotes] = useState<string[]>(routine?.downvotes ?? []);
   const currentUserId = "u1";
-
-  const comments = useMemo(() => {
-    if (!routine?.comments) {
-      return [];
-    }
-
-    return routine.comments.map((comment) => ({
-      ...comment,
-      user: users.find((candidate) => candidate.id === comment.userId)
-    }));
-  }, [routine?.comments, users]);
+  const comments = routine?.comments ?? [];
 
   const publishedAtLabel = useMemo(() => {
     if (!routine?.publishedAt) {
@@ -229,7 +218,12 @@ export default function RoutineDetailPage({ routineId, backPath = "/community" }
               </CardContent>
             </Card>
 
-            <CommentSection routineId={routine.id} initialComments={comments} />
+            <CommentSection
+              targetId={routine.id}
+              targetType="routine"
+              initialComments={comments}
+              translationNamespace="RoutineDetail"
+            />
           </div>
         </div>
       </div>

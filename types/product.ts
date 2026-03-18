@@ -1,3 +1,5 @@
+import type { Comment } from "@/types/Comment";
+
 export enum Category {
     HIDRATACION = "hidratacion",
     LIMPIEZA = "limpieza",
@@ -30,7 +32,7 @@ export enum ProductType {
     EXFOLIANT = "exfoliant",
     SUNSCREEN = "sunscreen",
     TONER = "toner",
-    GEL= "gel",
+    GEL = "gel",
     BALM = "balm",
     TREATMENT = "treatment",
     MAKEUP_REMOVER = "makeup_remover",
@@ -49,6 +51,7 @@ export interface Product {
     rating: number;
     review_count: number;
     image_url: string[];
+    comments?: Comment[];
 }
 
 //Productos propuestos por los usuarios, que aún no han sido validados por el equipo de administración
