@@ -29,3 +29,17 @@ export function toLowerCaseAndReplaceHyphensWithSpaces(str: string | undefined):
             .replace("ú", "u")
             .replace(/[^a-z0-9-]/g, '');
 }
+
+export function normalizeSearchText(str: string | undefined): string {
+  if (!str) {
+    return "";
+  }
+
+  return str
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[-_]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
