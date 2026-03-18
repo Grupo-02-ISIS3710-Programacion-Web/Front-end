@@ -1,18 +1,64 @@
 "use client"
 
-import { Check, MessageCircle, Heart } from "lucide-react"
-import { useTranslations } from "next-intl"
+import { Check } from "lucide-react"
+import { useLocale, useTranslations } from "next-intl"
 import Link from "next/link"
+import { getRoutines } from "@/lib/routine"
+import { getUsers } from "@/lib/api"
+import { useLocaleDateFormatter } from "@/lib/hooks/use-locale-date-formatter"
+import { useMemo } from "react"
+import RoutineCard, { RoutineCardPost } from "@/components/community/RoutineCard"
 
 export default function CommentHome() {
 
     const t = useTranslations("CommentHome")
+    const tSkin = useTranslations("SkinTypes")
+    const tCommunity = useTranslations("CommunityPage")
+    const locale = useLocale()
+
+    const publishedDateFormatter = useLocaleDateFormatter(locale, {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+    })
+
+    const routineCards = useMemo<RoutineCardPost[]>(() => {
+        const routines = getRoutines()
+        const users = getUsers()
+
+        return routines
+            .map((routine) => {
+                const user = users.find((candidate) => candidate.id === routine.userId) ?? users[0]
+                const publishedAtDate = routine.publishedAt ? new Date(routine.publishedAt) : null
+                const publishedAtTs = publishedAtDate ? publishedAtDate.getTime() : 0
+
+                return {
+                    id: routine.id,
+                    title: routine.name,
+                    excerpt: routine.description,
+                    userName: user?.name ?? "",
+                    avatarUrl: user?.avatarUrl ?? "",
+                    tag: tSkin(routine.skinType),
+                    upvotes: routine.upvotes?.length ?? 0,
+                    downvotes: routine.downvotes?.length ?? 0,
+                    hasUpvoted: false,
+                    hasDownvoted: false,
+                    comments: routine.comments?.length ?? 0,
+                    views: routine.views ?? 0,
+                    publishedAt: publishedAtDate ? publishedDateFormatter.format(publishedAtDate) : "-",
+                    publishedAtTs,
+                }
+            })
+            .sort((left, right) => right.publishedAtTs - left.publishedAtTs)
+            .slice(0, 3)
+            .map(({ publishedAtTs, ...card }) => card)
+    }, [publishedDateFormatter, tSkin])
 
     return (
 
         <div className="flex flex-col  bg-gray-50">
 
-            <div className="flex flex-cols max-w-7xl mx-auto px-5 mt-23 mb-24 grid md:grid-cols-2 gap-14 items-start">
+            <div className="max-w-7xl mx-auto px-5 mt-23 mb-24 grid md:grid-cols-2 gap-14 items-start">
 
                 <div>
                     <h2 className="text-3xl font-bold text-gray-900 mb-4">
@@ -41,87 +87,23 @@ export default function CommentHome() {
                             <span>{t("feature3")}</span>
                         </li>
                     </ul>
-                    <button className="bg-foreground text-white px-6 py-3 rounded-lg font-medium hover:opacity-90 transition">
-                        <Link href="/community">
-                            {t("visitCommunity")}
-                        </Link>
-                    </button>
+                    <Link href="/community" className="inline-flex bg-foreground text-white px-6 py-3 rounded-lg font-medium hover:opacity-90 transition">
+                        {t("visitCommunity")}
+                    </Link>
                 </div>
 
 
 
                 <div className="space-y-4">
-
-
-                    <div className="bg-white p-5 rounded-xl border border-gray-200 shadow-sm flex gap-4 items-start">
-                        <img src="/avatar1.png" className="w-10 h-10 rounded-full" />
-                        <div>
-                            <div className="text-sm text-pink-500 mb-1">
-                                #Acné · hace 5 minutos
-                            </div>
-                            <p className="font-semibold text-gray-900 mb-2">
-                                {t("post1")}
-                            </p>
-                            <div className="flex items-center gap-5 text-sm text-gray-500">
-                                <div className="flex items-center gap-1">
-                                    <MessageCircle size={14} />
-                                    24 {t("replies")}
-                                </div>
-                                <div className="flex items-center gap-1">
-                                    <Heart size={14} />
-                                    156 {t("likes")}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-
-                    <div className="bg-white p-5 rounded-xl border border-gray-200 shadow-sm flex gap-4 items-start">
-                        <img src="/avatar2.jpeg" className="w-10 h-10 rounded-full" />
-                        <div>
-                            <div className="text-sm text-orange-500 mb-1">
-                                #Transformación · hace 2 horas
-                            </div>
-                            <p className="font-semibold text-gray-900 mb-2">
-                                {t("post2")}
-                            </p>
-                            <div className="flex items-center gap-5 text-sm text-gray-500">
-                                <div className="flex items-center gap-1">
-                                    <MessageCircle size={14} />
-                                    89 {t("replies")}
-                                </div>
-                                <div className="flex items-center gap-1">
-                                    <Heart size={14} />
-                                    432 {t("likes")}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="bg-white p-5 rounded-xl border border-gray-200 shadow-sm flex gap-4 items-start">
-                        <img src="/avatar3.webp" className="w-10 h-10 rounded-full" />
-                        <div>
-                            <div className="text-sm text-purple-500 mb-1">
-                                #Ciencia · ayer
-                            </div>
-                            <p className="font-semibold text-gray-900 mb-2">
-                                {t("post3")}
-                            </p>
-                            <div className="flex items-center gap-5 text-sm text-gray-500">
-                                <div className="flex items-center gap-1">
-                                    <MessageCircle size={14} />
-                                    12 {t("replies")}
-                                </div>
-                                <div className="flex items-center gap-1">
-                                    <Heart size={14} />
-                                    88 {t("likes")}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
+                    {routineCards.map((card) => (
+                        <RoutineCard
+                            key={card.id}
+                            post={card}
+                            size="sm"
+                            showVoting={false}
+                            tCommunity={tCommunity}
+                        />
+                    ))}
                 </div>
 
             </div>
@@ -135,7 +117,7 @@ export default function CommentHome() {
                         {t("ctaTitle")}
                     </h2>
 
-                    <p className="text-[#1a1c2e]/70 text-xl mb-12 max-w-2xl mx-auto">
+                    <p className="text-white text-xl mb-12 max-w-2xl mx-auto">
                         {t("ctaDescription")}
                     </p>
 

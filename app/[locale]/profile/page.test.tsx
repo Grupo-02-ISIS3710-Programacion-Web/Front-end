@@ -16,10 +16,24 @@ jest.mock("@/i18n/navigation", () => ({
   Link: ({ children }: any) => children,
 }));
 
+const mockSession = {
+  user: {
+    id: "u1",
+    name: "Elara Vance",
+    city: "San Francisco, CA",
+    skinType: "Combination / Sensitive",
+    reviewCount: 18,
+    createdRoutineIds: ["r1", "r2"],
+    bio: "Barrier-first skincare lover sharing simple routines and soothing product picks.",
+    avatarUrl: "https://i.pravatar.cc/80?img=29",
+    favoriteProductIds: [],
+  },
+  isLoggedIn: true,
+  isReady: true,
+};
 
-jest.mock("next/link", () => ({
-  __esModule: true,
-  default: ({ children }: any) => children,
+jest.mock("@/lib/hooks/use-auth-session", () => ({
+  useAuthSession: () => mockSession,
 }));
 
 describe("HU-03: Profile Page", () => {
@@ -63,7 +77,7 @@ describe("HU-03: Profile Page", () => {
     fireEvent.click(screen.getByText("cancel"));
 
     await waitFor(() => {
-    expect(screen.queryByTestId("edit-modal")).toBeNull();
+      expect(screen.queryByTestId("edit-modal")).toBeNull();
     });
   });
 

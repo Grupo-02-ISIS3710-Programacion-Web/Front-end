@@ -20,6 +20,8 @@ import { Product, Category, SkinType } from "@/types/product";
 import { Routine } from "@/types/routine";
 import { RoutineFormData } from "@/types/routine-form";
 import { useTranslations } from "next-intl";
+import { useAuthSession } from "@/lib/hooks/use-auth-session";
+import { clearAiRoutineDraft, readAiRoutineDraft } from "@/lib/ai-routine-draft";
 
 type RoutineFormMode = "create" | "edit";
 
@@ -45,6 +47,7 @@ export default function RoutineForm({ mode }: RoutineFormProps) {
     const tRoutine = useTranslations("GuardarRutina");
     const tSteps = useTranslations("GuardarRutina.steps");
     const tSkin = useTranslations("SkinTypes");
+    const { user } = useAuthSession();
 
     const filteredProducts = useMemo(() => {
         return allProducts.filter((product) => {
@@ -90,6 +93,15 @@ export default function RoutineForm({ mode }: RoutineFormProps) {
         setAllProducts(products);
 
         if (mode === "create") {
+            const aiRoutineDraft = readAiRoutineDraft();
+            if (aiRoutineDraft) {
+                reset(aiRoutineDraft);
+                setSelectedProductIds(new Set(aiRoutineDraft.steps.map((step) => step.product.id)));
+                previousProductsSignatureRef.current = aiRoutineDraft.steps.map((step) => step.product.id).join(",");
+                clearAiRoutineDraft();
+                return;
+            }
+
             const preselectedId = searchParams.get("product");
             if (preselectedId && products.some((product) => product.id === preselectedId)) {
                 setSelectedProductIds(new Set([preselectedId]));
@@ -221,9 +233,14 @@ export default function RoutineForm({ mode }: RoutineFormProps) {
         }
 
         const routineId = searchParams.get("id");
+        if (!user) {
+            toast.error("Authentication required");
+            return;
+        }
+
         const routine: Routine = {
             id: mode === "edit" && routineId ? routineId : generateId(),
-            userId: "u1",
+            userId: user.id,
             name: data.name,
             description: data.description,
             type: data.type,
@@ -330,8 +347,11 @@ export default function RoutineForm({ mode }: RoutineFormProps) {
                             </div>
 
                             <div className="space-y-2">
-                                <p className="text-sm font-medium text-muted-foreground">{tRoutine("infoCard.skinTypeLabel")}</p>
+                                <label htmlFor="routine-skin-type" className="text-sm font-medium text-muted-foreground">
+                                    {tRoutine("infoCard.skinTypeLabel")}
+                                </label>
                                 <select
+                                    id="routine-skin-type"
                                     {...register("skinType", {
                                         required: tRoutine("validation.skinTypeRequired")
                                     })}
@@ -366,29 +386,37 @@ export default function RoutineForm({ mode }: RoutineFormProps) {
                                     <DialogTitle>{tRoutine("productDialog.title")}</DialogTitle>
                                 </DialogHeader>
 
-                                <SearchBar
-                                    searchTerm={searchTerm}
-                                    selectedCategory={selectedCategory}
-                                    onSearchChange={setSearchTerm}
-                                    onCategoryChange={setSelectedCategory}
-                                    compact
-                                />
+                                <div className="flex min-h-0 flex-1 flex-col">
+                                    <SearchBar
+                                        searchTerm={searchTerm}
+                                        selectedCategory={selectedCategory}
+                                        onSearchChange={setSearchTerm}
+                                        onCategoryChange={setSelectedCategory}
+                                        compact
+                                    />
 
-                                <div className="min-h-0 flex-1 overflow-y-auto pr-2">
-                                    <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
-                                        {filteredProducts.length === 0 && (
-                                            <p className="col-span-full text-center text-muted-foreground">{tRoutine("productDialog.noResults")}</p>
-                                        )}
+                                    <div className="min-h-0 flex-1 overflow-y-auto pr-2">
+                                        <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+                                            {filteredProducts.length === 0 && (
+                                                <p className="col-span-full text-center text-muted-foreground">{tRoutine("productDialog.noResults")}</p>
+                                            )}
 
-                                        {filteredProducts.map((product) => (
-                                            <CardProducto
-                                                key={product.id}
-                                                product={product}
-                                                onAddToRoutine={() => handleAddToRoutine(product)}
-                                                showButton
-                                                compact
-                                            />
-                                        ))}
+                                            {filteredProducts.map((product) => (
+                                                <motion.div
+                                                    key={product.id}
+                                                    layout="position"
+                                                    transition={{ duration: 0.16, ease: "easeInOut" }}
+                                                    className="overflow-hidden"
+                                                >
+                                                    <CardProducto
+                                                        product={product}
+                                                        onAddToRoutine={() => handleAddToRoutine(product)}
+                                                        showButton
+                                                        compact
+                                                    />
+                                                </motion.div>
+                                            ))}
+                                        </div>
                                     </div>
                                 </div>
                             </DialogContent>
@@ -406,7 +434,7 @@ export default function RoutineForm({ mode }: RoutineFormProps) {
                         </Card>
                     )}
 
-                    <AnimatePresence initial={false} mode="popLayout">
+                    <AnimatePresence initial={false} mode="sync">
                         {fields.map((field, index) => {
                             const product = field.product as Product;
 
@@ -414,10 +442,10 @@ export default function RoutineForm({ mode }: RoutineFormProps) {
                                 <motion.div
                                     key={field.id}
                                     layout
-                                    initial={{ opacity: 0, y: 10 }}
+                                    initial={{ opacity: 0, y: 1 }}
                                     animate={{ opacity: 1, y: 0 }}
-                                    exit={{ opacity: 0, y: -10, scale: 0.98 }}
-                                    transition={{ duration: 0.2, ease: "easeOut" }}
+                                    exit={{ opacity: 0, y: 1 }}
+                                    transition={{ duration: 0.22, ease: "easeInOut" }}
                                 >
                                     <PasoRutinaCard
                                         index={index}

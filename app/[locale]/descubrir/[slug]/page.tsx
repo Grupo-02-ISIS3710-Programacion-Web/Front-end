@@ -31,11 +31,14 @@ import { useParams } from "next/navigation";
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import CommentSection from "@/components/comments/CommentsSection";
+import { useAuthSession } from "@/lib/hooks/use-auth-session";
+import { getProtectedRoute } from "@/lib/protected-route";
 
 export default function ProductDetailPage() {
     const t = useTranslations("ProductCard");
     const tCat = useTranslations("Categories");
     const tProdType = useTranslations("ProductTypes");
+    const { isLoggedIn } = useAuthSession();
     const params = useParams();
 
     let slug: string;
@@ -53,6 +56,7 @@ export default function ProductDetailPage() {
     const isMobile = useMediaQuery(theme.breakpoints.down('md'));
     const [toggleFavorite, setToggleFavorite] = useState(false);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
+    const createRoutineHref = getProtectedRoute(`/routine/crear?product=${encodeURIComponent(product?.id ?? "")}`, isLoggedIn);
 
     const handleFavoriteClick = () => {
         setToggleFavorite(!toggleFavorite);
@@ -199,7 +203,7 @@ export default function ProductDetailPage() {
                             {/* botones para añadir a rutina y favorito */}
                             <Stack direction={"row"} gap={2} alignItems={"center"}>
                                 <Button asChild size="lg" className="w-fit">
-                                    <Link href={`/routine/crear?product=${encodeURIComponent(product.id)}`}>
+                                    <Link href={createRoutineHref}>
                                         {t("addToRoutine")}
                                     </Link>
                                 </Button>
@@ -208,6 +212,7 @@ export default function ProductDetailPage() {
                                     size="sm"
                                     className="px-2 rounded-2xl"
                                     onClick={handleFavoriteClick}
+                                    aria-label={toggleFavorite ? "Quitar de favoritos" : "Agregar a favoritos"}
                                 >
                                     <Heart size={20} />
                                 </Button>
@@ -238,7 +243,7 @@ export default function ProductDetailPage() {
                     {/* TODO: sección de product reviews */}
                 </Container>
 
-           
+
                 <Container maxWidth="md" className="mt-10">
                     <CommentSection
                         targetId={product.id}
@@ -247,7 +252,7 @@ export default function ProductDetailPage() {
                         translationNamespace="ProductComments"
                     />
                 </Container>
-                
+
 
             </Container>
 

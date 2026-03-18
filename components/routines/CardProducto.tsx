@@ -1,4 +1,5 @@
 import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { Product } from "@/types/product";
 import { useTranslations } from "next-intl";
@@ -56,21 +57,22 @@ export default function CardProducto({
                                 {product.brand} • {product.product_type}
                             </p>
                         </div>
-                        <span className={compact ? "inline-flex max-w-full px-2 py-0.5 bg-blue-100 text-blue-600 text-xs md:text-sm font-medium rounded uppercase wrap-break-word whitespace-normal" : "inline-flex max-w-full px-2.5 py-1 bg-blue-100 text-blue-600 text-sm md:text-base font-medium rounded uppercase wrap-break-word whitespace-normal"}>
+                        <span className={compact ? "inline-flex self-start w-fit max-w-[85%] px-2 py-0.5 bg-blue-100 text-blue-700 text-xs md:text-sm font-medium rounded uppercase wrap-break-word whitespace-normal" : "inline-flex self-start w-fit max-w-[85%] px-2.5 py-1 bg-blue-100 text-blue-700 text-sm md:text-base font-medium rounded uppercase wrap-break-word whitespace-normal"}>
                             {getCategoryLabel(primaryCategory)}
                         </span>
                     </div>
 
                     {/* Add to Routine button */}
                     {showButton && (
-                        <button
+                        <Button
+                            type="button"
                             onClick={onAddToRoutine}
                             disabled={!onAddToRoutine}
-                            className="flex flex-wrap items-center gap-1.5 text-pink-500 hover:text-pink-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors w-full sm:w-fit group"
+                            className="w-full sm:w-fit"
                         >
-                            <Plus className="w-4 h-4 group-hover:scale-110 transition-transform" />
-                            <span className="text-base md:text-lg font-medium wrap-break-word whitespace-normal text-left">{t("addToRoutine")}</span>
-                        </button>
+                            <Plus className="w-4 h-4" />
+                            {t("addToRoutine")}
+                        </Button>
                     )}
                 </div>
 

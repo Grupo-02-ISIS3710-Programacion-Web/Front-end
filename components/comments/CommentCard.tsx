@@ -6,12 +6,13 @@ import { ArrowDown, ArrowUp } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { useEffect, useState } from "react";
+import { useFormattedCommentDate } from "@/lib/hooks/use-formatted-comment-date";
 
 type CommentCardProps = Readonly<{
   comment: Comment;
   currentUserId?: string;
   onVote?: (commentId: string, vote: "up" | "down") => void;
+  isInteractionDisabled?: boolean;
   translationNamespace?: string;
 }>;
 
@@ -19,6 +20,7 @@ export default function CommentCard({
   comment,
   currentUserId = "u1",
   onVote,
+  isInteractionDisabled = false,
   translationNamespace = "RoutineDetail"
 }: CommentCardProps) {
   const t = useTranslations(translationNamespace);
@@ -26,24 +28,7 @@ export default function CommentCard({
   const user = getUserById(comment.userId);
   const hasUpvoted = comment.upvotes.includes(currentUserId);
   const hasDownvoted = comment.downvotes.includes(currentUserId);
-
-  const [formattedDate, setFormattedDate] = useState("");
-
-  useEffect(() => {
-    if (!comment.createdAt) {
-      setFormattedDate("");
-      return;
-    }
-
-    const date = new Date(comment.createdAt);
-    const formatted = new Intl.DateTimeFormat(locale === "es" ? "es-ES" : "en-US", {
-      month: "short",
-      day: "numeric",
-      hour: "2-digit",
-      minute: "2-digit"
-    }).format(date);
-    setFormattedDate(formatted);
-  }, [comment.createdAt, locale]);
+  const formattedDate = useFormattedCommentDate(comment.createdAt, locale);
 
   return (
     <article className="rounded-xl bg-transparent p-3">
@@ -55,7 +40,7 @@ export default function CommentCard({
         />
         <div className="flex flex-wrap items-center gap-2">
           <p className="text-base font-semibold text-[#232839]">{user?.name ?? t("userFallback")}</p>
-          <p className="text-sm text-[#6f778c]">{formattedDate}</p>
+          <p className="text-sm text-[#687084]">{formattedDate}</p>
         </div>
       </div>
       <div className="pl-12 text-base leading-relaxed text-[#2f3443]">
@@ -76,6 +61,7 @@ export default function CommentCard({
             }`}
           aria-label={t("upvote")}
           type="button"
+          disabled={isInteractionDisabled}
           onClick={() => onVote?.(comment.id, "up")}
         >
           <ArrowUp size={16} />
@@ -86,12 +72,13 @@ export default function CommentCard({
             }`}
           aria-label={t("downvote")}
           type="button"
+          disabled={isInteractionDisabled}
           onClick={() => onVote?.(comment.id, "down")}
         >
           <ArrowDown size={16} />
           {comment.downvotes.length}
         </button>
-        <button className="text-sm font-semibold hover:text-[#d44f67]">{t("reply")}</button>
+        <button className="text-sm font-semibold hover:text-[#d44f67]" disabled={isInteractionDisabled}>{t("reply")}</button>
       </div>
     </article>
   );

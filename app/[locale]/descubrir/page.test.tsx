@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import DiscoveryPage from "./page";
 
@@ -101,35 +101,42 @@ jest.mock("@/components/products/filter-header", () => ({
 
 describe("HU-6:DiscoveryPage", () => {
 
-  test("muestra productos al cargar", () => {
-    render(<DiscoveryPage />);
+  const renderDiscoveryPage = async (searchParams: Record<string, string | string[] | undefined> = {}) => {
+    const element = await DiscoveryPage({ searchParams });
+    return render(element);
+  };
+
+  test("muestra productos al cargar", async () => {
+    await renderDiscoveryPage();
 
     expect(screen.getAllByText("Cleanser A").length).toBeGreaterThan(0);
     expect(screen.getAllByText("Serum B").length).toBeGreaterThan(0);
   });
 
   test("filtra por tipo de piel", async () => {
-    render(<DiscoveryPage />);
+    await renderDiscoveryPage();
 
     fireEvent.click(screen.getByText("apply-oily"));
 
     await screen.findAllByText("Cleanser A");
-
-    expect(screen.queryAllByText("Serum B").length).toBe(0);
+    await waitFor(() => {
+      expect(screen.queryAllByText("Serum B").length).toBe(0);
+    });
   });
 
   test("excluye ingredientes correctamente", async () => {
-    render(<DiscoveryPage />);
+    await renderDiscoveryPage();
 
     fireEvent.click(screen.getByText("apply-alcohol"));
 
     await screen.findAllByText("Cleanser A");
-
-    expect(screen.queryAllByText("Serum B").length).toBe(0);
+    await waitFor(() => {
+      expect(screen.queryAllByText("Serum B").length).toBe(0);
+    });
   });
 
   test("muestra estado vacío", async () => {
-    render(<DiscoveryPage />);
+    await renderDiscoveryPage();
 
     fireEvent.click(screen.getByText("apply-empty"));
 

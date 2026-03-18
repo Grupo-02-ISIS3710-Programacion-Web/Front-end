@@ -9,19 +9,37 @@ jest.mock("next-intl", () => ({
 
 jest.mock("@/i18n/navigation", () => ({
   Link: ({ children }: any) => children,
+  useRouter: () => ({
+    replace: jest.fn(),
+    push: jest.fn(),
+    back: jest.fn(),
+    refresh: jest.fn(),
+    prefetch: jest.fn(),
+  }),
+}));
+
+jest.mock("@/lib/hooks/use-auth-session", () => ({
+  useAuthSession: () => ({
+    login: (emailOrLogin: string, password: string) => {
+      if (emailOrLogin && password) {
+        return { id: "u1" };
+      }
+      return null;
+    },
+  }),
 }));
 
 
-beforeAll(() => {
-  delete (window as any).location;
-  (window as any).location = { href: "" };
-});
+const renderLoginPage = async () => {
+  const element = await Login({ searchParams: {} });
+  return render(element);
+};
 
 describe("HU-02: Login", () => {
 
-  
+
   test("muestra errores si el formulario está vacío", async () => {
-    render(<Login />);
+    await renderLoginPage();
 
     fireEvent.click(screen.getByText("login"));
 
@@ -29,9 +47,9 @@ describe("HU-02: Login", () => {
     expect(await screen.findByText("passwordRequired")).toBeInTheDocument();
   });
 
-  
+
   test("muestra error si falta contraseña", async () => {
-    render(<Login />);
+    await renderLoginPage();
 
     fireEvent.change(
       screen.getByPlaceholderText("glowing.skin@example.com"),
@@ -45,7 +63,7 @@ describe("HU-02: Login", () => {
 
 
   test("muestra error si falta email", async () => {
-    render(<Login />);
+    await renderLoginPage();
 
     fireEvent.change(
       screen.getByPlaceholderText("••••••••"),
@@ -57,9 +75,9 @@ describe("HU-02: Login", () => {
     expect(await screen.findByText("emailRequired")).toBeInTheDocument();
   });
 
-  
+
   test("permite enviar formulario con datos válidos", async () => {
-    render(<Login />);
+    await renderLoginPage();
 
     fireEvent.change(
       screen.getByPlaceholderText("glowing.skin@example.com"),
@@ -77,13 +95,13 @@ describe("HU-02: Login", () => {
     expect(screen.queryByText("passwordRequired")).not.toBeInTheDocument();
   });
 
- 
-  test("permite mostrar y ocultar la contraseña", () => {
-    render(<Login />);
+
+  test("permite mostrar y ocultar la contraseña", async () => {
+    await renderLoginPage();
 
     const input = screen.getByPlaceholderText("••••••••");
 
-    
+
     const toggleBtn = screen.getAllByRole("button")[0];
 
     expect(input).toHaveAttribute("type", "password");
@@ -97,9 +115,9 @@ describe("HU-02: Login", () => {
     expect(input).toHaveAttribute("type", "password");
   });
 
-  
-  test("tiene enlace a registro", () => {
-    render(<Login />);
+
+  test("tiene enlace a registro", async () => {
+    await renderLoginPage();
 
     expect(screen.getByText(/register/i)).toBeInTheDocument();
   });

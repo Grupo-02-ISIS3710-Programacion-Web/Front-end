@@ -7,49 +7,45 @@ import StarRating from "./star-rating";
 import { Stack } from "@mui/material";
 import { FlaskConical, Heart, Smile } from "lucide-react";
 import { Button } from "../ui/button";
-import { useState } from "react";
 import { toLowerCaseAndReplaceSpacesWithHyphens } from "@/lib/string-utils";
-import { productsFavorites } from "@/lib/favorites";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
+import { useProductFavorite } from "@/lib/hooks/use-product-favorite";
+import { ReactNode } from "react";
 
 interface ProductCardProps {
     productIndex: number;
     product: Product;
-    onFavoriteSelect: (productIndex: number) => void;
-    onFavoriteDeselect: (productIndex: number) => void;
+    onFavoriteSelect?: (productIndex: number) => void;
+    onFavoriteDeselect?: (productIndex: number) => void;
+    showFavoriteButton?: boolean;
+    action?: ReactNode;
+    className?: string;
 }
 
 export function ProductCard({
     productIndex,
     product,
-    onFavoriteSelect,
-    onFavoriteDeselect
+    onFavoriteSelect = () => undefined,
+    onFavoriteDeselect = () => undefined,
+    showFavoriteButton = true,
+    action,
+    className
 }: ProductCardProps) {
 
     const t = useTranslations("ProductCard");
     const productHref = `/descubrir/${toLowerCaseAndReplaceSpacesWithHyphens(product.name)}`;
-
-    const [toggleFavorite, setToggleFavorite] = useState(
-        productsFavorites.some(p => p.id === product.id)
-    );
-
-    const handleClick = () => {
-        setToggleFavorite(!toggleFavorite);
-
-        if (toggleFavorite) {
-            onFavoriteDeselect(productIndex);
-            onFavoriteDeselect(productIndex);
-        } else {
-            onFavoriteSelect(productIndex);
-            onFavoriteSelect(productIndex);
-        }
-    };
+    const { isFavorite, toggleFavorite } = useProductFavorite({
+        product,
+        productIndex,
+        onFavoriteSelect,
+        onFavoriteDeselect,
+    });
 
     return (
-        <Card className="p-0 h-full">
+        <Card className={`p-0 h-full overflow-hidden ${className ?? ""}`}>
             <Link href={productHref}>
-                <CardHeader className="bg-muted p-5 flex items-center justify-center">
+                <CardHeader className="bg-muted/70 p-5 flex items-center justify-center">
                     <div className="flex justify-center items-center w-full h-full">
                         <Image
                             src={product.image_url[0]}
@@ -64,28 +60,21 @@ export function ProductCard({
             </Link>
 
             <CardContent className="pb-5">
-                <Stack
-                    direction={"row"}
-                    paddingBottom={1}
-                    justifyContent={"space-between"}
-                    alignItems={"center"}
-                >
+                <div className="flex flex-row items-center justify-between pb-1">
                     <div className="text-primary font-bold">{product.brand}</div>
-                    <Button
-                        variant={toggleFavorite ? "secondary" : "outline"}
-                        size="sm"
-                        className="h-8 px-2 rounded-2xl"
-                        onClick={handleClick}
-                    >
-                        <Heart size={16} />
-                    </Button>
-                </Stack>
+                    {showFavoriteButton && (
+                        <Button
+                            variant={isFavorite ? "secondary" : "outline"}
+                            size="sm"
+                            className="h-8 px-2 rounded-2xl"
+                            onClick={toggleFavorite}
+                            aria-label={isFavorite ? "Quitar de favoritos" : "Agregar a favoritos"}
+                        >
+                            <Heart size={16} />
+                        </Button>
+                    )}
+                </div>
 
-                <CardTitle>
-                    <a href={`/descubrir/${toLowerCaseAndReplaceSpacesWithHyphens(product.name)}`}>
-                        {product.name}
-                    </a>
-                </CardTitle>
                 <CardTitle>
                     <Link href={productHref}>
                         {product.name}
@@ -99,15 +88,21 @@ export function ProductCard({
                         size={10}
                         className="mb-1"
                     />
-                    <Stack direction={"row"} gap={1} className="items-center-safe">
+                    <div className="flex flex-row gap-1 items-center-safe">
                         <Smile className="text-primary" size={20} />
                         {t("productType")}: {t(`productTypes.${product.product_type}`)}
-                    </Stack>
-                    <Stack direction={"row"} gap={1} className="items-center-safe">
+                    </div>
+                    <div className="flex flex-row gap-1 items-center-safe">
                         <FlaskConical className="text-primary" size={20} />
                         {t("keyIngredient")}: {product.ingredients[0]}
-                    </Stack>
+                    </div>
                 </CardDescription>
+
+                {action ? (
+                    <div className="mt-4">
+                        {action}
+                    </div>
+                ) : null}
             </CardContent>
         </Card>
     );

@@ -16,6 +16,7 @@ import {
 
 import { Category } from "@/types/product";
 import { useTranslations } from "next-intl";
+import Link from "next/link";
 
 interface CategoriesCardProps {
     currentCategory?: Category | "ALL";
@@ -78,12 +79,12 @@ export function CategoriesCardDesktop({ isCategorySelected }: CategoriesCardDesk
                                 <Button
                                     key={index}
                                     className={`flex justify-baseline w-full hover:bg-secondary py-5 ${isCategorySelected(category.value)
-                                            ? "bg-secondary text-secondary-foreground"
-                                            : "bg-muted/20 text-foreground"
+                                        ? "bg-secondary text-secondary-foreground"
+                                        : "bg-muted/20 text-foreground"
                                         }`}
                                     asChild
                                 >
-                                    <a
+                                    <Link
                                         href={category.value === "ALL"
                                             ? "/descubrir"
                                             : `?category=${category.value}`}
@@ -93,7 +94,7 @@ export function CategoriesCardDesktop({ isCategorySelected }: CategoriesCardDesk
                                         <div>
                                             {tCat(`${category.value}.label`)}
                                         </div>
-                                    </a>
+                                    </Link>
                                 </Button>
                             ))}
                         </ButtonGroup>
@@ -114,12 +115,12 @@ export function CategoriesCardMobile({ isCategorySelected }: CategoriesCardDeskt
                 <Button
                     key={index}
                     className={`flex justify-baseline w-fit hover:bg-secondary py-5 ${isCategorySelected(category.value)
-                            ? "bg-secondary text-secondary-foreground"
-                            : "bg-muted text-foreground"
+                        ? "bg-secondary text-secondary-foreground"
+                        : "bg-muted text-foreground"
                         }`}
                     asChild
                 >
-                    <a
+                    <Link
                         href={category.value === "ALL"
                             ? "/descubrir"
                             : `?category=${category.value}`}
@@ -129,7 +130,7 @@ export function CategoriesCardMobile({ isCategorySelected }: CategoriesCardDeskt
                         <div>
                             {tCat(`${category.value}.label`)}
                         </div>
-                    </a>
+                    </Link>
                 </Button>
             ))}
 
