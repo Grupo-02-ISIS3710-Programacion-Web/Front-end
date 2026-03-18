@@ -1,4 +1,5 @@
 import NavBar from "@/components/NavBar";
+import RouteTransition from "@/components/RouteTransition";
 import { Toaster } from "@/components/ui/sonner";
 import { NextIntlClientProvider } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
@@ -27,7 +28,7 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
 
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
-      {children}
+      <RouteTransition>{children}</RouteTransition>
       <Toaster />
     </NextIntlClientProvider>
   );
