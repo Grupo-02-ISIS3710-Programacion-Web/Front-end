@@ -12,6 +12,7 @@ import { Container } from "@mui/material";
 import { Button } from "@/components/ui/button";
 import { BadgePlus } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { normalizeSearchText } from "@/lib/string-utils";
 
 export default function DiscoveryPage() {
   const t = useTranslations("DiscoveryPage");
@@ -20,6 +21,7 @@ export default function DiscoveryPage() {
   const products = getProducts();
   const params = useSearchParams();
   const selectedCategory = params.get("category") ? (params.get("category") as Category) : "ALL";
+  const searchQuery = normalizeSearchText(params.get("q") ?? "");
   const [favoriteProducts, setFavoriteProducts] = useState<Product[]>([]);
   const [filters, setFilters] = useState<{
     skinTypes: SkinType[];
@@ -51,7 +53,19 @@ export default function DiscoveryPage() {
       productIngredients.includes(excluded)
     );
 
-    return matchesCategory && matchesBrand && matchesSkinType && !hasExcludedIngredient;
+    const searchableFields = [
+      product.name,
+      product.brand,
+      ...productIngredients,
+      ...productSkinTypes,
+      ...product.category,
+    ];
+
+    const normalizedSearchableText = normalizeSearchText(searchableFields.join(" "));
+    const matchesSearch =
+      searchQuery.length === 0 || normalizedSearchableText.includes(searchQuery);
+
+    return matchesCategory && matchesBrand && matchesSkinType && !hasExcludedIngredient && matchesSearch;
   });
 
   const brands = Array.from(new Set(products.flatMap(product => product.brand)));

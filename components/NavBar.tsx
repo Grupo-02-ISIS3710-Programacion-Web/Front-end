@@ -6,6 +6,8 @@ import Link from "next/link";
 import { User, Search, Menu, Bell } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { useEffect, useState, type ComponentPropsWithoutRef } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const links = [
   {
@@ -26,6 +28,22 @@ const links = [
   }
 ]
 
+function buildDiscoverySearchUrl(searchTerm: string) {
+  const trimmedSearchTerm = searchTerm.trim();
+
+  if (!trimmedSearchTerm) {
+    return "/descubrir";
+  }
+
+  return `/descubrir?q=${encodeURIComponent(trimmedSearchTerm)}`;
+}
+
+interface SearchBarProps {
+  initialValue?: string;
+  onSearch: (searchTerm: string) => void;
+  autoFocus?: boolean;
+}
+
 export default function NavBar() {
 
   return (
@@ -43,6 +61,13 @@ export default function NavBar() {
 }
 
 export function NavBarDesktop({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
+  const router = useRouter();
+  const params = useSearchParams();
+
+  const handleSearch = (searchTerm: string) => {
+    router.push(buildDiscoverySearchUrl(searchTerm));
+  };
+
   return (
     <div className="hidden md:flex items-center justify-center px-4 lg:px-10 py-3 w-full gap-12 bg-popover">
 
@@ -83,7 +108,7 @@ export function NavBarDesktop({ isLoggedIn = false }: { isLoggedIn?: boolean }) 
       <div className="flex items-center justify-centter">
         {/* Barra de busqueda en el centro  */}
         <div className="flex-1 max-w-1/2 mx-6">
-          <SearchBar />
+          <SearchBar initialValue={params.get("q") ?? ""} onSearch={handleSearch} />
         </div>
 
         {/* Lado derecho */}
@@ -115,18 +140,32 @@ export function NavBarDesktop({ isLoggedIn = false }: { isLoggedIn?: boolean }) 
   )
 }
 
-export function SearchBar() {
+export function SearchBar({ initialValue = "", onSearch, autoFocus = false }: SearchBarProps) {
+  const [query, setQuery] = useState(initialValue);
+
+  useEffect(() => {
+    setQuery(initialValue);
+  }, [initialValue]);
+
+  const handleSubmit: NonNullable<ComponentPropsWithoutRef<"form">["onSubmit"]> = (event) => {
+    event.preventDefault();
+    onSearch(query);
+  };
+
   return (
-    <div className="flex items-center gap-2 w-full">
+    <form className="flex items-center gap-2 w-full" onSubmit={handleSubmit}>
       <Input
         type="text"
         placeholder="Buscar productos..."
         className="w-full"
+        value={query}
+        onChange={(event) => setQuery(event.target.value)}
+        autoFocus={autoFocus}
       />
-      <Button variant="outline" size="icon">
+      <Button variant="outline" size="icon" type="submit" aria-label="Buscar productos">
         <Search className="h-4 w-4" />
       </Button>
-    </div>
+    </form>
   )
 }
 
@@ -147,6 +186,15 @@ export function ProfileButton() {
 }
 
 export function NavBarMobile() {
+  const router = useRouter();
+  const params = useSearchParams();
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+
+  const handleSearch = (searchTerm: string) => {
+    router.push(buildDiscoverySearchUrl(searchTerm));
+    setIsSearchOpen(false);
+  };
+
   return (
     <div className="md:hidden sticky top-0 z-50 border-b">
       <div className="flex items-center justify-baseline px-4 py-3">
@@ -200,7 +248,7 @@ export function NavBarMobile() {
           </Link>
           {/* Right actions */}
           <div className="flex items-center gap-1">
-            <Button variant="ghost" size="icon">
+            <Button variant="ghost" size="icon" onClick={() => setIsSearchOpen((previousState) => !previousState)} aria-label="Abrir búsqueda">
               <Search className="h-5 w-5" />
             </Button>
 
@@ -211,6 +259,16 @@ export function NavBarMobile() {
 
 
       </div>
+
+      {isSearchOpen && (
+        <div className="px-4 pb-3">
+          <SearchBar
+            initialValue={params.get("q") ?? ""}
+            onSearch={handleSearch}
+            autoFocus
+          />
+        </div>
+      )}
     </div>
   )
 }
