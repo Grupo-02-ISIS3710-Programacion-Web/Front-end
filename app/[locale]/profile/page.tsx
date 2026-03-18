@@ -4,17 +4,19 @@ import UserInfo from "@/components/profile/userInfo"
 import ProfileTabs from "@/components/profile/profileTabs"
 import RoutineContent from "@/components/profile/routineContent"
 import { ProductCard } from "@/components/products/product-card"
-import { Heart, Sun, SlidersHorizontal, Search } from "lucide-react"
-import { useState, useEffect } from "react"
-import { Product, Category } from "@/types/product"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { productsFavorites } from "@/lib/favorites"
-import { routines } from "@/lib/routine"
-import { Link } from "@/i18n/navigation"
+import { Heart, Sun, SlidersHorizontal } from "lucide-react"
+import { useState } from "react"
+import { Product, Category, SkinType } from "@/types/product";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Search } from "lucide-react";
+import { productsFavorites } from "@/lib/favorites";
+import { getRoutines } from "@/lib/routine";
+import Link from "next/link"
+import { useEffect } from "react";
 import { useTranslations } from "next-intl"
 
-export default function Profile(){
+export default function Profile() {
 
     const t = useTranslations("Profile")
 
@@ -29,13 +31,13 @@ export default function Profile(){
     const [routineDaily, setRoutineDaily] = useState("am")
 
     const tabs = [
-        {id:"routine", label: t("myRoutine"), icon: Sun},
-        {id:"favorites", label: t("myFavorites"), icon:Heart}
+        { id: "routine", label: t("myRoutine"), icon: Sun },
+        { id: "favorites", label: t("myFavorites"), icon: Heart }
     ]
 
     const routine = [
-        {id:"am", label: t("morning")},
-        {id:"pm", label: t("evening")}
+        { id: "am", label: t("morning") },
+        { id: "pm", label: t("evening") }
     ]
 
     const handleFavoriteSelect = (productIndex: number) => {
@@ -52,9 +54,9 @@ export default function Profile(){
         )
     }
 
-    const filteredRoutines = routines.filter((routine) =>
+    const filteredRoutines = getRoutines().filter((routine) =>
         routine.type.toLowerCase() === routineDaily
-    )
+    );
 
     const filteredFavorites = productsFavorites.filter((product) =>
         product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -65,7 +67,7 @@ export default function Profile(){
         setVisibleCount(ITEMS_PER_PAGE)
     }, [searchTerm])
 
-    return( 
+    return (
         <div>
             <div className="grid grid-cols-1 px-15 py-10 md:grid-cols-25 gap-y-10 md:gap-10 md:px-35 md:py-15 min-h-screen">
 
@@ -86,7 +88,7 @@ export default function Profile(){
                     <div>
                         <div className="flex flex-col rounded-2xl border border-gray-200 overflow-hidden h-full">
 
-                            
+
 
                             <div className="grid grid-cols-1 sm:grid-cols-2 sm:h-15 bg-white">
                                 {tabs.map((tab) => {
@@ -115,7 +117,7 @@ export default function Profile(){
                                 })}
                             </div>
 
-                            
+
 
                             {activeTab === "routine" && (
                                 <div className="flex flex-col lg:flex-row bg-white gap-4 items-start lg:items-center justify-between p-4 lg:px-10">
@@ -127,11 +129,10 @@ export default function Profile(){
                                             return (
                                                 <Button
                                                     key={routin.id}
-                                                    className={`text-black ${
-                                                        dayRoutine
+                                                    className={`text-black ${dayRoutine
                                                         ? ""
                                                         : "bg-white border-primary hover:bg-secondary hover:text-primary-foreground"
-                                                    }`}
+                                                        }`}
                                                     onClick={() => setRoutineDaily(routin.id)}
                                                 >
                                                     {routin.label}
@@ -141,13 +142,15 @@ export default function Profile(){
                                     </div>
 
                                     <Button className="bg-white text-primary hover:bg-white hover:underline w-full lg:w-auto">
-                                        {t("addStep")}
+                                        <Link href={"/routine/crear"}>
+                                            {t("addStep")}
+                                        </Link>
                                     </Button>
 
                                 </div>
                             )}
 
-                            
+
 
                             {activeTab === "favorites" && (
                                 <div className="flex flex-col lg:flex-row bg-white gap-4 items-start lg:items-center justify-between p-4 lg:px-10">
@@ -155,28 +158,28 @@ export default function Profile(){
                                     <div className="flex items-center gap-2 w-full lg:w-96">
 
                                         <Input
-                                        type="text"
-                                        placeholder={t("searchProducts")}
-                                        className="w-full"
-                                        value={inputValue}
-                                        onChange={(e) => setInputValue(e.target.value)}
-                                        onKeyDown={(e) => {
-                                            if (e.key === "Enter") {
-                                                setSearchTerm(inputValue)
-                                            }
-                                        }}
+                                            type="text"
+                                            placeholder={t("searchProducts")}
+                                            className="w-full"
+                                            value={inputValue}
+                                            onChange={(e) => setInputValue(e.target.value)}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    setSearchTerm(inputValue)
+                                                }
+                                            }}
                                         />
 
-                                        <Button 
-                                            variant="outline" 
+                                        <Button
+                                            variant="outline"
                                             size="icon"
                                             onClick={() => setSearchTerm(inputValue)}
-                                            >
-                                            <Search className="h-4 w-4"/>
+                                        >
+                                            <Search className="h-4 w-4" />
                                         </Button>
 
                                         <Button className="flex items-center justify-center w-10 h-10 rounded-xl border border-gray-200 bg-white hover:bg-gray-100 transition">
-                                            <SlidersHorizontal size={18} className="text-gray-600"/>
+                                            <SlidersHorizontal size={18} className="text-gray-600" />
                                         </Button>
 
                                     </div>
@@ -193,13 +196,13 @@ export default function Profile(){
                         </div>
                     </div>
 
-                   
+
 
                     <div className="flex-1">
 
                         <div className="flex-1 rounded-2xl">
                             {activeTab === "routine" && (
-                                <RoutineContent filteredRoutines={filteredRoutines}/>
+                                <RoutineContent filteredRoutines={filteredRoutines} />
                             )}
                         </div>
 
@@ -207,36 +210,36 @@ export default function Profile(){
 
                             {activeTab === "favorites" &&
                                 filteredFavorites
-                                .slice(0, visibleCount)
-                                .map((product, index) => (
-                                    <ProductCard 
-                                        key={product.id}
-                                        productIndex={index}
-                                        product={product}
-                                        onFavoriteSelect={handleFavoriteSelect}
-                                        onFavoriteDeselect={handleFavoriteDeselect}
-                                    />
-                                ))
+                                    .slice(0, visibleCount)
+                                    .map((product, index) => (
+                                        <ProductCard
+                                            key={product.id}
+                                            productIndex={index}
+                                            product={product}
+                                            onFavoriteSelect={handleFavoriteSelect}
+                                            onFavoriteDeselect={handleFavoriteDeselect}
+                                        />
+                                    ))
                             }
 
                         </div>
 
                         {activeTab === "favorites" &&
                             visibleCount < filteredFavorites.length && (
-                            <div className="flex justify-center mt-8">
+                                <div className="flex justify-center mt-8">
 
-                                <Button
-                                    variant="outline"
-                                    onClick={() =>
-                                        setVisibleCount((prev) => prev + ITEMS_PER_PAGE)
-                                    }
-                                    className="px-8"
-                                >
-                                    {t("loadMore")}
-                                </Button>
+                                    <Button
+                                        variant="outline"
+                                        onClick={() =>
+                                            setVisibleCount((prev) => prev + ITEMS_PER_PAGE)
+                                        }
+                                        className="px-8"
+                                    >
+                                        {t("loadMore")}
+                                    </Button>
 
-                            </div>
-                        )}
+                                </div>
+                            )}
 
                     </div>
 
