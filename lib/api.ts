@@ -2,7 +2,7 @@
 
 // data/products.ts
 
-import { Product, Category, SkinType, ProductType } from "@/types/product";
+import { Product, Category, SkinType, ProductType, ProposedProduct, ApprovalStatus } from "@/types/product";
 import { MockUser } from "@/types/user";
 import { toLowerCaseAndReplaceHyphensWithSpaces } from "./string-utils";
 
@@ -204,6 +204,89 @@ const products: Product[] = [
     }
 ];
 
+const proposedProducts: ProposedProduct[] = [
+    {
+        id: "p1",
+        name: "Citrus Cleansing Oil",
+        brand: "Heimish",
+        skin_type: [SkinType.MIXTA, SkinType.GRASA],
+        product_type: ProductType.OIL,
+        primary_category: Category.LIMPIEZA,
+        ingredients: ["Citrus Oil", "Sunflower Oil", "Vitamin E"],
+        image_url: [],
+        submitted_by: "maria_g",
+        submitted_at: "2024-03-10T14:23:00Z",
+        status: ApprovalStatus.PENDING,
+    },
+    {
+        id: "p2",
+        name: "Centella Calm Toner",
+        brand: "Some By Mi",
+        skin_type: [SkinType.SENSIBLE, SkinType.IRRITADA],
+        product_type: ProductType.TONER,
+        primary_category: Category.REPARACION,
+        additional_categories: [Category.HIDRATACION],
+        ingredients: ["Centella Asiatica", "Niacinamide", "Aqua"],
+        image_url: [],
+        submitted_by: "skinlover_92",
+        submitted_at: "2024-03-11T09:10:00Z",
+        status: ApprovalStatus.PENDING,
+    },
+    {
+        id: "p3",
+        name: "Vitamin C Glow Serum",
+        brand: "Skinceuticals",
+        skin_type: [SkinType.OPACA, SkinType.NORMAL],
+        product_type: ProductType.SERUM,
+        primary_category: Category.ANTIOXIDANTE,
+        ingredients: ["Ascorbic Acid", "Ferulic Acid", "Vitamin E"],
+        image_url: [],
+        submitted_by: "glowup_jess",
+        submitted_at: "2024-03-12T17:45:00Z",
+        status: ApprovalStatus.APPROVED,
+    },
+    {
+        id: "p4",
+        name: "Hydro Boost Gel",
+        brand: "Neutrogena",
+        skin_type: [SkinType.SECA, SkinType.MIXTA],
+        product_type: ProductType.GEL,
+        primary_category: Category.HIDRATACION,
+        ingredients: ["Hyaluronic Acid", "Glycerin", "Aqua"],
+        image_url: [],
+        submitted_by: "hydra_fan",
+        submitted_at: "2024-02-20T11:00:00Z",
+        status: ApprovalStatus.PUBLISHED,
+    },
+    {
+        id: "p5",
+        name: "Retinol Serum 2%",
+        brand: "The Ordinary",
+        skin_type: [SkinType.NORMAL, SkinType.GRASA],
+        product_type: ProductType.SERUM,
+        primary_category: Category.ANTI_EDAD,
+        additional_categories: [Category.REPARACION],
+        ingredients: ["Retinol", "Squalane", "Glycerin"],
+        image_url: [],
+        submitted_by: "skinscience",
+        submitted_at: "2024-02-28T08:30:00Z",
+        status: ApprovalStatus.PUBLISHED,
+    },
+    {
+        id: "p6",
+        name: "AHA 30% + BHA 2% Peeling",
+        brand: "The Ordinary",
+        skin_type: [SkinType.TEXTURIZADA, SkinType.ACNEICA],
+        product_type: ProductType.EXFOLIANT,
+        primary_category: Category.EXFOLIACION,
+        ingredients: ["Glycolic Acid", "Salicylic Acid", "Aqua"],
+        image_url: [],
+        submitted_by: "chemist_corner",
+        submitted_at: "2024-03-01T15:20:00Z",
+        status: ApprovalStatus.REJECTED,
+    },
+];
+
 export function getProducts(): Product[] {
     return products;
 }
@@ -223,6 +306,9 @@ export function getProductsByCategory(category: Category | "ALL"): Product[] {
     return products.filter(product => product.category.includes(category));
 }
 
+export function getProposedProducts(): ProposedProduct[] {
+    return proposedProducts;
+}
 const users: MockUser[] = [
     { id: "u1", name: "Sarah J.", avatarUrl: "https://i.pravatar.cc/80?img=29" },
     { id: "u2", name: "Alex R.", avatarUrl: "https://i.pravatar.cc/80?img=22" },

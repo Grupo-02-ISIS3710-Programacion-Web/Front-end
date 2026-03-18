@@ -492,5 +492,111 @@
                 "body": "We may update these terms at any time. If important changes are made, we will notify you within the platform."
             }
         }
+    },
+
+    "admin": {
+        "nav": {
+            "dashboard": "Dashboard",
+            "products": "Products",
+            "users": "Users",
+            "reviews": "Reviews",
+            "advertisement": "Advertisements",
+            "posts": "Posts",
+            "settings": "Settings"
+        },
+        "viewSite": "View site",
+        "search": {
+            "placeholder": "Search for something"
+        },
+        "notifications": {
+            "label": "Notifications",
+            "unread": "Unread"
+        },
+        "user": {
+            "menuLabel": "Menu",
+            "profile": "Profile",
+            "logout": "Logout"
+        },
+        "stats": {
+            "totalUsers": "Total Users",
+            "activePosts": "Active Posts",
+            "pendingPostReviews": "Pending Post Reviews",
+            "pendingProductReviews": "Pending Product Reviews"
+        },
+        "moderation": {
+            "title": "Moderation Queue",
+            "viewAll": "View All",
+            "keep": "Keep",
+            "remove": "Remove",
+            "approve": "Approve",
+            "delete": "Delete"
+        },
+        "products": {
+            "overviewTitle": "Product Overview",
+            "addProduct": "Add Product",
+            "colName": "Product Name",
+            "colCategory": "Category",
+            "colStatus": "Status",
+            "colReviews": "Reviews",
+            "colActions": "Actions",
+            "showing": "Showing {count} of {total} products",
+            "published": "Published",
+            "proposed": "Waiting for approval",
+            "colBrand": "Brand",
+            "colType": "Type",
+            "colSubmittedBy": "Submitted By",
+            "stats": {
+                    "total": "Total Products",
+                    "pending": "Pending Approval",
+                    "approved": "Approved",
+                    "published": "Published",
+                    "rejected": "Rejected"
+            }
+        },
+        "productsPage": {
+            "title": "Product Management",
+            "subtitle": "Review, approve and manage products submitted by users.",
+            "export": "Export",
+            "addNew": "Add New Product",
+            "empty": "No products match the selected filters.",
+            "showing": "Showing {from}–{to} of {total} results",
+            "stats": {
+                    "total": "Total Products",
+                    "pending": "Pending Approval",
+                    "approved": "Approved",
+                    "published": "Published",
+                    "rejected": "Rejected"
+            },
+            "filters": {
+                "searchPlaceholder": "Filter by name or brand...",
+                "allCategories": "All Categories",
+                "allStatuses": "All Statuses",
+                "more": "More filters"
+            },
+            "bulk": {
+                "label": "Bulk Actions:",
+                "selectAction": "Select Action",
+                "approve": "Approve",
+                "reject": "Reject",
+                "publish": "Publish",
+                "delete": "Delete",
+                "apply": "Apply"
+            },
+            "table": {
+                    "selectAll": "Select all",
+                    "select": "Select",
+                    "submittedBy": "Submitted By"
+            }
+        },
+        "pagination": {
+            "prev": "Prev",
+            "next": "Next"
+        },
+        "actions": {
+            "edit": "Edit",
+            "delete": "Delete",
+            "approve": "Approve",
+            "reject": "Reject"
+        }
     }
 }

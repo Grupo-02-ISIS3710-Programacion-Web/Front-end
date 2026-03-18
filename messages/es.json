@@ -494,5 +494,110 @@
                 "body": "Podemos actualizar estos terminos en cualquier momento. Si realizamos cambios importantes, te lo notificaremos dentro de la plataforma."
             }
         }
+    },
+
+    "admin": {
+        "nav": {
+            "dashboard": "Dashboard",
+            "products": "Productos",
+            "users": "Usuarios",
+            "reviews": "Reseñas",
+            "advertisement": "Publicidad",
+            "posts": "Posts",
+            "settings": "Ajustes"
+        },
+        "viewSite": "Ver sitio",
+        "search": {
+            "placeholder": "Buscar"
+        },
+        "notifications": {
+            "label": "Notificaciones",
+            "unread": "Sin leer"
+        },
+        "user": {
+            "menuLabel": "Menu",
+            "profile": "Perfil",
+            "logout": "Cerrar sesión"
+        },
+        "stats": {
+            "totalUsers": "Usuarios totales",
+            "activePosts": "Posts activos",
+            "pendingPostReviews": "Posts pendientes por revisar",
+            "pendingProductReviews": "Productos pendientes por revisar"
+        },
+        "moderation": {
+            "title": "Cola de moderación",
+            "viewAll": "Ver todo",
+            "keep": "Conservar",
+            "remove": "Remover",
+            "approve": "Aprobar",
+            "delete": "Eliminar"
+        },
+        "products": {
+            "overviewTitle": "Vista general de productos",
+            "addProduct": "Agregar producto",
+            "colName": "Nombre del producto",
+            "colCategory": "Categoría",
+            "colStatus": "Estado",
+            "colReviews": "Reseñas",
+            "colActions": "Acciones",
+            "showing": "Mostrando {count} de {total} productos",
+            "published": "Publicados",
+            "proposed": "En espera de aprobación",
+            "colBrand": "Marca",
+            "colType": "Tipo",
+            "colSubmittedBy": "Propuesto por",
+            "stats": {
+                "pending": "Pendiente de aprobación",
+                "approved": "Aprobado",
+                "published": "Publicado",
+                "rejected": "Rechazado"
+            }
+        },
+        "productsPage": {
+            "title": "Gestión de Productos",
+            "subtitle": "Revisa, aprueba y administra los productos enviados por usuarios.",
+            "export": "Exportar",
+            "addNew": "Agregar producto",
+            "empty": "Ningún producto coincide con los filtros seleccionados.",
+            "showing": "Mostrando {from}–{to} de {total} resultados",
+            "stats": {
+                "total": "Total productos",
+                "pending": "Pendientes de aprobación",
+                "approved": "Aprobados",
+                "published": "Publicados",
+                "rejected": "Rechazados"
+            },
+            "filters": {
+                "searchPlaceholder": "Filtrar por nombre o marca...",
+                "allCategories": "Todas las categorías",
+                "allStatuses": "Todos los estados",
+                "more": "Más filtros"
+            },
+            "bulk": {
+                "label": "Acciones masivas:",
+                "selectAction": "Seleccionar acción",
+                "approve": "Aprobar",
+                "reject": "Rechazar",
+                "publish": "Publicar",
+                "delete": "Eliminar",
+                "apply": "Aplicar"
+            },
+            "table": {
+            "selectAll": "Seleccionar todos",
+            "select": "Seleccionar",
+            "submittedBy": "Enviado por"
+            }
+        },
+        "pagination": {
+            "prev": "Anterior",
+            "next": "Siguiente"
+        },
+        "actions": {
+            "edit": "Editar",
+            "delete": "Eliminar",
+            "approve": "Aprobar",
+            "reject": "Rechazar"
+        }
     }
 }

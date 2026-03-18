@@ -6,6 +6,7 @@ import Link from "next/link";
 import { User, Search, Menu, Bell } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { usePathname } from "next/navigation";
 
 const links = [
   {
@@ -27,6 +28,9 @@ const links = [
 ]
 
 export default function NavBar() {
+  const pathname = usePathname();
+  
+  if (pathname.includes("/admin")) return null;
 
   return (
     <>
