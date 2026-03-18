@@ -21,7 +21,7 @@ describe('UserInfo', () => {
     expect(screen.getByText('Skincare lover')).toBeInTheDocument()
   })
 
-  it('opens modal, updates fields and closes it', () => {
+  it('opens modal, saves fields and closes it', () => {
     render(<UserInfo {...props} />)
 
     fireEvent.click(screen.getByRole('button', { name: /UserInfo.editProfile/i }))
@@ -29,9 +29,9 @@ describe('UserInfo', () => {
     const nameInput = screen.getByDisplayValue('Manuela')
     fireEvent.change(nameInput, { target: { value: 'Ana' } })
 
-    fireEvent.click(screen.getByRole('button', { name: 'UserInfo.cancel' }))
+    fireEvent.click(screen.getByRole('button', { name: 'UserInfo.save' }))
 
-    expect(screen.queryByRole('button', { name: 'UserInfo.cancel' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: 'UserInfo.save' })).not.toBeInTheDocument()
     expect(screen.getByText('Ana')).toBeInTheDocument()
   })
 })

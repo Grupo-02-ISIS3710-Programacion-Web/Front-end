@@ -30,6 +30,7 @@ import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import { useTranslations } from "next-intl";
+import CommentSection from "@/components/comments/CommentsSection";
 import { useAuthSession } from "@/lib/hooks/use-auth-session";
 import { getProtectedRoute } from "@/lib/protected-route";
 
@@ -241,6 +242,17 @@ export default function ProductDetailPage() {
 
                     {/* TODO: sección de product reviews */}
                 </Container>
+
+
+                <Container maxWidth="md" className="mt-10">
+                    <CommentSection
+                        targetId={product.id}
+                        targetType="product"
+                        initialComments={[]}
+                        translationNamespace="ProductComments"
+                    />
+                </Container>
+
 
             </Container>
 

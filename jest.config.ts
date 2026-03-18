@@ -4,6 +4,8 @@ const config: Config = {
   testEnvironment: 'jest-environment-jsdom',
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
   moduleNameMapper: {
+    '^next-intl$': '<rootDir>/test/mocks/next-intl.ts',
+    '^next-intl/server$': '<rootDir>/test/mocks/next-intl-server.ts',
     '^@/(.*)$': '<rootDir>/$1',
     '^.+\\.(css|sass|scss)$': 'identity-obj-proxy',
   },

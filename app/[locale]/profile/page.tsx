@@ -94,10 +94,12 @@ export default function Profile() {
         )
     }
 
-    const filteredRoutines = getRoutines().filter((routine) =>
-        userRoutineIdSet.has(routine.id) &&
-        routine.type.toLowerCase() === routineDaily
-    );
+    const filteredRoutines = useMemo(() => {
+        return getRoutines().filter((routine) =>
+            userRoutineIdSet.has(routine.id) &&
+            routine.type.toLowerCase() === routineDaily
+        );
+    }, [routineDaily, userRoutineIdSet]);
 
     useEffect(() => {
         setVisibleCount(ITEMS_PER_PAGE)

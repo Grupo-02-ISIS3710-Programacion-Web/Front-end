@@ -27,7 +27,7 @@ test.describe("HU-03 Gestionar perfil", () => {
     await modal.locator("label", { hasText: "Tipo de piel" }).locator("..").locator("input").fill("Mixta");
     await modal.locator("textarea").fill("Bio actualizada desde E2E.");
 
-    await modal.getByRole("button", { name: "Cancelar" }).click();
+    await modal.getByRole("button", { name: "Guardar" }).click();
 
     await expect(modal).toBeHidden();
     await expect(page.getByText("E2E Nombre Perfil")).toBeVisible();
