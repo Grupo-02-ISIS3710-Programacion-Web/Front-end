@@ -44,6 +44,13 @@ export enum ApprovalStatus {
   APPROVED  = "approved",   // aprobado por admin, aún no publicado
   PUBLISHED = "published",  // visible en la plataforma
   REJECTED  = "rejected",   // rechazado por admin
+  INACTIVE  = "inactive",   // eliminación lógica — no visible públicamente
+}
+
+export interface AuditInfo {
+  action_by: string;       // ID o username del admin
+  action_at: string;       // ISO date string
+  reason?: string;         // motivo de rechazo (solo para REJECTED)
 }
 
 export interface Product {
@@ -66,6 +73,7 @@ export interface ProposedProduct {
     id: string;
     name: string;
     brand: string;
+    description: string;
     skin_type: SkinType[];
     product_type: ProductType;
     primary_category: Category;
@@ -75,6 +83,7 @@ export interface ProposedProduct {
     submitted_by?: string; // usuario que lo propuso
     submitted_at?: string;
     status: ApprovalStatus;
+    audit?: AuditInfo;
 }
 
 export interface ModerationItem {

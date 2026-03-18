@@ -566,7 +566,8 @@
                 "pending": "Pendientes de aprobación",
                 "approved": "Aprobados",
                 "published": "Publicados",
-                "rejected": "Rechazados"
+                "rejected": "Rechazados",
+                "inactive": ""
             },
             "filters": {
                 "searchPlaceholder": "Filtrar por nombre o marca...",
@@ -584,20 +585,71 @@
                 "apply": "Aplicar"
             },
             "table": {
-            "selectAll": "Seleccionar todos",
-            "select": "Seleccionar",
-            "submittedBy": "Enviado por"
-            }
+        "selectAll": "Seleccionar todos",
+        "select": "Seleccionar",
+        "submittedBy": "Enviado por"
+      }
+    },
+    "pagination": {
+      "prev": "Anterior",
+      "next": "Siguiente"
+    },
+    "actions": {
+      "edit": "Editar",
+      "delete": "Eliminar",
+      "approve": "Aprobar",
+      "reject": "Rechazar",
+      "view": "Ver detalle",
+      "cancel": "Cancelar",
+      "close": "Cerrar",
+      "confirmReject": "Confirmar rechazo"
+    },
+        "productDetail": {
+        "images": "Imágenes",
+        "skinType": "Tipo de piel",
+        "description": "Descripción",
+        "ingredients": "Ingredientes",
+        "rejectionReason": "Motivo de rechazo"
         },
-        "pagination": {
-            "prev": "Anterior",
-            "next": "Siguiente"
+        "rejectModal": {
+        "title": "Rechazar producto",
+        "description": "Estás a punto de rechazar \"{name}\". Este producto no será publicado.",
+        "reasonLabel": "Motivo del rechazo",
+        "reasonPlaceholder": "Ej: Información incompleta, ingredientes incorrectos, producto duplicado...",
+        "reasonError": "Por favor ingresa al menos 10 caracteres.",
+        "reasonHint": "Este motivo quedará registrado en el historial de auditoría."
         },
-        "actions": {
-            "edit": "Editar",
-            "delete": "Eliminar",
-            "approve": "Aprobar",
-            "reject": "Rechazar"
+        "deleteModal": {
+        "title": "Eliminar producto",
+        "description": "Estás a punto de eliminar \"{name}\". Esta acción no se puede deshacer.",
+        "logicalTitle": "Eliminación lógica",
+        "logicalDescription": "El producto quedará marcado como Inactivo y dejará de ser visible para los usuarios. Las reseñas existentes se conservarán como historial.",
+        "confirm": "Eliminar producto"
+        },
+        "editDrawer": {
+        "title": "Editar producto",
+        "description": "Editando \"{name}\". Los campos obligatorios están marcados con *.",
+        "save": "Guardar cambios",
+        "fields": {
+            "name": "Nombre",
+            "brand": "Marca",
+            "description": "Descripción",
+            "descriptionPlaceholder": "Breve descripción del producto...",
+            "primaryCategory": "Categoría principal",
+            "additionalCategories": "Categorías adicionales",
+            "skinType": "Tipo de piel",
+            "ingredients": "Ingredientes",
+            "ingredientPlaceholder": "Agregar ingrediente...",
+            "ingredientAdd": "Agregar",
+            "images": "Imágenes",
+            "imagePlaceholder": "https://...",
+            "imageAdd": "Agregar",
+            "imageHint": "En producción esto será reemplazado por un cargador de archivos."
+        },
+        "errors": {
+            "required": "Este campo es obligatorio.",
+            "selectOne": "Selecciona al menos una opción."
+        }
         }
     }
 }
