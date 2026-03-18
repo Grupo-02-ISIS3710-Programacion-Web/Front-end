@@ -104,7 +104,7 @@ export default function RoutineDetailPage({ routineId, backPath = "/community" }
                   <img src={user?.avatarUrl} alt={user?.name ?? t("authorFallback")} className="h-10 w-10 rounded-full object-cover" />
                   <div>
                     <p className="text-sm font-semibold text-[#242939]">{user?.name ?? t("userFallback")}</p>
-                    <p className="text-xs text-[#7a8297]">{t("routineCreator")}</p>
+                    <p className="text-xs text-[#5d6478]">{t("routineCreator")}</p>
                   </div>
                 </div>
 

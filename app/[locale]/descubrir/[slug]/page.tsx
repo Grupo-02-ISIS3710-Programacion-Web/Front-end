@@ -207,6 +207,7 @@ export default function ProductDetailPage() {
                                     size="sm"
                                     className="px-2 rounded-2xl"
                                     onClick={handleFavoriteClick}
+                                    aria-label={toggleFavorite ? "Quitar de favoritos" : "Agregar a favoritos"}
                                 >
                                     <Heart size={20} />
                                 </Button>

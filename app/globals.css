@@ -9,7 +9,7 @@
 /* ============================= */
 
 @theme inline {
-  
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
 
@@ -66,7 +66,7 @@
   --popover-foreground: #1D1E2C;
 
   /* Brand */
-  --primary: #DB5375;
+  --primary: #BE3D5E;
   --primary-foreground: #FFFFFF;
 
   --secondary: #EC9192;
@@ -77,13 +77,15 @@
   --muted-foreground: #59656F;
 
   /* Accent (soft secondary) */
-  --accent: #EC919240; /* 25% */
+  --accent: #EC919240;
+  /* 25% */
   --accent-foreground: #1D1E2C;
 
   /* Borders */
   --border: #E8ECEF;
   --input: #E8ECEF;
-  --ring: #DB5375bf; /* primary 75% */
+  --ring: #DB5375bf;
+  /* primary 75% */
 
   /* States */
   --destructive: #B91C1C;
@@ -114,7 +116,8 @@
   --muted: #232534;
   --muted-foreground: #A0A4B8;
 
-  --accent: #DB537540; /* primary 25% */
+  --accent: #DB537540;
+  /* primary 25% */
   --accent-foreground: #F5F5F5;
 
   --border: #2A2D3E;

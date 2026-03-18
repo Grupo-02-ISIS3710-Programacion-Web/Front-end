@@ -38,7 +38,7 @@ export default function CommentCard({
         />
         <div className="flex flex-wrap items-center gap-2">
           <p className="text-base font-semibold text-[#232839]">{user?.name ?? t("userFallback")}</p>
-          <p className="text-sm text-[#6f778c]">{formattedDate}</p>
+          <p className="text-sm text-[#687084]">{formattedDate}</p>
         </div>
       </div>
       <div className="pl-12 text-base leading-relaxed text-[#2f3443]">

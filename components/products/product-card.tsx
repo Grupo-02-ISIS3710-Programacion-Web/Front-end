@@ -65,16 +65,12 @@ export function ProductCard({
                         size="sm"
                         className="h-8 px-2 rounded-2xl"
                         onClick={toggleFavorite}
+                        aria-label={isFavorite ? "Quitar de favoritos" : "Agregar a favoritos"}
                     >
                         <Heart size={16} />
                     </Button>
                 </Stack>
 
-                <CardTitle>
-                    <a href={`/descubrir/${toLowerCaseAndReplaceSpacesWithHyphens(product.name)}`}>
-                        {product.name}
-                    </a>
-                </CardTitle>
                 <CardTitle>
                     <Link href={productHref}>
                         {product.name}

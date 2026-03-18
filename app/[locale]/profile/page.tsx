@@ -109,7 +109,7 @@ export default function Profile() {
                                             {tab.label}
 
                                             <span
-                                                className={`absolute left-0 bottom-0 w-full h-[2px] rounded-full
+                                                className={`absolute left-0 bottom-0 w-full h-0.5 rounded-full
                                                 ${isActive ? "bg-primary" : "bg-gray-200"}`}
                                             />
                                         </button>
@@ -129,10 +129,10 @@ export default function Profile() {
                                             return (
                                                 <Button
                                                     key={routin.id}
-                                                    className={`text-black ${dayRoutine
-                                                        ? ""
-                                                        : "bg-white border-primary hover:bg-secondary hover:text-primary-foreground"
-                                                        }`}
+                                                    className={dayRoutine
+                                                        ? "text-primary-foreground"
+                                                        : "bg-white text-foreground border-primary hover:bg-secondary hover:text-primary-foreground"
+                                                    }
                                                     onClick={() => setRoutineDaily(routin.id)}
                                                 >
                                                     {routin.label}
@@ -141,10 +141,8 @@ export default function Profile() {
                                         })}
                                     </div>
 
-                                    <Button className="bg-white text-primary hover:bg-white hover:underline w-full lg:w-auto">
-                                        <Link href={"/routine/crear"}>
-                                            {t("addStep")}
-                                        </Link>
+                                    <Button asChild className="bg-white text-primary hover:bg-white hover:underline w-full lg:w-auto">
+                                        <Link href={"/routine/crear"}>{t("addStep")}</Link>
                                     </Button>
 
                                 </div>
@@ -174,20 +172,19 @@ export default function Profile() {
                                             variant="outline"
                                             size="icon"
                                             onClick={() => setSearchTerm(inputValue)}
+                                            aria-label={t("searchProducts")}
                                         >
                                             <Search className="h-4 w-4" />
                                         </Button>
 
-                                        <Button className="flex items-center justify-center w-10 h-10 rounded-xl border border-gray-200 bg-white hover:bg-gray-100 transition">
+                                        <Button className="flex items-center justify-center w-10 h-10 rounded-xl border border-gray-200 bg-white hover:bg-gray-100 transition" aria-label="Filtrar favoritos">
                                             <SlidersHorizontal size={18} className="text-gray-600" />
                                         </Button>
 
                                     </div>
 
-                                    <Button className="bg-white text-primary hover:bg-white hover:underline w-full lg:w-auto">
-                                        <Link href="/descubrir">
-                                            {t("discoverMore")}
-                                        </Link>
+                                    <Button asChild className="bg-white text-primary hover:bg-white hover:underline w-full lg:w-auto">
+                                        <Link href="/descubrir">{t("discoverMore")}</Link>
                                     </Button>
 
                                 </div>

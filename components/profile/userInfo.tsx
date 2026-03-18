@@ -37,7 +37,7 @@ export default function UserInfo({
 
     <div className="bg-white rounded-2xl shadow-md overflow-hidden">
 
-      <div className="h-30 bg-gradient-to-r from-pink-200 to-slate-200"></div>
+      <div className="h-30 bg-linear-to-r from-pink-200 to-slate-200"></div>
       
 
       <div className="flex justify-center -mt-16">
@@ -66,7 +66,7 @@ export default function UserInfo({
 
       <div className="flex justify-center mt-4">
 
-        <span className="bg-accent bg-secondary flex gap-2 items-center text-dark px-4 py-1 rounded-full">
+        <span className="bg-accent flex gap-2 items-center text-dark px-4 py-1 rounded-full">
 
           <Droplet size={14} className="fill-white stroke-white"/>
 
@@ -129,7 +129,7 @@ export default function UserInfo({
 
           <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
 
-            <div className="bg-white rounded-2xl p-6 w-[420px] shadow-xl">
+            <div className="bg-white rounded-2xl p-6 w-105 shadow-xl">
 
               <h2 className="text-xl font-bold mb-5">
                 {t("editProfile")}

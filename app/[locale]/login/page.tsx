@@ -8,6 +8,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Eye, EyeOff, Mail, Lock } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { Link } from "@/i18n/navigation"
+import Image from "next/image"
 
 type LoginForm = {
   email: string
@@ -60,9 +61,13 @@ function LoginFormComponent(){
 
       <div className="flex justify-center">
 
-        <div className="w-16 h-16 rounded-full border border-green-200 flex items-center justify-center">
-          Skin4All
-        </div>
+        <Image
+          src="/skin4all_logo.svg"
+          alt="Skin4All logo"
+          width={42}
+          height={42}
+          priority
+        />
 
       </div>
 
@@ -146,6 +151,8 @@ function LoginFormComponent(){
             type="button"
             onClick={() => setShowPassword((prev) => !prev)}
             className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition"
+            aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+            title={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
           >
             {showPassword ? <EyeOff size={18}/> : <Eye size={18}/>}
           </button>

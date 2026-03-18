@@ -122,7 +122,7 @@ export function FilterHeaderDesktop({
                             <p>{t("description")}</p>
                         </Box>
 
-                        <Typography className="body italic text-muted-foreground/50 px-5">
+                        <Typography className="body italic text-muted-foreground px-5">
                             {t("productCount", { count: productCount })}
                         </Typography>
                     </Stack>
@@ -362,7 +362,7 @@ export function FilterHeaderMobile({
                 </AccordionItem>
             </Accordion>
 
-            <Typography className="body italic text-muted-foreground/50">
+            <Typography className="body italic text-muted-foreground">
                 {t("productCount", { count: productCount })}
             </Typography>
             <Stack direction={"row"} gap={1} flexWrap="wrap">

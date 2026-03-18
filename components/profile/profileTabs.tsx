@@ -11,27 +11,25 @@ type Props = {
   setActiveTab: (tab: string) => void
 }
 
-export default function ProfileTabs({ activeTab, setActiveTab }: Props){
+export default function ProfileTabs({ activeTab, setActiveTab }: Props) {
 
   const t = useTranslations("ProfileTabs")
 
   const [routineDaily, setRoutineDaily] = useState("am")
 
   const tabs = [
-    {id:"routine", label: t("myRoutine"), icon: Sun},
-    {id:"favorites", label: t("myFavorites"), icon: Heart},
-    {id:"forum", label: t("forumPosts"), icon: MessageSquare}
+    { id: "routine", label: t("myRoutine"), icon: Sun },
+    { id: "favorites", label: t("myFavorites"), icon: Heart },
+    { id: "forum", label: t("forumPosts"), icon: MessageSquare }
   ]
 
   const routines = [
-    {id:"am", label: t("morning")},
-    {id:"pm", label: t("evening")}
+    { id: "am", label: t("morning") },
+    { id: "pm", label: t("evening") }
   ]
 
   return (
     <div className="flex flex-col rounded-2xl border border-gray-200 overflow-hidden h-full">
-
-
       <div className="grid grid-cols-1 sm:grid-cols-3 bg-white">
         {tabs.map((tab) => {
           const Icon = tab.icon
@@ -50,7 +48,7 @@ export default function ProfileTabs({ activeTab, setActiveTab }: Props){
               />
               {tab.label}
               <span
-                className={`absolute left-0 bottom-0 w-full h-[2px] rounded-full
+                className={`absolute left-0 bottom-0 w-full h-0.5 rounded-full
                 ${isActive ? "bg-primary" : "bg-gray-200"}
                 `}
               />
@@ -59,7 +57,6 @@ export default function ProfileTabs({ activeTab, setActiveTab }: Props){
         })}
       </div>
 
-     
       {activeTab === "routine" && (
         <div className="flex flex-col lg:flex-row bg-white gap-4 items-start lg:items-center justify-between p-4 lg:px-10">
           <div className="flex flex-wrap rounded-2xl border border-secondary p-1 gap-2 w-full lg:w-auto">
@@ -68,11 +65,11 @@ export default function ProfileTabs({ activeTab, setActiveTab }: Props){
               return (
                 <Button
                   key={routine.id}
-                  className={`text-black ${
+                  className={
                     dayRoutine
-                      ? ""
-                      : "bg-white border-primary hover:bg-secondary hover:text-primary-foreground"
-                  }`}
+                      ? "text-primary-foreground"
+                      : "bg-white text-foreground border-primary hover:bg-secondary hover:text-primary-foreground"
+                  }
                   onClick={() => setRoutineDaily(routine.id)}
                 >
                   {routine.label}
@@ -86,8 +83,6 @@ export default function ProfileTabs({ activeTab, setActiveTab }: Props){
         </div>
       )}
 
-
-
       {activeTab === "favorites" && (
         <div className="flex flex-col lg:flex-row bg-white gap-4 items-start lg:items-center justify-between p-4 lg:px-10">
           <div className="flex items-center gap-2 w-full lg:w-96">
@@ -96,10 +91,10 @@ export default function ProfileTabs({ activeTab, setActiveTab }: Props){
               placeholder={t("searchProducts")}
               className="w-full"
             />
-            <Button variant="outline" size="icon">
+            <Button variant="outline" size="icon" aria-label={t("searchProducts")}>
               <Search className="h-4 w-4" />
             </Button>
-            <Button className="flex items-center justify-center w-10 h-10 rounded-xl border border-gray-200 bg-white hover:bg-gray-100 transition">
+            <Button className="flex items-center justify-center w-10 h-10 rounded-xl border border-gray-200 bg-white hover:bg-gray-100 transition" aria-label="Filtrar favoritos">
               <SlidersHorizontal size={18} className="text-gray-600" />
             </Button>
           </div>

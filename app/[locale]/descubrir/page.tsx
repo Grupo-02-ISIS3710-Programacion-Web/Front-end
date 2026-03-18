@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { BadgePlus } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useProductDiscovery } from "@/lib/hooks/use-product-discovery";
+import { AnimatePresence, motion } from "motion/react";
 
 export default function DiscoveryPage() {
   const t = useTranslations("DiscoveryPage");
@@ -53,16 +54,26 @@ export default function DiscoveryPage() {
             )}
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3 auto-rows-max">
-              {filteredProducts.map((product, index) => (
-                <div key={index} className="w-11/12 lg:w-full pl-10 md:pl-0">
-                  <ProductCard
-                    productIndex={index}
-                    product={product}
-                    onFavoriteSelect={handleFavoriteSelect}
-                    onFavoriteDeselect={handleFavoriteDeselect}
-                  />
-                </div>
-              ))}
+              <AnimatePresence initial={false} mode="popLayout">
+                {filteredProducts.map((product, index) => (
+                  <motion.div
+                    key={product.id}
+                    layout
+                    initial={{ opacity: 0, y: 10, scale: 0.98 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: -10, scale: 0.98 }}
+                    transition={{ duration: 0.2, ease: "easeOut" }}
+                    className="w-11/12 lg:w-full pl-10 md:pl-0"
+                  >
+                    <ProductCard
+                      productIndex={index}
+                      product={product}
+                      onFavoriteSelect={handleFavoriteSelect}
+                      onFavoriteDeselect={handleFavoriteDeselect}
+                    />
+                  </motion.div>
+                ))}
+              </AnimatePresence>
             </div>
           </div>
         </div>

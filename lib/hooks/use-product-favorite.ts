@@ -22,21 +22,15 @@ export function useProductFavorite({
     );
 
     const toggleFavorite = () => {
-        setIsFavorite((prev) => {
-            const next = !prev;
+        const next = !isFavorite;
+        setIsFavorite(next);
 
-            if (prev) {
-                // Preserve current behavior in ProductCard callbacks.
-                onFavoriteDeselect(productIndex);
-                onFavoriteDeselect(productIndex);
-            } else {
-                // Preserve current behavior in ProductCard callbacks.
-                onFavoriteSelect(productIndex);
-                onFavoriteSelect(productIndex);
-            }
+        if (next) {
+            onFavoriteSelect(productIndex);
+            return;
+        }
 
-            return next;
-        });
+        onFavoriteDeselect(productIndex);
     };
 
     return {

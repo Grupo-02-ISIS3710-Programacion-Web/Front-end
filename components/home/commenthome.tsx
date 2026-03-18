@@ -12,7 +12,7 @@ export default function CommentHome() {
 
         <div className="flex flex-col  bg-gray-50">
 
-            <div className="flex flex-cols max-w-7xl mx-auto px-5 mt-23 mb-24 grid md:grid-cols-2 gap-14 items-start">
+            <div className="max-w-7xl mx-auto px-5 mt-23 mb-24 grid md:grid-cols-2 gap-14 items-start">
 
                 <div>
                     <h2 className="text-3xl font-bold text-gray-900 mb-4">
@@ -41,11 +41,9 @@ export default function CommentHome() {
                             <span>{t("feature3")}</span>
                         </li>
                     </ul>
-                    <button className="bg-foreground text-white px-6 py-3 rounded-lg font-medium hover:opacity-90 transition">
-                        <Link href="/community">
-                            {t("visitCommunity")}
-                        </Link>
-                    </button>
+                    <Link href="/community" className="inline-flex bg-foreground text-white px-6 py-3 rounded-lg font-medium hover:opacity-90 transition">
+                        {t("visitCommunity")}
+                    </Link>
                 </div>
 
 
@@ -54,9 +52,9 @@ export default function CommentHome() {
 
 
                     <div className="bg-white p-5 rounded-xl border border-gray-200 shadow-sm flex gap-4 items-start">
-                        <img src="/avatar1.png" className="w-10 h-10 rounded-full" />
+                        <img src="/avatar1.png" alt="Avatar de usuario" className="w-10 h-10 rounded-full" />
                         <div>
-                            <div className="text-sm text-pink-500 mb-1">
+                            <div className="text-sm text-pink-700 mb-1">
                                 #Acné · hace 5 minutos
                             </div>
                             <p className="font-semibold text-gray-900 mb-2">
@@ -78,9 +76,9 @@ export default function CommentHome() {
 
 
                     <div className="bg-white p-5 rounded-xl border border-gray-200 shadow-sm flex gap-4 items-start">
-                        <img src="/avatar2.jpeg" className="w-10 h-10 rounded-full" />
+                        <img src="/avatar2.jpeg" alt="Avatar de usuario" className="w-10 h-10 rounded-full" />
                         <div>
-                            <div className="text-sm text-orange-500 mb-1">
+                            <div className="text-sm text-orange-700 mb-1">
                                 #Transformación · hace 2 horas
                             </div>
                             <p className="font-semibold text-gray-900 mb-2">
@@ -100,9 +98,9 @@ export default function CommentHome() {
                     </div>
 
                     <div className="bg-white p-5 rounded-xl border border-gray-200 shadow-sm flex gap-4 items-start">
-                        <img src="/avatar3.webp" className="w-10 h-10 rounded-full" />
+                        <img src="/avatar3.webp" alt="Avatar de usuario" className="w-10 h-10 rounded-full" />
                         <div>
-                            <div className="text-sm text-purple-500 mb-1">
+                            <div className="text-sm text-purple-700 mb-1">
                                 #Ciencia · ayer
                             </div>
                             <p className="font-semibold text-gray-900 mb-2">
@@ -135,7 +133,7 @@ export default function CommentHome() {
                         {t("ctaTitle")}
                     </h2>
 
-                    <p className="text-[#1a1c2e]/70 text-xl mb-12 max-w-2xl mx-auto">
+                    <p className="text-white text-xl mb-12 max-w-2xl mx-auto">
                         {t("ctaDescription")}
                     </p>
 

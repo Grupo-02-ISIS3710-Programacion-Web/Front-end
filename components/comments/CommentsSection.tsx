@@ -85,7 +85,7 @@ export default function CommentSection({
                 <ImageIcon size={16} />
               </button>
             </div>
-            <Button onClick={addComment} className="h-9 rounded-xl bg-[#d85068] px-5 text-sm font-semibold text-white hover:bg-[#c5455c]">
+            <Button onClick={addComment} className="h-9 rounded-xl bg-[#be3d5e] px-5 text-sm font-semibold text-white hover:bg-[#a73553]">
               <MessageSquare size={16} />
               {t("postComment")}
             </Button>

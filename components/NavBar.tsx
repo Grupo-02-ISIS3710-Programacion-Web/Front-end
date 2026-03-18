@@ -89,18 +89,15 @@ export function NavBarDesktop({ isLoggedIn = false }: { isLoggedIn?: boolean }) 
         {/* Lado derecho */}
         <div className="flex items-center gap-3">
           <div className="hidden lg:flex items-center gap-2">
-            <Link href="/register">
-              <Button
-                variant="outline"
-                className=" hover:bg-secondary hover:text-secondary-foreground"
-              >
-                Registrarme
-              </Button>
-            </Link>
-            <Button>
-              <Link href="/login">
-                Iniciar sesión
-              </Link>
+            <Button
+              asChild
+              variant="outline"
+              className=" hover:bg-secondary hover:text-secondary-foreground"
+            >
+              <Link href="/register">Registrarme</Link>
+            </Button>
+            <Button asChild className="bg-[#BE3D5E] text-white hover:bg-[#A73553]">
+              <Link href="/login">Iniciar sesión</Link>
             </Button>
           </div>
           {isLoggedIn && (<>
@@ -123,7 +120,7 @@ export function SearchBar() {
         placeholder="Buscar productos..."
         className="w-full"
       />
-      <Button variant="outline" size="icon">
+      <Button variant="outline" size="icon" aria-label="Buscar productos">
         <Search className="h-4 w-4" />
       </Button>
     </div>
@@ -132,7 +129,7 @@ export function SearchBar() {
 
 export function NotificationsButton() {
   return (
-    <Button variant="outline" size="icon" >
+    <Button variant="outline" size="icon" aria-label="Notificaciones">
       <Bell className="h-5 w-5" />
     </Button>
   )
@@ -140,7 +137,7 @@ export function NotificationsButton() {
 
 export function ProfileButton() {
   return (
-    <Button size="icon" className="rounded-full">
+    <Button size="icon" className="rounded-full" aria-label="Perfil">
       <User className="h-5 w-5" />
     </Button>
   )
@@ -154,7 +151,7 @@ export function NavBarMobile() {
         {/* Menu trigger */}
         <Sheet>
           <SheetTrigger asChild>
-            <Button variant="ghost" size="icon">
+            <Button variant="ghost" size="icon" aria-label="Abrir menú de navegación">
               <Menu className="h-5 w-5" />
             </Button>
           </SheetTrigger>
@@ -167,7 +164,7 @@ export function NavBarMobile() {
             {/* Links */}
             <div className="mt-6 flex flex-col gap-1">
               {links.map((link) => (
-                <Button key={link.nombre} variant="ghost" className="justify-start text-base active:text-primary transition-transform ">
+                <Button key={link.nombre} asChild variant="ghost" className="justify-start text-base active:text-primary transition-transform ">
                   <Link href={link.href}>{link.nombre}</Link>
                 </Button>
               ))}
@@ -176,8 +173,8 @@ export function NavBarMobile() {
             {/* Autenticación al fondo */}
             <div className="mt-auto pt-6 border-t flex justify-center w-full">
               <div className=" flex flex-col gap-2 w-60">
-                <Button variant="outline">Registrarme</Button>
-                <Button>Iniciar sesión</Button>
+                <Button asChild variant="outline"><Link href="/register">Registrarme</Link></Button>
+                <Button asChild className="bg-[#BE3D5E] text-white hover:bg-[#A73553]"><Link href="/login">Iniciar sesión</Link></Button>
               </div>
             </div>
           </SheetContent>
@@ -200,7 +197,7 @@ export function NavBarMobile() {
           </Link>
           {/* Right actions */}
           <div className="flex items-center gap-1">
-            <Button variant="ghost" size="icon">
+            <Button variant="ghost" size="icon" aria-label="Buscar productos">
               <Search className="h-5 w-5" />
             </Button>
 

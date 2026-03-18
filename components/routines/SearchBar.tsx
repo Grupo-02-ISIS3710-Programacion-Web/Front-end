@@ -43,7 +43,7 @@ export default function SearchBar({
             });
         });
         return Array.from(categorySet);
-    }, []);
+    }, [products]);
 
     return (
         <div className={compact ? "w-full rounded-xl border p-3" : "w-full bg-white rounded-2xl p-6 shadow-sm mb-6"}>
