@@ -19,6 +19,8 @@ jobs:
       run: pnpm exec playwright install --with-deps
     - name: Run Playwright tests
       run: pnpm exec playwright test
+    - name: Run Unit tests
+      run: pnpm run test:unit
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:
