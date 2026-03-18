@@ -113,24 +113,29 @@ export default function RoutineDetailPage({ routineId, backPath = "/community" }
                 <p className="text-[#5f6880]">{routine.description}</p>
               </div>
 
-              <div className="flex flex-wrap items-center gap-3 border-t border-[#eceff4] pt-4">
-                <img src={user?.avatarUrl} alt={user?.name ?? t("authorFallback")} className="h-10 w-10 rounded-full object-cover" />
-                <div>
-                  <p className="text-sm font-semibold text-[#242939]">{user?.name ?? t("userFallback")}</p>
-                  <p className="text-xs text-[#7a8297]">{t("routineCreator")}</p>
+              <div className="border-t border-[#eceff4] pt-4">
+                <div className="flex items-center gap-3">
+                  <img src={user?.avatarUrl} alt={user?.name ?? t("authorFallback")} className="h-10 w-10 rounded-full object-cover" />
+                  <div>
+                    <p className="text-sm font-semibold text-[#242939]">{user?.name ?? t("userFallback")}</p>
+                    <p className="text-xs text-[#7a8297]">{t("routineCreator")}</p>
+                  </div>
                 </div>
-                <span className="inline-flex items-center gap-1 rounded-full bg-[#eff2f7] px-3 py-1 text-xs font-semibold text-[#4f576e]">
-                  <MessageSquare size={14} />
-                  {comments.length}
-                </span>
-                <span className="inline-flex items-center gap-1 rounded-full bg-[#eff2f7] px-3 py-1 text-xs font-semibold text-[#4f576e]">
-                  <CalendarDays size={14} />
-                  {publishedAtLabel}
-                </span>
-                <span className="ml-auto inline-flex items-center gap-1 rounded-full bg-[#eff2f7] px-3 py-1 text-xs font-semibold text-[#4f576e]">
-                  {routine.type.toLowerCase() === "am" ? <Sun size={14} /> : <Moon size={14} />}
-                  {t("routineType", { type: routine.type.toUpperCase() })}
-                </span>
+
+                <div className="mt-3 flex flex-wrap items-center gap-2">
+                  <span className="inline-flex items-center gap-1 rounded-full bg-[#eff2f7] px-3 py-1 text-xs font-semibold text-[#4f576e]">
+                    <MessageSquare size={14} />
+                    {comments.length}
+                  </span>
+                  <span className="inline-flex items-center gap-1 rounded-full bg-[#eff2f7] px-3 py-1 text-xs font-semibold text-[#4f576e]">
+                    <CalendarDays size={14} />
+                    {publishedAtLabel}
+                  </span>
+                  <span className="inline-flex items-center gap-1 rounded-full bg-[#eff2f7] px-3 py-1 text-xs font-semibold text-[#4f576e]">
+                    {routine.type.toLowerCase() === "am" ? <Sun size={14} /> : <Moon size={14} />}
+                    {t("routineType", { type: routine.type.toUpperCase() })}
+                  </span>
+                </div>
               </div>
 
               <div className="flex items-center gap-3 border-t border-[#eceff4] pt-4 text-sm font-semibold text-[#4f576e]">
