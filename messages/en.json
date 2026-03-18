@@ -639,24 +639,24 @@
         "goToLogin": "Sign in"
     },
     "Footer": {
-        "brand": "SkinCare Community",
+        "brand": "Skin4All",
         "description": "Join the world's most transparent skincare community.",
         "exploreTitle": "Explore",
         "explore": {
-            "bestSellers": "Best Sellers",
-            "ingredientLab": "Ingredient Lab",
-            "forums": "Forums"
+            "bestSellers": "Home",
+            "ingredientLab": "Discover",
+            "forums": "Community"
         },
         "communityTitle": "Community",
         "community": {
-            "communityRules": "Community Rules",
-            "hallOfFame": "Hall of Fame",
-            "verifiedExperts": "Verified Experts"
+            "communityRules": "Profile",
+            "hallOfFame": "AI Routine",
+            "verifiedExperts": "Terms and Conditions"
         },
         "newsletterTitle": "Newsletter",
         "emailPlaceholder": "Your email",
         "send": "Send",
-        "copyright": "© 2024 SkinCare Community. All rights reserved."
+        "copyright": "© 2026 Skin4All. All rights reserved."
     },
     "ToS": {
         "title": "Terms and Conditions",

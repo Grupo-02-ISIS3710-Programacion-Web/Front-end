@@ -645,20 +645,20 @@
         "description": "Únete a la mejor comunidad de cuidado de la piel. Descubre productos, comparte tus resultados y encuentra la rutina perfecta para ti.",
         "exploreTitle": "Explorar",
         "explore": {
-            "bestSellers": "Más vendidos",
-            "ingredientLab": "Laboratorio de ingredientes",
-            "forums": "Foros"
+            "bestSellers": "Inicio",
+            "ingredientLab": "Descubrir",
+            "forums": "Comunidad"
         },
         "communityTitle": "Comunidad",
         "community": {
-            "communityRules": "Reglas de la comunidad",
-            "hallOfFame": "Salón de la fama",
-            "verifiedExperts": "Expertos verificados"
+            "communityRules": "Perfil",
+            "hallOfFame": "Rutina con IA",
+            "verifiedExperts": "Términos y condiciones"
         },
         "newsletterTitle": "Boletín",
         "emailPlaceholder": "Tu correo",
         "send": "Enviar",
-        "copyright": "© 2024 Comunidad SkinCare. Todos los derechos reservados."
+        "copyright": "© 2026 Skin4All. Todos los derechos reservados."
     },
     "ToS": {
         "title": "Terminos y Condiciones",

@@ -60,12 +60,7 @@ export function ProductCard({
             </Link>
 
             <CardContent className="pb-5">
-                <Stack
-                    direction={"row"}
-                    paddingBottom={1}
-                    justifyContent={"space-between"}
-                    alignItems={"center"}
-                >
+                <div className="flex flex-row items-center justify-between pb-1">
                     <div className="text-primary font-bold">{product.brand}</div>
                     {showFavoriteButton && (
                         <Button
@@ -78,7 +73,7 @@ export function ProductCard({
                             <Heart size={16} />
                         </Button>
                     )}
-                </Stack>
+                </div>
 
                 <CardTitle>
                     <Link href={productHref}>
@@ -93,14 +88,14 @@ export function ProductCard({
                         size={10}
                         className="mb-1"
                     />
-                    <Stack direction={"row"} gap={1} className="items-center-safe">
+                    <div className="flex flex-row gap-1 items-center-safe">
                         <Smile className="text-primary" size={20} />
                         {t("productType")}: {t(`productTypes.${product.product_type}`)}
-                    </Stack>
-                    <Stack direction={"row"} gap={1} className="items-center-safe">
+                    </div>
+                    <div className="flex flex-row gap-1 items-center-safe">
                         <FlaskConical className="text-primary" size={20} />
                         {t("keyIngredient")}: {product.ingredients[0]}
-                    </Stack>
+                    </div>
                 </CardDescription>
 
                 {action ? (

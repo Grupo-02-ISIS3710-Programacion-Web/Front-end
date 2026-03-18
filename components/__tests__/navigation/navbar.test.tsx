@@ -22,8 +22,8 @@ describe('NavBar', () => {
   it('renders desktop auth actions when logged out and user actions when logged in', () => {
     const { rerender } = render(<NavBarDesktop isLoggedIn={false} />)
 
-    expect(screen.getByRole('button', { name: 'Registrarme' })).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: 'Iniciar sesión' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'NavBar.register' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'NavBar.login' })).toBeInTheDocument()
 
     rerender(<NavBarDesktop isLoggedIn />)
 
@@ -33,7 +33,7 @@ describe('NavBar', () => {
   it('renders mobile menu links', () => {
     render(<NavBarMobile />)
 
-    expect(screen.getAllByRole('link', { name: 'Home' }).length).toBeGreaterThan(0)
-    expect(screen.getAllByRole('link', { name: 'Descubre productos' }).length).toBeGreaterThan(0)
+    expect(screen.getAllByRole('link', { name: 'NavBar.home' }).length).toBeGreaterThan(0)
+    expect(screen.getAllByRole('link', { name: 'NavBar.discover' }).length).toBeGreaterThan(0)
   })
 })
