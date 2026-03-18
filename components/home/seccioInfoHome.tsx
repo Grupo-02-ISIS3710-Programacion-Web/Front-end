@@ -25,26 +25,26 @@ export default function SeccionInfoHome() {
           {t("description")}
         </p>
 
-        <div className="flex items-center gap-3 mt-8">
+        <div className="mt-8 flex flex-wrap items-center gap-3">
 
-          <Link href="/login" className="flex items-center gap-2 bg-primary hover:bg-secondary text-white px-4 py-3 rounded-xl shadow-md transition">
+          <Link href="/login" className="inline-flex h-14 items-center justify-center gap-2 whitespace-nowrap rounded-xl bg-primary px-8 text-white shadow-md transition hover:bg-secondary">
             {t("register")}
             <ArrowRight size={18} />
           </Link>
 
-          <Link href="/descubrir" className="flex items-center gap-2 bg-foreground  text-white px-4 py-3 rounded-xl shadow-md transition">
+          <Link href="/descubrir" className="inline-flex h-14 items-center justify-center gap-2 whitespace-nowrap rounded-xl bg-foreground px-8 text-white shadow-md transition hover:opacity-90">
             {t("explorer")}
           </Link>
 
-          <div className="flex items-center gap-3">
+          <div className="flex w-full items-center gap-3 sm:ml-2 sm:w-auto">
 
-            <div className="flex -space-x-3">
+            <div className="flex shrink-0 -space-x-3">
               <img src="/avatar1.png" alt="" aria-hidden="true" className="w-8 h-8 rounded-full border-2 border-white" />
               <img src="/avatar2.jpeg" alt="" aria-hidden="true" className="w-8 h-8 rounded-full border-2 border-white" />
               <img src="/avatar3.webp" alt="" aria-hidden="true" className="w-8 h-8 rounded-full border-2 border-white" />
             </div>
 
-            <span className="text-sm text-gray-600">
+            <span className="min-w-0 text-sm leading-snug text-gray-600">
               <span className="font-semibold">50k+</span> {t("trusted")}
             </span>
 
@@ -61,7 +61,7 @@ export default function SeccionInfoHome() {
           alt="Productos de skincare"
           width={505}
           height={300}
-          className="rounded-2xl object-cover shadow-lg"
+          className="h-auto w-100 rounded-2xl object-cover shadow-lg sm:w-128 md:w-auto"
           unoptimized={true}
         />
 
