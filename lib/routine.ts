@@ -20,6 +20,7 @@ const routines: Routine[] = [
         id: "r1c1",
         userId: "u2",
         comment: "Me funciono muy bien para piel sensible en las mananas.",
+        createdAt: "2026-03-14T10:30:00.000Z",
         upvotes: ["u1", "u4"],
         downvotes: []
       },
@@ -27,6 +28,7 @@ const routines: Routine[] = [
         id: "r1c2",
         userId: "u5",
         comment: "Yo anadiria protector solar al final para completar AM.",
+        createdAt: "2026-03-14T12:00:00.000Z",
         upvotes: ["u2"],
         downvotes: []
       }
@@ -53,6 +55,7 @@ const routines: Routine[] = [
         id: "r2c1",
         userId: "u1",
         comment: "Buen orden de activos. Lo haria dias alternos si eres principiante.",
+        createdAt: "2026-03-12T22:15:00.000Z",
         upvotes: ["u3", "u6"],
         downvotes: []
       }
@@ -79,6 +82,7 @@ const routines: Routine[] = [
         id: "r3c1",
         userId: "u6",
         comment: "La niacinamida aqui va perfecta antes de hidratar.",
+        createdAt: "2026-03-10T08:45:00.000Z",
         upvotes: ["u1"],
         downvotes: []
       }
@@ -105,6 +109,7 @@ const routines: Routine[] = [
         id: "r4c1",
         userId: "u3",
         comment: "Rutina super calmante, la use despues de exfoliar y me ayudo mucho.",
+        createdAt: "2026-03-09T00:30:00.000Z",
         upvotes: ["u5", "u2", "u1"],
         downvotes: []
       }
@@ -131,6 +136,7 @@ const routines: Routine[] = [
         id: "r5c1",
         userId: "u4",
         comment: "Vitamina C + hidratante ligera me dio buen glow durante el dia.",
+        createdAt: "2026-03-16T12:20:00.000Z",
         upvotes: ["u2", "u6"],
         downvotes: []
       }

@@ -238,6 +238,11 @@ export default function RoutineForm({ mode }: RoutineFormProps) {
             }))
         };
 
+        if (mode === "create") {
+            toast.success(tCreate("toasts.created"));
+        } else {
+            toast.success(tEdit("toasts.saved"));
+        }
         console.log(mode === "edit" ? "Routine edited" : "Routine created", routine);
     };
 

@@ -6,7 +6,7 @@ type RoutineDetailRouteProps = Readonly<{
 
 export default async function RoutineDetailRoute({ params }: RoutineDetailRouteProps) {
   const { locale, id } = await params;
-  const backPath = locale === "en" ? "/community" : "/comunidad";
+  const backPath = locale === "en" ? "/community" : "/community";
 
   return <RoutineDetailPage routineId={id} backPath={backPath} />;
 }

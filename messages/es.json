@@ -2,14 +2,21 @@
     "CrearRutina": {
         "title": "Crea Tu Rutina Ideal",
         "routineInfo": "Información de tu rutina",
-        "description": "Explora productos, filtra por categoría y guarda una rutina personalizada para tu piel."
+        "description": "Explora productos, filtra por categoría y guarda una rutina personalizada para tu piel.",
+        "submitButton": "Crear Rutina",
+        "toasts": {
+            "created": "Tu rutina ha sido creada exitosamente"
+        }
     },
     "EditarRutina": {
         "title": "Edita Tu Rutina",
         "description": "Actualiza la información general y ajusta los pasos de tu rutina existente.",
         "submitButton": "Guardar Cambios",
         "notFoundTitle": "Rutina no encontrada",
-        "notFoundDescription": "No pudimos encontrar una rutina con el ID proporcionado."
+        "notFoundDescription": "No pudimos encontrar una rutina con el ID proporcionado.",
+        "toasts": {
+            "saved": "Los cambios han sido guardados exitosamente"
+        }
     },
     "GuardarRutina": {
         "pageTitle": "Finaliza tu rutina personalizada",
@@ -139,7 +146,16 @@
         "discoverMore": "Descubre más productos"
     },
     "RoutineContent": {
-        "steps": "pasos"
+        "steps": "pasos",
+        "deleteDialog": {
+            "title": "Eliminar rutina",
+            "description": "¿Estás seguro que deseas eliminar",
+            "descriptionWarning": "? Esta acción no se puede deshacer.",
+            "cancel": "Cancelar",
+            "delete": "Eliminar"
+        },
+        "editButton": "Editar rutina",
+        "deleted": "ha sido eliminada"
     },
     "UserInfo": {
         "reviews": "RESEÑAS",
@@ -426,6 +442,7 @@
         "commentPlaceholder": "Comparte tu experiencia con esta rutina...",
         "addComment": "Agregar comentario",
         "postComment": "Publicar comentario",
+        "commentPosted": "Tu comentario ha sido publicado",
         "noComments": "Aun no hay comentarios. Se la primera persona en comentar esta rutina.",
         "communityMember": "Miembro de la comunidad",
         "userFallback": "Usuario Skin4All",

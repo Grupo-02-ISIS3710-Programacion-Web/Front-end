@@ -2,29 +2,45 @@
 
 import { Comment } from "@/types/Comment";
 import { MockUser } from "@/types/user";
-import { ArrowDown, ArrowUp, BadgeCheck } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { ArrowDown, ArrowUp } from "lucide-react";
+import { useLocale, useTranslations } from "next-intl";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { useEffect, useState } from "react";
 
 type CommentCardProps = Readonly<{
   comment: Comment & { user?: MockUser };
-  postedAgo: string;
-  isExpert?: boolean;
   currentUserId?: string;
   onVote?: (commentId: string, vote: "up" | "down") => void;
 }>;
 
 export default function CommentCard({
   comment,
-  postedAgo,
-  isExpert = false,
   currentUserId = "u1",
   onVote
 }: CommentCardProps) {
   const t = useTranslations("RoutineDetail");
+  const locale = useLocale();
   const hasUpvoted = comment.upvotes.includes(currentUserId);
   const hasDownvoted = comment.downvotes.includes(currentUserId);
+
+  const [formattedDate, setFormattedDate] = useState("");
+
+  useEffect(() => {
+    if (!comment.createdAt) {
+      setFormattedDate("");
+      return;
+    }
+
+    const date = new Date(comment.createdAt);
+    const formatted = new Intl.DateTimeFormat(locale === "es" ? "es-ES" : "en-US", {
+      month: "short",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit"
+    }).format(date);
+    setFormattedDate(formatted);
+  }, [comment.createdAt, locale]);
 
   return (
     <article className="rounded-xl bg-transparent p-3">
@@ -36,13 +52,7 @@ export default function CommentCard({
         />
         <div className="flex flex-wrap items-center gap-2">
           <p className="text-base font-semibold text-[#232839]">{comment.user?.name ?? t("userFallback")}</p>
-          {isExpert && (
-            <span className="inline-flex items-center gap-1 rounded-md bg-[#efb0b7] px-2 py-0.5 text-xs font-semibold text-[#47232d]">
-              {t("expert")}
-              <BadgeCheck size={12} />
-            </span>
-          )}
-          <p className="text-sm text-[#6f778c]">{postedAgo}</p>
+          <p className="text-sm text-[#6f778c]">{formattedDate}</p>
         </div>
       </div>
       <div className="pl-12 text-base leading-relaxed text-[#2f3443]">

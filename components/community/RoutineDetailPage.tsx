@@ -3,9 +3,10 @@
 import { Link } from "@/i18n/navigation";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import RoutineCommentsSection from "@/components/community/RoutineCommentsSection";
+import CommentSection from "@/components/community/CommentsSection";
 import { getProductById, getUserById, getUsers } from "@/lib/api";
 import { getRoutineById } from "@/lib/routine";
+import { toLowerCaseAndReplaceSpacesWithHyphens } from "@/lib/string-utils";
 import { ArrowDown, ArrowLeft, ArrowUp, CalendarDays, MessageSquare, Moon, Sun } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { useMemo, useState } from "react";
@@ -15,7 +16,7 @@ type RoutineDetailPageProps = Readonly<{
   backPath?: string;
 }>;
 
-export default function RoutineDetailPage({ routineId, backPath = "/comunidad" }: RoutineDetailPageProps) {
+export default function RoutineDetailPage({ routineId, backPath = "/community" }: RoutineDetailPageProps) {
   const t = useTranslations("RoutineDetail");
   const tSkin = useTranslations("SkinTypes");
   const locale = useLocale();
@@ -92,9 +93,9 @@ export default function RoutineDetailPage({ routineId, backPath = "/comunidad" }
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
-              <BreadcrumbLink href={backPath} className="hover:text-secondary">
+              <Link href={backPath}>
                 {t("community")}
-              </BreadcrumbLink>
+              </Link>
             </BreadcrumbItem>
             <BreadcrumbSeparator className="text-secondary" />
             <BreadcrumbItem>
@@ -184,9 +185,12 @@ export default function RoutineDetailPage({ routineId, backPath = "/comunidad" }
                   .map((step, index) => {
                     const product = getProductById(step.productId);
                     const productImage = product?.image_url?.[0];
+                    const productHref = product
+                      ? `/descubrir/${toLowerCaseAndReplaceSpacesWithHyphens(product.name)}`
+                      : null;
 
-                    return (
-                      <article key={step.id} className="rounded-xl border border-[#ebeff5] bg-[#fafbfe] p-4">
+                    const stepContent = (
+                      <article className="rounded-xl border border-[#ebeff5] bg-[#fafbfe] p-4 transition hover:border-[#f1c6ce] hover:bg-[#fff8fa]">
                         <div className="flex flex-col gap-4 md:flex-row md:items-start">
                           {productImage ? (
                             <img
@@ -211,11 +215,21 @@ export default function RoutineDetailPage({ routineId, backPath = "/comunidad" }
                         </div>
                       </article>
                     );
+
+                    if (!productHref) {
+                      return <div key={step.id}>{stepContent}</div>;
+                    }
+
+                    return (
+                      <Link key={step.id} href={productHref} className="block rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d44f67]/40">
+                        {stepContent}
+                      </Link>
+                    );
                   })}
               </CardContent>
             </Card>
 
-            <RoutineCommentsSection routineId={routine.id} initialComments={comments} />
+            <CommentSection routineId={routine.id} initialComments={comments} />
           </div>
         </div>
       </div>

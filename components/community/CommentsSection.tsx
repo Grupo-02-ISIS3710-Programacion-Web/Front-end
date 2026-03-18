@@ -9,19 +9,20 @@ import { MockUser } from "@/types/user";
 import { Bold, Image as ImageIcon, Italic, Link2, MessageSquare } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRef, useState } from "react";
+import { toast } from "sonner";
 import CommentCard from "@/components/community/CommentCard";
 
-type RoutineCommentsSectionProps = Readonly<{
+type CommentSectionProps = Readonly<{
   routineId: string;
   initialComments: Array<Comment & { user?: MockUser }>;
   currentUserId?: string;
 }>;
 
-export default function RoutineCommentsSection({
+export default function CommentSection({
   routineId,
   initialComments,
   currentUserId = "u1"
-}: RoutineCommentsSectionProps) {
+}: CommentSectionProps) {
   const t = useTranslations("RoutineDetail");
   const [newComment, setNewComment] = useState("");
   const [localComments, setLocalComments] = useState(initialComments);
@@ -67,6 +68,7 @@ export default function RoutineCommentsSection({
     setLocalComments((prev) => [createdComment, ...prev]);
     setJustPostedId(createdComment.id);
     setNewComment("");
+    toast.success(t("commentPosted"));
   };
 
   const handleVote = (commentId: string, vote: "up" | "down") => {
@@ -161,22 +163,15 @@ export default function RoutineCommentsSection({
             </p>
           )}
 
-          {localComments.map((comment, index) => {
-            const postedAgo = comment.id === justPostedId ? t("justNow") : t("hoursAgo", { count: (index + 1) * 2 });
-            const isExpert = comment.userId === "u2";
-
-            return (
-              <div key={comment.id}>
-                <CommentCard
-                  comment={comment}
-                  postedAgo={postedAgo}
-                  isExpert={isExpert}
-                  currentUserId={currentUserId}
-                  onVote={handleVote}
-                />
-              </div>
-            );
-          })}
+          {localComments.map((comment) => (
+            <div key={comment.id}>
+              <CommentCard
+                comment={comment}
+                currentUserId={currentUserId}
+                onVote={handleVote}
+              />
+            </div>
+          ))}
         </div>
       </CardContent>
     </Card>

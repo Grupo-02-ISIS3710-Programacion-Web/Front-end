@@ -2,14 +2,21 @@
     "CrearRutina": {
         "title": "Create Your Ideal Routine",
         "routineInfo": "Your routine information",
-        "description": "Explore products, filter by category, and save a personalized routine for your skin."
+        "description": "Explore products, filter by category, and save a personalized routine for your skin.",
+        "submitButton": "Create Routine",
+        "toasts": {
+            "created": "Your routine has been created successfully"
+        }
     },
     "EditarRutina": {
         "title": "Edit Your Routine",
         "description": "Update the general information and adjust the steps of your existing routine.",
         "submitButton": "Save Changes",
         "notFoundTitle": "Routine not found",
-        "notFoundDescription": "We couldn't find a routine with the provided ID."
+        "notFoundDescription": "We could not find a routine with the provided ID.",
+        "toasts": {
+            "saved": "Changes have been saved successfully"
+        }
     },
     "GuardarRutina": {
         "pageTitle": "Finish your personalized routine",
@@ -136,7 +143,16 @@
         "discoverMore": "Discover more products"
     },
     "RoutineContent": {
-        "steps": "steps"
+        "steps": "steps",
+        "deleteDialog": {
+            "title": "Delete Routine",
+            "description": "Are you sure you want to delete",
+            "descriptionWarning": "? This action cannot be undone.",
+            "cancel": "Cancel",
+            "delete": "Delete"
+        },
+        "editButton": "Edit routine",
+        "deleted": "has been deleted"
     },
     "UserInfo": {
         "reviews": "REVIEWS",
@@ -437,7 +453,8 @@
         "bold": "Bold",
         "italic": "Italic",
         "insertLink": "Insert link",
-        "insertImage": "Insert image"
+        "insertImage": "Insert image",
+        "commentPosted": "Your comment has been posted"
     },
     "ToS": {
         "title": "Terms and Conditions",
