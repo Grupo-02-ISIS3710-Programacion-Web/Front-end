@@ -7,11 +7,10 @@ import StarRating from "./star-rating";
 import { Stack } from "@mui/material";
 import { FlaskConical, Heart, Smile } from "lucide-react";
 import { Button } from "../ui/button";
-import { useState } from "react";
 import { toLowerCaseAndReplaceSpacesWithHyphens } from "@/lib/string-utils";
-import { productsFavorites } from "@/lib/favorites";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
+import { useProductFavorite } from "@/lib/hooks/use-product-favorite";
 
 interface ProductCardProps {
     productIndex: number;
@@ -29,22 +28,12 @@ export function ProductCard({
 
     const t = useTranslations("ProductCard");
     const productHref = `/descubrir/${toLowerCaseAndReplaceSpacesWithHyphens(product.name)}`;
-
-    const [toggleFavorite, setToggleFavorite] = useState(
-        productsFavorites.some(p => p.id === product.id)
-    );
-
-    const handleClick = () => {
-        setToggleFavorite(!toggleFavorite);
-
-        if (toggleFavorite) {
-            onFavoriteDeselect(productIndex);
-            onFavoriteDeselect(productIndex);
-        } else {
-            onFavoriteSelect(productIndex);
-            onFavoriteSelect(productIndex);
-        }
-    };
+    const { isFavorite, toggleFavorite } = useProductFavorite({
+        product,
+        productIndex,
+        onFavoriteSelect,
+        onFavoriteDeselect,
+    });
 
     return (
         <Card className="p-0 h-full">
@@ -72,10 +61,10 @@ export function ProductCard({
                 >
                     <div className="text-primary font-bold">{product.brand}</div>
                     <Button
-                        variant={toggleFavorite ? "secondary" : "outline"}
+                        variant={isFavorite ? "secondary" : "outline"}
                         size="sm"
                         className="h-8 px-2 rounded-2xl"
-                        onClick={handleClick}
+                        onClick={toggleFavorite}
                     >
                         <Heart size={16} />
                     </Button>

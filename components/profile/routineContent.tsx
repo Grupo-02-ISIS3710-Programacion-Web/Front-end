@@ -17,8 +17,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 
-import { useEffect, useState } from "react"
-import { toast } from "sonner"
+import { useRoutineContentState } from "@/lib/hooks/use-routine-content-state"
 
 export default function RoutineContent({
   filteredRoutines,
@@ -26,20 +25,16 @@ export default function RoutineContent({
   filteredRoutines: Routine[]
 }) {
   const productsAvailable = getProducts();
-  const [deletingRoutineId, setDeletingRoutineId] = useState<string | null>(null)
-  const [routines, setRoutines] = useState<Routine[]>(filteredRoutines)
   const t = useTranslations("RoutineContent")
-
-  useEffect(() => {
-    setRoutines(filteredRoutines)
-  }, [filteredRoutines])
-
-  const handleDeleteRoutine = (routineId: string) => {
-    const routineName = routines.find(r => r.id === routineId)?.name || "Rutina"
-    setRoutines((prev) => prev.filter((routine) => routine.id !== routineId))
-    setDeletingRoutineId(null)
-    toast.success(`${routineName} ${t("deleted")}`)
-  }
+  const {
+    deletingRoutineId,
+    setDeletingRoutineId,
+    routines,
+    handleDeleteRoutine,
+  } = useRoutineContentState({
+    filteredRoutines,
+    deletedLabel: t("deleted"),
+  })
 
   return (
     <div className="flex flex-col gap-6">

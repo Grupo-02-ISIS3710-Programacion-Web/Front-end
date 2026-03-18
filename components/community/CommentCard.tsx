@@ -6,7 +6,7 @@ import { ArrowDown, ArrowUp } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { useEffect, useState } from "react";
+import { useFormattedCommentDate } from "@/lib/hooks/use-formatted-comment-date";
 
 type CommentCardProps = Readonly<{
   comment: Comment;
@@ -26,24 +26,7 @@ export default function CommentCard({
   const user = getUserById(comment.userId);
   const hasUpvoted = comment.upvotes.includes(currentUserId);
   const hasDownvoted = comment.downvotes.includes(currentUserId);
-
-  const [formattedDate, setFormattedDate] = useState("");
-
-  useEffect(() => {
-    if (!comment.createdAt) {
-      setFormattedDate("");
-      return;
-    }
-
-    const date = new Date(comment.createdAt);
-    const formatted = new Intl.DateTimeFormat(locale === "es" ? "es-ES" : "en-US", {
-      month: "short",
-      day: "numeric",
-      hour: "2-digit",
-      minute: "2-digit"
-    }).format(date);
-    setFormattedDate(formatted);
-  }, [comment.createdAt, locale]);
+  const formattedDate = useFormattedCommentDate(comment.createdAt, locale);
 
   return (
     <article className="rounded-xl bg-transparent p-3">

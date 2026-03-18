@@ -9,7 +9,9 @@ import { getRoutineById } from "@/lib/routine";
 import { toLowerCaseAndReplaceSpacesWithHyphens } from "@/lib/string-utils";
 import { ArrowDown, ArrowLeft, ArrowUp, CalendarDays, MessageSquare, Moon, Sun } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
+import { useRoutineVote } from "@/lib/hooks/use-routine-votes";
+import { useLocaleDateFormatter } from "@/lib/hooks/use-locale-date-formatter";
 
 type RoutineDetailPageProps = Readonly<{
   routineId: string;
@@ -23,43 +25,27 @@ export default function RoutineDetailPage({ routineId, backPath = "/community" }
 
   const routine = getRoutineById(routineId);
   const user = routine ? getUserById(routine.userId) : undefined;
-  const [routineUpvotes, setRoutineUpvotes] = useState<string[]>(routine?.upvotes ?? []);
-  const [routineDownvotes, setRoutineDownvotes] = useState<string[]>(routine?.downvotes ?? []);
   const currentUserId = "u1";
   const comments = routine?.comments ?? [];
+  const dateFormatter = useLocaleDateFormatter(locale, {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  });
+  const {
+    routineUpvotes,
+    routineDownvotes,
+    hasUpvotedRoutine,
+    hasDownvotedRoutine,
+    handleRoutineVote,
+  } = useRoutineVote(routine?.upvotes ?? [], routine?.downvotes ?? [], currentUserId);
 
   const publishedAtLabel = useMemo(() => {
     if (!routine?.publishedAt) {
       return "-";
     }
-    return new Intl.DateTimeFormat(locale, { day: "2-digit", month: "short", year: "numeric" }).format(new Date(routine.publishedAt));
-  }, [locale, routine?.publishedAt]);
-
-  const hasUpvotedRoutine = routineUpvotes.includes(currentUserId);
-  const hasDownvotedRoutine = routineDownvotes.includes(currentUserId);
-
-  const handleRoutineVote = (vote: "up" | "down") => {
-    if (vote === "up") {
-      setRoutineUpvotes((prev) =>
-        prev.includes(currentUserId)
-          ? prev.filter((id) => id !== currentUserId)
-          : [...prev, currentUserId]
-      );
-      setRoutineDownvotes((prev) =>
-        prev.includes(currentUserId) ? prev.filter((id) => id !== currentUserId) : prev
-      );
-      return;
-    }
-
-    setRoutineDownvotes((prev) =>
-      prev.includes(currentUserId)
-        ? prev.filter((id) => id !== currentUserId)
-        : [...prev, currentUserId]
-    );
-    setRoutineUpvotes((prev) =>
-      prev.includes(currentUserId) ? prev.filter((id) => id !== currentUserId) : prev
-    );
-  };
+    return dateFormatter.format(new Date(routine.publishedAt));
+  }, [dateFormatter, routine?.publishedAt]);
 
   if (!routine) {
     return (

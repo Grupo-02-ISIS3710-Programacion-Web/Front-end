@@ -1,74 +1,30 @@
 "use client";
 import { CategoriesCard } from "@/components/products/categories-card";
 import { FilterHeader } from "@/components/products/filter-header";
-import { Category, Product, SkinType } from "@/types/product";
-import { useState } from "react";
-import { getProducts } from "@/lib/api";
+import { Category } from "@/types/product";
 import { ProductCard } from "@/components/products/product-card";
 import { useSearchParams } from "next/navigation";
-import { productsFavorites } from "@/lib/favorites";
 import { useTranslations } from "next-intl";
 import { Container } from "@mui/material";
 import { Button } from "@/components/ui/button";
 import { BadgePlus } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useProductDiscovery } from "@/lib/hooks/use-product-discovery";
 
 export default function DiscoveryPage() {
   const t = useTranslations("DiscoveryPage");
   const router = useRouter();
 
-  const products = getProducts();
   const params = useSearchParams();
   const selectedCategory = params.get("category") ? (params.get("category") as Category) : "ALL";
-  const [favoriteProducts, setFavoriteProducts] = useState<Product[]>([]);
-  const [filters, setFilters] = useState<{
-    skinTypes: SkinType[];
-    brands: string[];
-    ingredients: string[];
-  }>({
-    skinTypes: [],
-    brands: [],
-    ingredients: [],
-  });
-
-  const filteredProducts = products.filter((product) => {
-    const matchesCategory =
-      selectedCategory === "ALL" ||
-      product.category.includes(selectedCategory as Category);
-
-    const productBrand = product.brand;
-    const matchesBrand =
-      filters.brands.length === 0 || filters.brands.includes(productBrand);
-
-    const productSkinTypes = product.skin_type || [];
-
-    const matchesSkinType =
-      filters.skinTypes.length === 0 ||
-      filters.skinTypes.some((skin) => productSkinTypes.includes(skin));
-
-    const productIngredients = product.ingredients || [];
-    const hasExcludedIngredient = filters.ingredients.some((excluded) =>
-      productIngredients.includes(excluded)
-    );
-
-    return matchesCategory && matchesBrand && matchesSkinType && !hasExcludedIngredient;
-  });
-
-  const brands = Array.from(new Set(products.flatMap(product => product.brand)));
-  const ingredients = Array.from(new Set(products.flatMap(product => product.ingredients)));
-
-  const handleFavoriteSelect = (productIndex: number) => {
-    const selectedProduct = products[productIndex];
-    if (!favoriteProducts.some(product => product.id === selectedProduct.id)) {
-      setFavoriteProducts([...favoriteProducts, selectedProduct]);
-      productsFavorites.push(selectedProduct)
-    }
-  }
-
-  const handleFavoriteDeselect = (productIndex: number) => {
-    const deselectedProduct = products[productIndex];
-    setFavoriteProducts(favoriteProducts.filter(product => product.id !== deselectedProduct.id));
-  }
+  const {
+    setFilters,
+    filteredProducts,
+    brands,
+    ingredients,
+    handleFavoriteSelect,
+    handleFavoriteDeselect,
+  } = useProductDiscovery(selectedCategory);
 
   return (
     <Container className=" flex justify-center">

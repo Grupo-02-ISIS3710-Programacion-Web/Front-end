@@ -10,10 +10,10 @@ import {
 import { Card } from "../ui/card";
 import { SkinType } from "@/types/product";
 import { capitalizeFirstLetter } from "@/lib/string-utils";
-import { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { useTranslations } from "next-intl";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "../ui/accordion";
+import { useFilterHeaderState } from "@/lib/hooks/use-filter-header-state";
 
 interface FilterHeaderProps {
     brands: string[];
@@ -33,7 +33,7 @@ interface FilterHeaderDesktopMobileProps {
     selectedSkinTypes: SkinType[];
     selectedBrands: string[];
     selectedIngredients: string[];
-    updateSelectedItems: (selType: string, selection: string[], skinTypes?: SkinType[]) => void;
+    updateSelectedItems: (selType: "skin" | "brand" | "ingredient", selection: string[], skinTypes?: SkinType[]) => void;
     resetFilters: () => void;
     handleDeleteChip: (
         item: string | SkinType,
@@ -47,73 +47,39 @@ export function FilterHeader({
     productCount,
     onFiltersChange,
 }: FilterHeaderProps) {
-    const [selectedSkinTypes, setSelectedSkinTypes] = useState<SkinType[]>([]);
-    const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
-    const [selectedIngredients, setSelectedIngredients] = useState<string[]>([]);
-
-    useEffect(() => {
-        onFiltersChange({
-        skinTypes: selectedSkinTypes,
-        brands: selectedBrands,
-        ingredients: selectedIngredients,
-        });
-    }, [selectedSkinTypes, selectedBrands, selectedIngredients, onFiltersChange]);
-
-    const updateSelections = (selType: string, selection: string[], skinTypes?: SkinType[]) => {
-        if (selType === "skin" && skinTypes) {
-            setSelectedSkinTypes(skinTypes);
-        } else if (selType === "brand") {
-            setSelectedBrands(selection);
-        } else if (selType === "ingredient") {
-            setSelectedIngredients(selection);
-        }
-    }
-
-    const handleDeleteChip = (
-        item: string | SkinType,
-        type: "skinType" | "brand" | "ingredient"
-    ) => {
-        if (type === "skinType") {
-        setSelectedSkinTypes(selectedSkinTypes.filter((skinType) => skinType !== item));
-        } else if (type === "brand") {
-        setSelectedBrands(selectedBrands.filter((brand) => brand !== item));
-        } else if (type === "ingredient") {
-        setSelectedIngredients(
-            selectedIngredients.filter((ingredient) => ingredient !== item)
-        );
-        }
-    };
-
-    const resetFilters = () => {
-        setSelectedSkinTypes([]);
-        setSelectedBrands([]);
-        setSelectedIngredients([]);
-    };
+    const {
+        selectedSkinTypes,
+        selectedBrands,
+        selectedIngredients,
+        updateSelectedItems,
+        handleDeleteChip,
+        resetFilters,
+    } = useFilterHeaderState({ onFiltersChange });
 
     return (
         <>
             <div className="hidden lg:block">
-                <FilterHeaderDesktop 
-                    brands={brands} 
-                    ingredients={ingredients} 
-                    productCount={productCount} 
-                    selectedBrands={selectedBrands} 
-                    selectedIngredients={selectedIngredients} 
-                    selectedSkinTypes={selectedSkinTypes} 
-                    updateSelectedItems={updateSelections} 
+                <FilterHeaderDesktop
+                    brands={brands}
+                    ingredients={ingredients}
+                    productCount={productCount}
+                    selectedBrands={selectedBrands}
+                    selectedIngredients={selectedIngredients}
+                    selectedSkinTypes={selectedSkinTypes}
+                    updateSelectedItems={updateSelectedItems}
                     resetFilters={resetFilters}
                     handleDeleteChip={handleDeleteChip}
                 />
             </div>
             <div className="block lg:hidden">
-                <FilterHeaderMobile 
-                    brands={brands} 
-                    ingredients={ingredients} 
-                    productCount={productCount} 
-                    selectedBrands={selectedBrands} 
-                    selectedIngredients={selectedIngredients} 
-                    selectedSkinTypes={selectedSkinTypes} 
-                    updateSelectedItems={updateSelections} 
+                <FilterHeaderMobile
+                    brands={brands}
+                    ingredients={ingredients}
+                    productCount={productCount}
+                    selectedBrands={selectedBrands}
+                    selectedIngredients={selectedIngredients}
+                    selectedSkinTypes={selectedSkinTypes}
+                    updateSelectedItems={updateSelectedItems}
                     resetFilters={resetFilters}
                     handleDeleteChip={handleDeleteChip}
                 />
@@ -140,149 +106,149 @@ export function FilterHeaderDesktop({
 
     return (
         <Card className="p-0">
-        <CardContent className="p-0">
-            <Stack
-            direction={"column"}
-            gap={2}
-            flexWrap="wrap"
-            justifyContent={"space-between"}
-            paddingLeft={2}
-            alignContent={"right"}
-            >
-            {/* header */}
-            <Stack direction={"row"} gap={2} alignItems={"baseline"} justifyContent={"space-between"}>
-                <Box flexDirection={"column"}>
-                <h2>{t("title")}</h2>
-                <p>{t("description")}</p>
-                </Box>
-
-                <Typography className="body italic text-muted-foreground/50 px-5">
-                {t("productCount", { count: productCount })}
-                </Typography>
-            </Stack>
-
-            {/* filters comboboxes */}
-            <Stack direction={"row"} gap={2}>
-                <Combobox
-                items={skinTypes}
-                multiple
-                autoHighlight
-                value={selectedSkinTypes}
-                onValueChange={(value) => updateSelectedItems("skin", [] ,value)}
+            <CardContent className="p-0">
+                <Stack
+                    direction={"column"}
+                    gap={2}
+                    flexWrap="wrap"
+                    justifyContent={"space-between"}
+                    paddingLeft={2}
+                    alignContent={"right"}
                 >
-                    <ComboboxInput placeholder={t("filters.skinType")} className="bg-muted/20" />
-                    <ComboboxContent>
-                        <ComboboxList>
-                        {(item) => (
-                            <ComboboxItem key={item} value={item}>
-                            {tSkin(item)}
-                            </ComboboxItem>
-                        )}
-                        </ComboboxList>
-                    </ComboboxContent>
-                </Combobox>
+                    {/* header */}
+                    <Stack direction={"row"} gap={2} alignItems={"baseline"} justifyContent={"space-between"}>
+                        <Box flexDirection={"column"}>
+                            <h2>{t("title")}</h2>
+                            <p>{t("description")}</p>
+                        </Box>
 
-                <Combobox
-                items={brands}
-                multiple
-                autoHighlight
-                value={selectedBrands}
-                onValueChange={(value) => updateSelectedItems("brand", value)}
-                >
-                <ComboboxInput
-                    placeholder={t("filters.brand")}
-                    className="bg-muted/20"
-                />
-                <ComboboxContent>
-                    <ComboboxList>
-                    {(item) => (
-                        <ComboboxItem key={item} value={item}>
-                        {capitalizeFirstLetter(item)}
-                        </ComboboxItem>
-                    )}
-                    </ComboboxList>
-                </ComboboxContent>
-                </Combobox>
+                        <Typography className="body italic text-muted-foreground/50 px-5">
+                            {t("productCount", { count: productCount })}
+                        </Typography>
+                    </Stack>
 
-                <Combobox
-                items={ingredients}
-                multiple
-                autoHighlight
-                value={selectedIngredients}
-                onValueChange={(value) => updateSelectedItems("ingredient",value)}
-                >
-                    <ComboboxInput placeholder={t("filters.excludeIngredients")} className="bg-muted/20" />
-                    <ComboboxContent>
-                        <ComboboxList>
-                        {(item) => (
-                            <ComboboxItem key={item} value={item}>
-                                {capitalizeFirstLetter(item)}
-                            </ComboboxItem>
-                        )}
-                        </ComboboxList>
-                    </ComboboxContent>
-                </Combobox>
+                    {/* filters comboboxes */}
+                    <Stack direction={"row"} gap={2}>
+                        <Combobox
+                            items={skinTypes}
+                            multiple
+                            autoHighlight
+                            value={selectedSkinTypes}
+                            onValueChange={(value) => updateSelectedItems("skin", [], value)}
+                        >
+                            <ComboboxInput placeholder={t("filters.skinType")} className="bg-muted/20" />
+                            <ComboboxContent>
+                                <ComboboxList>
+                                    {(item) => (
+                                        <ComboboxItem key={item} value={item}>
+                                            {tSkin(item)}
+                                        </ComboboxItem>
+                                    )}
+                                </ComboboxList>
+                            </ComboboxContent>
+                        </Combobox>
 
-                <Button variant={"secondary"} onClick={resetFilters} className="text-sm font-medium">
-                    {t("clearFilters")}
-                </Button>
-            </Stack>
+                        <Combobox
+                            items={brands}
+                            multiple
+                            autoHighlight
+                            value={selectedBrands}
+                            onValueChange={(value) => updateSelectedItems("brand", value)}
+                        >
+                            <ComboboxInput
+                                placeholder={t("filters.brand")}
+                                className="bg-muted/20"
+                            />
+                            <ComboboxContent>
+                                <ComboboxList>
+                                    {(item) => (
+                                        <ComboboxItem key={item} value={item}>
+                                            {capitalizeFirstLetter(item)}
+                                        </ComboboxItem>
+                                    )}
+                                </ComboboxList>
+                            </ComboboxContent>
+                        </Combobox>
 
-            {/* chips */}
-            <Stack direction={"row"} gap={1} flexWrap="wrap">
-                {selectedSkinTypes.map((skin) => (
-                <Chip
-                    sx={{
-                    backgroundColor: "var(--border)",
-                    color: "var(--muted-foreground)",
-                    border: "1px solid var(--border)",
-                    "& .MuiChip-deleteIcon:hover": {
-                        color: "var(--secondary)",
-                    },
-                    }}
-                    key={skin}
-                    label={`${t("chips.skin")} ${tSkin(skin)}`}
-                    onDelete={() => handleDeleteChip(skin, "skinType")}
-                />
-                ))}
+                        <Combobox
+                            items={ingredients}
+                            multiple
+                            autoHighlight
+                            value={selectedIngredients}
+                            onValueChange={(value) => updateSelectedItems("ingredient", value)}
+                        >
+                            <ComboboxInput placeholder={t("filters.excludeIngredients")} className="bg-muted/20" />
+                            <ComboboxContent>
+                                <ComboboxList>
+                                    {(item) => (
+                                        <ComboboxItem key={item} value={item}>
+                                            {capitalizeFirstLetter(item)}
+                                        </ComboboxItem>
+                                    )}
+                                </ComboboxList>
+                            </ComboboxContent>
+                        </Combobox>
 
-                {selectedBrands.map((brand) => (
-                <Chip
-                    sx={{
-                    backgroundColor: "var(--border)",
-                    color: "var(--muted-foreground)",
-                    border: "1px solid var(--border)",
-                    "& .MuiChip-deleteIcon:hover": {
-                        color: "var(--secondary)",
-                    },
-                    }}
-                    key={brand}
-                    label={t("chips.brand", { brand: capitalizeFirstLetter(brand) })}
-                    onDelete={() => handleDeleteChip(brand, "brand")}
-                />
-                ))}
+                        <Button variant={"secondary"} onClick={resetFilters} className="text-sm font-medium">
+                            {t("clearFilters")}
+                        </Button>
+                    </Stack>
 
-                {selectedIngredients.map((ingredient) => (
-                <Chip
-                    sx={{
-                    backgroundColor: "var(--border)",
-                    color: "var(--muted-foreground)",
-                    border: "1px solid var(--border)",
-                    "& .MuiChip-deleteIcon:hover": {
-                        color: "var(--secondary)",
-                    },
-                    }}
-                    key={ingredient}
-                    label={t("chips.exclude", {
-                    ingredient: capitalizeFirstLetter(ingredient),
-                    })}
-                    onDelete={() => handleDeleteChip(ingredient, "ingredient")}
-                />
-                ))}
-            </Stack>
-            </Stack>
-        </CardContent>
-        
+                    {/* chips */}
+                    <Stack direction={"row"} gap={1} flexWrap="wrap">
+                        {selectedSkinTypes.map((skin) => (
+                            <Chip
+                                sx={{
+                                    backgroundColor: "var(--border)",
+                                    color: "var(--muted-foreground)",
+                                    border: "1px solid var(--border)",
+                                    "& .MuiChip-deleteIcon:hover": {
+                                        color: "var(--secondary)",
+                                    },
+                                }}
+                                key={skin}
+                                label={`${t("chips.skin")} ${tSkin(skin)}`}
+                                onDelete={() => handleDeleteChip(skin, "skinType")}
+                            />
+                        ))}
+
+                        {selectedBrands.map((brand) => (
+                            <Chip
+                                sx={{
+                                    backgroundColor: "var(--border)",
+                                    color: "var(--muted-foreground)",
+                                    border: "1px solid var(--border)",
+                                    "& .MuiChip-deleteIcon:hover": {
+                                        color: "var(--secondary)",
+                                    },
+                                }}
+                                key={brand}
+                                label={t("chips.brand", { brand: capitalizeFirstLetter(brand) })}
+                                onDelete={() => handleDeleteChip(brand, "brand")}
+                            />
+                        ))}
+
+                        {selectedIngredients.map((ingredient) => (
+                            <Chip
+                                sx={{
+                                    backgroundColor: "var(--border)",
+                                    color: "var(--muted-foreground)",
+                                    border: "1px solid var(--border)",
+                                    "& .MuiChip-deleteIcon:hover": {
+                                        color: "var(--secondary)",
+                                    },
+                                }}
+                                key={ingredient}
+                                label={t("chips.exclude", {
+                                    ingredient: capitalizeFirstLetter(ingredient),
+                                })}
+                                onDelete={() => handleDeleteChip(ingredient, "ingredient")}
+                            />
+                        ))}
+                    </Stack>
+                </Stack>
+            </CardContent>
+
         </Card>
     );
 }
@@ -311,7 +277,7 @@ export function FilterHeaderMobile({
             justifyContent={"space-between"}
             paddingLeft={2}
             alignContent={"right"}
-            >
+        >
             {/* header */}
             <Box flexDirection={"column"}>
                 <h2>{t("title")}</h2>
@@ -329,61 +295,61 @@ export function FilterHeaderMobile({
                     <AccordionContent>
                         <div className="flex flex-col gap-3 justify-center">
                             <Combobox
-                            items={skinTypes}
-                            multiple
-                            autoHighlight
-                            value={selectedSkinTypes}
-                            onValueChange={(value) => updateSelectedItems("skin", [] ,value)}
+                                items={skinTypes}
+                                multiple
+                                autoHighlight
+                                value={selectedSkinTypes}
+                                onValueChange={(value) => updateSelectedItems("skin", [], value)}
                             >
                                 <ComboboxInput placeholder={t("filters.skinType")} className="bg-muted/20 w-full" />
                                 <ComboboxContent>
                                     <ComboboxList>
-                                    {(item) => (
-                                        <ComboboxItem key={item} value={item}>
-                                        {tSkin(item)}
-                                        </ComboboxItem>
-                                    )}
+                                        {(item) => (
+                                            <ComboboxItem key={item} value={item}>
+                                                {tSkin(item)}
+                                            </ComboboxItem>
+                                        )}
                                     </ComboboxList>
                                 </ComboboxContent>
                             </Combobox>
 
                             <Combobox
-                            items={brands}
-                            multiple
-                            autoHighlight
-                            value={selectedBrands}
-                            onValueChange={(value) => updateSelectedItems("brand", value)}
+                                items={brands}
+                                multiple
+                                autoHighlight
+                                value={selectedBrands}
+                                onValueChange={(value) => updateSelectedItems("brand", value)}
                             >
-                            <ComboboxInput
-                                placeholder={t("filters.brand")}
-                                className="bg-muted/20 w-full"
-                            />
-                            <ComboboxContent>
-                                <ComboboxList>
-                                {(item) => (
-                                    <ComboboxItem key={item} value={item}>
-                                    {capitalizeFirstLetter(item)}
-                                    </ComboboxItem>
-                                )}
-                                </ComboboxList>
-                            </ComboboxContent>
+                                <ComboboxInput
+                                    placeholder={t("filters.brand")}
+                                    className="bg-muted/20 w-full"
+                                />
+                                <ComboboxContent>
+                                    <ComboboxList>
+                                        {(item) => (
+                                            <ComboboxItem key={item} value={item}>
+                                                {capitalizeFirstLetter(item)}
+                                            </ComboboxItem>
+                                        )}
+                                    </ComboboxList>
+                                </ComboboxContent>
                             </Combobox>
 
                             <Combobox
-                            items={ingredients}
-                            multiple
-                            autoHighlight
-                            value={selectedIngredients}
-                            onValueChange={(value) => updateSelectedItems("ingredient",value)}
+                                items={ingredients}
+                                multiple
+                                autoHighlight
+                                value={selectedIngredients}
+                                onValueChange={(value) => updateSelectedItems("ingredient", value)}
                             >
                                 <ComboboxInput placeholder={t("filters.excludeIngredients")} className="bg-muted/20 w-full" />
                                 <ComboboxContent>
                                     <ComboboxList>
-                                    {(item) => (
-                                        <ComboboxItem key={item} value={item}>
-                                            {capitalizeFirstLetter(item)}
-                                        </ComboboxItem>
-                                    )}
+                                        {(item) => (
+                                            <ComboboxItem key={item} value={item}>
+                                                {capitalizeFirstLetter(item)}
+                                            </ComboboxItem>
+                                        )}
                                     </ComboboxList>
                                 </ComboboxContent>
                             </Combobox>
@@ -403,48 +369,48 @@ export function FilterHeaderMobile({
                 {selectedSkinTypes.map((skin) => (
                     <Chip
                         sx={{
-                        backgroundColor: "var(--border)",
-                        color: "var(--muted-foreground)",
-                        border: "1px solid var(--border)",
-                        "& .MuiChip-deleteIcon:hover": {
-                            color: "var(--secondary)",
-                        },
+                            backgroundColor: "var(--border)",
+                            color: "var(--muted-foreground)",
+                            border: "1px solid var(--border)",
+                            "& .MuiChip-deleteIcon:hover": {
+                                color: "var(--secondary)",
+                            },
                         }}
                         key={skin}
                         label={`${t("chips.skin")} ${tSkin(skin)}`}
                         onDelete={() => handleDeleteChip(skin, "skinType")}
                     />
-                    ))}
+                ))}
 
-                    {selectedBrands.map((brand) => (
+                {selectedBrands.map((brand) => (
                     <Chip
                         sx={{
-                        backgroundColor: "var(--border)",
-                        color: "var(--muted-foreground)",
-                        border: "1px solid var(--border)",
-                        "& .MuiChip-deleteIcon:hover": {
-                            color: "var(--secondary)",
-                        },
+                            backgroundColor: "var(--border)",
+                            color: "var(--muted-foreground)",
+                            border: "1px solid var(--border)",
+                            "& .MuiChip-deleteIcon:hover": {
+                                color: "var(--secondary)",
+                            },
                         }}
                         key={brand}
                         label={t("chips.brand", { brand: capitalizeFirstLetter(brand) })}
                         onDelete={() => handleDeleteChip(brand, "brand")}
                     />
-                    ))}
+                ))}
 
-                    {selectedIngredients.map((ingredient) => (
+                {selectedIngredients.map((ingredient) => (
                     <Chip
                         sx={{
-                        backgroundColor: "var(--border)",
-                        color: "var(--muted-foreground)",
-                        border: "1px solid var(--border)",
-                        "& .MuiChip-deleteIcon:hover": {
-                            color: "var(--secondary)",
-                        },
+                            backgroundColor: "var(--border)",
+                            color: "var(--muted-foreground)",
+                            border: "1px solid var(--border)",
+                            "& .MuiChip-deleteIcon:hover": {
+                                color: "var(--secondary)",
+                            },
                         }}
                         key={ingredient}
                         label={t("chips.exclude", {
-                        ingredient: capitalizeFirstLetter(ingredient),
+                            ingredient: capitalizeFirstLetter(ingredient),
                         })}
                         onDelete={() => handleDeleteChip(ingredient, "ingredient")}
                     />

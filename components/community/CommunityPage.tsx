@@ -9,6 +9,8 @@ import { useLocale, useTranslations } from "next-intl";
 import { useMemo, useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { useRoutineVotesMap } from "@/lib/hooks/use-routine-votes";
+import { useLocaleDateFormatter } from "@/lib/hooks/use-locale-date-formatter";
 
 type MobileTab = "newest" | "mostCommented" | "mostVoted";
 
@@ -106,29 +108,13 @@ export default function CommunityPage() {
 
   const routines = getRoutines();
   const users = getUsers();
-  const [routineVotes, setRoutineVotes] = useState(() =>
-    routines.reduce((acc, r) => ({ ...acc, [r.id]: { upvotes: r.upvotes ?? [], downvotes: r.downvotes ?? [] } }), {} as Record<string, any>)
-  );
+  const { routineVotes, voteRoutine } = useRoutineVotesMap(routines, currentUserId);
 
-  const handleVote = (routineId: string, voteType: "up" | "down") => {
-    setRoutineVotes((prev) => {
-      const { upvotes, downvotes } = prev[routineId];
-      const hasUp = upvotes.includes(currentUserId);
-      const hasDown = downvotes.includes(currentUserId);
-
-      return {
-        ...prev,
-        [routineId]: voteType === "up"
-          ? { upvotes: hasUp ? upvotes.filter((id: string) => id !== currentUserId) : [...upvotes, currentUserId], downvotes: hasDown ? downvotes.filter((id: string) => id !== currentUserId) : downvotes }
-          : { downvotes: hasDown ? downvotes.filter((id: string) => id !== currentUserId) : [...downvotes, currentUserId], upvotes: hasUp ? upvotes.filter((id: string) => id !== currentUserId) : upvotes }
-      };
-    });
-  };
-
-  const publishedDateFormatter = useMemo(
-    () => new Intl.DateTimeFormat(locale, { day: "2-digit", month: "short", year: "numeric" }),
-    [locale]
-  );
+  const publishedDateFormatter = useLocaleDateFormatter(locale, {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  });
 
   const posts = useMemo(() =>
     routines.map((routine) => {
@@ -159,7 +145,7 @@ export default function CommunityPage() {
 
   const TabButtons = () => mobileTabs.map(tab => <Button key={tab} variant={activeTab === tab ? "default" : "outline"} onClick={() => setActiveTab(tab)} size="sm">{t(`tabs.${tab}`)}</Button>);
 
-  const PostsList = ({ size = "lg" }: any) => visiblePosts.map(post => <PostCard key={post.id} post={post} onVote={handleVote} t={t} tRoutine={tRoutine} size={size} />);
+  const PostsList = ({ size = "lg" }: any) => visiblePosts.map(post => <PostCard key={post.id} post={post} onVote={voteRoutine} t={t} tRoutine={tRoutine} size={size} />);
 
   const MostDiscussedList = () => mostDiscussed.map(topic => <Link key={topic.id} href={`/routine/detail/${topic.id}`} className="block rounded-lg px-2 py-1.5 transition hover:bg-muted"><p className="font-bold line-clamp-1">{topic.title}</p><p className="text-xs text-muted-foreground">{t("commentsCount", { count: topic.comments })} • {topic.skinTypeTag}</p></Link>);
 

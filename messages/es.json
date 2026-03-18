@@ -473,6 +473,26 @@
         "insertLink": "Insertar enlace",
         "insertImage": "Insertar imagen"
     },
+    "Footer": {
+        "brand": "Skin4All",
+        "description": "Unete a la mejor comunidad de cuidado de la piel. Descubre productos, comparte tus resultados y encuentra la rutina perfecta para ti.",
+        "exploreTitle": "Explorar",
+        "explore": {
+            "bestSellers": "Mas vendidos",
+            "ingredientLab": "Laboratorio de ingredientes",
+            "forums": "Foros"
+        },
+        "communityTitle": "Comunidad",
+        "community": {
+            "communityRules": "Reglas de la comunidad",
+            "hallOfFame": "Salon de la fama",
+            "verifiedExperts": "Expertos verificados"
+        },
+        "newsletterTitle": "Boletin",
+        "emailPlaceholder": "Tu correo",
+        "send": "Enviar",
+        "copyright": "© 2024 Comunidad SkinCare. Todos los derechos reservados."
+    },
     "ToS": {
         "title": "Terminos y Condiciones",
         "lastUpdated": "Ultima actualizacion: 16 de marzo de 2026",
