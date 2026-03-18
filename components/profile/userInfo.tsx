@@ -135,7 +135,7 @@ export default function UserInfo({
       
 
       <p className="mt-4 text-gray-600 text-sm text-center">
-        {editBio}
+        {userBio}
       </p>
 
       <div className="py-6 px-6">
@@ -143,7 +143,7 @@ export default function UserInfo({
         
 
         <button
-          onClick={() => setOpenModal(true)}
+          onClick={openEditModal}
           className="mt-6 w-full border border-gray-300 text-gray-700 py-3 rounded-xl flex items-center justify-center gap-2 hover:bg-gray-100 transition"
         >
 
@@ -157,7 +157,7 @@ export default function UserInfo({
 
         {openModal && (
 
-          <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+          <div data-testid="edit-modal" className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
 
             <div className="bg-white rounded-2xl p-6 w-[420px] shadow-xl">
 
@@ -266,7 +266,7 @@ export default function UserInfo({
               <div className="flex justify-end gap-2 mt-5">
 
                 <button
-                  onClick={()=>setOpenModal(false)}
+                  onClick={() => setOpenModal(false)}
                   className="px-4 py-2 border rounded-lg"
                 >
                   {t("cancel")}

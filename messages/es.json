@@ -473,6 +473,28 @@
         "insertLink": "Insertar enlace",
         "insertImage": "Insertar imagen"
     },
+    "ProductComments": {
+        "commentsTitle": "Comentarios",
+        "thoughtsTitle": "Que opinas?",
+        "commentPlaceholder": "Comparte tu experiencia con este producto...",
+        "addComment": "Agregar comentario",
+        "postComment": "Publicar comentario",
+        "commentPosted": "Tu comentario ha sido publicado",
+        "noComments": "Aun no hay comentarios. Se la primera persona en comentar este producto.",
+        "communityMember": "Miembro de la comunidad",
+        "userFallback": "Usuario Skin4All",
+        "likes": "{count, plural, =0 {0 me gusta} =1 {1 me gusta} other {{count} me gusta}}",
+        "reply": "Responder",
+        "expert": "Experto",
+        "justNow": "Ahora",
+        "hoursAgo": "{count}h",
+        "upvote": "Votar positivo",
+        "downvote": "Votar negativo",
+        "bold": "Negrita",
+        "italic": "Cursiva",
+        "insertLink": "Insertar enlace",
+        "insertImage": "Insertar imagen"
+    },
     "ToS": {
         "title": "Terminos y Condiciones",
         "lastUpdated": "Ultima actualizacion: 16 de marzo de 2026",

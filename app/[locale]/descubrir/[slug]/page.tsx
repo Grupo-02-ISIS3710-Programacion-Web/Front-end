@@ -244,7 +244,7 @@ export default function ProductDetailPage() {
                         targetId={product.id}
                         targetType="product"
                         initialComments={[]}
-                        translationNamespace="RoutineDetail"
+                        translationNamespace="ProductComments"
                     />
                 </Container>
                 
