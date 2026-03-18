@@ -15,7 +15,7 @@ const linksStatic = [
     { key: "home", href: "/" },
     { key: "discover", href: "/descubrir" },
     { key: "community", href: "/community" },
-    { key: "myProducts", href: "/mis-productos" },
+    { key: "aiRoutines", href: "/ai-routine" },
 ];
 
 export default function NavBar() {

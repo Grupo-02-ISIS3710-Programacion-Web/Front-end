@@ -114,7 +114,7 @@
         "home": "Home",
         "discover": "Discover",
         "community": "Community",
-        "myProducts": "My products",
+        "aiRoutines": "AI-created routines",
         "register": "Register",
         "login": "Sign in",
         "logout": "Sign out",
@@ -209,7 +209,7 @@
         "emailRequired": "Email is required",
         "passwordRequired": "Password is required",
         "invalidCredentials": "Invalid credentials. Check your username/email and password.",
-        "demoHint": "Demo: login sarahj or sarah@skin4all.com, password skin4all123"
+        "demoHint": "Demo: login sofia@skin4all.com, password skin4all123"
     },
     "Auth": {
         "requiredTitle": "You're not logged in",
