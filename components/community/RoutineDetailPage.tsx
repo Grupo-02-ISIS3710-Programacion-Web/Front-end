@@ -9,7 +9,10 @@ import { getRoutineById } from "@/lib/routine";
 import { toLowerCaseAndReplaceSpacesWithHyphens } from "@/lib/string-utils";
 import { ArrowDown, ArrowLeft, ArrowUp, CalendarDays, MessageSquare, Moon, Sun } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
+import { useRoutineVote } from "@/lib/hooks/use-routine-votes";
+import { useLocaleDateFormatter } from "@/lib/hooks/use-locale-date-formatter";
+import { useAuthSession } from "@/lib/hooks/use-auth-session";
 
 type RoutineDetailPageProps = Readonly<{
   routineId: string;
@@ -20,51 +23,37 @@ export default function RoutineDetailPage({ routineId, backPath = "/community" }
   const t = useTranslations("RoutineDetail");
   const tSkin = useTranslations("SkinTypes");
   const locale = useLocale();
+  const { user: loggedUser, isLoggedIn } = useAuthSession();
 
   const routine = getRoutineById(routineId);
   const user = routine ? getUserById(routine.userId) : undefined;
-  const [routineUpvotes, setRoutineUpvotes] = useState<string[]>(routine?.upvotes ?? []);
-  const [routineDownvotes, setRoutineDownvotes] = useState<string[]>(routine?.downvotes ?? []);
-  const currentUserId = "u1";
+  const currentUserId = loggedUser?.id ?? "";
   const comments = routine?.comments ?? [];
+  const loginHref = `/login?redirect=${encodeURIComponent(`/routine/detail/${routineId}`)}`;
+  const dateFormatter = useLocaleDateFormatter(locale, {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  });
+  const {
+    routineUpvotes,
+    routineDownvotes,
+    hasUpvotedRoutine,
+    hasDownvotedRoutine,
+    handleRoutineVote,
+  } = useRoutineVote(routine?.upvotes ?? [], routine?.downvotes ?? [], currentUserId);
 
   const publishedAtLabel = useMemo(() => {
     if (!routine?.publishedAt) {
       return "-";
     }
-    return new Intl.DateTimeFormat(locale, { day: "2-digit", month: "short", year: "numeric" }).format(new Date(routine.publishedAt));
-  }, [locale, routine?.publishedAt]);
-
-  const hasUpvotedRoutine = routineUpvotes.includes(currentUserId);
-  const hasDownvotedRoutine = routineDownvotes.includes(currentUserId);
-
-  const handleRoutineVote = (vote: "up" | "down") => {
-    if (vote === "up") {
-      setRoutineUpvotes((prev) =>
-        prev.includes(currentUserId)
-          ? prev.filter((id) => id !== currentUserId)
-          : [...prev, currentUserId]
-      );
-      setRoutineDownvotes((prev) =>
-        prev.includes(currentUserId) ? prev.filter((id) => id !== currentUserId) : prev
-      );
-      return;
-    }
-
-    setRoutineDownvotes((prev) =>
-      prev.includes(currentUserId)
-        ? prev.filter((id) => id !== currentUserId)
-        : [...prev, currentUserId]
-    );
-    setRoutineUpvotes((prev) =>
-      prev.includes(currentUserId) ? prev.filter((id) => id !== currentUserId) : prev
-    );
-  };
+    return dateFormatter.format(new Date(routine.publishedAt));
+  }, [dateFormatter, routine?.publishedAt]);
 
   if (!routine) {
     return (
-      <main className="min-h-screen bg-[#f3f4f6] px-4 py-8">
-        <div className="mx-auto max-w-4xl rounded-2xl border border-[#e6e9ef] bg-white p-8 text-center">
+      <main className="min-h-screen bg-background px-4 py-8">
+        <div className="mx-auto max-w-4xl rounded-2xl border border-[#e6e9ef] bg-card p-8 text-center">
           <h1 className="text-2xl font-bold text-[#222739]">{t("notFoundTitle")}</h1>
           <p className="mt-2 text-[#646e84]">{t("notFoundDescription")}</p>
           <Link href={backPath} className="mt-4 inline-flex items-center gap-2 text-[#d44f67] hover:underline">
@@ -77,7 +66,7 @@ export default function RoutineDetailPage({ routineId, backPath = "/community" }
   }
 
   return (
-    <main className="min-h-screen bg-[#f3f4f6] px-4 py-8 md:px-8">
+    <main className="min-h-screen bg-background px-4 py-8 md:px-8">
       <div className="mx-auto max-w-7xl space-y-6">
         <Breadcrumb>
           <BreadcrumbList>
@@ -96,7 +85,7 @@ export default function RoutineDetailPage({ routineId, backPath = "/community" }
         </Breadcrumb>
 
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-[400px_minmax(0,1fr)] lg:items-start">
-          <Card className="border-[#e8ebf1] lg:sticky lg:top-6">
+          <Card className="border-[#e8ebf1] lg:sticky lg:top-6 bg-card">
             <CardHeader className="space-y-4">
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <Link href={backPath} className="inline-flex items-center gap-2 text-sm font-semibold text-[#56607a] hover:text-[#d44f67]">
@@ -118,20 +107,20 @@ export default function RoutineDetailPage({ routineId, backPath = "/community" }
                   <img src={user?.avatarUrl} alt={user?.name ?? t("authorFallback")} className="h-10 w-10 rounded-full object-cover" />
                   <div>
                     <p className="text-sm font-semibold text-[#242939]">{user?.name ?? t("userFallback")}</p>
-                    <p className="text-xs text-[#7a8297]">{t("routineCreator")}</p>
+                    <p className="text-xs text-[#5d6478]">{t("routineCreator")}</p>
                   </div>
                 </div>
 
                 <div className="mt-3 flex flex-wrap items-center gap-2">
-                  <span className="inline-flex items-center gap-1 rounded-full bg-[#eff2f7] px-3 py-1 text-xs font-semibold text-[#4f576e]">
+                  <span className="inline-flex items-center gap-1 rounded-full bg-muted px-3 py-1 text-xs font-semibold text-[#4f576e]">
                     <MessageSquare size={14} />
                     {comments.length}
                   </span>
-                  <span className="inline-flex items-center gap-1 rounded-full bg-[#eff2f7] px-3 py-1 text-xs font-semibold text-[#4f576e]">
+                  <span className="inline-flex items-center gap-1 rounded-full bg-muted px-3 py-1 text-xs font-semibold text-[#4f576e]">
                     <CalendarDays size={14} />
                     {publishedAtLabel}
                   </span>
-                  <span className="inline-flex items-center gap-1 rounded-full bg-[#eff2f7] px-3 py-1 text-xs font-semibold text-[#4f576e]">
+                  <span className="inline-flex items-center gap-1 rounded-full bg-muted px-3 py-1 text-xs font-semibold text-[#4f576e]">
                     {routine.type.toLowerCase() === "am" ? <Sun size={14} /> : <Moon size={14} />}
                     {t("routineType", { type: routine.type.toUpperCase() })}
                   </span>
@@ -141,34 +130,51 @@ export default function RoutineDetailPage({ routineId, backPath = "/community" }
               <div className="flex items-center gap-3 border-t border-[#eceff4] pt-4 text-sm font-semibold text-[#4f576e]">
                 <button
                   type="button"
-                  onClick={() => handleRoutineVote("up")}
+                  onClick={() => {
+                    if (!isLoggedIn) {
+                      return;
+                    }
+                    handleRoutineVote("up");
+                  }}
                   className={`inline-flex items-center gap-1 rounded-lg border px-3 py-1.5 transition ${hasUpvotedRoutine
                     ? "border-[#d44f67] bg-[#fdecef] text-[#d44f67]"
                     : "border-[#dfe4ec] hover:border-[#d44f67] hover:text-[#d44f67]"
                     }`}
                   aria-label={t("upvote")}
+                  disabled={!isLoggedIn}
                 >
                   <ArrowUp size={14} />
                   {routineUpvotes.length}
                 </button>
                 <button
                   type="button"
-                  onClick={() => handleRoutineVote("down")}
+                  onClick={() => {
+                    if (!isLoggedIn) {
+                      return;
+                    }
+                    handleRoutineVote("down");
+                  }}
                   className={`inline-flex items-center gap-1 rounded-lg border px-3 py-1.5 transition ${hasDownvotedRoutine
                     ? "border-[#d44f67] bg-[#fdecef] text-[#d44f67]"
                     : "border-[#dfe4ec] hover:border-[#d44f67] hover:text-[#d44f67]"
                     }`}
                   aria-label={t("downvote")}
+                  disabled={!isLoggedIn}
                 >
                   <ArrowDown size={14} />
                   {routineDownvotes.length}
                 </button>
               </div>
+              {!isLoggedIn && (
+                <p className="text-sm text-[#5f6880]">
+                  {t("loginRequiredForComments")} <Link href={loginHref} className="font-semibold text-[#d44f67] hover:underline">{t("goToLogin")}</Link>
+                </p>
+              )}
             </CardHeader>
           </Card>
 
           <div className="space-y-6">
-            <Card className="border-[#e8ebf1]">
+            <Card className="border-[#e8ebf1] bg-card">
               <CardHeader>
                 <CardTitle className="text-2xl font-bold text-[#202635]">{t("stepsTitle")}</CardTitle>
               </CardHeader>
@@ -184,7 +190,7 @@ export default function RoutineDetailPage({ routineId, backPath = "/community" }
                       : null;
 
                     const stepContent = (
-                      <article className="rounded-xl border border-[#ebeff5] bg-[#fafbfe] p-4 transition hover:border-[#f1c6ce] hover:bg-[#fff8fa]">
+                      <article className="rounded-xl border border-[#ebeff5] bg-card p-4 transition hover:border-[#f1c6ce] hover:bg-[#fff8fa]">
                         <div className="flex flex-col gap-4 md:flex-row md:items-start">
                           {productImage ? (
                             <img
@@ -193,7 +199,7 @@ export default function RoutineDetailPage({ routineId, backPath = "/community" }
                               className="h-48 w-full rounded-lg object-cover md:h-32 md:w-32 md:min-w-32"
                             />
                           ) : (
-                            <div className="flex h-48 w-full items-center justify-center rounded-lg bg-[#edf1f7] text-sm font-medium text-[#69728a] md:h-32 md:w-32 md:min-w-32">
+                            <div className="flex h-48 w-full items-center justify-center rounded-lg bg-muted text-sm font-medium text-[#69728a] md:h-32 md:w-32 md:min-w-32">
                               {t("noImage")}
                             </div>
                           )}
@@ -227,6 +233,9 @@ export default function RoutineDetailPage({ routineId, backPath = "/community" }
               targetId={routine.id}
               targetType="routine"
               initialComments={comments}
+              currentUserId={currentUserId}
+              isLoggedIn={isLoggedIn}
+              loginHref={loginHref}
               translationNamespace="RoutineDetail"
             />
           </div>

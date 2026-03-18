@@ -17,8 +17,9 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 
-import { useEffect, useState } from "react"
-import { toast } from "sonner"
+import { useRoutineContentState } from "@/lib/hooks/use-routine-content-state"
+import { useAuthSession } from "@/lib/hooks/use-auth-session";
+import { getProtectedRoute } from "@/lib/protected-route";
 
 export default function RoutineContent({
   filteredRoutines,
@@ -26,20 +27,17 @@ export default function RoutineContent({
   filteredRoutines: Routine[]
 }) {
   const productsAvailable = getProducts();
-  const [deletingRoutineId, setDeletingRoutineId] = useState<string | null>(null)
-  const [routines, setRoutines] = useState<Routine[]>(filteredRoutines)
+  const { isLoggedIn } = useAuthSession();
   const t = useTranslations("RoutineContent")
-
-  useEffect(() => {
-    setRoutines(filteredRoutines)
-  }, [filteredRoutines])
-
-  const handleDeleteRoutine = (routineId: string) => {
-    const routineName = routines.find(r => r.id === routineId)?.name || "Rutina"
-    setRoutines((prev) => prev.filter((routine) => routine.id !== routineId))
-    setDeletingRoutineId(null)
-    toast.success(`${routineName} ${t("deleted")}`)
-  }
+  const {
+    deletingRoutineId,
+    setDeletingRoutineId,
+    routines,
+    handleDeleteRoutine,
+  } = useRoutineContentState({
+    filteredRoutines,
+    deletedLabel: t("deleted"),
+  })
 
   return (
     <div className="flex flex-col gap-6">
@@ -92,10 +90,11 @@ export default function RoutineContent({
             </div>
 
             <div className="relative z-20 flex items-center self-start gap-1">
-              <Link href={`/routine/editar?id=${routine.id}`}>
+              <Link href={getProtectedRoute(`/routine/editar?id=${routine.id}`, isLoggedIn)}>
                 <button
                   className="inline-flex h-8 w-8 items-center justify-center rounded-md transition text-gray-400 hover:bg-blue-50 hover:text-blue-600"
                   title={t("editButton")}
+                  disabled={!isLoggedIn}
                 >
                   <Edit size={18} />
                 </button>
@@ -109,6 +108,7 @@ export default function RoutineContent({
                   <button
                     className="inline-flex h-8 w-8 items-center justify-center rounded-md transition text-gray-400 hover:bg-red-50 hover:text-red-500"
                     title={t("deleteDialog.title")}
+                    disabled={!isLoggedIn}
                   >
                     <Trash2 size={18} />
                   </button>

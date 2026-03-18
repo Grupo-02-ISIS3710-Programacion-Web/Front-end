@@ -49,12 +49,12 @@ describe('community/CommunityPage', () => {
     it('updates vote count when upvote is clicked', () => {
         render(<CommunityPage />)
 
-        const upvoteButton = screen.getAllByRole('button', { name: 'RoutineDetail.upvote' })[0]
+        const upvoteButton = screen.getAllByRole('button', { name: /^RoutineDetail.upvote/ })[0]
 
         expect(upvoteButton).toHaveTextContent('1')
 
         fireEvent.click(upvoteButton)
 
-        expect(screen.getAllByRole('button', { name: 'RoutineDetail.upvote' })[0]).toHaveTextContent('2')
+        expect(screen.getAllByRole('button', { name: /^RoutineDetail.upvote/ })[0]).toHaveTextContent('2')
     })
 })

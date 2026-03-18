@@ -15,6 +15,18 @@ jest.mock('next/navigation', () => ({
   useSearchParams: () => new URLSearchParams(),
 }))
 
+jest.mock('next-intl', () => ({
+  useTranslations: () => (key: string) => key,
+}))
+
+jest.mock('@/lib/hooks/use-auth-session', () => ({
+  useAuthSession: () => ({
+    isLoggedIn: false,
+    logout: jest.fn(),
+    user: null,
+  }),
+}))
+
 jest.mock('@/components/ui/sheet', () => {
   const React = require('react')
   return {
@@ -40,8 +52,8 @@ describe('NavBar', () => {
   it('renders desktop auth actions when logged out and user actions when logged in', () => {
     const { rerender } = render(<NavBarDesktop isLoggedIn={false} />)
 
-    expect(screen.getByRole('button', { name: 'Registrarme' })).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: 'Iniciar sesión' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'register' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'login' })).toBeInTheDocument()
 
     rerender(<NavBarDesktop isLoggedIn />)
 
@@ -51,17 +63,17 @@ describe('NavBar', () => {
   it('renders mobile menu links', () => {
     render(<NavBarMobile />)
 
-    expect(screen.getAllByRole('link', { name: 'Home' }).length).toBeGreaterThan(0)
-    expect(screen.getAllByRole('link', { name: 'Descubre productos' }).length).toBeGreaterThan(0)
+    expect(screen.getAllByRole('link', { name: 'home' }).length).toBeGreaterThan(0)
+    expect(screen.getAllByRole('link', { name: 'discover' }).length).toBeGreaterThan(0)
   })
 
   it('navigates to discovery page with query when desktop search is submitted', () => {
     render(<NavBarDesktop isLoggedIn={false} />)
 
-    fireEvent.change(screen.getByPlaceholderText('Buscar productos...'), {
+    fireEvent.change(screen.getByPlaceholderText('searchPlaceholder'), {
       target: { value: 'hidra' },
     })
-    fireEvent.click(screen.getByRole('button', { name: 'Buscar productos' }))
+    fireEvent.click(screen.getByRole('button', { name: 'searchPlaceholder' }))
 
     expect(pushMock).toHaveBeenCalledWith('/descubrir?q=hidra')
   })
@@ -69,7 +81,7 @@ describe('NavBar', () => {
   it('navigates to discovery without query when desktop search is empty', () => {
     render(<NavBarDesktop isLoggedIn={false} />)
 
-    fireEvent.click(screen.getByRole('button', { name: 'Buscar productos' }))
+    fireEvent.click(screen.getByRole('button', { name: 'searchPlaceholder' }))
 
     expect(pushMock).toHaveBeenCalledWith('/descubrir')
   })
@@ -77,11 +89,11 @@ describe('NavBar', () => {
   it('opens mobile search and submits query', () => {
     render(<NavBarMobile />)
 
-    fireEvent.click(screen.getByRole('button', { name: 'Abrir búsqueda' }))
-    fireEvent.change(screen.getByPlaceholderText('Buscar productos...'), {
+    fireEvent.click(screen.getByRole('button', { name: 'openSearch' }))
+    fireEvent.change(screen.getByPlaceholderText('searchPlaceholder'), {
       target: { value: 'acne' },
     })
-    fireEvent.click(screen.getByRole('button', { name: 'Buscar productos' }))
+    fireEvent.click(screen.getByRole('button', { name: 'searchPlaceholder' }))
 
     expect(pushMock).toHaveBeenCalledWith('/descubrir?q=acne')
   })

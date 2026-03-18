@@ -83,8 +83,8 @@ export function FormularioRegistroComponent() {
                 </div>
 
                 <div className="space-y-2">
-                    <p className="text-sm font-medium">{t("campos.tipoPiel.label")}</p>
-                    <select className={selectClasses} {...register("tipoPiel", { required: campoObligatorio })}>
+                    <label htmlFor="register-tipo-piel" className="text-sm font-medium">{t("campos.tipoPiel.label")}</label>
+                    <select id="register-tipo-piel" className={selectClasses} {...register("tipoPiel", { required: campoObligatorio })}>
                         <option value="">{t("campos.tipoPiel.placeholder")}</option>
                         {tiposPiel.map((tipo) => (
                             <option key={tipo.value} value={tipo.value}>{t(`campos.tipoPiel.opciones.${tipo.value}`)}</option>
@@ -124,8 +124,8 @@ export function FormularioRegistroComponent() {
             </div>
 
             <div className="space-y-2">
-                <p className="text-sm font-medium">{t("campos.comoEnteroDeNosotros.label")}</p>
-                <select className={selectClasses} {...register("comoEnteroDeNosotros", { required: campoObligatorio })}>
+                <label htmlFor="register-como-entero" className="text-sm font-medium">{t("campos.comoEnteroDeNosotros.label")}</label>
+                <select id="register-como-entero" className={selectClasses} {...register("comoEnteroDeNosotros", { required: campoObligatorio })}>
                     <option value="">{t("campos.comoEnteroDeNosotros.placeholder")}</option>
                     {formasEnteroDeNosotros.map((forma) => (
                         <option key={forma.value} value={forma.value}>{t(`campos.comoEnteroDeNosotros.opciones.${forma.value}`)}</option>
@@ -182,13 +182,13 @@ export function FormularioRegistroComponent() {
 
             <div className="space-y-2">
                 <p className="text-gray-600 text-sm">
-                    {t("legal.texto")} <Link href="/ToS" className="text-pink-500">{t("legal.terminos")}</Link>
+                    {t("legal.texto")} <Link href="/ToS" className="text-[#BE3D5E] underline underline-offset-2 hover:text-[#A73553]">{t("legal.terminos")}</Link>
                 </p>
             </div>
             <Button type="submit" className="w-full">
                 {t("botones.crearCuenta")}
             </Button>
-            <p className="text-center text-sm">{t("footer.yaTienesCuenta")} <Link href="/login" className="text-pink-500">{t("botones.iniciarSesion")}</Link></p>
+            <p className="text-center text-sm">{t("footer.yaTienesCuenta")} <Link href="/login" className="text-[#BE3D5E] underline underline-offset-2 hover:text-[#A73553]">{t("botones.iniciarSesion")}</Link></p>
         </form>
     )
 }

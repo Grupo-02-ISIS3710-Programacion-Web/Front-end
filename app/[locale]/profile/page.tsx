@@ -1,34 +1,36 @@
 "use client"
 
+import AuthRequiredCard from "@/components/auth/AuthRequiredCard"
 import UserInfo from "@/components/profile/userInfo"
-import ProfileTabs from "@/components/profile/profileTabs"
 import RoutineContent from "@/components/profile/routineContent"
 import { ProductCard } from "@/components/products/product-card"
 import { Heart, Sun, SlidersHorizontal } from "lucide-react"
-import { useState } from "react"
-import { Product, Category, SkinType } from "@/types/product";
+import { useEffect, useMemo, useState } from "react"
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
-import { productsFavorites } from "@/lib/favorites";
+import { getProducts } from "@/lib/api";
 import { getRoutines } from "@/lib/routine";
 import Link from "next/link"
-import { useEffect } from "react";
 import { useTranslations } from "next-intl"
+import { useAuthSession } from "@/lib/hooks/use-auth-session";
+import { getProtectedRoute } from "@/lib/protected-route";
 
 export default function Profile() {
 
     const t = useTranslations("Profile")
+    const { user, isLoggedIn, isReady } = useAuthSession()
+    const createRoutineHref = getProtectedRoute("/routine/crear", isLoggedIn)
+    const createAiRoutineHref = getProtectedRoute("/ai-routine", isLoggedIn)
+    const products = getProducts()
 
     const [activeTab, setActiveTab] = useState("routine")
-    const [selectedCategory, setSelectedCategory] = useState<Category | "ALL">("ALL")
-    const [favoriteProducts, setFavoriteProducts] = useState<Product[]>([])
     const [searchTerm, setSearchTerm] = useState("")
     const ITEMS_PER_PAGE = 6
     const [visibleCount, setVisibleCount] = useState(ITEMS_PER_PAGE)
     const [inputValue, setInputValue] = useState("")
-
     const [routineDaily, setRoutineDaily] = useState("am")
+    const [favoriteProductIds, setFavoriteProductIds] = useState<string[]>([])
 
     const tabs = [
         { id: "routine", label: t("myRoutine"), icon: Sun },
@@ -40,32 +42,74 @@ export default function Profile() {
         { id: "pm", label: t("evening") }
     ]
 
-    const handleFavoriteSelect = (productIndex: number) => {
-        const selectedProduct = productsFavorites[productIndex]
-        if (!favoriteProducts.some(product => product.id === selectedProduct.id)) {
-            setFavoriteProducts([...favoriteProducts, selectedProduct])
+    useEffect(() => {
+        if (!user) {
+            setFavoriteProductIds([])
+            return
         }
+
+        setFavoriteProductIds(user.favoriteProductIds)
+    }, [user])
+
+    const favoriteProducts = useMemo(() => {
+        const favoriteProductIdSet = new Set(favoriteProductIds)
+
+        return products.filter((product) => favoriteProductIdSet.has(product.id))
+    }, [favoriteProductIds, products])
+
+    const userRoutineIdSet = useMemo(() => {
+        return new Set(user?.createdRoutineIds ?? [])
+    }, [user])
+
+    const filteredFavorites = useMemo(() => {
+        return favoriteProducts.filter((product) =>
+            product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            product.brand.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+    }, [favoriteProducts, searchTerm])
+
+    const handleFavoriteSelect = (productIndex: number) => {
+        const selectedProduct = filteredFavorites[productIndex]
+        if (!selectedProduct) {
+            return
+        }
+
+        setFavoriteProductIds((currentFavoriteProductIds) => {
+            if (currentFavoriteProductIds.includes(selectedProduct.id)) {
+                return currentFavoriteProductIds
+            }
+
+            return [...currentFavoriteProductIds, selectedProduct.id]
+        })
     }
 
     const handleFavoriteDeselect = (productIndex: number) => {
-        const deselectedProduct = productsFavorites[productIndex]
-        setFavoriteProducts(
-            favoriteProducts.filter(product => product.id !== deselectedProduct.id)
+        const deselectedProduct = filteredFavorites[productIndex]
+        if (!deselectedProduct) {
+            return
+        }
+
+        setFavoriteProductIds((currentFavoriteProductIds) =>
+            currentFavoriteProductIds.filter((productId) => productId !== deselectedProduct.id)
         )
     }
 
     const filteredRoutines = getRoutines().filter((routine) =>
+        userRoutineIdSet.has(routine.id) &&
         routine.type.toLowerCase() === routineDaily
     );
-
-    const filteredFavorites = productsFavorites.filter((product) =>
-        product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        product.brand.toLowerCase().includes(searchTerm.toLowerCase())
-    )
 
     useEffect(() => {
         setVisibleCount(ITEMS_PER_PAGE)
     }, [searchTerm])
+
+    if (!isReady) {
+        return <div className="min-h-screen bg-background" />
+    }
+
+    if (!user) {
+        return <AuthRequiredCard redirectPath="/profile" />
+    }
 
     return (
         <div>
@@ -73,13 +117,13 @@ export default function Profile() {
 
                 <div className="col-span-6">
                     <UserInfo
-                        name="Elara Vance"
-                        city="San Francisco, CA"
-                        skinType="Oily / Sensitive"
-                        reviews={42}
-                        posts={15}
-                        bio="Currently focusing on barrier repair and hydration."
-                        photo="/usuario.webp"
+                        name={user.name}
+                        city={user.city}
+                        skinType={user.skinType}
+                        reviews={user.reviewCount}
+                        posts={user.createdRoutineIds.length}
+                        bio={user.bio}
+                        photo={user.avatarUrl}
                     />
                 </div>
 
@@ -109,7 +153,7 @@ export default function Profile() {
                                             {tab.label}
 
                                             <span
-                                                className={`absolute left-0 bottom-0 w-full h-[2px] rounded-full
+                                                className={`absolute left-0 bottom-0 w-full h-0.5 rounded-full
                                                 ${isActive ? "bg-primary" : "bg-gray-200"}`}
                                             />
                                         </button>
@@ -129,10 +173,10 @@ export default function Profile() {
                                             return (
                                                 <Button
                                                     key={routin.id}
-                                                    className={`text-black ${dayRoutine
-                                                        ? ""
-                                                        : "bg-white border-primary hover:bg-secondary hover:text-primary-foreground"
-                                                        }`}
+                                                    className={dayRoutine
+                                                        ? "text-primary-foreground"
+                                                        : "bg-white text-foreground border-primary hover:bg-secondary hover:text-primary-foreground"
+                                                    }
                                                     onClick={() => setRoutineDaily(routin.id)}
                                                 >
                                                     {routin.label}
@@ -141,11 +185,14 @@ export default function Profile() {
                                         })}
                                     </div>
 
-                                    <Button className="bg-white text-primary hover:bg-white hover:underline w-full lg:w-auto">
-                                        <Link href={"/routine/crear"}>
-                                            {t("addStep")}
-                                        </Link>
-                                    </Button>
+                                    <div className="flex w-full flex-col gap-2 lg:w-auto lg:flex-row">
+                                        <Button asChild className="bg-white text-primary hover:bg-white hover:underline w-full lg:w-auto">
+                                            <Link href={createRoutineHref}>{t("addStep")}</Link>
+                                        </Button>
+                                        <Button asChild variant="outline" className="w-full lg:w-auto">
+                                            <Link href={createAiRoutineHref}>{t("createWithAi")}</Link>
+                                        </Button>
+                                    </div>
 
                                 </div>
                             )}
@@ -174,20 +221,19 @@ export default function Profile() {
                                             variant="outline"
                                             size="icon"
                                             onClick={() => setSearchTerm(inputValue)}
+                                            aria-label={t("searchProducts")}
                                         >
                                             <Search className="h-4 w-4" />
                                         </Button>
 
-                                        <Button className="flex items-center justify-center w-10 h-10 rounded-xl border border-gray-200 bg-white hover:bg-gray-100 transition">
+                                        <Button className="flex items-center justify-center w-10 h-10 rounded-xl border border-gray-200 bg-white hover:bg-gray-100 transition" aria-label="Filtrar favoritos">
                                             <SlidersHorizontal size={18} className="text-gray-600" />
                                         </Button>
 
                                     </div>
 
-                                    <Button className="bg-white text-primary hover:bg-white hover:underline w-full lg:w-auto">
-                                        <Link href="/descubrir">
-                                            {t("discoverMore")}
-                                        </Link>
+                                    <Button asChild className="bg-white text-primary hover:bg-white hover:underline w-full lg:w-auto">
+                                        <Link href="/descubrir">{t("discoverMore")}</Link>
                                     </Button>
 
                                 </div>
