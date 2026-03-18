@@ -142,7 +142,9 @@ export default function Profile() {
                                     </div>
 
                                     <Button className="bg-white text-primary hover:bg-white hover:underline w-full lg:w-auto">
-                                        {t("addStep")}
+                                        <Link href={"/routine/crear"}>
+                                            {t("addStep")}
+                                        </Link>
                                     </Button>
 
                                 </div>
