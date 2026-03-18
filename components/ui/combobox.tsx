@@ -47,8 +47,8 @@ function ComboboxClear({ className, ...props }: ComboboxPrimitive.Clear.Props) {
         <InputGroupButton
           variant="ghost"
           size="icon-xs"
-          aria-label="Limpiar seleccion"
-          title="Limpiar seleccion"
+          aria-label="Limpiar selección"
+          title="Limpiar selección"
         />
       }
       className={cn(className)}

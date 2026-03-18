@@ -47,11 +47,10 @@ export default function ChatPanel({
                     className={`flex ${isAssistant ? "justify-start" : "justify-end"}`}
                   >
                     <div
-                      className={`max-w-[88%] rounded-3xl border px-4 py-3 ${
-                        isAssistant
+                      className={`max-w-[88%] rounded-3xl border px-4 py-3 ${isAssistant
                           ? "border-border bg-card text-card-foreground"
-                          : "border-primary/10 bg-primary text-white"
-                      }`}
+                          : "border-border bg-primary/8 text-primary"
+                        }`}
                     >
                       <div className="mb-2 flex items-center gap-2 text-[11px] font-semibold uppercase tracking-wide opacity-80">
                         {isAssistant ? <Bot size={14} /> : <MessageSquareText size={14} />}

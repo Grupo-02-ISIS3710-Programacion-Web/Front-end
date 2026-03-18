@@ -110,6 +110,20 @@
         "topProductsDescription": "Selected by our community and dermatologists.",
         "seeAllProducts": "See all products"
     },
+    "NavBar": {
+        "home": "Home",
+        "discover": "Discover",
+        "community": "Community",
+        "myProducts": "My products",
+        "register": "Register",
+        "login": "Sign in",
+        "logout": "Sign out",
+        "profile": "Profile",
+        "menuTitle": "Menu",
+        "openMenu": "Open menu",
+        "searchPlaceholder": "Search products...",
+        "notifications": "Notifications"
+    },
     "CommentHome": {
         "title": "Explore real community routines",
         "description": "Discover routines shared by people with your same skin type, compare outcomes, and adapt your plan step by step.",

@@ -110,6 +110,20 @@
         "topProductsDescription": "Seleccionados por nuestra comunidad y dermatólogos.",
         "seeAllProducts": "Ver todos los productos"
     },
+    "NavBar": {
+        "home": "Inicio",
+        "discover": "Descubre",
+        "community": "Comunidad",
+        "myProducts": "Mis productos",
+        "register": "Registrarme",
+        "login": "Iniciar sesión",
+        "logout": "Cerrar sesión",
+        "profile": "Perfil",
+        "menuTitle": "Menú",
+        "openMenu": "Abrir menú",
+        "searchPlaceholder": "Buscar productos...",
+        "notifications": "Notificaciones"
+    },
     "CommentHome": {
         "title": "Explora rutinas reales de la comunidad",
         "description": "Descubre rutinas publicadas por personas con tu mismo tipo de piel, compara resultados y adapta tu plan paso a paso.",
@@ -628,20 +642,20 @@
     },
     "Footer": {
         "brand": "Skin4All",
-        "description": "Unete a la mejor comunidad de cuidado de la piel. Descubre productos, comparte tus resultados y encuentra la rutina perfecta para ti.",
+        "description": "Únete a la mejor comunidad de cuidado de la piel. Descubre productos, comparte tus resultados y encuentra la rutina perfecta para ti.",
         "exploreTitle": "Explorar",
         "explore": {
-            "bestSellers": "Mas vendidos",
+            "bestSellers": "Más vendidos",
             "ingredientLab": "Laboratorio de ingredientes",
             "forums": "Foros"
         },
         "communityTitle": "Comunidad",
         "community": {
             "communityRules": "Reglas de la comunidad",
-            "hallOfFame": "Salon de la fama",
+            "hallOfFame": "Salón de la fama",
             "verifiedExperts": "Expertos verificados"
         },
-        "newsletterTitle": "Boletin",
+        "newsletterTitle": "Boletín",
         "emailPlaceholder": "Tu correo",
         "send": "Enviar",
         "copyright": "© 2024 Comunidad SkinCare. Todos los derechos reservados."

@@ -50,9 +50,10 @@ const VoteButton = ({
   label: string;
 }) => (
   <button
+    type="button"
     onClick={onClick}
     className={`inline-flex items-center gap-1 transition ${isActive ? "text-destructive" : "hover:text-destructive"}`}
-    aria-label={label}
+    aria-label={`${label} ${count}`}
   >
     {icon} {count}
   </button>

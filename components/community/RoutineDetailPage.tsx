@@ -52,8 +52,8 @@ export default function RoutineDetailPage({ routineId, backPath = "/community" }
 
   if (!routine) {
     return (
-      <main className="min-h-screen bg-[#f3f4f6] px-4 py-8">
-        <div className="mx-auto max-w-4xl rounded-2xl border border-[#e6e9ef] bg-white p-8 text-center">
+      <main className="min-h-screen bg-background px-4 py-8">
+        <div className="mx-auto max-w-4xl rounded-2xl border border-[#e6e9ef] bg-card p-8 text-center">
           <h1 className="text-2xl font-bold text-[#222739]">{t("notFoundTitle")}</h1>
           <p className="mt-2 text-[#646e84]">{t("notFoundDescription")}</p>
           <Link href={backPath} className="mt-4 inline-flex items-center gap-2 text-[#d44f67] hover:underline">
@@ -66,7 +66,7 @@ export default function RoutineDetailPage({ routineId, backPath = "/community" }
   }
 
   return (
-    <main className="min-h-screen bg-[#f3f4f6] px-4 py-8 md:px-8">
+    <main className="min-h-screen bg-background px-4 py-8 md:px-8">
       <div className="mx-auto max-w-7xl space-y-6">
         <Breadcrumb>
           <BreadcrumbList>
@@ -85,7 +85,7 @@ export default function RoutineDetailPage({ routineId, backPath = "/community" }
         </Breadcrumb>
 
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-[400px_minmax(0,1fr)] lg:items-start">
-          <Card className="border-[#e8ebf1] lg:sticky lg:top-6">
+          <Card className="border-[#e8ebf1] lg:sticky lg:top-6 bg-card">
             <CardHeader className="space-y-4">
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <Link href={backPath} className="inline-flex items-center gap-2 text-sm font-semibold text-[#56607a] hover:text-[#d44f67]">
@@ -112,15 +112,15 @@ export default function RoutineDetailPage({ routineId, backPath = "/community" }
                 </div>
 
                 <div className="mt-3 flex flex-wrap items-center gap-2">
-                  <span className="inline-flex items-center gap-1 rounded-full bg-[#eff2f7] px-3 py-1 text-xs font-semibold text-[#4f576e]">
+                  <span className="inline-flex items-center gap-1 rounded-full bg-muted px-3 py-1 text-xs font-semibold text-[#4f576e]">
                     <MessageSquare size={14} />
                     {comments.length}
                   </span>
-                  <span className="inline-flex items-center gap-1 rounded-full bg-[#eff2f7] px-3 py-1 text-xs font-semibold text-[#4f576e]">
+                  <span className="inline-flex items-center gap-1 rounded-full bg-muted px-3 py-1 text-xs font-semibold text-[#4f576e]">
                     <CalendarDays size={14} />
                     {publishedAtLabel}
                   </span>
-                  <span className="inline-flex items-center gap-1 rounded-full bg-[#eff2f7] px-3 py-1 text-xs font-semibold text-[#4f576e]">
+                  <span className="inline-flex items-center gap-1 rounded-full bg-muted px-3 py-1 text-xs font-semibold text-[#4f576e]">
                     {routine.type.toLowerCase() === "am" ? <Sun size={14} /> : <Moon size={14} />}
                     {t("routineType", { type: routine.type.toUpperCase() })}
                   </span>
@@ -174,7 +174,7 @@ export default function RoutineDetailPage({ routineId, backPath = "/community" }
           </Card>
 
           <div className="space-y-6">
-            <Card className="border-[#e8ebf1]">
+            <Card className="border-[#e8ebf1] bg-card">
               <CardHeader>
                 <CardTitle className="text-2xl font-bold text-[#202635]">{t("stepsTitle")}</CardTitle>
               </CardHeader>
@@ -190,7 +190,7 @@ export default function RoutineDetailPage({ routineId, backPath = "/community" }
                       : null;
 
                     const stepContent = (
-                      <article className="rounded-xl border border-[#ebeff5] bg-[#fafbfe] p-4 transition hover:border-[#f1c6ce] hover:bg-[#fff8fa]">
+                      <article className="rounded-xl border border-[#ebeff5] bg-card p-4 transition hover:border-[#f1c6ce] hover:bg-[#fff8fa]">
                         <div className="flex flex-col gap-4 md:flex-row md:items-start">
                           {productImage ? (
                             <img
@@ -199,7 +199,7 @@ export default function RoutineDetailPage({ routineId, backPath = "/community" }
                               className="h-48 w-full rounded-lg object-cover md:h-32 md:w-32 md:min-w-32"
                             />
                           ) : (
-                            <div className="flex h-48 w-full items-center justify-center rounded-lg bg-[#edf1f7] text-sm font-medium text-[#69728a] md:h-32 md:w-32 md:min-w-32">
+                            <div className="flex h-48 w-full items-center justify-center rounded-lg bg-muted text-sm font-medium text-[#69728a] md:h-32 md:w-32 md:min-w-32">
                               {t("noImage")}
                             </div>
                           )}
