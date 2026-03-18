@@ -18,94 +18,143 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { Check, Package, Pencil, Trash2, X } from "lucide-react";
+import { Check, Eye, Package, Pencil, Trash2, X } from "lucide-react";
 
 import { ApprovalStatus, type ProposedProduct } from "@/types/product";
 import { ApprovalStatusBadge, CategoryBadge, ProductTypeBadge } from "./product-components-utils";
 import { formatDate } from "@/lib/string-utils";
 
 interface ProductTableProps {
-    products: ProposedProduct[];
-    selected: Set<string>;
-    onToggleOne: (id: string) => void;
+  products: ProposedProduct[];
+  selected: Set<string>;
+  onToggleOne: (id: string) => void;
+  onView:    (product: ProposedProduct) => void;
+  onApprove: (product: ProposedProduct) => void;
+  onReject:  (product: ProposedProduct) => void;
+  onEdit:    (product: ProposedProduct) => void;
+  onDelete:  (product: ProposedProduct) => void;
 }
-
-function RowActions({ product }: { product: ProposedProduct }) {
-    const t = useTranslations("admin");
-
-    return (
-        <div className="flex items-center justify-end gap-1">
-        <TooltipProvider>
-            {/* Approve — solo para pending */}
-            {product.status === ApprovalStatus.PENDING && (
-            <Tooltip>
-                <TooltipTrigger asChild>
-                <Button
-                    variant="ghost"
-                    size="icon"
-                    className="h-7 w-7 text-muted-foreground hover:text-primary"
-                    aria-label={t("actions.approve")}
-                >
-                    <Check className="h-3.5 w-3.5" aria-hidden="true" />
-                </Button>
-                </TooltipTrigger>
-                <TooltipContent><p>{t("actions.approve")}</p></TooltipContent>
-            </Tooltip>
-            )}
-
-            {/* Reject — para pending y approved */}
-            {(product.status === ApprovalStatus.PENDING ||
-            product.status === ApprovalStatus.APPROVED) && (
-            <Tooltip>
-                <TooltipTrigger asChild>
-                <Button
-                    variant="ghost"
-                    size="icon"
-                    className="h-7 w-7 text-muted-foreground hover:text-destructive"
-                    aria-label={t("actions.reject")}
-                >
-                    <X className="h-3.5 w-3.5" aria-hidden="true" />
-                </Button>
-                </TooltipTrigger>
-                <TooltipContent><p>{t("actions.reject")}</p></TooltipContent>
-            </Tooltip>
-            )}
-
-            {/* Edit — siempre */}
-            <Tooltip>
+ 
+// ─── Row actions ──────────────────────────────────────────────────────────────
+ 
+function RowActions({
+  product,
+  onView,
+  onApprove,
+  onReject,
+  onEdit,
+  onDelete,
+}: {
+  product: ProposedProduct;
+  onView:    () => void;
+  onApprove: () => void;
+  onReject:  () => void;
+  onEdit:    () => void;
+  onDelete:  () => void;
+}) {
+  const t = useTranslations("admin");
+  const isPending  = product.status === ApprovalStatus.PENDING;
+  const isActive   = product.status === ApprovalStatus.PENDING ||
+                     product.status === ApprovalStatus.APPROVED;
+ 
+  return (
+    <div className="flex items-center justify-end gap-1">
+      <TooltipProvider>
+ 
+        {/* View detail — siempre */}
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              variant="ghost" size="icon"
+              className="h-7 w-7 text-muted-foreground hover:text-foreground"
+              aria-label={t("actions.view")}
+              onClick={onView}
+            >
+              <Eye className="h-3.5 w-3.5" aria-hidden="true" />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent><p>{t("actions.view")}</p></TooltipContent>
+        </Tooltip>
+ 
+        {/* Approve — solo pending */}
+        {isPending && (
+          <Tooltip>
             <TooltipTrigger asChild>
-                <Button
-                variant="ghost"
-                size="icon"
-                className="h-7 w-7 text-muted-foreground hover:text-foreground"
-                aria-label={t("actions.edit")}
-                >
-                <Pencil className="h-3.5 w-3.5" aria-hidden="true" />
-                </Button>
+              <Button
+                variant="ghost" size="icon"
+                className="h-7 w-7 text-muted-foreground hover:text-primary"
+                aria-label={t("actions.approve")}
+                onClick={onApprove}
+              >
+                <Check className="h-3.5 w-3.5" aria-hidden="true" />
+              </Button>
             </TooltipTrigger>
-            <TooltipContent><p>{t("actions.edit")}</p></TooltipContent>
-            </Tooltip>
-
-            {/* Delete — siempre */}
-            <Tooltip>
+            <TooltipContent><p>{t("actions.approve")}</p></TooltipContent>
+          </Tooltip>
+        )}
+ 
+        {/* Reject — pending y approved */}
+        {isActive && (
+          <Tooltip>
             <TooltipTrigger asChild>
-                <Button
-                variant="ghost"
-                size="icon"
+              <Button
+                variant="ghost" size="icon"
                 className="h-7 w-7 text-muted-foreground hover:text-destructive"
-                aria-label={t("actions.delete")}
-                >
-                <Trash2 className="h-3.5 w-3.5" aria-hidden="true" />
-                </Button>
+                aria-label={t("actions.reject")}
+                onClick={onReject}
+              >
+                <X className="h-3.5 w-3.5" aria-hidden="true" />
+              </Button>
             </TooltipTrigger>
-            <TooltipContent><p>{t("actions.delete")}</p></TooltipContent>
-            </Tooltip>
-        </TooltipProvider>
-        </div>
-    );
+            <TooltipContent><p>{t("actions.reject")}</p></TooltipContent>
+          </Tooltip>
+        )}
+ 
+        {/* Edit — siempre */}
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              variant="ghost" size="icon"
+              className="h-7 w-7 text-muted-foreground hover:text-foreground"
+              aria-label={t("actions.edit")}
+              onClick={onEdit}
+            >
+              <Pencil className="h-3.5 w-3.5" aria-hidden="true" />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent><p>{t("actions.edit")}</p></TooltipContent>
+        </Tooltip>
+ 
+        {/* Delete — siempre */}
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              variant="ghost" size="icon"
+              className="h-7 w-7 text-muted-foreground hover:text-destructive"
+              aria-label={t("actions.delete")}
+              onClick={onDelete}
+            >
+              <Trash2 className="h-3.5 w-3.5" aria-hidden="true" />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent><p>{t("actions.delete")}</p></TooltipContent>
+        </Tooltip>
+ 
+      </TooltipProvider>
+    </div>
+  );
 }
 
-export function ProductTable({ products, selected, onToggleOne }: ProductTableProps) {
+export function ProductTable({
+  products,
+  selected,
+  onToggleOne,
+  onView,
+  onApprove,
+  onReject,
+  onEdit,
+  onDelete,
+}: ProductTableProps) {
     const t = useTranslations("admin");
 
     return (
@@ -205,7 +254,14 @@ export function ProductTable({ products, selected, onToggleOne }: ProductTablePr
 
                     {/* Actions */}
                     <TableCell className="pr-5">
-                    <RowActions product={product} />
+                    <RowActions
+                    product={product}
+                    onView={() => onView(product)}
+                    onApprove={() => onApprove(product)}
+                    onReject={() => onReject(product)}
+                    onEdit={() => onEdit(product)}
+                    onDelete={() => onDelete(product)}
+                  />
                     </TableCell>
                 </TableRow>
                 ))

@@ -597,6 +597,53 @@
             "delete": "Delete",
             "approve": "Approve",
             "reject": "Reject"
+        },
+        "productDetail": {
+        "images": "Images",
+        "skinType": "Skin type",
+        "description": "Description",
+        "ingredients": "Ingredients",
+        "rejectionReason": "Rejection reason"
+        },
+        "rejectModal": {
+        "title": "Reject product",
+        "description": "You are about to reject \"{name}\". This product will not be published.",
+        "reasonLabel": "Rejection reason",
+        "reasonPlaceholder": "e.g. Incomplete information, incorrect ingredients, duplicate product...",
+        "reasonError": "Please enter at least 10 characters.",
+        "reasonHint": "This reason will be stored in the audit log."
+        },
+        "deleteModal": {
+        "title": "Delete product",
+        "description": "You are about to delete \"{name}\". This action cannot be undone.",
+        "logicalTitle": "Logical deletion",
+        "logicalDescription": "The product will be marked as Inactive and will no longer be visible to users. Existing reviews will be preserved for historical purposes.",
+        "confirm": "Delete product"
+        },
+        "editDrawer": {
+            "title": "Edit product",
+            "description": "Editing \"{name}\". Required fields are marked with *.",
+            "save": "Save changes",
+            "fields": {
+                "name": "Name",
+                "brand": "Brand",
+                "description": "Description",
+                "descriptionPlaceholder": "Brief product description...",
+                "primaryCategory": "Primary category",
+                "additionalCategories": "Additional categories",
+                "skinType": "Skin type",
+                "ingredients": "Ingredients",
+                "ingredientPlaceholder": "Add ingredient...",
+                "ingredientAdd": "Add",
+                "images": "Images",
+                "imagePlaceholder": "https://...",
+                "imageAdd": "Add",
+                "imageHint": "In production this will be replaced by a file uploader."
+            },
+            "errors": {
+                "required": "This field is required.",
+                "selectOne": "Select at least one option."
+            }
         }
     }
 }
