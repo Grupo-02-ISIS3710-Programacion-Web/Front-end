@@ -1,3 +1,5 @@
+import type { Comment } from "@/types/Comment";
+
 export enum Category {
     HIDRATACION = "hidratacion",
     LIMPIEZA = "limpieza",
@@ -30,11 +32,18 @@ export enum ProductType {
     EXFOLIANT = "exfoliant",
     SUNSCREEN = "sunscreen",
     TONER = "toner",
-    GEL= "gel",
+    GEL = "gel",
     BALM = "balm",
     TREATMENT = "treatment",
     MAKEUP_REMOVER = "makeup_remover",
     MAKEUP = "makeup"
+}
+
+export enum ApprovalStatus {
+  PENDING   = "pending",    // recién enviado, sin revisar
+  APPROVED  = "approved",   // aprobado por admin, aún no publicado
+  PUBLISHED = "published",  // visible en la plataforma
+  REJECTED  = "rejected",   // rechazado por admin
 }
 
 export interface Product {
@@ -49,29 +58,39 @@ export interface Product {
     rating: number;
     review_count: number;
     image_url: string[];
+    comments?: Comment[];
 }
 
 //Productos propuestos por los usuarios, que aún no han sido validados por el equipo de administración
 export interface ProposedProduct {
+    id: string;
     name: string;
     brand: string;
     skin_type: SkinType[];
-    product_type: string;
+    product_type: ProductType;
     primary_category: Category;
     additional_categories?: Category[];
     ingredients: string[];
     image_url: string[];
     submitted_by?: string; // usuario que lo propuso
     submitted_at?: string;
+    status: ApprovalStatus;
 }
 
 export interface ModerationItem {
-  id: string;
-  user: string;
-  userInitials: string;
-  userAvatar?: string;
-  action: string;
-  excerpt: string;
-  timeAgo: string;
-  type: "report" | "flag" | "spam";
+    id: string;
+    user: string;
+    userInitials: string;
+    userAvatar?: string;
+    action: string;
+    excerpt: string;
+    timeAgo: string;
+    type: "report" | "flag" | "spam";
+}
+
+export interface ProductStats {
+    total: number;
+    pending: number;
+    approved: number;
+    published: number;
 }

@@ -1,7 +1,7 @@
 import { ModerationQueue } from "@/components/admin/moderation-queue";
-import { ProductInventory } from "@/components/admin/product-inventory";
+import { ProductOverview } from "@/components/admin/product-overview";
 import { StatCard } from "@/components/admin/stat-card";
-import { Clipboard, Megaphone, Package, Star, Users } from "lucide-react";
+import { Clipboard, Package, Users } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 export default function AdminDashboardPage() {
@@ -40,7 +40,7 @@ export default function AdminDashboardPage() {
         {/* ── Lower row ── */}
         <div className="grid grid-cols-1 sm:grid-cols-[1fr_1.6fr] gap-4">
             <ModerationQueue />
-            <ProductInventory />
+            <ProductOverview />
         </div>
     
         </div>

@@ -1,7 +1,76 @@
 {
     "CrearRutina": {
         "title": "Create Your Ideal Routine",
-        "description": "Explore products, filter by category, and save a personalized routine for your skin."
+        "routineInfo": "Your routine information",
+        "description": "Explore products, filter by category, and save a personalized routine for your skin.",
+        "submitButton": "Create Routine",
+        "toasts": {
+            "created": "Your routine has been created successfully"
+        }
+    },
+    "EditarRutina": {
+        "title": "Edit Your Routine",
+        "description": "Update the general information and adjust the steps of your existing routine.",
+        "submitButton": "Save Changes",
+        "notFoundTitle": "Routine not found",
+        "notFoundDescription": "We could not find a routine with the provided ID.",
+        "toasts": {
+            "saved": "Changes have been saved successfully"
+        }
+    },
+    "GuardarRutina": {
+        "pageTitle": "Finish your personalized routine",
+        "pageDescription": "Review and adjust each step description in your routine. You can reorder, edit details, or remove steps before saving your personalized routine.",
+        "infoCard": {
+            "title": "Routine information",
+            "nameLabel": "Routine name",
+            "namePlaceholder": "Routine name",
+            "descriptionLabel": "Routine description",
+            "descriptionPlaceholder": "Routine description",
+            "timeOfDayLabel": "Routine time",
+            "skinTypeLabel": "Skin type",
+            "skinTypePlaceholder": "Select skin type",
+            "timeOfDay": {
+                "am": "AM",
+                "pm": "PM"
+            },
+            "productsLabel": "Products in routine",
+            "productsSelected": "{count, plural, =0 {0 selected products} =1 {1 selected product} other {{count} selected products}}",
+            "selectProductsButton": "Add a step"
+        },
+        "productDialog": {
+            "title": "Select products for your routine",
+            "noResults": "No products match your search."
+        },
+        "steps": {
+            "title": "Description of each step",
+            "empty": "There are no steps in the routine. Add products from the selector to get started.",
+            "stepNumber": "Step {number}",
+            "nameLabel": "Step name",
+            "routineNamePlaceholder": "Routine name",
+            "namePlaceholder": "Step name",
+            "descriptionLabel": "Step description",
+            "descriptionPlaceholder": "Step description",
+            "errors": {
+                "nameRequired": "Step name is required",
+                "nameMin": "Step name must have at least 2 characters",
+                "descriptionRequired": "Step description is required",
+                "descriptionMin": "Step description must have at least 5 characters",
+                "atLeastOneStep": "You must add at least one step to the routine"
+            }
+        },
+        "submitButton": "Create Routine",
+        "validation": {
+            "nameRequired": "Routine name is required",
+            "nameMin": "Routine name must have at least 3 characters",
+            "descriptionRequired": "Routine description is required",
+            "descriptionMin": "Routine description must have at least 10 characters",
+            "skinTypeRequired": "You must select a skin type"
+        },
+        "toast": {
+            "alreadyAdded": "{name} is already in your routine",
+            "added": "{name} added to your routine"
+        }
     },
     "GridProductos": {
         "loading": "Loading products...",
@@ -35,6 +104,95 @@
     "SearchBar": {
         "placeholder": "Search products by name, brand, or type...",
         "allProducts": "All products"
+    },
+    "Home": {
+        "topProducts": "Top rated products",
+        "topProductsDescription": "Selected by our community and dermatologists.",
+        "seeAllProducts": "See all products"
+    },
+    "CommentHome": {
+        "title": "Join the conversation",
+        "description": "Ask questions, share your results and learn from thousands of real users with your same skin type.",
+        "feature1": "Forums based on your skin problem",
+        "feature2": "Verified answers from professionals",
+        "feature3": "Daily skincare routine challenges",
+        "visitCommunity": "Visit community",
+        "post1": "What is the best sunscreen for oily skin that won't clog pores?",
+        "post2": "My vitamin C transformation after 3 months (Results)",
+        "post3": "Can retinol be used with niacinamide? Experts explain.",
+        "replies": "replies",
+        "likes": "likes",
+        "ctaTitle": "Start Your Skin Transformation",
+        "ctaDescription": "Get weekly personalized skincare tips and early access to product launches.",
+        "emailPlaceholder": "Enter your email",
+        "joinNow": "Join Now"
+    },
+    "SeccionInfoHome": {
+        "badge": "EXPERT-BACKED SKINCARE",
+        "title1": "Your",
+        "title2": "Skincare",
+        "title3": "journey starts here",
+        "description": "Join a community of over 50k enthusiasts. Track your progress, find the perfect routine for your skin type and discover products that actually work.",
+        "register": "Sign up",
+        "explorer": "Discover more",
+        "trusted": "people trust us"
+    },
+    "Profile": {
+        "myRoutine": "My Routines",
+        "myFavorites": "My Favorites",
+        "morning": "Morning (AM)",
+        "evening": "Evening (PM)",
+        "addStep": "+ Add routine",
+        "searchProducts": "Search products...",
+        "discoverMore": "Discover more products",
+        "loadMore": "Load more"
+    },
+    "ProfileTabs": {
+        "myRoutine": "My Routines",
+        "myFavorites": "My Favorites",
+        "forumPosts": "Forum Posts",
+        "morning": "Morning (AM)",
+        "evening": "Evening (PM)",
+        "addStep": "+ Add Step",
+        "searchProducts": "Search products...",
+        "discoverMore": "Discover more products"
+    },
+    "RoutineContent": {
+        "steps": "steps",
+        "deleteDialog": {
+            "title": "Delete Routine",
+            "description": "Are you sure you want to delete",
+            "descriptionWarning": "? This action cannot be undone.",
+            "cancel": "Cancel",
+            "delete": "Delete"
+        },
+        "editButton": "Edit routine",
+        "deleted": "has been deleted"
+    },
+    "UserInfo": {
+        "reviews": "REVIEWS",
+        "posts": "POSTS",
+        "editProfile": "Edit Profile",
+        "changePhoto": "Change photo",
+        "name": "Name",
+        "city": "City",
+        "skinType": "Skin Type",
+        "bio": "Bio",
+        "cancel": "Cancel",
+        "save": "Save"
+    },
+    "Login": {
+        "welcome": "Welcome",
+        "subtitle": "Sign in to your daily skincare ritual",
+        "usernameEmail": "Username or Email",
+        "password": "Password",
+        "forgotPassword": "Forgot password?",
+        "login": "Sign in",
+        "continueWith": "or continue with",
+        "newUser": "New to Skin4All?",
+        "register": "Register",
+        "emailRequired": "Email is required",
+        "passwordRequired": "Password is required"
     },
     "DiscoveryPage": {
         "didNotFindProduct": "Didn't found what you were looking for?",
@@ -126,7 +284,25 @@
         "keyIngredient": "Key ingredient",
         "ingredientsDetailed": "Detailed ingredients",
         "addToRoutine": "Add to routine",
-        "productNotFound": "Product not found"
+        "productNotFound": "Product not found",
+        "productTypes": {
+            "cream": "Cream",
+            "cleanser": "Cleanser",
+            "eye_cream": "Eye cream",
+            "mask": "Mask",
+            "oil": "Oil",
+            "serum": "Serum",
+            "essence": "Essence",
+            "exfoliant": "Exfoliant",
+            "sunscreen": "Sunscreen",
+            "toner": "Toner",
+            "gel": "Gel",
+            "balm": "Balm",
+            "treatment": "Treatment",
+            "makeup_remover": "Makeup Remover",
+            "makeup": "Makeup"
+        },
+        "viewDetails": "View details"
     },
     "CreateProductPage": {
         "title": "Add a new product to the Skin4All Catalogue",
@@ -156,105 +332,164 @@
             "primaryCategoryRequired": "Product category is required",
             "ingredientsRequired": "Product ingredients are required",
             "imageUrlRequired": "Image URL of product is required"
+        }
+    },
+    "registro": {
+        "titulo": "Create account",
+        "descripcion": "Complete your details to start your experience",
+        "header": {
+            "title": "Join the Glow",
+            "subtitle": "Let's get to know your skin."
         },
-        "registro": {
-            "titulo": "Create account",
-            "descripcion": "Complete your details to start your experience",
-            "header": {
-                "title": "Join the Glow",
-                "subtitle": "Let's get to know your skin."
+        "campos": {
+            "nombre": {
+                "label": "Name",
+                "placeholder": "Eg: John Doe"
             },
-            "campos": {
-                "nombre": {
-                    "label": "Name",
-                    "placeholder": "Eg: John Doe"
-                },
-                "fechaNacimiento": {
-                    "label": "Birth date"
-                },
-                "tipoPiel": {
-                    "label": "Skin type",
-                    "placeholder": "Select your skin type",
-                    "opciones": {
-                        "grasa": "Oily",
-                        "seca": "Dry",
-                        "mixta": "Combination",
-                        "sensible": "Sensitive",
-                        "normal": "Normal"
-                    }
-                },
-                "probadoSkinCare": {
-                    "label": "Have you ever tried skincare products?",
-                    "si": "Yes",
-                    "no": "No"
-                },
-                "comoEnteroDeNosotros": {
-                    "label": "How did you hear about us?",
-                    "placeholder": "Select an option",
-                    "opciones": {
-                        "instagram": "Instagram",
-                        "tiktok": "TikTok",
-                        "amigo": "Friend referral",
-                        "google": "Google search",
-                        "publicidad": "Ads",
-                        "otro": "Other"
-                    }
-                },
-                "email": {
-                    "label": "Email address",
-                    "placeholder": "email@example.com"
-                },
-                "contrasenia": {
-                    "label": "Password",
-                    "placeholder": "********"
-                },
-                "confirmarContrasenia": {
-                    "label": "Confirm password",
-                    "placeholder": "********"
+            "fechaNacimiento": {
+                "label": "Birth date"
+            },
+            "tipoPiel": {
+                "label": "Skin type",
+                "placeholder": "Select your skin type",
+                "opciones": {
+                    "grasa": "Oily",
+                    "seca": "Dry",
+                    "mixta": "Combination",
+                    "sensible": "Sensitive",
+                    "normal": "Normal"
                 }
             },
-            "validaciones": {
-                "requerido": "This field is required",
-                "emailInvalido": "Please enter a valid email",
-                "contraseniaMinima": "Password must be at least 8 characters",
-                "contraseniasNoCoinciden": "Passwords do not match"
+            "probadoSkinCare": {
+                "label": "Have you ever tried skincare products?",
+                "si": "Yes",
+                "no": "No"
             },
-            "legal": {
-                "texto": "Password must be at least 8 characters long. By creating an account, you accept our",
-                "terminos": "Terms and Conditions"
+            "comoEnteroDeNosotros": {
+                "label": "How did you hear about us?",
+                "placeholder": "Select an option",
+                "opciones": {
+                    "instagram": "Instagram",
+                    "tiktok": "TikTok",
+                    "amigo": "Friend referral",
+                    "google": "Google search",
+                    "publicidad": "Ads",
+                    "otro": "Other"
+                }
             },
-            "botones": {
-                "crearCuenta": "Create account",
-                "iniciarSesion": "Sign in here"
+            "email": {
+                "label": "Email address",
+                "placeholder": "email@example.com"
             },
-            "footer": {
-                "yaTienesCuenta": "Already have an account?"
+            "contrasenia": {
+                "label": "Password",
+                "placeholder": "********"
             },
-            "mensajes": {
-                "registroExitoso": "Your account has been created successfully",
-                "errorGenerico": "An unexpected error occurred. Please try again."
+            "confirmarContrasenia": {
+                "label": "Confirm password",
+                "placeholder": "********"
             }
         },
-        "ToS": {
-            "title": "Terms and Conditions",
-            "lastUpdated": "Last updated: March 16, 2026",
-            "sections": {
-                "platformUse": {
-                    "title": "1. Platform use",
-                    "body": "By creating an account on Skin4All, you agree to use the platform responsibly and not affect the security, availability, or experience of other users."
-                },
-                "accountPrivacy": {
-                    "title": "2. Account and privacy",
-                    "body": "You are responsible for keeping your account credentials confidential. The information you provide will be handled according to our privacy practices and used only to improve your in-app experience."
-                },
-                "contentRecommendations": {
-                    "title": "3. Content and recommendations",
-                    "body": "Routines and recommendations shown in the app are for informational purposes only and do not replace professional medical or dermatological advice."
-                },
-                "changes": {
-                    "title": "4. Changes to these terms",
-                    "body": "We may update these terms at any time. If important changes are made, we will notify you within the platform."
-                }
+        "validaciones": {
+            "requerido": "This field is required",
+            "emailInvalido": "Please enter a valid email",
+            "contraseniaMinima": "Password must be at least 8 characters",
+            "contraseniasNoCoinciden": "Passwords do not match"
+        },
+        "legal": {
+            "texto": "Password must be at least 8 characters long. By creating an account, you accept our",
+            "terminos": "Terms and Conditions"
+        },
+        "botones": {
+            "crearCuenta": "Create account",
+            "iniciarSesion": "Sign in here"
+        },
+        "footer": {
+            "yaTienesCuenta": "Already have an account?"
+        },
+        "mensajes": {
+            "registroExitoso": "Your account has been created successfully",
+            "errorGenerico": "An unexpected error occurred. Please try again."
+        }
+    },
+    "CommunityPage": {
+        "forumTitle": "Community Forum",
+        "forumSubtitle": "Skincare and Health",
+        "allSkinTypes": "All skin types",
+        "createPost": "Create Post",
+        "discussionsTitle": "Discussions",
+        "discussionsSubtitle": "Get expert advice from the community.",
+        "filter": "Filter",
+        "solved": "Solved",
+        "mostDiscussed": "Most discussed routines",
+        "commentsCount": "{count, plural, =0 {0 comments} =1 {1 comment} other {{count} comments}}",
+        "viewsCount": "{count} views",
+        "freshness": {
+            "twoHours": "2 hours ago",
+            "fiveHours": "5 hours ago",
+            "yesterday": "Yesterday",
+            "twoDays": "2 days ago"
+        },
+        "tabs": {
+            "newest": "Newest",
+            "mostCommented": "Most Commented",
+            "solved": "Solved",
+            "mostVoted": "Most Voted"
+        }
+    },
+    "RoutineDetail": {
+        "community": "Community",
+        "notFoundTitle": "Routine not found",
+        "notFoundDescription": "The routine you are trying to open does not exist in the mock API.",
+        "backToDiscussions": "Back to discussions",
+        "authorFallback": "Author",
+        "routineCreator": "Routine creator",
+        "routineType": "{type} routine",
+        "stepsTitle": "Routine steps",
+        "stepTitle": "Step {number}: {name}",
+        "unknownBrand": "Unknown brand",
+        "unknownProduct": "Unknown product",
+        "noImage": "No image",
+        "commentsTitle": "Comments",
+        "thoughtsTitle": "What are your thoughts?",
+        "commentPlaceholder": "Share your experience with this routine...",
+        "addComment": "Add comment",
+        "postComment": "Post comment",
+        "noComments": "No comments yet. Be the first one to comment on this routine.",
+        "communityMember": "Community member",
+        "userFallback": "Skin4All User",
+        "likes": "{count, plural, =0 {0 likes} =1 {1 like} other {{count} likes}}",
+        "reply": "Reply",
+        "expert": "Expert",
+        "justNow": "Just now",
+        "hoursAgo": "{count}h ago",
+        "upvote": "Upvote",
+        "downvote": "Downvote",
+        "bold": "Bold",
+        "italic": "Italic",
+        "insertLink": "Insert link",
+        "insertImage": "Insert image",
+        "commentPosted": "Your comment has been posted"
+    },
+    "ToS": {
+        "title": "Terms and Conditions",
+        "lastUpdated": "Last updated: March 16, 2026",
+        "sections": {
+            "platformUse": {
+                "title": "1. Platform use",
+                "body": "By creating an account on Skin4All, you agree to use the platform responsibly and not affect the security, availability, or experience of other users."
+            },
+            "accountPrivacy": {
+                "title": "2. Account and privacy",
+                "body": "You are responsible for keeping your account credentials confidential. The information you provide will be handled according to our privacy practices and used only to improve your in-app experience."
+            },
+            "contentRecommendations": {
+                "title": "3. Content and recommendations",
+                "body": "Routines and recommendations shown in the app are for informational purposes only and do not replace professional medical or dermatological advice."
+            },
+            "changes": {
+                "title": "4. Changes to these terms",
+                "body": "We may update these terms at any time. If important changes are made, we will notify you within the platform."
             }
         }
     },
@@ -297,7 +532,7 @@
             "delete": "Delete"
         },
         "products": {
-            "inventoryTitle": "Product Inventory",
+            "overviewTitle": "Product Overview",
             "addProduct": "Add Product",
             "colName": "Product Name",
             "colCategory": "Category",
@@ -309,7 +544,49 @@
             "proposed": "Waiting for approval",
             "colBrand": "Brand",
             "colType": "Type",
-            "colSubmittedBy": "Submitted By"
+            "colSubmittedBy": "Submitted By",
+            "stats": {
+                    "total": "Total Products",
+                    "pending": "Pending Approval",
+                    "approved": "Approved",
+                    "published": "Published",
+                    "rejected": "Rejected"
+            }
+        },
+        "productsPage": {
+            "title": "Product Management",
+            "subtitle": "Review, approve and manage products submitted by users.",
+            "export": "Export",
+            "addNew": "Add New Product",
+            "empty": "No products match the selected filters.",
+            "showing": "Showing {from}–{to} of {total} results",
+            "stats": {
+                    "total": "Total Products",
+                    "pending": "Pending Approval",
+                    "approved": "Approved",
+                    "published": "Published",
+                    "rejected": "Rejected"
+            },
+            "filters": {
+                "searchPlaceholder": "Filter by name or brand...",
+                "allCategories": "All Categories",
+                "allStatuses": "All Statuses",
+                "more": "More filters"
+            },
+            "bulk": {
+                "label": "Bulk Actions:",
+                "selectAction": "Select Action",
+                "approve": "Approve",
+                "reject": "Reject",
+                "publish": "Publish",
+                "delete": "Delete",
+                "apply": "Apply"
+            },
+            "table": {
+                    "selectAll": "Select all",
+                    "select": "Select",
+                    "submittedBy": "Submitted By"
+            }
         },
         "pagination": {
             "prev": "Prev",
@@ -317,7 +594,9 @@
         },
         "actions": {
             "edit": "Edit",
-            "delete": "Delete"
+            "delete": "Delete",
+            "approve": "Approve",
+            "reject": "Reject"
         }
     }
 }

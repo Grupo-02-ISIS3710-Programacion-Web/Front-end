@@ -19,7 +19,7 @@ const links = [
   },
   {
     nombre: "Comunidad",
-    href: "/comunidad"
+    href: "/community"
   },
   {
     nombre: "Mis productos",
@@ -70,11 +70,13 @@ export function NavBarDesktop({ isLoggedIn = false }: { isLoggedIn?: boolean }) 
           <NavigationMenuList className="gap-4">
             {links.map((link) => (
               <NavigationMenuItem key={link.nombre}>
-                <NavigationMenuLink
-                  href={link.href}
-                  className="text-sm font-medium hover:text-primary hover:font-medium transition-colors"
-                >
-                  {link.nombre}
+                <NavigationMenuLink asChild>
+                  <Link
+                    href={link.href}
+                    className="text-sm font-medium hover:text-primary hover:font-medium transition-colors"
+                  >
+                    {link.nombre}
+                  </Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>
             ))}
@@ -91,7 +93,7 @@ export function NavBarDesktop({ isLoggedIn = false }: { isLoggedIn?: boolean }) 
         {/* Lado derecho */}
         <div className="flex items-center gap-3">
           <div className="hidden lg:flex items-center gap-2">
-            <Link href={"/register"}>
+            <Link href="/register">
               <Button
                 variant="outline"
                 className=" hover:bg-secondary hover:text-secondary-foreground"
@@ -100,7 +102,9 @@ export function NavBarDesktop({ isLoggedIn = false }: { isLoggedIn?: boolean }) 
               </Button>
             </Link>
             <Button>
-              Iniciar sesión
+              <Link href="/login">
+                Iniciar sesión
+              </Link>
             </Button>
           </div>
           {isLoggedIn && (<>
@@ -176,9 +180,7 @@ export function NavBarMobile() {
             {/* Autenticación al fondo */}
             <div className="mt-auto pt-6 border-t flex justify-center w-full">
               <div className=" flex flex-col gap-2 w-60">
-                <Button variant="outline"><Link href={"/register"}>
-                  Registrarme
-                </Link></Button>
+                <Button variant="outline">Registrarme</Button>
                 <Button>Iniciar sesión</Button>
               </div>
             </div>
