@@ -20,10 +20,10 @@ describe('ProductCard', () => {
     )
 
     expect(screen.getByText(product.brand)).toBeInTheDocument()
-    expect(screen.getByText(product.name)).toBeInTheDocument()
+    expect(screen.getAllByText(product.name).length).toBeGreaterThan(0)
 
-    const detailLinks = screen.getAllByRole('link')
-    expect(detailLinks[0]).toHaveAttribute('href', '/descubrir/hydra-cream')
+    const detailLinks = screen.getAllByRole('link', { name: product.name })
+    expect(detailLinks.some((link) => link.getAttribute('href') === '/descubrir/hydra-cream')).toBe(true)
   })
 
   it('calls onFavoriteSelect when toggled from non-favorite state', () => {

@@ -2,9 +2,24 @@ import { fireEvent, render, screen } from '@testing-library/react'
 import RoutineContent from '../../profile/routineContent'
 import { mockRoutines } from '../../test-fixtures/routines'
 import { mockProducts } from '../../test-fixtures/products'
+import { toast } from 'sonner'
 
 jest.mock('@/lib/api', () => ({
   getProducts: jest.fn(() => mockProducts),
+}))
+
+jest.mock('@/i18n/navigation', () => ({
+  Link: ({ children, href, ...props }: any) => (
+    <a href={href} {...props}>
+      {children}
+    </a>
+  ),
+}))
+
+jest.mock('sonner', () => ({
+  toast: {
+    success: jest.fn(),
+  },
 }))
 
 describe('RoutineContent', () => {
@@ -33,14 +48,13 @@ describe('RoutineContent', () => {
     expect(screen.getByText('Producto no encontrado')).toBeInTheDocument()
   })
 
-  it('keeps delete control interactive', () => {
-    const consoleSpy = jest.spyOn(console, 'log').mockImplementation(() => {})
-
+  it('deletes a routine when confirmation is accepted', () => {
     render(<RoutineContent filteredRoutines={[mockRoutines[0]]} />)
 
-    fireEvent.click(screen.getByRole('button'))
+    fireEvent.click(screen.getByTitle('RoutineContent.deleteDialog.title'))
+    fireEvent.click(screen.getByRole('button', { name: 'RoutineContent.deleteDialog.delete' }))
 
-    expect(consoleSpy).toHaveBeenCalledWith('Delete routine', 'r1')
-    consoleSpy.mockRestore()
+    expect(screen.queryByText('Morning Basic')).not.toBeInTheDocument()
+    expect(toast.success).toHaveBeenCalledWith('Morning Basic RoutineContent.deleted')
   })
 })
