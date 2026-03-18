@@ -4,7 +4,6 @@ import { Trash2, Sun, Moon, Edit } from "lucide-react"
 import { Routine } from "@/types/routine"
 import { useTranslations } from "next-intl"
 import { getProducts } from "@/lib/api"
-import { Product } from "@/types/product"
 import { Link } from "@/i18n/navigation"
 import { toLowerCaseAndReplaceSpacesWithHyphens } from "@/lib/string-utils"
 import { Button } from "@/components/ui/button"
@@ -26,21 +25,12 @@ export default function RoutineContent({
 }: {
   filteredRoutines: Routine[]
 }) {
-
   const productsAvailable = getProducts();
-
-  const [products, setProducts] = useState<Product[]>([])
   const [deletingRoutineId, setDeletingRoutineId] = useState<string | null>(null)
   const [routines, setRoutines] = useState<Routine[]>(filteredRoutines)
   const t = useTranslations("RoutineContent")
 
-  function setProductsApi() {
-    const productsData = getProducts()
-    setProducts(productsData)
-  }
-
   useEffect(() => {
-    setProductsApi()
     setRoutines(filteredRoutines)
   }, [filteredRoutines])
 

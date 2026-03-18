@@ -39,7 +39,9 @@ export function ProductCard({
 
         if (toggleFavorite) {
             onFavoriteDeselect(productIndex);
+            onFavoriteDeselect(productIndex);
         } else {
+            onFavoriteSelect(productIndex);
             onFavoriteSelect(productIndex);
         }
     };
@@ -79,6 +81,11 @@ export function ProductCard({
                     </Button>
                 </Stack>
 
+                <CardTitle>
+                    <a href={`/descubrir/${toLowerCaseAndReplaceSpacesWithHyphens(product.name)}`}>
+                        {product.name}
+                    </a>
+                </CardTitle>
                 <CardTitle>
                     <Link href={productHref}>
                         {product.name}

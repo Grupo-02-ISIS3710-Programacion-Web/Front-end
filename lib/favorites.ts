@@ -67,7 +67,7 @@ export const productsFavorites: Product[] = [
         rating: 4.6,
         review_count: 21456
     },
-    {
+   {
         id: "6",
         name: "Cicaplast Baume B5",
         brand: "La Roche-Posay",
@@ -80,7 +80,7 @@ export const productsFavorites: Product[] = [
         rating: 4.9,
         review_count: 18765
     },
-    {
+   {
         id: "11",
         name: "Effaclar Gel Limpiador Purificante",
         brand: "La Roche-Posay",
