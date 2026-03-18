@@ -11,7 +11,7 @@ jest.mock("@/i18n/navigation", () => ({
   Link: ({ children }) => children,
 }));
 
-describe("FormularioRegistroComponent", () => {
+describe("HU-01: FormularioRegistroComponent", () => {
 
   
   test("muestra errores si el formulario está vacío", async () => {

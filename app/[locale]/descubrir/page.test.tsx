@@ -99,7 +99,7 @@ jest.mock("@/components/products/filter-header", () => ({
   ),
 }));
 
-describe("DiscoveryPage (FINAL TEST)", () => {
+describe("HU-6:DiscoveryPage", () => {
 
   test("muestra productos al cargar", () => {
     render(<DiscoveryPage />);

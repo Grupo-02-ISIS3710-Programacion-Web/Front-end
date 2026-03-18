@@ -17,7 +17,7 @@ beforeAll(() => {
   (window as any).location = { href: "" };
 });
 
-describe("Login (HU-02)", () => {
+describe("HU-02: Login", () => {
 
   
   test("muestra errores si el formulario está vacío", async () => {

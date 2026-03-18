@@ -22,7 +22,7 @@ jest.mock("next/link", () => ({
   default: ({ children }: any) => children,
 }));
 
-describe("Profile Page (HU-03)", () => {
+describe("HU-03: Profile Page", () => {
 
   test("muestra información del usuario", () => {
     render(<Profile />);
