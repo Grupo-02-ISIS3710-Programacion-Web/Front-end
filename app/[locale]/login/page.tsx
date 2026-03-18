@@ -50,6 +50,9 @@ function LoginFormComponent(){
 
   const onSubmit: SubmitHandler<LoginForm> = (data) => {
     console.log(data)
+    localStorage.setItem("isLoggedIn", "true")
+
+    window.location.href = "/home"
   }
 
   return (

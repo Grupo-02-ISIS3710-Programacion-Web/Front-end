@@ -6,6 +6,7 @@ import Link from "next/link";
 import { User, Search, Menu, Bell } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { useActionState, useEffect, useState } from "react";
 
 const links = [
   {
@@ -42,7 +43,21 @@ export default function NavBar() {
   )
 }
 
-export function NavBarDesktop({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
+export function NavBarDesktop() {
+
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+
+  useEffect(() => {
+    const logged = localStorage.getItem("isLoggedIn") === "true"
+    setIsLoggedIn(logged)
+  }, [])
+
+  const handleLogout = () => {
+    localStorage.removeItem("isLoggedIn")
+    window.location.href = "/"
+  }
+
+
   return (
     <div className="hidden md:flex items-center justify-center px-4 lg:px-10 py-3 w-full gap-12 bg-popover">
 
@@ -88,7 +103,7 @@ export function NavBarDesktop({ isLoggedIn = false }: { isLoggedIn?: boolean }) 
 
         {/* Lado derecho */}
         <div className="flex items-center gap-3">
-          <div className="hidden lg:flex items-center gap-2">
+          { !isLoggedIn && <div className="hidden lg:flex items-center gap-2">
             <Link href="/register">
               <Button
                 variant="outline"
@@ -102,10 +117,16 @@ export function NavBarDesktop({ isLoggedIn = false }: { isLoggedIn?: boolean }) 
                 Iniciar sesión
               </Link>
             </Button>
-          </div>
+          </div>}
           {isLoggedIn && (<>
-            <NotificationsButton />
+            <Button className="bg-foreground"
+              onClick={handleLogout}>
+                Cerrar sesión
+         
+            </Button>
+            <Link href="/profile">
             <ProfileButton />
+            </Link>
           </>)}
         </div>
       </div>
