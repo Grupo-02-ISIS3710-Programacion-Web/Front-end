@@ -146,6 +146,7 @@
         "morning": "Mañana (AM)",
         "evening": "Noche (PM)",
         "addStep": "+ Agregar rutina",
+        "createWithAi": "Crear con IA",
         "searchProducts": "Buscar productos...",
         "discoverMore": "Descubre más productos",
         "loadMore": "Cargar más"
@@ -195,7 +196,156 @@
         "newUser": "¿Nuevo en Skin4All?",
         "register": "Regístrate",
         "emailRequired": "El email es obligatorio",
-        "passwordRequired": "La contraseña es obligatoria"
+        "passwordRequired": "La contraseña es obligatoria",
+        "invalidCredentials": "Credenciales inválidas. Verifica tu usuario/email y contraseña.",
+        "demoHint": "Demo: usuario sarahj o sarah@skin4all.com, contraseña skin4all123"
+    },
+    "Auth": {
+        "requiredTitle": "No has iniciado sesión",
+        "requiredDescription": "Necesitas iniciar sesión para crear o editar rutinas y para interactuar en comentarios.",
+        "goToLogin": "Ir a iniciar sesión",
+        "backToCommunity": "Volver a la comunidad"
+    },
+    "AiRoutine": {
+        "badge": "Rutina asistida por IA",
+        "title": "Crea una rutina conversando con IA",
+        "description": "Describe lo que buscas, ajusta el borrador en tiempo real y selecciona productos que ya existen dentro de Skin4All.",
+        "headerActions": {
+            "manualBuilder": "Abrir constructor manual",
+            "suggestions": "Ver sugerencias"
+        },
+        "suggestionsSheet": {
+            "title": "Sugerencias",
+            "description": "Explora productos sugeridos y atajos para seguir refinando la conversación."
+        },
+        "mobileDraft": {
+            "open": "Ver borrador",
+            "title": "Borrador de rutina",
+            "description": "Edita tu rutina sin salir del chat.",
+            "close": "Cerrar"
+        },
+        "starterPrompts": {
+            "title": "Puntos de inicio",
+            "description": "Empieza con una intención clara y continúa iterando desde el chat.",
+            "hydration": {
+                "label": "Más hidratación y barrera",
+                "value": "Quiero una rutina enfocada en hidratación, reparación de barrera y menos irritación."
+            },
+            "breakouts": {
+                "label": "Brotes y textura",
+                "value": "Necesito una rutina que me ayude con brotes ocasionales, textura y exceso de grasa sin resecar demasiado."
+            },
+            "barrier": {
+                "label": "Piel sensible",
+                "value": "Busco una rutina calmante para piel sensible con pocos pasos y enfoque en reparación."
+            },
+            "minimalist": {
+                "label": "Rutina minimalista",
+                "value": "Quiero una rutina simple, fácil de seguir y con pocos productos."
+            }
+        },
+        "focusAreas": {
+            "title": "Áreas de enfoque",
+            "description": "Estas prioridades influyen en los productos sugeridos para el borrador.",
+            "items": {
+                "hydration": "Hidratación",
+                "barrier": "Barrera",
+                "texture": "Textura",
+                "sensitivity": "Sensibilidad"
+            }
+        },
+        "chat": {
+            "title": "Chat",
+            "description": "Haz preguntas, pide ajustes y sigue afinando la rutina paso a paso.",
+            "status": "Experiencia lista para conectar con IA",
+            "assistantLabel": "Skin4All AI",
+            "userLabel": "{name}"
+        },
+        "composer": {
+            "label": "Indica lo que quieres lograr",
+            "placeholder": "Describe tus preocupaciones, ingredientes que quieres usar o evitar, presupuesto, tiempo disponible y cualquier detalle relevante...",
+            "hint": "Esta pantalla simula la experiencia final. La lógica real del LLM se integrará después.",
+            "send": "Enviar"
+        },
+        "messages": {
+            "assistantIntro": "Hola {name}, cuéntame qué quieres mejorar y te iré guiando hacia una rutina más precisa.",
+            "userGoal": "Quiero una rutina simple que me ayude con deshidratación, sensibilidad y textura irregular.",
+            "assistantFollowUp": "Perfecto. Empezaré con una propuesta base y luego podremos seguir ajustando productos, pasos y notas desde esta misma conversación.",
+            "pendingReply": "Respuesta simulada: aquí aparecerá la siguiente iteración del asistente cuando se conecte la lógica con el LLM."
+        },
+        "draft": {
+            "title": "Borrador de rutina",
+            "description": "Este panel representa una estructura real del tipo Routine: nombre, descripción, tipo, tipo de piel y pasos con productos existentes.",
+            "initialName": "Rutina personalizada asistida",
+            "initialDescription": "Borrador inicial generado desde el contexto del chat. Edita campos, reorganiza pasos y selecciona productos existentes.",
+            "fields": {
+                "name": "Nombre de la rutina",
+                "description": "Descripción",
+                "type": "Momento de la rutina",
+                "skinType": "Tipo de piel"
+            },
+            "placeholders": {
+                "name": "Nombre de la rutina",
+                "description": "Describe qué busca resolver esta rutina",
+                "skinType": "Selecciona el tipo de piel",
+                "stepName": "Nombre del paso",
+                "stepNotes": "Notas o instrucciones del paso"
+            },
+            "typeOptions": {
+                "am": "AM",
+                "pm": "PM"
+            },
+            "structure": {
+                "title": "Vista estructurada",
+                "summary": "{count, plural, =0 {0 pasos dentro del borrador} =1 {1 paso dentro del borrador} other {{count} pasos dentro del borrador}}"
+            },
+            "stepsTitle": "Pasos seleccionados",
+            "stepsCount": "{count, plural, =0 {0 pasos} =1 {1 paso} other {{count} pasos}}",
+            "stepLabel": "Paso {order}",
+            "stepName": "Paso {order}",
+            "stepNotes": "Usar {productName} siguiendo tolerancia y necesidades de la piel.",
+            "empty": "Aún no has agregado productos al borrador. Usa las recomendaciones para construir la rutina.",
+            "unknownProduct": "Producto no encontrado",
+            "actions": {
+                "continue": "Continuar en el constructor",
+                "moveUp": "Mover paso hacia arriba",
+                "moveDown": "Mover paso hacia abajo",
+                "removeStep": "Eliminar paso"
+            }
+        },
+        "recommendedProducts": {
+            "title": "Productos sugeridos",
+            "description": "Estas recomendaciones usan productos reales de la plataforma y puedes agregarlas o quitarlas del borrador.",
+            "actions": {
+                "add": "Agregar al borrador",
+                "added": "Ya agregado"
+            },
+            "toast": {
+                "added": "{name} se agrego al borrador"
+            }
+        },
+        "continuousRecommendations": {
+            "title": "Recomendaciones continuas",
+            "description": "Atajos para seguir refinando la conversación sin romper el flujo.",
+            "addToChat": "Llevar al chat",
+            "items": {
+                "adjustFrequency": {
+                    "title": "Hacer la rutina más progresiva",
+                    "description": "Pide una versión más suave si quieres introducir activos con mayor cuidado.",
+                    "prompt": "Ajusta la rutina para introducir los activos de forma más gradual y tolerable."
+                },
+                "swapTexture": {
+                    "title": "Cambiar texturas",
+                    "description": "Solicita opciones más ligeras o más nutritivas manteniendo el mismo objetivo.",
+                    "prompt": "Propón alternativas con texturas más ligeras para clima cálido y húmedo."
+                },
+                "simplifyNight": {
+                    "title": "Crear una versión PM",
+                    "description": "Úsalo para pedir una variante nocturna que complemente la rutina principal.",
+                    "prompt": "Crea una versión nocturna más simple que complemente este borrador."
+                }
+            }
+        }
     },
     "DiscoveryPage": {
         "didNotFindProduct": "¿No encontraste lo que estabas buscando?",
@@ -419,6 +569,7 @@
         "forumSubtitle": "Skincare y salud",
         "allSkinTypes": "Todos los tipos de piel",
         "createPost": "Crear publicación",
+        "createWithAi": "Crear rutina con IA",
         "discussionsTitle": "Discusiones de rutinas",
         "discussionsSubtitle": "Explora, compara y mejora rutinas de skincare.",
         "filter": "Filtrar",
@@ -471,7 +622,9 @@
         "bold": "Negrita",
         "italic": "Cursiva",
         "insertLink": "Insertar enlace",
-        "insertImage": "Insertar imagen"
+        "insertImage": "Insertar imagen",
+        "loginRequiredForComments": "Debes iniciar sesión para comentar o votar.",
+        "goToLogin": "Iniciar sesión"
     },
     "Footer": {
         "brand": "Skin4All",

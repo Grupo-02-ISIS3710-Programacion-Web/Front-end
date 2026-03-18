@@ -12,6 +12,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { useMemo } from "react";
 import { useRoutineVote } from "@/lib/hooks/use-routine-votes";
 import { useLocaleDateFormatter } from "@/lib/hooks/use-locale-date-formatter";
+import { useAuthSession } from "@/lib/hooks/use-auth-session";
 
 type RoutineDetailPageProps = Readonly<{
   routineId: string;
@@ -22,11 +23,13 @@ export default function RoutineDetailPage({ routineId, backPath = "/community" }
   const t = useTranslations("RoutineDetail");
   const tSkin = useTranslations("SkinTypes");
   const locale = useLocale();
+  const { user: loggedUser, isLoggedIn } = useAuthSession();
 
   const routine = getRoutineById(routineId);
   const user = routine ? getUserById(routine.userId) : undefined;
-  const currentUserId = "u1";
+  const currentUserId = loggedUser?.id ?? "";
   const comments = routine?.comments ?? [];
+  const loginHref = `/login?redirect=${encodeURIComponent(`/routine/detail/${routineId}`)}`;
   const dateFormatter = useLocaleDateFormatter(locale, {
     day: "2-digit",
     month: "short",
@@ -127,29 +130,46 @@ export default function RoutineDetailPage({ routineId, backPath = "/community" }
               <div className="flex items-center gap-3 border-t border-[#eceff4] pt-4 text-sm font-semibold text-[#4f576e]">
                 <button
                   type="button"
-                  onClick={() => handleRoutineVote("up")}
+                  onClick={() => {
+                    if (!isLoggedIn) {
+                      return;
+                    }
+                    handleRoutineVote("up");
+                  }}
                   className={`inline-flex items-center gap-1 rounded-lg border px-3 py-1.5 transition ${hasUpvotedRoutine
                     ? "border-[#d44f67] bg-[#fdecef] text-[#d44f67]"
                     : "border-[#dfe4ec] hover:border-[#d44f67] hover:text-[#d44f67]"
                     }`}
                   aria-label={t("upvote")}
+                  disabled={!isLoggedIn}
                 >
                   <ArrowUp size={14} />
                   {routineUpvotes.length}
                 </button>
                 <button
                   type="button"
-                  onClick={() => handleRoutineVote("down")}
+                  onClick={() => {
+                    if (!isLoggedIn) {
+                      return;
+                    }
+                    handleRoutineVote("down");
+                  }}
                   className={`inline-flex items-center gap-1 rounded-lg border px-3 py-1.5 transition ${hasDownvotedRoutine
                     ? "border-[#d44f67] bg-[#fdecef] text-[#d44f67]"
                     : "border-[#dfe4ec] hover:border-[#d44f67] hover:text-[#d44f67]"
                     }`}
                   aria-label={t("downvote")}
+                  disabled={!isLoggedIn}
                 >
                   <ArrowDown size={14} />
                   {routineDownvotes.length}
                 </button>
               </div>
+              {!isLoggedIn && (
+                <p className="text-sm text-[#5f6880]">
+                  {t("loginRequiredForComments")} <Link href={loginHref} className="font-semibold text-[#d44f67] hover:underline">{t("goToLogin")}</Link>
+                </p>
+              )}
             </CardHeader>
           </Card>
 
@@ -213,6 +233,9 @@ export default function RoutineDetailPage({ routineId, backPath = "/community" }
               targetId={routine.id}
               targetType="routine"
               initialComments={comments}
+              currentUserId={currentUserId}
+              isLoggedIn={isLoggedIn}
+              loginHref={loginHref}
               translationNamespace="RoutineDetail"
             />
           </div>

@@ -13,6 +13,8 @@ import { useRoutineVotesMap } from "@/lib/hooks/use-routine-votes";
 import { useLocaleDateFormatter } from "@/lib/hooks/use-locale-date-formatter";
 import { AnimatePresence, motion } from "motion/react";
 import RoutineCard from "@/components/community/RoutineCard";
+import { useAuthSession } from "@/lib/hooks/use-auth-session";
+import { getProtectedRoute } from "@/lib/protected-route";
 
 type MobileTab = "newest" | "mostCommented" | "mostVoted";
 
@@ -48,10 +50,14 @@ export default function CommunityPage() {
   const tSkin = useTranslations("SkinTypes");
   const tRoutine = useTranslations("RoutineDetail");
   const locale = useLocale();
+  const { user } = useAuthSession();
+  const isLoggedIn = !!user;
 
   const [activeTab, setActiveTab] = useState<MobileTab>("newest");
   const [activeSkinFilter, setActiveSkinFilter] = useState<"all" | SkinType>("all");
-  const currentUserId = "u1";
+  const currentUserId = user?.id ?? "";
+  const createRoutineHref = getProtectedRoute("/routine/crear", isLoggedIn);
+  const createAiRoutineHref = getProtectedRoute("/ai-routine", isLoggedIn);
 
   const routines = getRoutines();
   const users = getUsers();
@@ -109,7 +115,7 @@ export default function CommunityPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.2, ease: "easeOut", delay: Math.min(index * 0.025, 0.1) }}
           >
-            <RoutineCard post={post} onVote={voteRoutine} tCommunity={t} tRoutine={tRoutine} size={size} />
+            <RoutineCard post={post} onVote={isLoggedIn ? voteRoutine : undefined} tCommunity={t} tRoutine={tRoutine} size={size} showVoting={isLoggedIn} />
           </motion.div>
         ))}
       </motion.div>
@@ -126,7 +132,8 @@ export default function CommunityPage() {
           <aside className="sticky top-6 self-start h-fit">
             <SidebarSection title={t("forumTitle")} subtitle={t("forumSubtitle")}>
               <nav className="space-y-2"><FilterButtons active={activeSkinFilter} onChange={setActiveSkinFilter} counts={skinTypeCounts} t={t} tSkin={tSkin} /></nav>
-              <Button asChild className="mt-5 w-full"><Link href="/routine/crear"><Plus size={16} /> {t("createPost")}</Link></Button>
+              <Button asChild className="mt-5 w-full"><Link href={createRoutineHref}><Plus size={16} /> {t("createPost")}</Link></Button>
+              <Button asChild variant="outline" className="mt-2 w-full"><Link href={createAiRoutineHref}>{t("createWithAi")}</Link></Button>
             </SidebarSection>
           </aside>
 
@@ -147,7 +154,8 @@ export default function CommunityPage() {
         <div className="space-y-4 lg:hidden">
           <SidebarSection title={t("forumTitle")} subtitle={t("forumSubtitle")}>
             <nav className="space-y-2"><FilterButtons active={activeSkinFilter} onChange={setActiveSkinFilter} counts={skinTypeCounts} t={t} tSkin={tSkin} /></nav>
-            <Button asChild className="mt-5 w-full"><Link href="/routine/crear"><Plus size={16} /> {t("createPost")}</Link></Button>
+            <Button asChild className="mt-5 w-full"><Link href={createRoutineHref}><Plus size={16} /> {t("createPost")}</Link></Button>
+            <Button asChild variant="outline" className="mt-2 w-full"><Link href={createAiRoutineHref}>{t("createWithAi")}</Link></Button>
           </SidebarSection>
 
           <Card>
@@ -162,7 +170,7 @@ export default function CommunityPage() {
             <div className="space-y-3"><MostDiscussedList /></div>
           </SidebarSection>
 
-          <Button asChild size="icon" className="fixed right-6 bottom-6 z-50 h-16 w-16 rounded-full shadow-lg"><Link href="/routine/crear" aria-label={t("createPost")}><Plus size={30} /></Link></Button>
+          <Button asChild size="icon" className="fixed right-6 bottom-6 z-50 h-16 w-16 rounded-full shadow-lg"><Link href={createRoutineHref} aria-label={t("createPost")}><Plus size={30} /></Link></Button>
         </div>
       </div>
     </main>

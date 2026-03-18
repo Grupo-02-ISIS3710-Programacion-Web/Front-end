@@ -11,19 +11,26 @@ import { toLowerCaseAndReplaceSpacesWithHyphens } from "@/lib/string-utils";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useProductFavorite } from "@/lib/hooks/use-product-favorite";
+import { ReactNode } from "react";
 
 interface ProductCardProps {
     productIndex: number;
     product: Product;
-    onFavoriteSelect: (productIndex: number) => void;
-    onFavoriteDeselect: (productIndex: number) => void;
+    onFavoriteSelect?: (productIndex: number) => void;
+    onFavoriteDeselect?: (productIndex: number) => void;
+    showFavoriteButton?: boolean;
+    action?: ReactNode;
+    className?: string;
 }
 
 export function ProductCard({
     productIndex,
     product,
-    onFavoriteSelect,
-    onFavoriteDeselect
+    onFavoriteSelect = () => undefined,
+    onFavoriteDeselect = () => undefined,
+    showFavoriteButton = true,
+    action,
+    className
 }: ProductCardProps) {
 
     const t = useTranslations("ProductCard");
@@ -36,9 +43,9 @@ export function ProductCard({
     });
 
     return (
-        <Card className="p-0 h-full">
+        <Card className={`p-0 h-full overflow-hidden ${className ?? ""}`}>
             <Link href={productHref}>
-                <CardHeader className="bg-muted p-5 flex items-center justify-center">
+                <CardHeader className="bg-muted/70 p-5 flex items-center justify-center">
                     <div className="flex justify-center items-center w-full h-full">
                         <Image
                             src={product.image_url[0]}
@@ -60,15 +67,17 @@ export function ProductCard({
                     alignItems={"center"}
                 >
                     <div className="text-primary font-bold">{product.brand}</div>
-                    <Button
-                        variant={isFavorite ? "secondary" : "outline"}
-                        size="sm"
-                        className="h-8 px-2 rounded-2xl"
-                        onClick={toggleFavorite}
-                        aria-label={isFavorite ? "Quitar de favoritos" : "Agregar a favoritos"}
-                    >
-                        <Heart size={16} />
-                    </Button>
+                    {showFavoriteButton && (
+                        <Button
+                            variant={isFavorite ? "secondary" : "outline"}
+                            size="sm"
+                            className="h-8 px-2 rounded-2xl"
+                            onClick={toggleFavorite}
+                            aria-label={isFavorite ? "Quitar de favoritos" : "Agregar a favoritos"}
+                        >
+                            <Heart size={16} />
+                        </Button>
+                    )}
                 </Stack>
 
                 <CardTitle>
@@ -93,6 +102,12 @@ export function ProductCard({
                         {t("keyIngredient")}: {product.ingredients[0]}
                     </Stack>
                 </CardDescription>
+
+                {action ? (
+                    <div className="mt-4">
+                        {action}
+                    </div>
+                ) : null}
             </CardContent>
         </Card>
     );

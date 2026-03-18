@@ -143,6 +143,7 @@
         "morning": "Morning (AM)",
         "evening": "Evening (PM)",
         "addStep": "+ Add routine",
+        "createWithAi": "Create with AI",
         "searchProducts": "Search products...",
         "discoverMore": "Discover more products",
         "loadMore": "Load more"
@@ -192,7 +193,156 @@
         "newUser": "New to Skin4All?",
         "register": "Register",
         "emailRequired": "Email is required",
-        "passwordRequired": "Password is required"
+        "passwordRequired": "Password is required",
+        "invalidCredentials": "Invalid credentials. Check your username/email and password.",
+        "demoHint": "Demo: login sarahj or sarah@skin4all.com, password skin4all123"
+    },
+    "Auth": {
+        "requiredTitle": "You're not logged in",
+        "requiredDescription": "You need to sign in to create or edit routines and to interact with comments.",
+        "goToLogin": "Go to login",
+        "backToCommunity": "Back to community"
+    },
+    "AiRoutine": {
+        "badge": "AI-assisted routine",
+        "title": "Create a routine by chatting with AI",
+        "description": "Describe what you want to achieve, refine the draft in real time, and select products that already exist inside Skin4All.",
+        "headerActions": {
+            "manualBuilder": "Open manual builder",
+            "suggestions": "View suggestions"
+        },
+        "suggestionsSheet": {
+            "title": "Suggestions",
+            "description": "Browse suggested products and shortcuts to keep refining the conversation."
+        },
+        "mobileDraft": {
+            "open": "View draft",
+            "title": "Routine draft",
+            "description": "Edit your routine without leaving the chat.",
+            "close": "Close"
+        },
+        "starterPrompts": {
+            "title": "Starting points",
+            "description": "Begin with a clear intention and keep iterating through the chat.",
+            "hydration": {
+                "label": "More hydration and barrier care",
+                "value": "I want a routine focused on hydration, barrier repair, and less irritation."
+            },
+            "breakouts": {
+                "label": "Breakouts and texture",
+                "value": "I need a routine that helps with occasional breakouts, texture, and excess oil without over-drying my skin."
+            },
+            "barrier": {
+                "label": "Sensitive skin support",
+                "value": "I am looking for a calming routine for sensitive skin with fewer steps and a stronger focus on repair."
+            },
+            "minimalist": {
+                "label": "Minimal routine",
+                "value": "I want a simple routine that is easy to follow and uses fewer products."
+            }
+        },
+        "focusAreas": {
+            "title": "Focus areas",
+            "description": "These priorities influence the products suggested for the draft.",
+            "items": {
+                "hydration": "Hydration",
+                "barrier": "Barrier",
+                "texture": "Texture",
+                "sensitivity": "Sensitivity"
+            }
+        },
+        "chat": {
+            "title": "Chat",
+            "description": "Ask for changes, request adjustments, and refine the routine step by step.",
+            "status": "Experience ready for AI integration",
+            "assistantLabel": "Skin4All AI",
+            "userLabel": "{name}"
+        },
+        "composer": {
+            "label": "Tell the AI what you want to achieve",
+            "placeholder": "Describe your concerns, ingredients you want to use or avoid, budget, time available, and any relevant preferences...",
+            "hint": "This screen currently simulates the final experience. The real LLM logic will be integrated later.",
+            "send": "Send"
+        },
+        "messages": {
+            "assistantIntro": "Hi {name}, tell me what you want to improve and I will help shape a more precise routine.",
+            "userGoal": "I want a simple routine that helps with dehydration, sensitivity, and uneven texture.",
+            "assistantFollowUp": "Perfect. I will start from a base proposal and then we can keep adjusting products, steps, and notes from this conversation.",
+            "pendingReply": "Preview response: the assistant's next iteration will appear here once the LLM logic is connected."
+        },
+        "draft": {
+            "title": "Routine draft",
+            "description": "This panel represents a real Routine structure: name, description, type, skin type, and steps linked to existing products.",
+            "initialName": "AI-assisted personalized routine",
+            "initialDescription": "Initial draft generated from the chat context. Edit the fields, reorder steps, and select products that already exist on the platform.",
+            "fields": {
+                "name": "Routine name",
+                "description": "Description",
+                "type": "Routine time",
+                "skinType": "Skin type"
+            },
+            "placeholders": {
+                "name": "Routine name",
+                "description": "Describe what this routine is meant to improve",
+                "skinType": "Select skin type",
+                "stepName": "Step name",
+                "stepNotes": "Step notes or instructions"
+            },
+            "typeOptions": {
+                "am": "AM",
+                "pm": "PM"
+            },
+            "structure": {
+                "title": "Structured view",
+                "summary": "{count, plural, =0 {0 steps in the draft} =1 {1 step in the draft} other {{count} steps in the draft}}"
+            },
+            "stepsTitle": "Selected steps",
+            "stepsCount": "{count, plural, =0 {0 steps} =1 {1 step} other {{count} steps}}",
+            "stepLabel": "Step {order}",
+            "stepName": "Step {order}",
+            "stepNotes": "Use {productName} according to your skin tolerance and needs.",
+            "empty": "You have not added products to the draft yet. Use the suggestions to build the routine.",
+            "unknownProduct": "Unknown product",
+            "actions": {
+                "continue": "Continue in builder",
+                "moveUp": "Move step up",
+                "moveDown": "Move step down",
+                "removeStep": "Remove step"
+            }
+        },
+        "recommendedProducts": {
+            "title": "Suggested products",
+            "description": "These recommendations use real platform products and can be added to or removed from the draft.",
+            "actions": {
+                "add": "Add to draft",
+                "added": "Already added"
+            },
+            "toast": {
+                "added": "{name} was added to the draft"
+            }
+        },
+        "continuousRecommendations": {
+            "title": "Continuous recommendations",
+            "description": "Shortcuts to keep refining the conversation without breaking the flow.",
+            "addToChat": "Send to chat",
+            "items": {
+                "adjustFrequency": {
+                    "title": "Make the routine more gradual",
+                    "description": "Ask for a gentler version if you want to introduce actives more carefully.",
+                    "prompt": "Adjust the routine so the actives are introduced in a slower and more tolerable way."
+                },
+                "swapTexture": {
+                    "title": "Change textures",
+                    "description": "Request lighter or richer alternatives while keeping the same routine goal.",
+                    "prompt": "Suggest alternatives with lighter textures for warm and humid weather."
+                },
+                "simplifyNight": {
+                    "title": "Create a PM version",
+                    "description": "Use this to request a nighttime variation that complements the main routine.",
+                    "prompt": "Create a simpler nighttime version that complements this draft."
+                }
+            }
+        }
     },
     "DiscoveryPage": {
         "didNotFindProduct": "Didn't found what you were looking for?",
@@ -417,6 +567,7 @@
         "forumSubtitle": "Skincare and Health",
         "allSkinTypes": "All skin types",
         "createPost": "Create Routine",
+        "createWithAi": "Create AI Routine",
         "discussionsTitle": "Routine Discussions",
         "discussionsSubtitle": "Explore, compare, and improve skincare routines.",
         "filter": "Filter",
@@ -469,7 +620,9 @@
         "italic": "Italic",
         "insertLink": "Insert link",
         "insertImage": "Insert image",
-        "commentPosted": "Your comment has been posted"
+        "commentPosted": "Your comment has been posted",
+        "loginRequiredForComments": "You must be logged in to comment or vote.",
+        "goToLogin": "Sign in"
     },
     "Footer": {
         "brand": "SkinCare Community",

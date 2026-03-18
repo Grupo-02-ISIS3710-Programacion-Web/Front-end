@@ -12,6 +12,7 @@ type CommentCardProps = Readonly<{
   comment: Comment;
   currentUserId?: string;
   onVote?: (commentId: string, vote: "up" | "down") => void;
+  isInteractionDisabled?: boolean;
   translationNamespace?: string;
 }>;
 
@@ -19,6 +20,7 @@ export default function CommentCard({
   comment,
   currentUserId = "u1",
   onVote,
+  isInteractionDisabled = false,
   translationNamespace = "RoutineDetail"
 }: CommentCardProps) {
   const t = useTranslations(translationNamespace);
@@ -59,6 +61,7 @@ export default function CommentCard({
             }`}
           aria-label={t("upvote")}
           type="button"
+          disabled={isInteractionDisabled}
           onClick={() => onVote?.(comment.id, "up")}
         >
           <ArrowUp size={16} />
@@ -69,12 +72,13 @@ export default function CommentCard({
             }`}
           aria-label={t("downvote")}
           type="button"
+          disabled={isInteractionDisabled}
           onClick={() => onVote?.(comment.id, "down")}
         >
           <ArrowDown size={16} />
           {comment.downvotes.length}
         </button>
-        <button className="text-sm font-semibold hover:text-[#d44f67]">{t("reply")}</button>
+        <button className="text-sm font-semibold hover:text-[#d44f67]" disabled={isInteractionDisabled}>{t("reply")}</button>
       </div>
     </article>
   );

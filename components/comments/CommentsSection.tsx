@@ -15,6 +15,8 @@ type CommentSectionProps = Readonly<{
   targetType?: "routine" | "product";
   initialComments: Comment[];
   currentUserId?: string;
+  isLoggedIn?: boolean;
+  loginHref?: string;
   translationNamespace?: string;
 }>;
 
@@ -23,6 +25,8 @@ export default function CommentSection({
   targetType = "routine",
   initialComments,
   currentUserId = "u1",
+  isLoggedIn = true,
+  loginHref = "/login",
   translationNamespace = "RoutineDetail"
 }: CommentSectionProps) {
   const t = useTranslations(translationNamespace);
@@ -59,6 +63,7 @@ export default function CommentSection({
             rows={4}
             placeholder={t("commentPlaceholder")}
             className="mt-3 rounded-none border-0 border-t border-[#eef1f6] bg-white px-4 py-4 text-base shadow-none focus-visible:ring-0"
+            disabled={!isLoggedIn}
           />
           <div className="flex items-center justify-between rounded-b-xl border-t border-[#e6eaf1] bg-[#eef2f7] px-4 py-3">
             <div className="flex items-center gap-3 text-[#5f677c]">
@@ -67,6 +72,7 @@ export default function CommentSection({
                 aria-label={t("bold")}
                 onClick={() => applyInlineFormat("**")}
                 type="button"
+                disabled={!isLoggedIn}
               >
                 <Bold size={16} />
               </button>
@@ -75,21 +81,28 @@ export default function CommentSection({
                 aria-label={t("italic")}
                 onClick={() => applyInlineFormat("*")}
                 type="button"
+                disabled={!isLoggedIn}
               >
                 <Italic size={16} />
               </button>
-              <button className="rounded-md p-1.5 hover:bg-white" aria-label={t("insertLink")} type="button">
+              <button className="rounded-md p-1.5 hover:bg-white" aria-label={t("insertLink")} type="button" disabled={!isLoggedIn}>
                 <Link2 size={16} />
               </button>
-              <button className="rounded-md p-1.5 hover:bg-white" aria-label={t("insertImage")} type="button">
+              <button className="rounded-md p-1.5 hover:bg-white" aria-label={t("insertImage")} type="button" disabled={!isLoggedIn}>
                 <ImageIcon size={16} />
               </button>
             </div>
-            <Button onClick={addComment} className="h-9 rounded-xl bg-[#be3d5e] px-5 text-sm font-semibold text-white hover:bg-[#a73553]">
+            <Button onClick={addComment} className="h-9 rounded-xl bg-[#be3d5e] px-5 text-sm font-semibold text-white hover:bg-[#a73553]" disabled={!isLoggedIn}>
               <MessageSquare size={16} />
               {t("postComment")}
             </Button>
           </div>
+
+          {!isLoggedIn && (
+            <p className="px-4 py-3 text-sm text-[#5f677c]">
+              {t("loginRequiredForComments")} <a href={loginHref} className="font-semibold text-[#be3d5e] hover:underline">{t("goToLogin")}</a>
+            </p>
+          )}
         </div>
 
         <div className="space-y-1">
@@ -105,6 +118,7 @@ export default function CommentSection({
                 comment={comment}
                 currentUserId={currentUserId}
                 onVote={voteComment}
+                isInteractionDisabled={!isLoggedIn}
                 translationNamespace={translationNamespace}
               />
             </div>

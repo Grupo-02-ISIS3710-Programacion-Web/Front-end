@@ -20,6 +20,8 @@ import { Product, Category, SkinType } from "@/types/product";
 import { Routine } from "@/types/routine";
 import { RoutineFormData } from "@/types/routine-form";
 import { useTranslations } from "next-intl";
+import { useAuthSession } from "@/lib/hooks/use-auth-session";
+import { clearAiRoutineDraft, readAiRoutineDraft } from "@/lib/ai-routine-draft";
 
 type RoutineFormMode = "create" | "edit";
 
@@ -45,6 +47,7 @@ export default function RoutineForm({ mode }: RoutineFormProps) {
     const tRoutine = useTranslations("GuardarRutina");
     const tSteps = useTranslations("GuardarRutina.steps");
     const tSkin = useTranslations("SkinTypes");
+    const { user } = useAuthSession();
 
     const filteredProducts = useMemo(() => {
         return allProducts.filter((product) => {
@@ -90,6 +93,15 @@ export default function RoutineForm({ mode }: RoutineFormProps) {
         setAllProducts(products);
 
         if (mode === "create") {
+            const aiRoutineDraft = readAiRoutineDraft();
+            if (aiRoutineDraft) {
+                reset(aiRoutineDraft);
+                setSelectedProductIds(new Set(aiRoutineDraft.steps.map((step) => step.product.id)));
+                previousProductsSignatureRef.current = aiRoutineDraft.steps.map((step) => step.product.id).join(",");
+                clearAiRoutineDraft();
+                return;
+            }
+
             const preselectedId = searchParams.get("product");
             if (preselectedId && products.some((product) => product.id === preselectedId)) {
                 setSelectedProductIds(new Set([preselectedId]));
@@ -221,9 +233,14 @@ export default function RoutineForm({ mode }: RoutineFormProps) {
         }
 
         const routineId = searchParams.get("id");
+        if (!user) {
+            toast.error("Authentication required");
+            return;
+        }
+
         const routine: Routine = {
             id: mode === "edit" && routineId ? routineId : generateId(),
-            userId: "u1",
+            userId: user.id,
             name: data.name,
             description: data.description,
             type: data.type,

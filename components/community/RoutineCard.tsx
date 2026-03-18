@@ -1,9 +1,9 @@
 "use client";
 
 import { Card, CardContent } from "@/components/ui/card";
-import { Link } from "@/i18n/navigation";
 import { ArrowDown, ArrowUp, Eye, MessageSquare } from "lucide-react";
 import type { MouseEvent, ReactNode } from "react";
+import Link from "next/link";
 
 export type RoutineVoteDirection = "up" | "down";
 

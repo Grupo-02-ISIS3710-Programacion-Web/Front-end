@@ -6,6 +6,9 @@ import Link from "next/link";
 import { User, Search, Menu, Bell } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { useAuthSession } from "@/lib/hooks/use-auth-session";
+import { User as AuthUser } from "@/types/user";
+import { useRouter } from "next/navigation";
 
 const links = [
   {
@@ -27,22 +30,52 @@ const links = [
 ]
 
 export default function NavBar() {
+  const router = useRouter();
+  const { isLoggedIn, logout, user } = useAuthSession();
 
   return (
     <>
       <div className="hidden md:block">
-        <NavBarDesktop />
+        <NavBarDesktop
+          isLoggedIn={isLoggedIn}
+          onLogout={logout}
+          onLogin={() => router.push("/login")}
+          onRegister={() => router.push("/register")}
+          onProfile={() => router.push("/profile")}
+          user={user}
+        />
       </div>
 
       {/* Para mobile */}
       <div className="block md:hidden">
-        <NavBarMobile />
+        <NavBarMobile
+          isLoggedIn={isLoggedIn}
+          onLogout={logout}
+          onLogin={() => router.push("/login")}
+          onRegister={() => router.push("/register")}
+          onProfile={() => router.push("/profile")}
+          user={user}
+        />
       </div>
     </>
   )
 }
 
-export function NavBarDesktop({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
+export function NavBarDesktop({
+  isLoggedIn = false,
+  onLogout,
+  onLogin,
+  onRegister,
+  onProfile,
+  user,
+}: {
+  isLoggedIn?: boolean;
+  onLogout?: () => void;
+  onLogin?: () => void;
+  onRegister?: () => void;
+  onProfile?: () => void;
+  user?: AuthUser | null;
+}) {
   return (
     <div className="hidden md:flex items-center justify-center px-4 lg:px-10 py-3 w-full gap-12 bg-popover">
 
@@ -56,7 +89,6 @@ export function NavBarDesktop({ isLoggedIn = false }: { isLoggedIn?: boolean }) 
               alt="Skin4All logo"
               width={20}
               height={20}
-              priority
             />
             <h1 className="font-medium text-xl">Skin4All</h1>
           </div>
@@ -88,21 +120,20 @@ export function NavBarDesktop({ isLoggedIn = false }: { isLoggedIn?: boolean }) 
 
         {/* Lado derecho */}
         <div className="flex items-center gap-3">
-          <div className="hidden lg:flex items-center gap-2">
-            <Button
-              asChild
-              variant="outline"
-              className=" hover:bg-secondary hover:text-secondary-foreground"
-            >
-              <Link href="/register">Registrarme</Link>
-            </Button>
-            <Button asChild className="bg-[#BE3D5E] text-white hover:bg-[#A73553]">
-              <Link href="/login">Iniciar sesión</Link>
-            </Button>
-          </div>
+          {!isLoggedIn && (
+            <div className="hidden lg:flex items-center gap-2">
+              <Button variant="outline" className=" hover:bg-secondary hover:text-secondary-foreground" onClick={onRegister}>
+                Registrarme
+              </Button>
+              <Button className="bg-[#BE3D5E] text-white hover:bg-[#A73553]" onClick={onLogin}>
+                Iniciar sesión
+              </Button>
+            </div>
+          )}
           {isLoggedIn && (<>
             <NotificationsButton />
-            <ProfileButton />
+            <ProfileButton user={user} onClick={onProfile} />
+            <Button variant="outline" onClick={onLogout}>Cerrar sesión</Button>
           </>)}
         </div>
       </div>
@@ -135,15 +166,50 @@ export function NotificationsButton() {
   )
 }
 
-export function ProfileButton() {
+export function ProfileButton({
+  user,
+  onClick,
+}: {
+  user?: AuthUser | null;
+  onClick?: () => void;
+}) {
   return (
-    <Button size="icon" className="rounded-full" aria-label="Perfil">
-      <User className="h-5 w-5" />
+    <Button
+      type="button"
+      size="icon"
+      variant="outline"
+      className="rounded-full overflow-hidden p-0"
+      aria-label="Perfil"
+      onClick={onClick}
+    >
+      {user?.avatarUrl ? (
+        <img
+          src={user.avatarUrl}
+          alt={user.name}
+          className="h-full w-full object-cover"
+        />
+      ) : (
+        <User className="h-5 w-5" />
+      )}
     </Button>
   )
 }
 
-export function NavBarMobile() {
+export function NavBarMobile({
+  isLoggedIn = false,
+  onLogout,
+  onLogin,
+  onRegister,
+  onProfile,
+  user,
+}: {
+  isLoggedIn?: boolean;
+  onLogout?: () => void;
+  onLogin?: () => void;
+  onRegister?: () => void;
+  onProfile?: () => void;
+  user?: AuthUser | null;
+}) {
   return (
     <div className="md:hidden sticky top-0 z-50 border-b">
       <div className="flex items-center justify-baseline px-4 py-3">
@@ -173,8 +239,15 @@ export function NavBarMobile() {
             {/* Autenticación al fondo */}
             <div className="mt-auto pt-6 border-t flex justify-center w-full">
               <div className=" flex flex-col gap-2 w-60">
-                <Button asChild variant="outline"><Link href="/register">Registrarme</Link></Button>
-                <Button asChild className="bg-[#BE3D5E] text-white hover:bg-[#A73553]"><Link href="/login">Iniciar sesión</Link></Button>
+                {!isLoggedIn && (
+                  <>
+                    <Button variant="outline" onClick={onRegister}>Registrarme</Button>
+                    <Button className="bg-[#BE3D5E] text-white hover:bg-[#A73553]" onClick={onLogin}>Iniciar sesión</Button>
+                  </>
+                )}
+                {isLoggedIn && (
+                  <Button variant="outline" onClick={onLogout}>Cerrar sesión</Button>
+                )}
               </div>
             </div>
           </SheetContent>
@@ -190,7 +263,6 @@ export function NavBarMobile() {
                 alt="Skin4All logo"
                 width={20}
                 height={20}
-                priority
               />
               <h1 className="font-medium text-lg">Skin4All</h1>
             </div>
@@ -200,9 +272,12 @@ export function NavBarMobile() {
             <Button variant="ghost" size="icon" aria-label="Buscar productos">
               <Search className="h-5 w-5" />
             </Button>
-
-            <NotificationsButton />
-            <ProfileButton />
+            {isLoggedIn && (
+              <>
+                <NotificationsButton />
+                <ProfileButton user={user} onClick={onProfile} />
+              </>
+            )}
           </div>
         </div>
 

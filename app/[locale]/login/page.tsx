@@ -7,11 +7,13 @@ import { SubmitHandler, useForm } from "react-hook-form"
 import { Card, CardContent } from "@/components/ui/card"
 import { Eye, EyeOff, Mail, Lock } from "lucide-react"
 import { useTranslations } from "next-intl"
-import { Link } from "@/i18n/navigation"
+import { Link, useRouter } from "@/i18n/navigation"
 import Image from "next/image"
+import { useSearchParams } from "next/navigation"
+import { useAuthSession } from "@/lib/hooks/use-auth-session"
 
 type LoginForm = {
-  email: string
+  emailOrLogin: string
   password: string
 }
 
@@ -44,13 +46,26 @@ export default function Login() {
 function LoginFormComponent(){
 
   const t = useTranslations("Login")
+  const router = useRouter()
+  const searchParams = useSearchParams()
+  const { login } = useAuthSession()
 
   const { register, handleSubmit, formState:{ errors } } = useForm<LoginForm>()
 
   const [showPassword, setShowPassword] = useState(false)
+  const [authError, setAuthError] = useState<string | null>(null)
 
   const onSubmit: SubmitHandler<LoginForm> = (data) => {
-    console.log(data)
+    setAuthError(null)
+
+    const user = login(data.emailOrLogin, data.password)
+    if (!user) {
+      setAuthError(t("invalidCredentials"))
+      return
+    }
+
+    const redirectTo = searchParams.get("redirect") || "/home"
+    router.replace(redirectTo)
   }
 
   return (
@@ -98,16 +113,16 @@ function LoginFormComponent(){
           <Mail className="absolute left-3 top-3.5 text-gray-400" size={18}/>
 
           <Input
-            type="email"
+            type="text"
             placeholder="glowing.skin@example.com"
             className="pl-10"
-            {...register("email", { required: t("emailRequired") })}
+            {...register("emailOrLogin", { required: t("emailRequired") })}
           />
 
         </div>
 
-        {errors.email && (
-          <p className="text-xs text-red-500">{errors.email.message}</p>
+        {errors.emailOrLogin && (
+          <p className="text-xs text-red-500">{errors.emailOrLogin.message}</p>
         )}
 
       </div>
@@ -173,6 +188,12 @@ function LoginFormComponent(){
       >
         {t("login")}
       </Button>
+
+      <p className="text-xs text-center text-gray-500">{t("demoHint")}</p>
+
+      {authError && (
+        <p className="text-xs text-red-600 text-center">{authError}</p>
+      )}
 
 
       <div className="flex items-center gap-3">
