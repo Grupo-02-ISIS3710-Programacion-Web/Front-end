@@ -2,6 +2,7 @@
 
 import { getProducts } from "@/lib/api";
 import { productsFavorites } from "@/lib/favorites";
+import { normalizeSearchText } from "@/lib/string-utils";
 import { Category, Product, SkinType } from "@/types/product";
 import { useCallback, useMemo, useState } from "react";
 
@@ -17,8 +18,9 @@ const defaultFilters: DiscoveryFilters = {
     ingredients: [],
 };
 
-export function useProductDiscovery(selectedCategory: Category | "ALL") {
+export function useProductDiscovery(selectedCategory: Category | "ALL", searchQueryParam = "") {
     const products = getProducts();
+    const searchQuery = normalizeSearchText(searchQueryParam);
     const [favoriteProducts, setFavoriteProducts] = useState<Product[]>([]);
     const [filters, setFilters] = useState<DiscoveryFilters>(defaultFilters);
 
@@ -41,14 +43,26 @@ export function useProductDiscovery(selectedCategory: Category | "ALL") {
                 productIngredients.includes(excluded)
             );
 
+            const searchableFields = [
+                product.name,
+                product.brand,
+                ...productIngredients,
+                ...productSkinTypes,
+                ...product.category,
+            ];
+            const normalizedSearchableText = normalizeSearchText(searchableFields.join(" "));
+            const matchesSearch =
+                searchQuery.length === 0 || normalizedSearchableText.includes(searchQuery);
+
             return (
                 matchesCategory &&
                 matchesBrand &&
                 matchesSkinType &&
-                !hasExcludedIngredient
+                !hasExcludedIngredient &&
+                matchesSearch
             );
         });
-    }, [filters, products, selectedCategory]);
+    }, [filters, products, searchQuery, selectedCategory]);
 
     const brands = useMemo(
         () => Array.from(new Set(products.map((product) => product.brand))),

@@ -6,10 +6,11 @@ import Link from "next/link";
 import { User, Search, Menu, Bell } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { useEffect, useState, type ComponentPropsWithoutRef } from "react";
+import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useAuthSession } from "@/lib/hooks/use-auth-session";
 import { User as AuthUser } from "@/types/user";
-import { useRouter } from "next/navigation";
 
 const linksStatic = [
     { key: "home", href: "/" },
@@ -18,10 +19,21 @@ const linksStatic = [
     { key: "aiRoutines", href: "/ai-routine" },
 ];
 
+function buildDiscoverySearchUrl(searchTerm: string) {
+    const trimmedSearchTerm = searchTerm.trim();
+    if (!trimmedSearchTerm) return "/descubrir";
+    return `/descubrir?q=${encodeURIComponent(trimmedSearchTerm)}`;
+}
+
+interface SearchBarProps {
+    initialValue?: string;
+    onSearch: (searchTerm: string) => void;
+    autoFocus?: boolean;
+}
+
 export default function NavBar() {
     const router = useRouter();
     const { isLoggedIn, logout, user } = useAuthSession();
-    const t = useTranslations("NavBar");
 
     return (
         <>
@@ -36,7 +48,6 @@ export default function NavBar() {
                 />
             </div>
 
-            {/* Para mobile */}
             <div className="block md:hidden">
                 <NavBarMobile
                     isLoggedIn={isLoggedIn}
@@ -48,7 +59,7 @@ export default function NavBar() {
                 />
             </div>
         </>
-    )
+    );
 }
 
 export function NavBarDesktop({
@@ -67,21 +78,33 @@ export function NavBarDesktop({
     user?: AuthUser | null;
 }) {
     const t = useTranslations("NavBar");
+    const router = useRouter();
+    const [currentQuery, setCurrentQuery] = useState("");
+
+    useEffect(() => {
+        const syncQueryFromUrl = () => {
+            setCurrentQuery(new URLSearchParams(window.location.search).get("q") ?? "");
+        };
+
+        syncQueryFromUrl();
+        window.addEventListener("popstate", syncQueryFromUrl);
+
+        return () => {
+            window.removeEventListener("popstate", syncQueryFromUrl);
+        };
+    }, []);
+
+    const handleSearch = (searchTerm: string) => {
+        setCurrentQuery(searchTerm);
+        router.push(buildDiscoverySearchUrl(searchTerm));
+    };
 
     return (
         <div className="hidden md:flex items-center justify-center px-4 lg:px-10 py-3 w-full gap-12 bg-popover">
-
-            {/* Left side */}
             <div className="flex items-center gap-6">
                 <Link href="/">
                     <div className="flex gap-1 cursor-pointer hover:opacity-80 transition-opacity">
-                        <Image
-                            className="dark:invert"
-                            src="/skin4all_logo.svg"
-                            alt="Skin4All logo"
-                            width={20}
-                            height={20}
-                        />
+                        <Image className="dark:invert" src="/skin4all_logo.svg" alt="Skin4All logo" width={20} height={20} />
                         <h1 className="font-medium text-xl">Skin4All</h1>
                     </div>
                 </Link>
@@ -91,10 +114,7 @@ export function NavBarDesktop({
                         {linksStatic.map((link) => (
                             <NavigationMenuItem key={link.key}>
                                 <NavigationMenuLink asChild>
-                                    <Link
-                                        href={link.href}
-                                        className="text-sm font-medium hover:text-primary hover:font-medium transition-colors"
-                                    >
+                                    <Link href={link.href} className="text-sm font-medium hover:text-primary hover:font-medium transition-colors">
                                         {t(link.key)}
                                     </Link>
                                 </NavigationMenuLink>
@@ -105,12 +125,10 @@ export function NavBarDesktop({
             </div>
 
             <div className="flex items-center justify-centter">
-                {/* Barra de busqueda en el centro  */}
                 <div className="flex-1 max-w-1/2 mx-6">
-                    <SearchBar />
+                    <SearchBar initialValue={currentQuery} onSearch={handleSearch} />
                 </div>
 
-                {/* Lado derecho */}
                 <div className="flex items-center gap-3">
                     {!isLoggedIn && (
                         <div className="hidden lg:flex items-center gap-2">
@@ -122,32 +140,41 @@ export function NavBarDesktop({
                             </Button>
                         </div>
                     )}
-                    {isLoggedIn && (<>
-                        <NotificationsButton />
-                        <ProfileButton user={user} onClick={onProfile} />
-                        <Button variant="outline" onClick={onLogout}>{t("logout")}</Button>
-                    </>)}
+
+                    {isLoggedIn && (
+                        <>
+                            <NotificationsButton />
+                            <ProfileButton user={user} onClick={onProfile} />
+                            <Button variant="outline" onClick={onLogout}>
+                                {t("logout")}
+                            </Button>
+                        </>
+                    )}
                 </div>
             </div>
-
         </div>
-    )
+    );
 }
 
-export function SearchBar() {
+export function SearchBar({ initialValue = "", onSearch, autoFocus = false }: SearchBarProps) {
+    const [query, setQuery] = useState(initialValue);
     const t = useTranslations("NavBar");
+
+    useEffect(() => setQuery(initialValue), [initialValue]);
+
+    const handleSubmit: NonNullable<ComponentPropsWithoutRef<"form">["onSubmit"]> = (event) => {
+        event.preventDefault();
+        onSearch(query);
+    };
+
     return (
-        <div className="flex items-center gap-2 w-full">
-            <Input
-                type="text"
-                placeholder={t("searchPlaceholder")}
-                className="w-full"
-            />
-            <Button variant="outline" size="icon" aria-label={t("searchPlaceholder")}>
+        <form className="flex items-center gap-2 w-full" onSubmit={handleSubmit}>
+            <Input type="text" placeholder={t("searchPlaceholder")} className="w-full" value={query} onChange={(e) => setQuery(e.target.value)} autoFocus={autoFocus} />
+            <Button variant="outline" size="icon" type="submit" aria-label={t("searchPlaceholder")}>
                 <Search className="h-4 w-4" />
             </Button>
-        </div>
-    )
+        </form>
+    );
 }
 
 export function NotificationsButton() {
@@ -156,37 +183,16 @@ export function NotificationsButton() {
         <Button variant="outline" size="icon" aria-label={t("notifications")}>
             <Bell className="h-5 w-5" />
         </Button>
-    )
+    );
 }
 
-export function ProfileButton({
-    user,
-    onClick,
-}: {
-    user?: AuthUser | null;
-    onClick?: () => void;
-}) {
+export function ProfileButton({ user, onClick }: { user?: AuthUser | null; onClick?: () => void }) {
     const t = useTranslations("NavBar");
     return (
-        <Button
-            type="button"
-            size="icon"
-            variant="outline"
-            className="rounded-full overflow-hidden p-0"
-            aria-label={t("profile")}
-            onClick={onClick}
-        >
-            {user?.avatarUrl ? (
-                <img
-                    src={user.avatarUrl}
-                    alt={user.name}
-                    className="h-full w-full object-cover"
-                />
-            ) : (
-                <User className="h-5 w-5" />
-            )}
+        <Button type="button" size="icon" variant="outline" className="rounded-full overflow-hidden p-0" aria-label={t("profile")} onClick={onClick}>
+            {user?.avatarUrl ? <img src={user.avatarUrl} alt={user.name} className="h-full w-full object-cover" /> : <User className="h-5 w-5" />}
         </Button>
-    )
+    );
 }
 
 export function NavBarMobile({
@@ -205,11 +211,32 @@ export function NavBarMobile({
     user?: AuthUser | null;
 }) {
     const t = useTranslations("NavBar");
+    const router = useRouter();
+    const [isSearchOpen, setIsSearchOpen] = useState(false);
+    const [currentQuery, setCurrentQuery] = useState("");
+
+    useEffect(() => {
+        const syncQueryFromUrl = () => {
+            setCurrentQuery(new URLSearchParams(window.location.search).get("q") ?? "");
+        };
+
+        syncQueryFromUrl();
+        window.addEventListener("popstate", syncQueryFromUrl);
+
+        return () => {
+            window.removeEventListener("popstate", syncQueryFromUrl);
+        };
+    }, []);
+
+    const handleSearch = (searchTerm: string) => {
+        setCurrentQuery(searchTerm);
+        router.push(buildDiscoverySearchUrl(searchTerm));
+        setIsSearchOpen(false);
+    };
+
     return (
         <div className="md:hidden sticky top-0 z-50 border-b">
             <div className="flex items-center justify-baseline px-4 py-3">
-
-                {/* Menu trigger */}
                 <Sheet>
                     <SheetTrigger asChild>
                         <Button variant="ghost" size="icon" aria-label={t("openMenu")}>
@@ -222,7 +249,6 @@ export function NavBarMobile({
                             <SheetTitle>{t("menuTitle")}</SheetTitle>
                         </SheetHeader>
 
-                        {/* Links */}
                         <div className="mt-6 flex flex-col gap-1">
                             {linksStatic.map((link) => (
                                 <Button key={link.key} asChild variant="ghost" className="justify-start text-base active:text-primary transition-transform ">
@@ -231,17 +257,22 @@ export function NavBarMobile({
                             ))}
                         </div>
 
-                        {/* Autenticación al fondo */}
                         <div className="mt-auto pt-6 border-t flex justify-center w-full">
                             <div className=" flex flex-col gap-2 w-60">
                                 {!isLoggedIn && (
                                     <>
-                                        <Button variant="outline" onClick={onRegister}>{t("register")}</Button>
-                                        <Button className="bg-[#BE3D5E] text-white hover:bg-[#A73553]" onClick={onLogin}>{t("login")}</Button>
+                                        <Button variant="outline" onClick={onRegister}>
+                                            {t("register")}
+                                        </Button>
+                                        <Button className="bg-[#BE3D5E] text-white hover:bg-[#A73553]" onClick={onLogin}>
+                                            {t("login")}
+                                        </Button>
                                     </>
                                 )}
                                 {isLoggedIn && (
-                                    <Button variant="outline" onClick={onLogout}>{t("logout")}</Button>
+                                    <Button variant="outline" onClick={onLogout}>
+                                        {t("logout")}
+                                    </Button>
                                 )}
                             </div>
                         </div>
@@ -249,35 +280,29 @@ export function NavBarMobile({
                 </Sheet>
 
                 <div className="flex justify-between w-full items-center">
-                    {/* Center logo */}
                     <Link href="/">
                         <div className="flex gap-1 cursor-pointer hover:opacity-80 transition-opacity">
-                            <Image
-                                className="dark:invert"
-                                src="/skin4all_logo.svg"
-                                alt="Skin4All logo"
-                                width={20}
-                                height={20}
-                            />
+                            <Image className="dark:invert" src="/skin4all_logo.svg" alt="Skin4All logo" width={20} height={20} priority />
                             <h1 className="font-medium text-lg">Skin4All</h1>
                         </div>
                     </Link>
-                    {/* Right actions */}
+
                     <div className="flex items-center gap-1">
-                        <Button variant="ghost" size="icon" aria-label={t("searchPlaceholder")}>
+                        <Button variant="ghost" size="icon" onClick={() => setIsSearchOpen((s) => !s)} aria-label={t("openSearch") ?? "Abrir búsqueda"}>
                             <Search className="h-5 w-5" />
                         </Button>
-                        {isLoggedIn && (
-                            <>
-                                <NotificationsButton />
-                                <ProfileButton user={user} onClick={onProfile} />
-                            </>
-                        )}
+
+                        <NotificationsButton />
+                        <ProfileButton user={user} onClick={onProfile} />
                     </div>
                 </div>
-
-
             </div>
+
+            {isSearchOpen && (
+                <div className="px-4 pb-3">
+                    <SearchBar initialValue={currentQuery} onSearch={handleSearch} autoFocus />
+                </div>
+            )}
         </div>
-    )
+    );
 }

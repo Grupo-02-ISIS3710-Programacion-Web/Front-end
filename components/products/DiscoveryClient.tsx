@@ -12,7 +12,13 @@ import { useProductDiscovery } from "@/lib/hooks/use-product-discovery";
 import { AnimatePresence, motion } from "motion/react";
 import React from "react";
 
-export default function DiscoveryClient({ selectedCategory }: { selectedCategory: Category | "ALL" }) {
+export default function DiscoveryClient({
+    selectedCategory,
+    searchQuery,
+}: {
+    selectedCategory: Category | "ALL";
+    searchQuery?: string;
+}) {
     const t = useTranslations("DiscoveryPage");
     const router = useRouter();
 
@@ -23,7 +29,7 @@ export default function DiscoveryClient({ selectedCategory }: { selectedCategory
         ingredients,
         handleFavoriteSelect,
         handleFavoriteDeselect,
-    } = useProductDiscovery(selectedCategory);
+    } = useProductDiscovery(selectedCategory, searchQuery ?? "");
 
     return (
         <Container className=" flex justify-center">
