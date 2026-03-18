@@ -21,7 +21,7 @@ export default function Profile() {
     const t = useTranslations("Profile")
 
     const [activeTab, setActiveTab] = useState("routine")
-    const [selectedCategory, setSelectedCategory] = useState<Category | "ALL">("ALL")
+
     const [favoriteProducts, setFavoriteProducts] = useState<Product[]>([])
     const [searchTerm, setSearchTerm] = useState("")
     const ITEMS_PER_PAGE = 6

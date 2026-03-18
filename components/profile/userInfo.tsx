@@ -26,12 +26,42 @@ export default function UserInfo({
 
   const t = useTranslations("UserInfo")
 
+  const [userName, setUserName] = useState(name)
+  const [userCity, setUserCity] = useState(city)
+  const [userSkinType, setUserSkinType] = useState(skinType)
+  const [userBio, setUserBio] = useState(bio)
+  const [userPhoto, setUserPhoto] = useState(photo)
+
   const [openModal, setOpenModal] = useState(false)
   const [editName, setEditName] = useState(name)
   const [editCity, setEditCity] = useState(city)
   const [editSkinType, setEditSkinType] = useState(skinType)
   const [editBio, setEditBio] = useState(bio)
   const [editPhoto, setEditPhoto] = useState(photo)
+
+  
+
+ const openEditModal = () => {
+    setEditName(userName)
+    setEditCity(userCity)
+    setEditSkinType(userSkinType)
+    setEditBio(userBio)
+    setEditPhoto(userPhoto)
+
+    setOpenModal(true)
+  }
+
+
+  const updateInfoUser = () => {
+    setUserName(editName)
+    setUserCity(editCity)
+    setUserSkinType(editSkinType)
+    setUserBio(editBio)
+    setUserPhoto(editPhoto)
+
+    setOpenModal(false)
+  }
+
 
   return (
 
@@ -45,7 +75,7 @@ export default function UserInfo({
         <div className="w-30 h-30 rounded-full border-4 border-white overflow-hidden bg-gray-200">
 
           <img
-            src={editPhoto}
+            src={userPhoto}
             alt="User"
             className="w-full h-full object-cover"
           />
@@ -56,11 +86,11 @@ export default function UserInfo({
 
 
       <h2 className="text-2xl font-bold text-center mt-4">
-        {editName}
+        {userName}
       </h2>
 
       <p className="text-gray-500 text-center">
-        {editCity}
+        {userCity}
       </p>
 
 
@@ -70,7 +100,7 @@ export default function UserInfo({
 
           <Droplet size={14} className="fill-white stroke-white"/>
 
-          {editSkinType}
+          {userSkinType}
 
         </span>
 
@@ -244,6 +274,7 @@ export default function UserInfo({
 
                 <button
                   className="px-4 py-2 bg-primary text-white rounded-lg"
+                  onClick={updateInfoUser}
                 >
                   {t("save")}
                 </button>
