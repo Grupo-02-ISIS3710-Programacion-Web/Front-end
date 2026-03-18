@@ -496,6 +496,7 @@
             "skinTypeRequired": "Debe seleccionar al menos un tipo de piel",
             "productTypeRequired": "Debe seleccionar el tipo de producto",
             "primaryCategoryRequired": "Debe seleccionar al menos una categoría",
+            "imageUrlInvalid": "Una o más URLs de imagen no son válidas",
             "ingredientsRequired": "Debe ingresar al menos un ingrediente",
             "imageUrlRequired": "Debe incluir una url de imagen del producto válida"
         }

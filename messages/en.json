@@ -494,6 +494,7 @@
             "skinTypeRequired": "Product skin types are required",
             "productTypeRequired": "Product type is required",
             "primaryCategoryRequired": "Product category is required",
+            "imageUrlInvalid": "One or more image URLs are invalid",
             "ingredientsRequired": "Product ingredients are required",
             "imageUrlRequired": "Image URL of product is required"
         }

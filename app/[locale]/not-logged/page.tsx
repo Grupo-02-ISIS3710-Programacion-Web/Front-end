@@ -1,11 +1,8 @@
-"use client";
-
 import AuthRequiredCard from "@/components/auth/AuthRequiredCard";
-import { useSearchParams } from "next/navigation";
 
-export default function NotLoggedPage() {
-  const searchParams = useSearchParams();
-  const redirectPath = searchParams.get("redirect") || "/community";
+export default function NotLoggedPage({ searchParams }: { searchParams?: Record<string, string | string[] | undefined> }) {
+  const redirectParam = searchParams?.redirect;
+  const redirectPath = typeof redirectParam === 'string' ? redirectParam : Array.isArray(redirectParam) ? redirectParam[0] : "/community";
 
   return <AuthRequiredCard redirectPath={redirectPath} />;
 }

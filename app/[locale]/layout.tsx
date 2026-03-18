@@ -2,11 +2,10 @@ import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
 import RouteTransition from "@/components/RouteTransition";
 import { Toaster } from "@/components/ui/sonner";
+import { locales, type AppLocale } from "@/i18n/routing";
 import { NextIntlClientProvider } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
-
-const locales = ["es", "en"] as const;
 
 type LocaleLayoutProps = Readonly<{
   children: React.ReactNode;
@@ -20,7 +19,7 @@ export function generateStaticParams() {
 export default async function LocaleLayout({ children, params }: LocaleLayoutProps) {
   const { locale } = await params;
 
-  if (!locales.includes(locale as (typeof locales)[number])) {
+  if (!locales.includes(locale as AppLocale)) {
     notFound();
   }
 
