@@ -29,6 +29,7 @@
             "descriptionPlaceholder": "Routine description",
             "timeOfDayLabel": "Routine time",
             "skinTypeLabel": "Skin type",
+            "skinTypePlaceholder": "Select skin type",
             "timeOfDay": {
                 "am": "AM",
                 "pm": "PM"
@@ -49,9 +50,23 @@
             "routineNamePlaceholder": "Routine name",
             "namePlaceholder": "Step name",
             "descriptionLabel": "Step description",
-            "descriptionPlaceholder": "Step description"
+            "descriptionPlaceholder": "Step description",
+            "errors": {
+                "nameRequired": "Step name is required",
+                "nameMin": "Step name must have at least 2 characters",
+                "descriptionRequired": "Step description is required",
+                "descriptionMin": "Step description must have at least 5 characters",
+                "atLeastOneStep": "You must add at least one step to the routine"
+            }
         },
         "submitButton": "Create Routine",
+        "validation": {
+            "nameRequired": "Routine name is required",
+            "nameMin": "Routine name must have at least 3 characters",
+            "descriptionRequired": "Routine description is required",
+            "descriptionMin": "Routine description must have at least 10 characters",
+            "skinTypeRequired": "You must select a skin type"
+        },
         "toast": {
             "alreadyAdded": "{name} is already in your routine",
             "added": "{name} added to your routine"

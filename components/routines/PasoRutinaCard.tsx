@@ -1,4 +1,4 @@
-import { Product, SkinType } from "@/types/product";
+import { Product } from "@/types/product";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -7,27 +7,16 @@ import CardProducto from "@/components/routines/CardProducto";
 import { ArrowDown, ArrowUp, Trash2 } from "lucide-react";
 import { UseFormRegister } from "react-hook-form";
 import { useTranslations } from "next-intl";
-
-type PasoRutinaFormShape = {
-    name: string;
-    description: string;
-    type: string;
-    skinType: SkinType;
-    steps: {
-        id: string;
-        name: string;
-        order: number;
-        product: Product;
-        notes: string;
-    }[];
-};
+import { RoutineFormData } from "@/types/routine-form";
 
 type PasoRutinaCardProps = Readonly<{
     index: number;
     totalSteps: number;
     product: Product;
     stepId: string;
-    register: UseFormRegister<PasoRutinaFormShape>;
+    register: UseFormRegister<RoutineFormData>;
+    nameError?: string;
+    notesError?: string;
     onMoveUp: () => void;
     onMoveDown: () => void;
     onRemove: () => void;
@@ -39,6 +28,8 @@ export default function PasoRutinaCard({
     product,
     stepId,
     register,
+    nameError,
+    notesError,
     onMoveUp,
     onMoveDown,
     onRemove
@@ -85,14 +76,28 @@ export default function PasoRutinaCard({
 
                 <div className="space-y-2">
                     <p className="text-sm font-medium text-muted-foreground">{t("nameLabel")}</p>
-                    <Input {...register(`steps.${index}.name`)} placeholder={t("namePlaceholder")} />
+                    <Input
+                        {...register(`steps.${index}.name`, {
+                            required: t("errors.nameRequired"),
+                            minLength: { value: 2, message: t("errors.nameMin") }
+                        })}
+                        placeholder={t("namePlaceholder")}
+                    />
+                    {nameError && <p className="text-sm text-red-600">{nameError}</p>}
                 </div>
 
                 <CardProducto product={product} showButton={false} compact />
 
                 <div className="space-y-2">
                     <p className="text-sm font-medium text-muted-foreground">{t("descriptionLabel")}</p>
-                    <Textarea {...register(`steps.${index}.notes`)} placeholder={t("descriptionPlaceholder")} />
+                    <Textarea
+                        {...register(`steps.${index}.notes`, {
+                            required: t("errors.descriptionRequired"),
+                            minLength: { value: 5, message: t("errors.descriptionMin") }
+                        })}
+                        placeholder={t("descriptionPlaceholder")}
+                    />
+                    {notesError && <p className="text-sm text-red-600">{notesError}</p>}
                 </div>
             </CardContent>
         </Card>

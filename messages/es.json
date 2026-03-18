@@ -29,6 +29,7 @@
             "descriptionPlaceholder": "Descripción de la rutina",
             "timeOfDayLabel": "Momento de la rutina",
             "skinTypeLabel": "Tipo de piel",
+            "skinTypePlaceholder": "Selecciona el tipo de piel",
             "timeOfDay": {
                 "am": "AM",
                 "pm": "PM"
@@ -49,9 +50,23 @@
             "routineNamePlaceholder": "Nombre de la rutina",
             "namePlaceholder": "Nombre del paso",
             "descriptionLabel": "Descripción del paso",
-            "descriptionPlaceholder": "Descripción del paso"
+            "descriptionPlaceholder": "Descripción del paso",
+            "errors": {
+                "nameRequired": "El nombre del paso es obligatorio",
+                "nameMin": "El nombre del paso debe tener al menos 2 caracteres",
+                "descriptionRequired": "La descripción del paso es obligatoria",
+                "descriptionMin": "La descripción del paso debe tener al menos 5 caracteres",
+                "atLeastOneStep": "Debes agregar al menos un paso a la rutina"
+            }
         },
         "submitButton": "Crear Rutina",
+        "validation": {
+            "nameRequired": "El nombre de la rutina es obligatorio",
+            "nameMin": "El nombre de la rutina debe tener al menos 3 caracteres",
+            "descriptionRequired": "La descripción de la rutina es obligatoria",
+            "descriptionMin": "La descripción de la rutina debe tener al menos 10 caracteres",
+            "skinTypeRequired": "Debes seleccionar un tipo de piel"
+        },
         "toast": {
             "alreadyAdded": "{name} ya fue agregado a tu rutina",
             "added": "{name} agregado a la rutina"

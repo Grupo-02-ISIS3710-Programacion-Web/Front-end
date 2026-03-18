@@ -18,23 +18,10 @@ import SearchBar from "@/components/routines/SearchBar";
 import CardProducto from "@/components/routines/CardProducto";
 import { Product, Category, SkinType } from "@/types/product";
 import { Routine } from "@/types/routine";
+import { RoutineFormData } from "@/types/routine-form";
 import { useTranslations } from "next-intl";
 
 type RoutineFormMode = "create" | "edit";
-
-type RoutineFormData = {
-    name: string;
-    description: string;
-    type: string;
-    skinType: SkinType;
-    steps: {
-        id: string;
-        name: string;
-        order: number;
-        product: Product;
-        notes: string;
-    }[];
-};
 
 type RoutineFormProps = Readonly<{
     mode: RoutineFormMode;
@@ -57,6 +44,7 @@ export default function RoutineForm({ mode }: RoutineFormProps) {
     const tEdit = useTranslations("EditarRutina");
     const tRoutine = useTranslations("GuardarRutina");
     const tSteps = useTranslations("GuardarRutina.steps");
+    const tSkin = useTranslations("SkinTypes");
 
     const filteredProducts = useMemo(() => {
         return allProducts.filter((product) => {
@@ -80,12 +68,12 @@ export default function RoutineForm({ mode }: RoutineFormProps) {
         [selectedProducts]
     );
 
-    const { control, register, handleSubmit, reset, getValues, setValue, watch } = useForm<RoutineFormData>({
+    const { control, register, handleSubmit, reset, getValues, setValue, watch, setError, clearErrors, formState: { errors } } = useForm<RoutineFormData>({
         defaultValues: {
             name: "",
             description: "",
             type: "am",
-            skinType: SkinType.NORMAL,
+            skinType: "",
             steps: []
         }
     });
@@ -165,7 +153,7 @@ export default function RoutineForm({ mode }: RoutineFormProps) {
             name: currentValues.name ?? "",
             description: currentValues.description ?? "",
             type: currentValues.type ?? "am",
-            skinType: currentValues.skinType ?? SkinType.NORMAL,
+            skinType: currentValues.skinType ?? "",
             steps: selectedProducts.map((product, index) => {
                 const existingStep = currentValues.steps?.find((step) => step.product.id === product.id);
 
@@ -181,6 +169,12 @@ export default function RoutineForm({ mode }: RoutineFormProps) {
 
         previousProductsSignatureRef.current = productsSignature;
     }, [getValues, isInitialDataLoaded, productsSignature, reset, selectedProducts]);
+
+    useEffect(() => {
+        if (fields.length > 0) {
+            clearErrors("steps");
+        }
+    }, [clearErrors, fields.length]);
 
     const handleAddToRoutine = (product: Product) => {
         if (selectedProductIds.has(product.id)) {
@@ -221,6 +215,11 @@ export default function RoutineForm({ mode }: RoutineFormProps) {
     };
 
     const onSubmit = (data: RoutineFormData) => {
+        if (data.steps.length === 0) {
+            setError("steps", { type: "manual", message: tSteps("errors.atLeastOneStep") });
+            return;
+        }
+
         const routineId = searchParams.get("id");
         const routine: Routine = {
             id: mode === "edit" && routineId ? routineId : generateId(),
@@ -228,7 +227,7 @@ export default function RoutineForm({ mode }: RoutineFormProps) {
             name: data.name,
             description: data.description,
             type: data.type,
-            skinType: data.skinType,
+            skinType: data.skinType as SkinType,
             steps: data.steps.map((step, index) => ({
                 id: step.id,
                 name: step.name,
@@ -262,6 +261,7 @@ export default function RoutineForm({ mode }: RoutineFormProps) {
     const pageTitle = mode === "edit" ? tEdit("title") : tCreate("title");
     const pageDescription = mode === "edit" ? tEdit("description") : tCreate("description");
     const submitLabel = mode === "edit" ? tEdit("submitButton") : tRoutine("submitButton");
+    const stepArrayError = errors.steps as { message?: string } | undefined;
 
     return (
         <div className="mx-auto w-full max-w-6xl p-4 md:p-6">
@@ -282,12 +282,31 @@ export default function RoutineForm({ mode }: RoutineFormProps) {
                         <CardContent className="space-y-4">
                             <div className="space-y-2">
                                 <p className="text-sm font-medium text-muted-foreground">{tRoutine("infoCard.nameLabel")}</p>
-                                <Input {...register("name")} placeholder={tSteps("routineNamePlaceholder")} />
+                                <Input
+                                    {...register("name", {
+                                        required: tRoutine("validation.nameRequired"),
+                                        minLength: { value: 3, message: tRoutine("validation.nameMin") }
+                                    })}
+                                    placeholder={tSteps("routineNamePlaceholder")}
+                                />
+                                {errors.name?.message && (
+                                    <p className="text-sm text-red-600">{errors.name.message}</p>
+                                )}
                             </div>
 
                             <div className="space-y-2">
                                 <p className="text-sm font-medium text-muted-foreground">{tRoutine("infoCard.descriptionLabel")}</p>
-                                <Textarea {...register("description")} placeholder={tRoutine("infoCard.descriptionPlaceholder")} rows={4} />
+                                <Textarea
+                                    {...register("description", {
+                                        required: tRoutine("validation.descriptionRequired"),
+                                        minLength: { value: 10, message: tRoutine("validation.descriptionMin") }
+                                    })}
+                                    placeholder={tRoutine("infoCard.descriptionPlaceholder")}
+                                    rows={4}
+                                />
+                                {errors.description?.message && (
+                                    <p className="text-sm text-red-600">{errors.description.message}</p>
+                                )}
                             </div>
 
                             <div className="space-y-2">
@@ -313,15 +332,21 @@ export default function RoutineForm({ mode }: RoutineFormProps) {
                             <div className="space-y-2">
                                 <p className="text-sm font-medium text-muted-foreground">{tRoutine("infoCard.skinTypeLabel")}</p>
                                 <select
-                                    {...register("skinType")}
+                                    {...register("skinType", {
+                                        required: tRoutine("validation.skinTypeRequired")
+                                    })}
                                     className="border-input bg-transparent focus-visible:border-ring focus-visible:ring-ring/50 h-9 w-full rounded-md border px-3 py-1 text-sm shadow-xs outline-none focus-visible:ring-[3px]"
                                 >
+                                    <option value="">{tRoutine("infoCard.skinTypePlaceholder")}</option>
                                     {Object.values(SkinType).map((skinType) => (
                                         <option key={skinType} value={skinType}>
-                                            {skinType}
+                                            {tSkin(skinType)}
                                         </option>
                                     ))}
                                 </select>
+                                {errors.skinType?.message && (
+                                    <p className="text-sm text-red-600">{errors.skinType.message}</p>
+                                )}
                             </div>
                         </CardContent>
                     </Card>
@@ -370,6 +395,9 @@ export default function RoutineForm({ mode }: RoutineFormProps) {
                         </Dialog>
                     </div>
                     <p className="text-sm text-muted-foreground">{tRoutine("infoCard.productsSelected", { count: selectedProducts.length })}</p>
+                    {stepArrayError?.message && (
+                        <p className="text-sm text-red-600">{stepArrayError.message}</p>
+                    )}
                     {fields.length === 0 && (
                         <Card>
                             <CardContent className="pt-6">
@@ -397,6 +425,8 @@ export default function RoutineForm({ mode }: RoutineFormProps) {
                                         product={product}
                                         stepId={field.id}
                                         register={register}
+                                        nameError={errors.steps?.[index]?.name?.message as string | undefined}
+                                        notesError={errors.steps?.[index]?.notes?.message as string | undefined}
                                         onMoveUp={() => handleMoveUp(index)}
                                         onMoveDown={() => handleMoveDown(index)}
                                         onRemove={() => handleRemoveStep(index)}
