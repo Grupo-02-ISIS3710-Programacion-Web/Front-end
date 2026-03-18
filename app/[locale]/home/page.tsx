@@ -1,7 +1,5 @@
 "use client"
 
-
-
 import { ArrowRight } from "lucide-react"
 import { getProducts } from "@/lib/api"
 import CommentHome from "@/components/home/commenthome"

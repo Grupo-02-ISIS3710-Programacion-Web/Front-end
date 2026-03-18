@@ -146,6 +146,7 @@ export default function ProductForm() {
                             <InputGroup>
                                 <InputGroupTextarea
                                 {...field}
+                                id="description"
                                 placeholder={t("descriptionPlaceholder")}
                                 rows={3}
                                 aria-invalid={fieldState.invalid}
@@ -212,19 +213,25 @@ export default function ProductForm() {
                                     
                                     <ComboboxChips ref={anchorCategories} className="w-full">
                                         <ComboboxValue>
-                                            {(values) => (
-                                            <Fragment>
-                                                {values.map((value: string) => (
-                                                <ComboboxChip key={value}>{tCat(`${value}.label`)}</ComboboxChip>
-                                                ))}
+                                            {(values) => {
+                                                const safeValues = Array.isArray(values) ? values : [];
 
-                                                <ComboboxChipsInput
-                                                placeholder={values.length === 0 ? t("additionalCategoriesPlaceholder") : ""}
-                                                aria-invalid={fieldState.invalid}
-                                                className="min-w-24 flex-1"
-                                                />
-                                            </Fragment>
-                                            )}
+                                                return (
+                                                    <>
+                                                    {safeValues.map((value: string) => (
+                                                        <ComboboxChip key={value}>
+                                                        {tCat(`${value}.label`)}
+                                                        </ComboboxChip>
+                                                    ))}
+
+                                                    <ComboboxChipsInput
+                                                        placeholder={safeValues.length === 0 ? t("additionalCategoriesPlaceholder") : ""}
+                                                        aria-invalid={fieldState.invalid}
+                                                        className="min-w-24 flex-1"
+                                                    />
+                                                    </>
+                                                );
+                                                }}
                                         </ComboboxValue>
 
                                         <ComboboxTrigger className="ml-auto text-muted-foreground" />
@@ -368,9 +375,9 @@ export default function ProductForm() {
                             rows={3}
                             value={ingredientsRaw}
                             onChange={(e) => setIngredientsRaw(e.target.value)}
-                            onBlur={() =>
+                            onBlur={(e) =>
                                 field.onChange(
-                                ingredientsRaw
+                                    e.target.value
                                     .split(",")
                                     .map((v) => v.trim())
                                     .filter(Boolean)
