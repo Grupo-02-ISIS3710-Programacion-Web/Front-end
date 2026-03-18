@@ -7,8 +7,8 @@ pnpm-debug.log*
 
 # Build output
 .next
-out
 dist
+out
 build
 
 # Logs
