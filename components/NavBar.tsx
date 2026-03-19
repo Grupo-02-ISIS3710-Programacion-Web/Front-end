@@ -2,15 +2,14 @@
 import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList } from "@/components/ui/navigation-menu";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import Link from "next/link";
 import { User, Search, Menu, Bell } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { useEffect, useState, type ComponentPropsWithoutRef } from "react";
-import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useAuthSession } from "@/lib/hooks/use-auth-session";
 import { User as AuthUser } from "@/types/user";
+import { Link, useRouter } from "@/i18n/navigation";
 
 const linksStatic = [
     { key: "home", href: "/" },

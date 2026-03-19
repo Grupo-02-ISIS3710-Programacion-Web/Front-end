@@ -5,7 +5,8 @@ type ToSPageProps = Readonly<{
 }>;
 
 export default async function ToSPage({ params }: ToSPageProps) {
-    const t = await getTranslations("ToS");
+    const { locale } = await params;
+    const t = await getTranslations({ locale, namespace: "ToS" });
 
     return (
         <main className="mx-auto w-full max-w-4xl px-4 py-10 sm:px-6 lg:px-8">

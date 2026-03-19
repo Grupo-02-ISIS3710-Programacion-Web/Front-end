@@ -3,7 +3,8 @@ import NavBar, { NavBarDesktop, NavBarMobile } from '../../NavBar'
 
 const pushMock = jest.fn()
 
-jest.mock('next/navigation', () => ({
+jest.mock('@/i18n/navigation', () => ({
+  Link: ({ children, href, ...props }: any) => <a href={href} {...props}>{children}</a>,
   useRouter: () => ({
     push: pushMock,
     replace: jest.fn(),
@@ -11,8 +12,6 @@ jest.mock('next/navigation', () => ({
     refresh: jest.fn(),
     prefetch: jest.fn(),
   }),
-  usePathname: () => '/',
-  useSearchParams: () => new URLSearchParams(),
 }))
 
 jest.mock('next-intl', () => ({

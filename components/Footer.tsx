@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Link } from "@/i18n/navigation";
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 
 const exploreLinks = [
     { href: "/", key: "bestSellers" },
@@ -14,8 +14,12 @@ const communityLinks = [
     { href: "/ToS", key: "verifiedExperts" },
 ] as const;
 
-export default function Footer() {
-    const t = useTranslations("Footer");
+type FooterProps = {
+    locale: string;
+};
+
+export default async function Footer({ locale }: FooterProps) {
+    const t = await getTranslations({ locale, namespace: "Footer" });
 
     return (
         <footer className="border-t border-border bg-muted/35">

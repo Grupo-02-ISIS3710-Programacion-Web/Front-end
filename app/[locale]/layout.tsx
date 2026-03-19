@@ -28,8 +28,9 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
 
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
+      <NavBar />
       <RouteTransition>{children}</RouteTransition>
-      <Footer />
+      <Footer locale={locale} />
       <Toaster />
     </NextIntlClientProvider>
   );

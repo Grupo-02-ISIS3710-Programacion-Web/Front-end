@@ -121,6 +121,7 @@
         "profile": "Profile",
         "menuTitle": "Menu",
         "openMenu": "Open menu",
+        "openSearch": "Open search",
         "searchPlaceholder": "Search products...",
         "notifications": "Notifications"
     },

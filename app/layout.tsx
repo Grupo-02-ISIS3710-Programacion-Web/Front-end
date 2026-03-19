@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import NavBar from "../components/NavBar";
-import { Toaster } from "@/components/ui/sonner";
-import { NextIntlClientProvider } from 'next-intl';
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -32,11 +30,7 @@ export default function RootLayout({
   return (
     <html lang="es" className={`${geistSans.variable} ${geistMono.variable}`}>
       <body>
-        <NextIntlClientProvider >
-          <NavBar />
-          {children}
-          <Toaster />
-        </NextIntlClientProvider>
+        {children}
       </body>
     </html>
   );
