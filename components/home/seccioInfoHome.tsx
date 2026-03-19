@@ -27,7 +27,7 @@ export default function SeccionInfoHome() {
 
         <div className="mt-8 flex flex-wrap items-center gap-3">
 
-          <Link href="/login" className="inline-flex h-14 items-center justify-center gap-2 whitespace-nowrap rounded-xl bg-primary px-8 text-white shadow-md transition hover:bg-secondary">
+          <Link href="/register" className="inline-flex h-14 items-center justify-center gap-2 whitespace-nowrap rounded-xl bg-primary px-8 text-white shadow-md transition hover:bg-secondary">
             {t("register")}
             <ArrowRight size={18} />
           </Link>
