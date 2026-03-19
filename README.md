@@ -1,36 +1,98 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Front-end
 
-## Getting Started
+Aplicacion web del proyecto de Skin4All, construida con Next.js.
 
-First, run the development server:
+## Requisitos previos
+
+- Node.js 22 o superior
+- pnpm instalado globalmente
+- Docker y Docker Compose (para ejecucion con contenedores)
+
+## Ejecucion local (sin Docker)
+
+1. Instalar dependencias:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Iniciar en modo desarrollo:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+pnpm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+3. Abrir en navegador:
 
-## Learn More
+```text
+http://localhost:3000
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Ejecucion con Docker
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+El proyecto incluye [Dockerfile](Dockerfile) y [docker-compose.yml](docker-compose.yml).
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Opcion 1: Docker Compose
 
-## Deploy on Vercel
+Desde la raiz de Front-end:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+docker compose up --build
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+La aplicacion quedara disponible en:
+
+```text
+http://localhost:3000
+```
+
+Para detener los contenedores:
+
+```bash
+docker compose down
+```
+
+### Opcion 2: Docker CLI
+
+1. Construir imagen:
+
+```bash
+docker build -t skin4all-frontend .
+```
+
+2. Ejecutar contenedor:
+
+```bash
+docker run --rm -p 3000:3000 skin4all-frontend
+```
+
+## Scripts principales
+
+- `pnpm run dev`: inicia entorno de desarrollo
+- `pnpm run build`: compila la aplicacion para produccion
+- `pnpm run start`: ejecuta la aplicacion compilada
+- `pnpm run test`: ejecuta todas las pruebas (unitarias y E2E)
+- `pnpm run test:unit`: ejecuta pruebas unitarias (Jest)
+- `pnpm run test:e2e`: ejecuta pruebas E2E (Playwright)
+
+## Justificaciones tecnicas
+
+1. Next.js 
+Se utiliza Next.js para soportar renderizado hibrido (SSR/SSG), optimizacion de rendimiento, y facil manejo de rutas y recursos estaticos.
+
+2. Internacionalizacion con next-intl
+Se adopta `next-intl` para manejar multiples idiomas y namespaces de traduccion de forma consistente por ruta y por componente.
+
+3. Arquitectura basada en componentes
+Separamos la interfaz en componentes reutilizables y modulares, organizados por funcionalidad y por seccion de la aplicacion.
+
+4. Testing automatizado
+Se integran pruebas unitarias (Jest + Testing Library) y pruebas E2E (Playwright) para poder mantener la calidad del codigo.
+
+## Despliegue
+
+El proyecto puede desplegarse de dos formas:
+
+1. Despliegue en Docker, usando la imagen construida desde este repositorio.
+2. Despliegue en Vercel, como alternativa para publicacion y hosting de aplicaciones Next.js.
+
