@@ -79,4 +79,42 @@ describe('community/RoutineDetailPage', () => {
 
         expect(screen.getByRole('button', { name: 'RoutineDetail.upvote' })).toHaveTextContent('2')
     })
+
+    it('toggles up/down votes in routine detail', () => {
+        ; (getRoutineById as jest.Mock).mockReturnValue({
+            id: 'r2',
+            userId: 'u1',
+            name: 'AM Balance',
+            description: 'Routine description',
+            type: 'am',
+            skinType: SkinType.MIXTA,
+            publishedAt: '2026-03-16T11:05:00.000Z',
+            upvotes: [],
+            downvotes: [],
+            comments: [],
+            steps: [],
+        })
+
+        render(<RoutineDetailPage routineId="r2" />)
+
+        const upvoteButton = screen.getByRole('button', { name: 'RoutineDetail.upvote' })
+        const downvoteButton = screen.getByRole('button', { name: 'RoutineDetail.downvote' })
+
+        expect(upvoteButton).toHaveTextContent('0')
+        expect(downvoteButton).toHaveTextContent('0')
+
+        fireEvent.click(upvoteButton)
+        expect(screen.getByRole('button', { name: 'RoutineDetail.upvote' })).toHaveTextContent('1')
+        expect(screen.getByRole('button', { name: 'RoutineDetail.downvote' })).toHaveTextContent('0')
+
+        fireEvent.click(screen.getByRole('button', { name: 'RoutineDetail.upvote' }))
+        expect(screen.getByRole('button', { name: 'RoutineDetail.upvote' })).toHaveTextContent('0')
+
+        fireEvent.click(screen.getByRole('button', { name: 'RoutineDetail.downvote' }))
+        expect(screen.getByRole('button', { name: 'RoutineDetail.downvote' })).toHaveTextContent('1')
+
+        fireEvent.click(screen.getByRole('button', { name: 'RoutineDetail.upvote' }))
+        expect(screen.getByRole('button', { name: 'RoutineDetail.upvote' })).toHaveTextContent('1')
+        expect(screen.getByRole('button', { name: 'RoutineDetail.downvote' })).toHaveTextContent('0')
+    })
 })
