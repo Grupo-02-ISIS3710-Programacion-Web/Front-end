@@ -213,7 +213,7 @@
         "emailRequired": "El email es obligatorio",
         "passwordRequired": "La contraseña es obligatoria",
         "invalidCredentials": "Credenciales inválidas. Verifica tu usuario/email y contraseña.",
-        "demoHint": "Demo: usuario sarahj o sarah@skin4all.com, contraseña skin4all123"
+        "demoHint": "Demo: usuario sofia@skin4all.com, contraseña skin4all123"
     },
     "Auth": {
         "requiredTitle": "No has iniciado sesión",
