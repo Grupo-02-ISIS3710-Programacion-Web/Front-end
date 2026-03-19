@@ -143,7 +143,6 @@ export function NavBarDesktop({
 
                     {isLoggedIn && (
                         <>
-                            <NotificationsButton />
                             <ProfileButton user={user} onClick={onProfile} />
                             <Button variant="outline" onClick={onLogout}>
                                 {t("logout")}
@@ -177,14 +176,6 @@ export function SearchBar({ initialValue = "", onSearch, autoFocus = false }: Se
     );
 }
 
-export function NotificationsButton() {
-    const t = useTranslations("NavBar");
-    return (
-        <Button variant="outline" size="icon" aria-label={t("notifications")}>
-            <Bell className="h-5 w-5" />
-        </Button>
-    );
-}
 
 export function ProfileButton({ user, onClick }: { user?: AuthUser | null; onClick?: () => void }) {
     const t = useTranslations("NavBar");
@@ -292,7 +283,6 @@ export function NavBarMobile({
                             <Search className="h-5 w-5" />
                         </Button>
 
-                        <NotificationsButton />
                         <ProfileButton user={user} onClick={onProfile} />
                     </div>
                 </div>
