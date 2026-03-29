@@ -47,7 +47,7 @@ export default function CommentSection({
   });
 
   return (
-    <Card className="border-[#f2a4b0] bg-[#fcfdff]">
+    <Card className="border-secondary bg-secondary/10">
       <CardHeader>
         <CardTitle className="text-xl font-bold text-[#202635]">
           {t("commentsTitle")} ({localComments.length})
@@ -92,7 +92,7 @@ export default function CommentSection({
                 <ImageIcon size={16} />
               </button>
             </div>
-            <Button onClick={addComment} className="h-9 rounded-xl bg-[#be3d5e] px-5 text-sm font-semibold text-white hover:bg-[#a73553]" disabled={!isLoggedIn}>
+            <Button onClick={addComment} className="h-9 rounded-xl bg-primary px-5 text-sm font-semibold text-primary-foreground hover:bg-secondary hover:text-secondary-foreground" disabled={!isLoggedIn}>
               <MessageSquare size={16} />
               {t("postComment")}
             </Button>
@@ -100,7 +100,7 @@ export default function CommentSection({
 
           {!isLoggedIn && (
             <p className="px-4 py-3 text-sm text-[#5f677c]">
-              {t("loginRequiredForComments")} <a href={loginHref} className="font-semibold text-[#be3d5e] hover:underline">{t("goToLogin")}</a>
+              {t("loginRequiredForComments")} <a href={loginHref} className="font-semibold text-primary hover:underline">{t("goToLogin")}</a>
             </p>
           )}
         </div>

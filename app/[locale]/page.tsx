@@ -59,7 +59,7 @@ export default function Home() {
             </div>
 
 
-            <Link href="/descubrir" className="text-[#8F2D47] font-semibold flex items-center gap-2 hover:underline hover:text-[#7A263D]">
+            <Link href="/descubrir" className="text-primary font-semibold flex items-center gap-2 hover:underline hover:text-secondary">
               {t("seeAllProducts")} <ArrowRight size={18} />
             </Link>
 

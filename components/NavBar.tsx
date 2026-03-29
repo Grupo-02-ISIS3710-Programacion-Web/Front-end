@@ -134,7 +134,7 @@ export function NavBarDesktop({
                             <Button variant="outline" className=" hover:bg-secondary hover:text-secondary-foreground" onClick={onRegister}>
                                 {t("register")}
                             </Button>
-                            <Button className="bg-[#BE3D5E] text-white hover:bg-[#A73553]" onClick={onLogin}>
+                            <Button className="bg-primary text-primary-foreground hover:bg-secondary hover:text-secondary-foreground" onClick={onLogin}>
                                 {t("login")}
                             </Button>
                         </div>
@@ -254,7 +254,7 @@ export function NavBarMobile({
                                         <Button variant="outline" onClick={onRegister}>
                                             {t("register")}
                                         </Button>
-                                        <Button className="bg-[#BE3D5E] text-white hover:bg-[#A73553]" onClick={onLogin}>
+                                        <Button className="bg-primary text-primary-foreground hover:bg-secondary hover:text-secondary-foreground" onClick={onLogin}>
                                             {t("login")}
                                         </Button>
                                     </>

@@ -69,7 +69,7 @@ export function FormularioRegistroComponent() {
             </div>
 
             <div className="grid gap-5 sm:grid-cols-2">
-                
+
                 <div className="space-y-2">
                     <p className="text-sm font-medium">{t("campos.fechaNacimiento.label")}</p>
                     <DatePickerSimple
@@ -182,13 +182,13 @@ export function FormularioRegistroComponent() {
 
             <div className="space-y-2">
                 <p className="text-gray-600 text-sm">
-                    {t("legal.texto")} <Link href="/ToS" className="text-[#BE3D5E] underline underline-offset-2 hover:text-[#A73553]">{t("legal.terminos")}</Link>
+                    {t("legal.texto")} <Link href="/ToS" className="text-primary underline underline-offset-2 hover:text-secondary">{t("legal.terminos")}</Link>
                 </p>
             </div>
             <Button type="submit" className="w-full">
                 {t("botones.crearCuenta")}
             </Button>
-            <p className="text-center text-sm">{t("footer.yaTienesCuenta")} <Link href="/login" className="text-[#BE3D5E] underline underline-offset-2 hover:text-[#A73553]">{t("botones.iniciarSesion")}</Link></p>
+            <p className="text-center text-sm">{t("footer.yaTienesCuenta")} <Link href="/login" className="text-primary underline underline-offset-2 hover:text-secondary">{t("botones.iniciarSesion")}</Link></p>
         </form>
     )
 }

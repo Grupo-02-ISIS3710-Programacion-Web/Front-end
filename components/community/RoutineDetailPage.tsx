@@ -56,7 +56,7 @@ export default function RoutineDetailPage({ routineId, backPath = "/community" }
         <div className="mx-auto max-w-4xl rounded-2xl border border-[#e6e9ef] bg-card p-8 text-center">
           <h1 className="text-2xl font-bold text-[#222739]">{t("notFoundTitle")}</h1>
           <p className="mt-2 text-[#646e84]">{t("notFoundDescription")}</p>
-          <Link href={backPath} className="mt-4 inline-flex items-center gap-2 text-[#d44f67] hover:underline">
+          <Link href={backPath} className="mt-4 inline-flex items-center gap-2 text-primary hover:underline">
             <ArrowLeft size={16} />
             {t("backToDiscussions")}
           </Link>
@@ -88,11 +88,11 @@ export default function RoutineDetailPage({ routineId, backPath = "/community" }
           <Card className="border-[#e8ebf1] lg:sticky lg:top-6 bg-card">
             <CardHeader className="space-y-4">
               <div className="flex flex-wrap items-center justify-between gap-3">
-                <Link href={backPath} className="inline-flex items-center gap-2 text-sm font-semibold text-[#56607a] hover:text-[#d44f67]">
+                <Link href={backPath} className="inline-flex items-center gap-2 text-sm font-semibold text-muted-foreground hover:text-primary">
                   <ArrowLeft size={16} />
                   {t("backToDiscussions")}
                 </Link>
-                <span className="rounded-full bg-[#f8d1d7] px-3 py-1 text-xs font-bold uppercase tracking-wide text-[#7d2d45]">
+                <span className="rounded-full bg-secondary/30 px-3 py-1 text-xs font-bold uppercase tracking-wide text-primary">
                   {tSkin(routine.skinType)}
                 </span>
               </div>
@@ -137,8 +137,8 @@ export default function RoutineDetailPage({ routineId, backPath = "/community" }
                     handleRoutineVote("up");
                   }}
                   className={`inline-flex items-center gap-1 rounded-lg border px-3 py-1.5 transition ${hasUpvotedRoutine
-                    ? "border-[#d44f67] bg-[#fdecef] text-[#d44f67]"
-                    : "border-[#dfe4ec] hover:border-[#d44f67] hover:text-[#d44f67]"
+                    ? "border-primary bg-secondary/20 text-primary"
+                    : "border-border hover:border-primary hover:text-primary"
                     }`}
                   aria-label={t("upvote")}
                   disabled={!isLoggedIn}
@@ -155,8 +155,8 @@ export default function RoutineDetailPage({ routineId, backPath = "/community" }
                     handleRoutineVote("down");
                   }}
                   className={`inline-flex items-center gap-1 rounded-lg border px-3 py-1.5 transition ${hasDownvotedRoutine
-                    ? "border-[#d44f67] bg-[#fdecef] text-[#d44f67]"
-                    : "border-[#dfe4ec] hover:border-[#d44f67] hover:text-[#d44f67]"
+                    ? "border-primary bg-secondary/20 text-primary"
+                    : "border-border hover:border-primary hover:text-primary"
                     }`}
                   aria-label={t("downvote")}
                   disabled={!isLoggedIn}
@@ -167,7 +167,7 @@ export default function RoutineDetailPage({ routineId, backPath = "/community" }
               </div>
               {!isLoggedIn && (
                 <p className="text-sm text-[#5f6880]">
-                  {t("loginRequiredForComments")} <Link href={loginHref} className="font-semibold text-[#d44f67] hover:underline">{t("goToLogin")}</Link>
+                  {t("loginRequiredForComments")} <Link href={loginHref} className="font-semibold text-primary hover:underline">{t("goToLogin")}</Link>
                 </p>
               )}
             </CardHeader>
@@ -190,7 +190,7 @@ export default function RoutineDetailPage({ routineId, backPath = "/community" }
                       : null;
 
                     const stepContent = (
-                      <article className="rounded-xl border border-[#ebeff5] bg-card p-4 transition hover:border-[#f1c6ce] hover:bg-[#fff8fa]">
+                      <article className="rounded-xl border border-border bg-card p-4 transition hover:border-secondary hover:bg-secondary/10">
                         <div className="flex flex-col gap-4 md:flex-row md:items-start">
                           {productImage ? (
                             <img
@@ -221,7 +221,7 @@ export default function RoutineDetailPage({ routineId, backPath = "/community" }
                     }
 
                     return (
-                      <Link key={step.id} href={productHref} className="block rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d44f67]/40">
+                      <Link key={step.id} href={productHref} className="block rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40">
                         {stepContent}
                       </Link>
                     );

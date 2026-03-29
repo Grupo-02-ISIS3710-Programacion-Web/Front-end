@@ -57,7 +57,7 @@ export default function CommentCard({
       </div>
       <div className="mt-3 flex items-center gap-4 pl-12 text-[#5d667d]">
         <button
-          className={`inline-flex items-center gap-1 text-sm font-semibold transition ${hasUpvoted ? "text-[#d44f67]" : "hover:text-[#d44f67]"
+          className={`inline-flex items-center gap-1 text-sm font-semibold transition ${hasUpvoted ? "text-primary" : "hover:text-primary"
             }`}
           aria-label={t("upvote")}
           type="button"
@@ -68,7 +68,7 @@ export default function CommentCard({
           {comment.upvotes.length}
         </button>
         <button
-          className={`inline-flex items-center gap-1 text-sm transition ${hasDownvoted ? "text-[#d44f67]" : "hover:text-[#d44f67]"
+          className={`inline-flex items-center gap-1 text-sm transition ${hasDownvoted ? "text-primary" : "hover:text-primary"
             }`}
           aria-label={t("downvote")}
           type="button"
@@ -78,7 +78,7 @@ export default function CommentCard({
           <ArrowDown size={16} />
           {comment.downvotes.length}
         </button>
-        <button className="text-sm font-semibold hover:text-[#d44f67]" disabled={isInteractionDisabled}>{t("reply")}</button>
+        <button className="text-sm font-semibold hover:text-primary" disabled={isInteractionDisabled}>{t("reply")}</button>
       </div>
     </article>
   );
