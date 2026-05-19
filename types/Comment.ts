@@ -1,8 +1,9 @@
-export interface Comment {
-  id: string;
-  userId: string;
+export type Comment = {
+  _id?: string;
+  id?: string;
+  userId: string | { _id: string; nombre: string; avatarUrl: string }; 
   comment: string;
-  createdAt?: string;
   upvotes: string[];
   downvotes: string[];
-}
+  createdAt?: string;
+};

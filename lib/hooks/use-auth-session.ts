@@ -13,17 +13,20 @@ import {
 
 const TEST_DEFAULT_USER: User = {
   id: "u1",
+  nombre: "Sofía Navarro",
   name: "Sofía Navarro",
   avatarUrl: "https://i.pravatar.cc/80?img=29",
   email: "sofia@skin4all.com",
   login: "sofian",
   password: "skin4all123",
   city: "Madrid, Spain",
+  ciudad: "Madrid, España",
   skinType: "Combination / Sensitive",
+  tipoPiel: "Mixta / Sensible",
   bio: "Barrier-first skincare lover sharing simple routines and soothing product picks.",
   reviewCount: 18,
   favoriteProductIds: ["1", "5", "12", "14"],
-  createdRoutineIds: ["r1", "r7"],
+  createdRoutineIds: ["r1", "r7", "r13"],
 };
 
 export function useAuthSession() {

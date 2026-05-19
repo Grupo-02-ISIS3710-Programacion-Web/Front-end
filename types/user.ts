@@ -1,4 +1,7 @@
 export interface User {
+  tipoPiel: string;
+  ciudad: string;
+  nombre: string;
   id: string;
   name: string;
   avatarUrl: string;
@@ -11,4 +14,5 @@ export interface User {
   reviewCount: number;
   favoriteProductIds: string[];
   createdRoutineIds: string[];
+  isPremium?: boolean;
 }

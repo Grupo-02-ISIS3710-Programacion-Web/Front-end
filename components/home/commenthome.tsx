@@ -3,11 +3,10 @@
 import { Check } from "lucide-react"
 import { useLocale, useTranslations } from "next-intl"
 import Link from "next/link"
-import { getRoutines } from "@/lib/routine"
-import { getUsers } from "@/lib/api"
 import { useLocaleDateFormatter } from "@/lib/hooks/use-locale-date-formatter"
-import { useMemo } from "react"
+import { useState, useEffect } from "react"
 import RoutineCard, { RoutineCardPost } from "@/components/community/RoutineCard"
+import { fetchRoutines, fetchUsers } from "@/lib/api-client"
 
 export default function CommentHome() {
 
@@ -22,72 +21,93 @@ export default function CommentHome() {
         year: "numeric",
     })
 
-    const routineCards = useMemo<RoutineCardPost[]>(() => {
-        const routines = getRoutines()
-        const users = getUsers()
+    const [routineCards, setRoutineCards] = useState<RoutineCardPost[]>([])
 
-        return routines
-            .map((routine) => {
-                const user = users.find((candidate) => candidate.id === routine.userId) ?? users[0]
-                const publishedAtDate = routine.publishedAt ? new Date(routine.publishedAt) : null
-                const publishedAtTs = publishedAtDate ? publishedAtDate.getTime() : 0
+    useEffect(() => {
+        let ignore = false
 
-                return {
-                    id: routine.id,
-                    title: routine.name,
-                    excerpt: routine.description,
-                    userName: user?.name ?? "",
-                    avatarUrl: user?.avatarUrl ?? "",
-                    tag: tSkin(routine.skinType),
-                    upvotes: routine.upvotes?.length ?? 0,
-                    downvotes: routine.downvotes?.length ?? 0,
-                    hasUpvoted: false,
-                    hasDownvoted: false,
-                    comments: routine.comments?.length ?? 0,
-                    views: routine.views ?? 0,
-                    publishedAt: publishedAtDate ? publishedDateFormatter.format(publishedAtDate) : "-",
-                    publishedAtTs,
+        const loadData = async () => {
+            try {
+                const data = await fetchRoutines(1, locale, "newest")
+                const routines = data.routines || []
+                const users = await fetchUsers()
+                const usersMap: Record<string, any> = {}
+                for (const u of users) {
+                    const uid = u._id || u.id
+                    if (uid) usersMap[uid] = u
                 }
-            })
-            .sort((left, right) => right.publishedAtTs - left.publishedAtTs)
-            .slice(0, 3)
-            .map(({ publishedAtTs, ...card }) => card)
-    }, [publishedDateFormatter, tSkin])
+
+                const cards = routines
+                    .map((routine: any) => {
+                        const user = usersMap[routine.userId]
+                        const publishedAtDate = routine.publishedAt ? new Date(routine.publishedAt) : null
+                        const publishedAtTs = publishedAtDate ? publishedAtDate.getTime() : 0
+
+                        return {
+                            id: routine.id,
+                            title: routine.name,
+                            excerpt: routine.description,
+                            userName: user?.name ?? "",
+                            avatarUrl: user?.avatarUrl ?? "",
+                            tag: tSkin(routine.skinType),
+                            upvotes: routine.upvotes?.length ?? 0,
+                            downvotes: routine.downvotes?.length ?? 0,
+                            hasUpvoted: false,
+                            hasDownvoted: false,
+                            comments: routine.comments?.length ?? 0,
+                            views: routine.views ?? 0,
+                            publishedAt: publishedAtDate ? publishedDateFormatter.format(publishedAtDate) : "-",
+                            publishedAtTs,
+                        }
+                    })
+                    .sort((left: any, right: any) => right.publishedAtTs - left.publishedAtTs)
+                    .slice(0, 3)
+                    .map(({ publishedAtTs, ...card }: any) => card)
+
+                if (!ignore) setRoutineCards(cards)
+            } catch {
+                if (ignore) return
+            }
+        }
+
+        loadData()
+        return () => { ignore = true }
+    }, [locale, publishedDateFormatter, tSkin])
 
     return (
 
-        <div className="flex flex-col  bg-gray-50">
+        <div className="flex flex-col bg-muted/50">
 
-            <div className="max-w-7xl mx-auto px-5 mt-23 mb-24 grid md:grid-cols-2 gap-14 items-start">
+            <div className="max-w-7xl mx-auto px-5 mt-8 mb-10 grid md:grid-cols-2 gap-8 md:gap-14 items-start">
 
                 <div>
-                    <h2 className="text-3xl font-bold text-gray-900 mb-4">
+                    <h2 className="text-3xl font-bold text-foreground mb-4">
                         {t("title")}
                     </h2>
-                    <p className="text-gray-600 mb-8 max-w-md">
+                    <p className="text-muted-foreground mb-8 max-w-lg">
                         {t("description")}
                     </p>
                     <ul className="space-y-5 mb-8 py-5">
-                        <li className="flex items-center gap-3 text-gray-700">
-                            <div className="w-6 h-6 rounded-full bg-pink-200 flex items-center justify-center">
-                                <Check size={14} className="text-pink-600" />
+                        <li className="flex items-center gap-3 text-muted-foreground">
+                            <div className="w-6 h-6 rounded-full bg-secondary flex items-center justify-center">
+                                <Check size={14} className="text-secondary-foreground" />
                             </div>
                             <span>{t("feature1")}</span>
                         </li>
-                        <li className="flex items-center gap-3 text-gray-700">
-                            <div className="w-6 h-6 rounded-full bg-pink-200 flex items-center justify-center">
-                                <Check size={14} className="text-pink-600" />
+                        <li className="flex items-center gap-3 text-muted-foreground">
+                            <div className="w-6 h-6 rounded-full bg-secondary flex items-center justify-center">
+                                <Check size={14} className="text-secondary-foreground" />
                             </div>
                             <span>{t("feature2")}</span>
                         </li>
-                        <li className="flex items-center gap-3 text-gray-700">
-                            <div className="w-6 h-6 rounded-full bg-pink-200 flex items-center justify-center">
-                                <Check size={14} className="text-pink-600" />
+                        <li className="flex items-center gap-3 text-muted-foreground">
+                            <div className="w-6 h-6 rounded-full bg-secondary flex items-center justify-center">
+                                <Check size={14} className="text-secondary-foreground" />
                             </div>
                             <span>{t("feature3")}</span>
                         </li>
                     </ul>
-                    <Link href="/community" className="inline-flex bg-foreground text-white px-6 py-3 rounded-lg font-medium hover:opacity-90 transition">
+                    <Link href="/community" className="inline-flex bg-foreground text-background px-6 py-3 rounded-lg font-medium hover:opacity-90 transition">
                         {t("visitCommunity")}
                     </Link>
                 </div>
@@ -109,15 +129,15 @@ export default function CommentHome() {
             </div>
 
 
-            <div className="min-h-foreground flex items-center bg-primary mt-5 py-20">
+            <div className="min-h-foreground flex items-center bg-primary mt-5 py-10 sm:py-16 lg:py-20">
 
                 <div className="max-w-4xl mx-auto px-6 text-center w-full">
 
-                    <h2 className="text-4xl md:text-5xl font-bold text-[#1a1c2e] mb-8 leading-tight">
+                    <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold text-primary-foreground mb-6 md:mb-8 leading-tight">
                         {t("ctaTitle")}
                     </h2>
 
-                    <p className="text-white text-xl mb-12 max-w-2xl mx-auto">
+                    <p className="text-primary-foreground text-base sm:text-lg lg:text-xl mb-6 sm:mb-8 lg:mb-12 max-w-2xl mx-auto">
                         {t("ctaDescription")}
                     </p>
 
@@ -126,10 +146,10 @@ export default function CommentHome() {
                         <input
                             type="email"
                             placeholder={t("emailPlaceholder")}
-                            className="w-full max-w-md px-8 py-3 bg-white rounded-full border-none outline-none text-gray-700 shadow-md"
+                            className="w-full max-w-md px-4 sm:px-8 py-3 bg-card rounded-full border-none outline-none text-muted-foreground shadow-md"
                         />
 
-                        <button className="flex p-5 bg-foreground text-white px-12 py-3 rounded-full font-bold hover:scale-105 transition-transform shadow-lg ">
+                        <button className="flex p-5 bg-foreground text-background px-12 py-3 rounded-full font-bold hover:scale-105 transition-transform shadow-lg ">
                             {t("joinNow")}
                         </button>
 

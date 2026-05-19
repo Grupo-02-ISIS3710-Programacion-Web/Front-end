@@ -5,9 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { useFieldArray, useForm } from "react-hook-form";
 import { AnimatePresence, motion } from "motion/react";
 import { toast } from "sonner";
-
-import { getProducts } from "@/lib/api";
-import { getRoutineById } from "@/lib/routine";
+import { fetchProducts, fetchRoutineById } from "@/lib/api-client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
@@ -89,65 +87,76 @@ export default function RoutineForm({ mode }: RoutineFormProps) {
     });
 
     useEffect(() => {
-        const products = getProducts();
-        setAllProducts(products);
+        const init = async () => {
+            const products = await fetchProducts({});
+            setAllProducts(products);
 
-        if (mode === "create") {
-            const aiRoutineDraft = readAiRoutineDraft();
-            if (aiRoutineDraft) {
-                reset(aiRoutineDraft);
-                setSelectedProductIds(new Set(aiRoutineDraft.steps.map((step) => step.product.id)));
-                previousProductsSignatureRef.current = aiRoutineDraft.steps.map((step) => step.product.id).join(",");
-                clearAiRoutineDraft();
+            if (mode === "create") {
+                const aiRoutineDraft = readAiRoutineDraft();
+                if (aiRoutineDraft) {
+                    reset(aiRoutineDraft);
+                    setSelectedProductIds(new Set(aiRoutineDraft.steps.map((step) => step.product.id)));
+                    previousProductsSignatureRef.current = aiRoutineDraft.steps.map((step) => step.product.id).join(",");
+                    clearAiRoutineDraft();
+                    return;
+                }
+
+                const preselectedId = searchParams.get("product");
+                if (preselectedId && products.some((product) => product.id === preselectedId)) {
+                    setSelectedProductIds(new Set([preselectedId]));
+                }
                 return;
             }
 
-            const preselectedId = searchParams.get("product");
-            if (preselectedId && products.some((product) => product.id === preselectedId)) {
-                setSelectedProductIds(new Set([preselectedId]));
+            const routineId = searchParams.get("id");
+            if (!routineId) {
+                setIsRoutineMissing(true);
+                setIsInitialDataLoaded(true);
+                return;
             }
-            return;
-        }
 
-        const routineId = searchParams.get("id");
-        const routine = routineId ? getRoutineById(routineId) : undefined;
-
-        if (!routine) {
-            setIsRoutineMissing(true);
-            setIsInitialDataLoaded(true);
-            return;
-        }
-
-        const routineSteps = routine.steps
-            .map((step) => {
-                const product = products.find((item) => item.id === step.productId);
-
-                if (!product) {
-                    return null;
+            try {
+                const routine = await fetchRoutineById(routineId);
+                if (!routine) {
+                    setIsRoutineMissing(true);
+                    setIsInitialDataLoaded(true);
+                    return;
                 }
 
-                return {
-                    id: step.id,
-                    name: step.name,
-                    order: step.order,
-                    product,
-                    notes: step.notes
-                };
-            })
-            .filter((step): step is RoutineFormData["steps"][number] => step !== null)
-            .sort((left, right) => left.order - right.order);
+                const routineSteps = routine.steps
+                    .map((step: any) => {
+                        const product = products.find((item) => item.id === step.productId);
+                        if (!product) return null;
+                        return {
+                            id: step.id,
+                            name: step.name,
+                            order: step.order,
+                            product,
+                            notes: step.notes
+                        };
+                    })
+                    .filter((step: any): step is RoutineFormData["steps"][number] => step !== null)
+                    .sort((left: any, right: any) => left.order - right.order);
 
-        reset({
-            name: routine.name,
-            description: routine.description,
-            type: routine.type,
-            skinType: routine.skinType,
-            steps: routineSteps
-        });
+                reset({
+                    name: routine.name,
+                    description: routine.description,
+                    type: routine.type,
+                    skinType: routine.skinType as SkinType,
+                    steps: routineSteps
+                });
 
-        setSelectedProductIds(new Set(routineSteps.map((step) => step.product.id)));
-        previousProductsSignatureRef.current = routineSteps.map((step) => step.product.id).join(",");
-        setIsInitialDataLoaded(true);
+                setSelectedProductIds(new Set(routineSteps.map((step: any) => step.product.id)));
+                previousProductsSignatureRef.current = routineSteps.map((step: any) => step.product.id).join(",");
+                setIsInitialDataLoaded(true);
+            } catch (err) {
+                console.error("Failed to load routine for editing:", err);
+                setIsRoutineMissing(true);
+                setIsInitialDataLoaded(true);
+            }
+        };
+
+        init();
     }, [mode, reset, searchParams]);
 
     useEffect(() => {
@@ -226,7 +235,7 @@ export default function RoutineForm({ mode }: RoutineFormProps) {
         remove(index);
     };
 
-    const onSubmit = (data: RoutineFormData) => {
+    const onSubmit = async (data: RoutineFormData) => {
         if (data.steps.length === 0) {
             setError("steps", { type: "manual", message: tSteps("errors.atLeastOneStep") });
             return;
@@ -238,28 +247,44 @@ export default function RoutineForm({ mode }: RoutineFormProps) {
             return;
         }
 
-        const routine: Routine = {
-            id: mode === "edit" && routineId ? routineId : generateId(),
-            userId: user.id,
-            name: data.name,
-            description: data.description,
-            type: data.type,
-            skinType: data.skinType as SkinType,
-            steps: data.steps.map((step, index) => ({
-                id: step.id,
-                name: step.name,
-                order: index,
-                productId: step.product.id,
-                notes: step.notes
-            }))
-        };
+        try {
+            const routineData = {
+                userId: user.id,
+                name: data.name,
+                description: data.description,
+                type: data.type,
+                skinType: data.skinType,
+                steps: data.steps.map((step, index) => ({
+                    id: step.id,
+                    name: step.name,
+                    order: index,
+                    productId: step.product.id,
+                    notes: step.notes
+                }))
+            };
 
-        if (mode === "create") {
-            toast.success(tCreate("toasts.created"));
-        } else {
-            toast.success(tEdit("toasts.saved"));
+            if (mode === "create") {
+                const { createRoutine } = await import("@/lib/api-client");
+                await createRoutine(routineData);
+                toast.success(tCreate("toasts.created"));
+                // Clear draft and redirect
+                clearAiRoutineDraft();
+                // Redirect to profile or community
+                window.location.href = "/profile";
+            } else {
+                if (!routineId) {
+                    toast.error("Routine ID not found");
+                    return;
+                }
+                const { updateRoutine } = await import("@/lib/api-client");
+                await updateRoutine(routineId, routineData);
+                toast.success(tEdit("toasts.saved"));
+                window.location.href = "/profile";
+            }
+        } catch (error) {
+            console.error("Failed to save routine:", error);
+            toast.error(mode === "create" ? tCreate("toasts.error") : tEdit("toasts.error"));
         }
-        console.log(mode === "edit" ? "Routine edited" : "Routine created", routine);
     };
 
     if (mode === "edit" && isRoutineMissing) {
@@ -307,7 +332,7 @@ export default function RoutineForm({ mode }: RoutineFormProps) {
                                     placeholder={tSteps("routineNamePlaceholder")}
                                 />
                                 {errors.name?.message && (
-                                    <p className="text-sm text-red-600">{errors.name.message}</p>
+                                    <p className="text-sm text-destructive">{errors.name.message}</p>
                                 )}
                             </div>
 
@@ -322,7 +347,7 @@ export default function RoutineForm({ mode }: RoutineFormProps) {
                                     rows={4}
                                 />
                                 {errors.description?.message && (
-                                    <p className="text-sm text-red-600">{errors.description.message}</p>
+                                    <p className="text-sm text-destructive">{errors.description.message}</p>
                                 )}
                             </div>
 
@@ -355,17 +380,17 @@ export default function RoutineForm({ mode }: RoutineFormProps) {
                                     {...register("skinType", {
                                         required: tRoutine("validation.skinTypeRequired")
                                     })}
-                                    className="border-input bg-transparent focus-visible:border-ring focus-visible:ring-ring/50 h-9 w-full rounded-md border px-3 py-1 text-sm shadow-xs outline-none focus-visible:ring-[3px]"
+                                    className="border-input bg-transparent text-foreground focus-visible:border-ring focus-visible:ring-ring/50 h-9 w-full rounded-md border px-3 py-1 text-sm shadow-xs outline-none focus-visible:ring-[3px]"
                                 >
-                                    <option value="">{tRoutine("infoCard.skinTypePlaceholder")}</option>
+                                    <option value="" className="text-muted-foreground">{tRoutine("infoCard.skinTypePlaceholder")}</option>
                                     {Object.values(SkinType).map((skinType) => (
-                                        <option key={skinType} value={skinType}>
+                                        <option key={skinType} value={skinType} className="text-foreground">
                                             {tSkin(skinType)}
                                         </option>
                                     ))}
                                 </select>
                                 {errors.skinType?.message && (
-                                    <p className="text-sm text-red-600">{errors.skinType.message}</p>
+                                    <p className="text-sm text-destructive">{errors.skinType.message}</p>
                                 )}
                             </div>
                         </CardContent>
@@ -424,7 +449,7 @@ export default function RoutineForm({ mode }: RoutineFormProps) {
                     </div>
                     <p className="text-sm text-muted-foreground">{tRoutine("infoCard.productsSelected", { count: selectedProducts.length })}</p>
                     {stepArrayError?.message && (
-                        <p className="text-sm text-red-600">{stepArrayError.message}</p>
+                        <p className="text-sm text-destructive">{stepArrayError.message}</p>
                     )}
                     {fields.length === 0 && (
                         <Card>

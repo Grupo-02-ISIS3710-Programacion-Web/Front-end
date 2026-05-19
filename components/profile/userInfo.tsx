@@ -3,8 +3,10 @@
 import { Droplet, Pencil, Upload } from "lucide-react"
 import { useState } from "react"
 import { useTranslations } from "next-intl"
+import { toast } from "sonner"
 
 type UserInfoProps = {
+  userId: string 
   name: string
   city: string
   skinType: string
@@ -15,6 +17,7 @@ type UserInfoProps = {
 }
 
 export default function UserInfo({
+  userId,
   name,
   city,
   skinType,
@@ -52,20 +55,36 @@ export default function UserInfo({
   }
 
 
-  const updateInfoUser = () => {
-    setUserName(editName)
-    setUserCity(editCity)
-    setUserSkinType(editSkinType)
-    setUserBio(editBio)
-    setUserPhoto(editPhoto)
+const updateInfoUser = async () => {
+    try {
+        await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${userId}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                nombre: editName,
+                ciudad: editCity,
+                tipoPiel: editSkinType,
+                bio: editBio,
+            }),
+        })
 
-    setOpenModal(false)
-  }
+        setUserName(editName)
+        setUserCity(editCity)
+        setUserSkinType(editSkinType)
+        setUserBio(editBio)
+        setUserPhoto(editPhoto)
+        setOpenModal(false)
+        toast.success("Perfil actualizado")
+    } catch (err) {
+        console.error("Error al actualizar perfil:", err)
+        toast.error("No se pudo actualizar el perfil")
+    }
+}
 
 
   return (
 
-    <div className="bg-white rounded-2xl shadow-md overflow-hidden">
+    <div className="bg-card rounded-2xl shadow-md overflow-hidden">
 
       <div className="h-30 bg-linear-to-r from-pink-200 to-slate-200"></div>
       
@@ -159,7 +178,7 @@ export default function UserInfo({
 
           <div data-testid="edit-modal" className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
 
-            <div className="bg-white rounded-2xl p-6 w-105 shadow-xl">
+            <div className="bg-card rounded-2xl p-6 w-full max-w-md mx-4 shadow-xl">
 
               <h2 className="text-xl font-bold mb-5">
                 {t("editProfile")}
@@ -273,7 +292,7 @@ export default function UserInfo({
                 </button>
 
                 <button
-                  className="px-4 py-2 bg-primary text-white rounded-lg"
+                  className="px-4 py-2 bg-primary text-primary-foreground rounded-lg"
                   onClick={updateInfoUser}
                 >
                   {t("save")}

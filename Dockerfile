@@ -1,13 +1,14 @@
-FROM node:22-alpine3.23
+FROM node:22-alpine
 
 WORKDIR /app
 
 COPY package.json package-lock.json ./
+
 RUN npm install
 
 COPY . .
 
-ENV NODE_ENV=development
+RUN npm run build
 
 EXPOSE 3000
 

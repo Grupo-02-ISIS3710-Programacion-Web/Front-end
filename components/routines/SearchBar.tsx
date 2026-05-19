@@ -2,7 +2,7 @@
 
 import { Search } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
-import { getProducts } from "@/lib/api";
+import { fetchProducts } from "@/lib/api-client";
 import { Category, Product } from "@/types/product";
 import { Button } from "../ui/button";
 import { useTranslations } from "next-intl";
@@ -31,8 +31,7 @@ export default function SearchBar({
 }: SearchBarProps) {
     const [products, setProducts] = useState<Product[]>([]);
     useEffect(() => {
-        const products = getProducts();
-        setProducts(products);
+        fetchProducts({}).then(setProducts).catch(() => setProducts([]));
     }, []);
     const t = useTranslations("SearchBar");
     const availableCategories = useMemo(() => {
@@ -46,16 +45,16 @@ export default function SearchBar({
     }, [products]);
 
     return (
-        <div className={compact ? "w-full rounded-xl border p-3" : "w-full bg-white rounded-2xl p-6 shadow-sm mb-6"}>
+        <div className={compact ? "w-full rounded-xl border p-3" : "w-full bg-card rounded-2xl p-6 shadow-sm mb-6"}>
             {/* Search Input */}
-            <div className={compact ? "flex items-center gap-2 bg-muted rounded-full px-3 py-2 mb-3" : "flex items-center gap-3 bg-gray-100 rounded-full px-4 py-3 mb-6"}>
-                <Search className="w-5 h-5 text-gray-400" />
+            <div className={compact ? "flex items-center gap-2 bg-muted rounded-full px-3 py-2 mb-3" : "flex items-center gap-3 bg-muted rounded-full px-4 py-3 mb-6"}>
+                <Search className="w-5 h-5 text-muted-foreground" />
                 <input
                     type="text"
                     placeholder={t("placeholder")}
                     value={searchTerm}
                     onChange={(e) => onSearchChange(e.target.value)}
-                    className="bg-transparent flex-1 min-w-0 outline-none text-gray-700 placeholder-gray-400"
+                    className="bg-transparent flex-1 min-w-0 outline-none text-foreground placeholder:text-muted-foreground"
                 />
             </div>
 

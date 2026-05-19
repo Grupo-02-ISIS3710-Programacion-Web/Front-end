@@ -11,7 +11,14 @@ type CardProductoProps = Readonly<{
     compact?: boolean;
 }>;
 
-const getCategoryLabel = (category: string): string => {
+const getCategoryLabel = (category: string | number | (string | number)[] | undefined): string => {
+    if (!category) return "";
+    
+    if (Array.isArray(category)) {
+        return category.length > 0 ? getCategoryLabel(category[0]) : "";
+    }
+    
+    const catStr = String(category);
     const categoryMap: Record<string, string> = {
         hidratacion: "HYDRATION",
         limpieza: "CLEANSER",
@@ -20,7 +27,7 @@ const getCategoryLabel = (category: string): string => {
         reparacion: "REPAIR",
         antioxidante: "ANTIOXIDANT"
     };
-    return categoryMap[category] || category.toUpperCase();
+    return categoryMap[catStr.toLowerCase()] || catStr.toUpperCase();
 };
 
 export default function CardProducto({
@@ -29,11 +36,11 @@ export default function CardProducto({
     showButton = true,
     compact = false
 }: CardProductoProps) {
-    const primaryCategory = product.category[0] || "";
-    const imageUrl = product.image_url[0] || "/producto.jpg";
+    const primaryCategory = product?.category;
+    const imageUrl = (product?.image_url && product.image_url[0]) || "/producto.jpg";
     const t = useTranslations("CardProducto");
     return (
-        <Card className="w-full bg-white shadow-sm">
+        <Card className="w-full bg-card shadow-sm">
             <div className={compact ? "flex items-start px-3 gap-4" : "flex items-start px-4 py-3 gap-4"}>
 
                 {/* Image */}
@@ -50,14 +57,14 @@ export default function CardProducto({
                     {/* Header with title and badge */}
                     <div className={compact ? "flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1.5" : "flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2"}>
                         <div className="flex-1 min-w-0">
-                            <h3 className={compact ? "font-semibold text-[15px] md:text-base text-gray-900 leading-tight" : "font-semibold text-lg md:text-xl text-gray-900 leading-tight"}>
+                            <h3 className={compact ? "font-semibold text-[15px] md:text-base text-foreground leading-tight" : "font-semibold text-lg md:text-xl text-foreground leading-tight"}>
                                 {product.name}
                             </h3>
-                            <p className={compact ? "text-sm md:text-[15px] text-gray-500 mt-0.5 wrap-break-word" : "text-base md:text-lg text-gray-500 mt-0.5 wrap-break-word"}>
+                            <p className={compact ? "text-sm md:text-[15px] text-muted-foreground mt-0.5 wrap-break-word" : "text-base md:text-lg text-muted-foreground mt-0.5 wrap-break-word"}>
                                 {product.brand} • {product.product_type}
                             </p>
                         </div>
-                        <span className={compact ? "inline-flex self-start w-fit max-w-[85%] px-2 py-0.5 bg-blue-100 text-blue-700 text-xs md:text-sm font-medium rounded uppercase wrap-break-word whitespace-normal" : "inline-flex self-start w-fit max-w-[85%] px-2.5 py-1 bg-blue-100 text-blue-700 text-sm md:text-base font-medium rounded uppercase wrap-break-word whitespace-normal"}>
+                        <span className={compact ? "inline-flex self-start w-fit max-w-[85%] px-2 py-0.5 bg-muted text-muted-foreground text-xs md:text-sm font-medium rounded uppercase wrap-break-word whitespace-normal" : "inline-flex self-start w-fit max-w-[85%] px-2.5 py-1 bg-muted text-muted-foreground text-sm md:text-base font-medium rounded uppercase wrap-break-word whitespace-normal"}>
                             {getCategoryLabel(primaryCategory)}
                         </span>
                     </div>

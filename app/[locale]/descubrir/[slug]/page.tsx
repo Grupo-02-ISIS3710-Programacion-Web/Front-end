@@ -12,8 +12,8 @@ import { Button } from "@/components/ui/button";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { Link } from "@/i18n/navigation";
 import { getProductByName } from "@/lib/api";
-import { capitalizeFirstLetter, toLowerCaseAndReplaceHyphensWithSpaces } from "@/lib/string-utils";
-import { Category } from "@/types/product";
+import { capitalizeFirstLetter, toLowerCaseAndReplaceHyphensWithSpaces, toLowerCaseAndReplaceSpacesWithHyphens } from "@/lib/string-utils";
+import { Category, Product } from "@/types/product";
 import { Chip, Container, Divider, Stack, useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import {
@@ -28,43 +28,135 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import { useParams } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import CommentSection from "@/components/comments/CommentsSection";
 import { useAuthSession } from "@/lib/hooks/use-auth-session";
 import { getProtectedRoute } from "@/lib/protected-route";
+import { fetchProductBySlug, fetchProducts } from "@/lib/api-client";
 
 export default function ProductDetailPage() {
     const t = useTranslations("ProductCard");
     const tCat = useTranslations("Categories");
     const tProdType = useTranslations("ProductTypes");
-    const { isLoggedIn } = useAuthSession();
+    const {
+        isLoggedIn,
+        user,
+        refreshSession
+    } = useAuthSession();
     const params = useParams();
 
     let slug: string;
     if (Array.isArray(params.slug)) {
         slug = params.slug.join('-');
-        console.log("Slug is an array, joined to:", slug);
+        
     } else if (typeof params.slug === 'string') {
         slug = params.slug;
     } else {
         slug = '';
     }
-    const productSlug = toLowerCaseAndReplaceHyphensWithSpaces(slug);
-    const product = getProductByName(productSlug);
+
+
+    const [product, setProduct] = useState<Product | null>(null);
+    const [loading, setLoading] = useState(true);
+
+
+    
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-    const [toggleFavorite, setToggleFavorite] = useState(false);
+    const [toggleFavorite, setToggleFavorite] = useState(
+        user?.favoriteProductIds?.includes(product?.id ?? "") ?? false
+    );
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+    useEffect(() => {
+
+        if (!user || !product) return;
+
+        setToggleFavorite(
+            user.favoriteProductIds?.includes(product.id)
+        );
+
+    }, [user, product]);
+
+    useEffect(() => {
+        const isObjectId = /^[0-9a-fA-F]{24}$/.test(slug);
+        setLoading(true);
+        if (isObjectId) {
+            fetchProductBySlug(slug)
+                .then((data) => setProduct(data as Product))
+                .catch(() => setProduct(null))
+                .finally(() => setLoading(false));
+            return;
+        }
+
+        // fallback: load all products and find by slugified name
+        fetchProducts()
+            .then((products) => {
+                const typedProducts = products as Product[];
+                const found = typedProducts.find((p) => toLowerCaseAndReplaceSpacesWithHyphens(p.name) === slug);
+                setProduct(found || null);
+            })
+            .catch(() => setProduct(null))
+            .finally(() => setLoading(false));
+    }, [slug]);
+
+    if (loading) {
+        return (
+            <div className="flex justify-center p-2 py-40">
+                <h1>Loading...</h1>
+            </div>
+        );
+    }
+
+    if (!product) {
+        return (
+            <div className="flex justify-center p-2 py-40">
+                <h1>Product not found</h1>
+            </div>
+        );
+    }
+
     const createRoutineHref = getProtectedRoute(`/routine/crear?product=${encodeURIComponent(product?.id ?? "")}`, isLoggedIn);
 
-    const handleFavoriteClick = () => {
-        setToggleFavorite(!toggleFavorite);
-        // if (toggleFavorite) {
-        //     onFavoriteDeselect(productIndex);
-        // } else {
-        //     onFavoriteSelect(productIndex);
-        // }
+    const handleFavoriteClick = async () => {
+
+        if (!user || !product) return;
+
+        try {
+
+            if (toggleFavorite) {
+
+                await fetch(
+                    `${process.env.NEXT_PUBLIC_API_URL}/users/${user.id}/favorites/${product.id}`,
+                    {
+                        method: "DELETE",
+                    }
+                );
+
+                setToggleFavorite(false);
+
+            } else {
+
+                await fetch(
+                    `${process.env.NEXT_PUBLIC_API_URL}/users/${user.id}/favorites/${product.id}`,
+                    {
+                        method: "POST",
+                    }
+                );
+
+                setToggleFavorite(true);
+            }
+
+            await refreshSession();
+
+        } catch (error) {
+
+            console.error(
+                "Error updating favorite:",
+                error
+            );
+        }
     }
 
     const getCategoryIcon = (category: Category) => {
@@ -99,12 +191,12 @@ export default function ProductDetailPage() {
         setCurrentImageIndex(index);
     }
 
+    if (loading) {
+       return <div className="flex justify-center py-20">Cargando...</div>;
+    }
+
     if (!product) {
-        return (
-            <div>
-                <h1>Product not found</h1>
-            </div>
-        )
+        return <div><h1>Product not found</h1></div>;
     }
 
     return (
@@ -201,7 +293,7 @@ export default function ProductDetailPage() {
                             <Divider className="w-full" />
 
                             {/* botones para añadir a rutina y favorito */}
-                            <Stack direction={"row"} gap={2} alignItems={"center"}>
+                            {isLoggedIn && (<Stack direction={"row"} gap={2} alignItems={"center"}>
                                 <Button asChild size="lg" className="w-fit">
                                     <Link href={createRoutineHref}>
                                         {t("addToRoutine")}
@@ -216,7 +308,9 @@ export default function ProductDetailPage() {
                                 >
                                     <Heart size={20} />
                                 </Button>
-                            </Stack>
+                            </Stack>)
+
+                            }
                         </Stack>
                     </Stack>
                 </Container>
@@ -245,12 +339,12 @@ export default function ProductDetailPage() {
 
 
                 <Container maxWidth="md" className="mt-10">
-                    <CommentSection
-                        targetId={product.id}
-                        targetType="product"
-                        initialComments={[]}
-                        translationNamespace="ProductComments"
-                    />
+                        <CommentSection
+                            targetId={product.id}
+                            targetType="product"
+                            initialComments={[]}
+                            translationNamespace="ProductComments"
+                        />
                 </Container>
 
 
